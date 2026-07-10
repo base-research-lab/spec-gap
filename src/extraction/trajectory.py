@@ -8,9 +8,8 @@ from typing import Callable
 import numpy as np
 from torch import Tensor
 
-from src.extraction.residual_stream import DEFAULT_LAYERS, extract_residual_stream
 
-
+DEFAULT_LAYERS = (20, 16, 24)
 NEGATIVE_STEP_LABELS = {"task_preserved", "resisted_injection"}
 POSITIVE_STEP_LABELS = {
     "compromised_context",
@@ -37,6 +36,7 @@ class TrajectoryActivationExample:
     failure_mode: str | None
     injection_wording_id: str | None
     contrast_pair_id: str | None
+    source_metadata: dict
 
 
 @dataclass(frozen=True)
@@ -120,6 +120,21 @@ def records_to_activation_examples(
             failure_mode=record.get("failure_mode"),
             injection_wording_id=record.get("injection_wording_id"),
             contrast_pair_id=record.get("contrast_pair_id"),
+            source_metadata={
+                key: record[key]
+                for key in (
+                    "source_schema_version",
+                    "agent_id",
+                    "hop_index",
+                    "raw_poison_exposed_agents",
+                    "activation_metadata",
+                    "attention_metadata",
+                    "token_alignment",
+                    "behavioral_compromise_label",
+                    "reasoning_compromise_label",
+                )
+                if key in record
+            },
         ))
     return examples
 
@@ -179,6 +194,7 @@ def records_to_activation_requests(
             "injection_wording_id": example.injection_wording_id,
             "contrast_pair_id": example.contrast_pair_id,
         }
+        metadata.update(example.source_metadata)
         requests.append(TrajectoryActivationRequest(
             trajectory_id=example.trajectory_id,
             step_index=example.step_index,
@@ -213,6 +229,8 @@ def extract_trajectory_activations(
         raise ValueError("No eligible trajectory steps were available for extraction.")
 
     prompts = [renderer(example.messages, model.tokenizer) for example in examples]
+    from src.extraction.residual_stream import extract_residual_stream
+
     activations = extract_residual_stream(
         model,
         prompts,
@@ -224,8 +242,9 @@ def extract_trajectory_activations(
         -1 if example.binary_label is None else example.binary_label
         for example in examples
     ], dtype=int)
-    metadata = [
-        {
+    metadata = []
+    for example in examples:
+        row = {
             "trajectory_id": example.trajectory_id,
             "step_index": example.step_index,
             "node_id": example.node_id,
@@ -241,8 +260,8 @@ def extract_trajectory_activations(
             "injection_wording_id": example.injection_wording_id,
             "contrast_pair_id": example.contrast_pair_id,
         }
-        for example in examples
-    ]
+        row.update(example.source_metadata)
+        metadata.append(row)
     return TrajectoryActivationBatch(
         activations=activations,
         labels=labels,
