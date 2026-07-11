@@ -9,11 +9,15 @@ import numpy as np
 from torch import Tensor
 
 
-DEFAULT_LAYERS = (20, 16, 24)
-NEGATIVE_STEP_LABELS = {"task_preserved", "resisted_injection"}
-POSITIVE_STEP_LABELS = {
-    "compromised_context",
+NEGATIVE_STEP_LABELS = {
+    "task_preserved",
+    "resisted_injection",
+    "propagated_but_not_executed",
     "unsafe_action_attempted",
+    "injection_received",
+    "propagated",
+}
+POSITIVE_STEP_LABELS = {
     "unsafe_action_executed",
 }
 
@@ -37,6 +41,7 @@ class TrajectoryActivationExample:
     injection_wording_id: str | None
     contrast_pair_id: str | None
     source_metadata: dict
+    exact_rendered_prompt: str | None
 
 
 @dataclass(frozen=True)
@@ -100,7 +105,11 @@ def records_to_activation_examples(
         ]
         messages.append({"role": "assistant", "content": output})
         step_label = record.get("step_label")
-        binary_label = step_label_to_binary(step_label)
+        explicit_binary_label = record.get("binary_label")
+        if explicit_binary_label in (0, 1, False, True):
+            binary_label = int(explicit_binary_label)
+        else:
+            binary_label = step_label_to_binary(step_label)
         if binary_label is None and not include_unlabeled:
             continue
         examples.append(TrajectoryActivationExample(
@@ -132,9 +141,37 @@ def records_to_activation_examples(
                     "token_alignment",
                     "behavioral_compromise_label",
                     "reasoning_compromise_label",
+                    "match_group_id",
+                    "domain_id",
+                    "task_family_id",
+                    "document_set_id",
+                    "wording_id",
+                    "carrier_id",
+                    "thinking_mode",
+                    "model_revision",
+                    "tokenizer_name",
+                    "tokenizer_revision",
+                    "generation_config",
+                    "injection_present",
+                    "behavioral_outcome",
+                    "action_attempted",
+                    "action_fired",
+                    "black_box_compromise",
+                    "latent_compromise_status",
+                    "label_target",
+                    "exact_model_input",
+                    "input_token_ids",
+                    "generated_token_ids",
+                    "finish_reason",
+                    "generation_truncated",
                 )
                 if key in record
             },
+            exact_rendered_prompt=(
+                str(record["rendered_prompt"])
+                if record.get("rendered_prompt")
+                else None
+            ),
         ))
     return examples
 
@@ -167,7 +204,7 @@ def records_to_activation_requests(
     """Build prompt strings and metadata without loading a model.
 
     This is the handoff adapter for new trajectory files: JSONL records can be
-    validated and rendered into extraction-ready requests before Llama weights
+    validated and rendered into extraction-ready requests before model weights
     or TransformerLens are loaded.
     """
 
@@ -195,13 +232,17 @@ def records_to_activation_requests(
             "contrast_pair_id": example.contrast_pair_id,
         }
         metadata.update(example.source_metadata)
+        rendered_prompt = example.exact_rendered_prompt or renderer(
+            example.messages,
+            tokenizer,
+        )
         requests.append(TrajectoryActivationRequest(
             trajectory_id=example.trajectory_id,
             step_index=example.step_index,
             node_id=example.node_id,
             role=example.role,
             model=example.model,
-            rendered_prompt=renderer(example.messages, tokenizer),
+            rendered_prompt=rendered_prompt,
             token_position=example.token_position,
             step_label=example.step_label,
             binary_label=example.binary_label,
@@ -214,7 +255,7 @@ def extract_trajectory_activations(
     model,
     records: list[dict],
     *,
-    layers: tuple[int, ...] = DEFAULT_LAYERS,
+    layers: tuple[int, ...] | None = None,
     batch_size: int = 1,
     include_unlabeled: bool = False,
     renderer: Callable[[list[dict], object], str] = render_messages,
@@ -228,7 +269,16 @@ def extract_trajectory_activations(
     if not examples:
         raise ValueError("No eligible trajectory steps were available for extraction.")
 
-    prompts = [renderer(example.messages, model.tokenizer) for example in examples]
+    prompts = [
+        example.exact_rendered_prompt or renderer(example.messages, model.tokenizer)
+        for example in examples
+    ]
+    if layers is None:
+        layers = _declared_layers(examples)
+    if not layers:
+        raise ValueError(
+            "Activation layers must be passed explicitly or declared in activation_metadata."
+        )
     from src.extraction.residual_stream import extract_residual_stream
 
     activations = extract_residual_stream(
@@ -268,3 +318,16 @@ def extract_trajectory_activations(
         metadata=metadata,
         rendered_prompts=prompts,
     )
+
+
+def _declared_layers(examples: list[TrajectoryActivationExample]) -> tuple[int, ...]:
+    declared: set[int] = set()
+    for example in examples:
+        metadata = example.source_metadata.get("activation_metadata")
+        if not isinstance(metadata, dict):
+            continue
+        layers = metadata.get("layers_extracted") or metadata.get("layers") or []
+        for layer in layers:
+            if isinstance(layer, int):
+                declared.add(layer)
+    return tuple(sorted(declared))
