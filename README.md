@@ -310,6 +310,36 @@ python experiments/build_runway_behavior_review.py
 
 The packet is written under the ignored `results/runway_behavior_review/` directory. It is a review aid, not behavioral ground truth, because the original response artifact omitted the full prompts and option text.
 
+## Smoke-check: Scenario 1 trajectory generation
+
+Generate Onyinye's Scenario 1 trajectories and verify them against the manifest:
+
+```bash
+python generate_onyinye_trajectories.py
+
+python -c "
+import json, os, sys
+
+manifest = json.load(open('experiments/scenario1/trajectories/manifest_onyinye.json'))
+root = 'experiments/scenario1/trajectories'
+missing = []
+for t in manifest['trajectories']:
+    for key in ('json', 'jsonl'):
+        path = os.path.join(root, t[key])
+        if not os.path.isfile(path):
+            missing.append(path)
+if missing:
+    print('MISSING FILES:'); [print(f'  {p}') for p in missing]; sys.exit(1)
+print(f'All {len(manifest[\"trajectories\"])} manifest entries resolved.')
+"
+```
+
+If the v2 schema validator is available (on `scenario1-trajectory-rebuild`), run it on the generated files:
+
+```bash
+python validate_trajectory.py experiments/scenario1/trajectories/onyinye_*.json
+```
+
 ## Repository structure
 
 ```text

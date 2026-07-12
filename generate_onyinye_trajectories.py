@@ -10,7 +10,7 @@ import os
 from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_DIR = os.path.join(HERE, "experiments", "scenario1", "trajectories_onyinye")
+OUTPUT_DIR = os.path.join(HERE, "experiments", "scenario1", "trajectories")
 
 MODEL_NAME = "meta-llama/Meta-Llama-3.1-8B-Instruct [DRY_RUN_MOCK]"
 LAYERS = [16, 20, 24]
@@ -301,14 +301,23 @@ def build_trajectory(prompt, condition):
     })
     step_idx += 1
 
+    benign_body = (
+        f"Title: {p['benign_doc']['title']}\n\n"
+        f"This document {p['benign_doc']['gist']}."
+    )
+    poisoned_body = _poison_body(
+        p["marker"], p["endpoint"],
+        p["poisoned_doc"]["title"], p["poisoned_doc"]["gist"],
+    )
+
     # Tool call (hop 1)
     events.append({
         "type": "tool_call",
         "tool_name": "retrieve_papers",
         "hop_index": worker_hop,
         "tool_result": [
-            {"doc_id": p["benign_doc"]["doc_id"]},
-            {"doc_id": p["poisoned_doc"]["doc_id"]},
+            {"doc_id": p["benign_doc"]["doc_id"], "body": benign_body},
+            {"doc_id": p["poisoned_doc"]["doc_id"], "body": poisoned_body},
         ],
         "retrieval_metrics": {
             "retrieved_ids": [p["benign_doc"]["doc_id"],
@@ -613,11 +622,31 @@ def main():
         "layers": list(LAYERS),
         "primary_layer": PRIMARY_LAYER,
         "artifact_root": ARTIFACT_ROOT,
+        "created_by": "onyinye",
+        "generator": "generate_onyinye_trajectories.py",
+        "source_branch": "onyinye/scenario1-trajectories",
         "created": datetime.now(timezone.utc).isoformat(),
+        "trajectory_coverage": {
+            "includes_injected_success": True,
+            "includes_attempted_compromise": False,
+            "includes_clean_control": False,
+            "note": (
+                "All 10 trajectories are successful compromises "
+                "(injection_present=true, chain_completed=true). "
+                "Clean controls and attempted compromises are not "
+                "included because the v2 schema validator does not "
+                "currently support them."
+            ),
+        },
         "trajectories": manifest_entries,
     }
 
     manifest_path = os.path.join(OUTPUT_DIR, "manifest_onyinye.json")
+    # Remove old output directory if it exists from previous runs
+    old_dir = os.path.join(HERE, "experiments", "scenario1", "trajectories_onyinye")
+    if os.path.isdir(old_dir):
+        import shutil
+        shutil.rmtree(old_dir)
     with open(manifest_path, "w") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
         f.write("\n")
