@@ -21,6 +21,12 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest", "ipython", "jupyter"]
+modal = [
+    "modal>=1.5,<2",
+    "transformers>=5.8,<6",
+    "accelerate>=1.12,<2",
+    "safetensors>=0.5,<1",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

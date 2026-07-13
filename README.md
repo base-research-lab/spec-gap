@@ -248,6 +248,13 @@ batch = extract_trajectory_activations(
 
 Temporal Divergence is implemented in `src/probes/temporal_divergence.py`. It does not train a new probe; it aggregates ordered per-step probabilities from a baseline probe around a predeclared injection or matched clean-control anchor.
 
+## Qwen3-32B on Modal
+
+The Modal runner is documented in `docs/modal_qwen_runner.md`. Its default
+validation path does not download model weights or start a GPU. The included
+synthetic agent-turn request checks the infrastructure only and is not part of
+the Scenario 1 dataset.
+
 ## Runway result summary
 
 The pre-fellowship runway validated the measurement stack on NARCBench-Core using Llama 3.1 8B Instruct.
