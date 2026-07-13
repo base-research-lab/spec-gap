@@ -9,6 +9,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -17,8 +20,13 @@ import modal
 from src.infrastructure.qwen_modal import (
     MODEL_ID,
     activation_artifact_path,
+    build_generation_result,
     split_thinking_text,
     validate_generation_request,
+)
+from src.infrastructure.modal_costs import (
+    build_gpu_cost_record,
+    build_token_usage,
 )
 
 
@@ -42,7 +50,10 @@ image = (
     .add_local_python_source("src")
 )
 
-app = modal.App(APP_NAME)
+app = modal.App(
+    APP_NAME,
+    tags={"project": "spec-gap", "component": "qwen3-inference"},
+)
 model_volume = modal.Volume.from_name(MODEL_VOLUME_NAME, create_if_missing=True)
 artifact_volume = modal.Volume.from_name(ARTIFACT_VOLUME_NAME, create_if_missing=True)
 
@@ -169,6 +180,9 @@ class Qwen3Runner:
 
     @modal.method()
     def generate_agent_turn(self, payload: dict[str, Any]) -> dict[str, Any]:
+        started_at = datetime.now(timezone.utc).isoformat()
+        started_monotonic = time.perf_counter()
+        modal_input_id = modal.current_input_id()
         request = validate_generation_request(payload)
         torch = self.torch
         settings = request["generation_settings"]
@@ -237,10 +251,14 @@ class Qwen3Runner:
                 skip_special_tokens=True,
             ).strip()
             thinking_complete = True
+            thinking_token_count = len(thinking_ids)
+            final_output_token_count = len(final_ids)
         elif request["enable_thinking"]:
             thinking_content = parsed["thinking_content"] or raw_generated_text.strip()
             final_content = ""
             thinking_complete = False
+            thinking_token_count = len(generated_ids)
+            final_output_token_count = 0
         else:
             thinking_content = None
             final_content = self.tokenizer.decode(
@@ -248,6 +266,8 @@ class Qwen3Runner:
                 skip_special_tokens=True,
             ).strip()
             thinking_complete = None
+            thinking_token_count = 0
+            final_output_token_count = len(generated_ids)
         downstream_message = final_content
 
         eos_id = self.tokenizer.eos_token_id
@@ -288,30 +308,58 @@ class Qwen3Runner:
                 "token_id": generated_ids[content_offset],
             }
 
-        return {
-            "trajectory_id": request["trajectory_id"],
-            "step_index": request["step_index"],
-            "agent_id": request["agent_id"],
-            "agent_role": request["agent_role"],
-            "hop_index": request["hop_index"],
-            "model_name": MODEL_ID,
-            "model_revision": self.model_metadata["resolved_revision"],
-            "thinking_mode": request["thinking_mode"],
-            "generation_settings": settings,
-            "rendered_input": self.tokenizer.decode(
-                model_inputs["input_ids"][0], skip_special_tokens=False
-            ),
-            "input_token_ids": model_inputs["input_ids"][0].tolist(),
-            "generated_token_ids": generated_ids,
-            "raw_generated_text": raw_generated_text,
-            "thinking_content": thinking_content,
-            "thinking_complete": thinking_complete,
-            "final_content": final_content,
-            "downstream_message": downstream_message,
-            "finish_reason": finish_reason,
-            "truncated": truncated,
-            "activation_metadata": activation_metadata,
-        }
+        rendered_input = self.tokenizer.decode(
+            model_inputs["input_ids"][0], skip_special_tokens=False
+        )
+        token_usage = build_token_usage(
+            input_token_count=input_length,
+            generated_token_count=len(generated_ids),
+            thinking_token_count=thinking_token_count,
+            final_output_token_count=final_output_token_count,
+        )
+        finished_at = datetime.now(timezone.utc).isoformat()
+        elapsed_seconds = time.perf_counter() - started_monotonic
+        cost_metadata = build_gpu_cost_record(
+            trajectory_id=request["trajectory_id"],
+            step_index=request["step_index"],
+            agent_id=request["agent_id"],
+            thinking_mode=request["thinking_mode"],
+            started_at=started_at,
+            finished_at=finished_at,
+            elapsed_seconds=elapsed_seconds,
+            modal_input_id=modal_input_id,
+            modal_task_id=os.getenv("MODAL_TASK_ID"),
+            token_usage=token_usage,
+            runtime_metadata={
+                "app_name": APP_NAME,
+                "model_name": MODEL_ID,
+                "model_revision": self.model_metadata["resolved_revision"],
+                "modal_environment": os.getenv("MODAL_ENVIRONMENT"),
+                "modal_cloud_provider": os.getenv("MODAL_CLOUD_PROVIDER"),
+                "modal_region": os.getenv("MODAL_REGION"),
+            },
+        )
+        cost_path = ARTIFACT_MOUNT / cost_metadata["storage_path"]
+        cost_path.parent.mkdir(parents=True, exist_ok=True)
+        cost_path.write_text(json.dumps(cost_metadata, indent=2) + "\n")
+        artifact_volume.commit()
+        return build_generation_result(
+            request,
+            model_revision=self.model_metadata["resolved_revision"],
+            tokenizer_name=MODEL_ID,
+            tokenizer_revision=self.model_metadata["resolved_revision"],
+            rendered_input=rendered_input,
+            input_token_ids=model_inputs["input_ids"][0].tolist(),
+            generated_token_ids=generated_ids,
+            raw_generated_text=raw_generated_text,
+            thinking_content=thinking_content,
+            thinking_complete=thinking_complete,
+            final_content=downstream_message,
+            finish_reason=finish_reason,
+            truncated=truncated,
+            activation_metadata=activation_metadata,
+            cost_metadata=cost_metadata,
+        )
 
 
 @app.local_entrypoint()

@@ -248,12 +248,214 @@ batch = extract_trajectory_activations(
 
 Temporal Divergence is implemented in `src/probes/temporal_divergence.py`. It does not train a new probe; it aggregates ordered per-step probabilities from a baseline probe around a predeclared injection or matched clean-control anchor.
 
-## Qwen3-32B on Modal
+## Qwen3-32B Modal runner
 
-The Modal runner is documented in `docs/modal_qwen_runner.md`. Its default
-validation path does not download model weights or start a GPU. The included
-synthetic agent-turn request checks the infrastructure only and is not part of
-the Scenario 1 dataset.
+This runner provides live model generation and residual-stream extraction for
+the shared Scenario 1 generator. It does not replace the Scenario 1 input
+registry, agent chain, v2 schema, validator, or outcome adapter.
+
+### What can be tested without the Scenario 1 dataset
+
+The included request fixture checks:
+
+- the Qwen model and thinking-mode configuration;
+- the controlled decoding settings;
+- request and message validation;
+- the rule that only Worker1 may receive raw poison;
+- the 64-layer activation range;
+- separation of thinking content from the downstream message;
+- safe activation artifact paths;
+- exact input hashes and tokenizer metadata;
+- the saved model-turn result contract;
+- conservative parsing of Qwen's explicit `<tool_call>...</tool_call>` blocks.
+
+The request and result fixtures are only infrastructure checks. They are not
+Scenario 1 trajectories and must not be included in the dataset or manifest.
+
+Run the local tests without starting Modal compute:
+
+```bash
+python -m pytest tests/test_qwen_modal.py tests/test_modal_costs.py -q
+```
+
+Compile the Modal app without deploying it:
+
+```bash
+python -m py_compile \
+  modal_qwen_runner.py \
+  src/infrastructure/qwen_modal.py \
+  src/infrastructure/modal_costs.py
+```
+
+### Model-turn handoff contract
+
+PR #8 owns model execution, not the final trajectory schema. After one Qwen
+turn, it returns a validated model-turn result with:
+
+- the agent and trajectory identifiers supplied by the shared generator;
+- the exact input messages, rendered chat input, input token IDs, and SHA-256
+  hash;
+- the model and tokenizer revisions;
+- raw generated text and generated token IDs;
+- separated thinking content and downstream-visible final content;
+- parsed tool-call requests, parsing errors, finish reason, and truncation;
+- an activation artifact reference when extraction was requested;
+- per-input token usage and H200 cost metadata for paid runs.
+
+`tests/fixtures/qwen_agent_turn_result.json` shows this contract without
+claiming that Qwen or a GPU ran. The pure-Python validator can check a saved
+result locally:
+
+```python
+import json
+from pathlib import Path
+
+from src.infrastructure.qwen_modal import validate_generation_result
+
+payload = json.loads(
+    Path("tests/fixtures/qwen_agent_turn_result.json").read_text()
+)
+result = validate_generation_result(payload)
+```
+
+The shared generator can convert the validated result into model-owned
+`agent_turn` fields:
+
+```python
+from src.infrastructure.qwen_modal import generation_result_to_agent_turn_fields
+
+event_fields = generation_result_to_agent_turn_fields(result)
+```
+
+That helper returns `exact_model_input`, `output`, `activation_metadata`,
+`cost_metadata`, and `model_execution_metadata`. The generator adds its own
+event identity, document, token-alignment, topology, and construction metadata
+around those fields. This keeps one model contract without making PR #8 a
+second Scenario 1 schema or generator.
+
+#### Tool requests are not executed actions
+
+Qwen3 uses explicit Hermes-style `<tool_call>...</tool_call>` blocks for tool
+requests, as described in [Qwen's function-calling
+guide](https://qwen.readthedocs.io/en/stable/framework/function_call.html).
+The runner parses only those blocks. Endpoint text written in prose does not
+become a tool request.
+
+Every parsed item has `status: "requested"`. PR #8 never writes an `actions`
+array and never marks a request as executed. The shared executor must decide
+whether a recognized request is allowed, run only the safe simulated tool, and
+record the actual result. Therefore:
+
+- endpoint text only: no request and no executed action;
+- valid tool-call block: requested, but not yet executed;
+- safe executor confirmation: the generator may record the action as executed.
+
+This distinction preserves the agreed behavioral labels. A model request alone
+cannot turn a trajectory into `executed`.
+
+#### Thinking content stays private to the saved turn
+
+`thinking_content` is saved for the controlled white-box comparison, but only
+`final_content` becomes `downstream_message`. Worker2 and the executor must not
+receive the prior agent's hidden thinking text.
+
+### Modal resources
+
+The app uses the shared `agileai` workspace and these resources:
+
+- `spec-gap-qwen3-32b-model`: cached Qwen weights;
+- `spec-gap-scenario1-artifacts`: activation tensors and metadata.
+
+The app is tagged with `project=spec-gap` and
+`component=qwen3-inference` so workspace billing reports can attribute its
+spend.
+
+Qwen3-32B is public, so the initial runner does not require a Hugging Face
+secret. If authenticated downloads are added later, create the secret in the
+Modal dashboard. Do not commit a token or put it in trajectory files.
+
+### Cost and token ledger
+
+The runner uses one H200. Every paid model-turn input writes one JSON cost
+record under:
+
+```text
+costs/<trajectory_id>/<thinking_mode>/step_<step_index>/<modal_input_id>.json
+```
+
+The same record is returned as `cost_metadata` and preserved by the adapter.
+It contains:
+
+- trajectory, agent, step, thinking mode, Modal input ID, and container task
+  ID;
+- UTC start/end times and measured elapsed seconds;
+- GPU type and count;
+- input, generated, thinking, final-output, separator, and total token counts;
+- generated tokens per second;
+- estimated H200 cost for the input;
+- estimated H200 cost per 1,000 generated tokens;
+- the pinned price, price date, and source;
+- Modal region/provider metadata when available;
+- an explicit list of costs excluded from the estimate.
+
+The ledger stores counts and identifiers, not prompt or response text. Exact
+model I/O stays in the trajectory/model-turn artifact.
+
+The pinned H200 estimate is `$0.001261` per second, checked on July 13, 2026
+against [Modal's pricing page](https://modal.com/pricing). For example, 60
+measured seconds on one H200 is estimated as `$0.07566` before other resource
+costs and credits.
+
+This is not the final amount charged by Modal. The per-input estimate excludes
+container startup/model loading, warm idle time, CPU, memory, Volume storage,
+network charges, credits, reservations, and discounts. Use the workspace
+billing report to reconcile the experiment ledger with actual app-level spend.
+If billing reports are enabled for the workspace:
+
+```bash
+modal billing report --for today --show-resources
+modal billing report --for today --show-resources --json
+```
+
+Modal billing data can arrive a few minutes late. Keep the local estimate and
+the later billing report rather than replacing one with the other.
+
+### Commands and cost boundary
+
+Validate a request without calling a remote function or GPU:
+
+```bash
+modal run modal_qwen_runner.py \
+  --request-path tests/fixtures/qwen_agent_turn_request.json \
+  --action validate
+```
+
+Downloading the weights uses remote CPU, network, and Volume storage but does
+not start a GPU:
+
+```bash
+modal run modal_qwen_runner.py \
+  --request-path tests/fixtures/qwen_agent_turn_request.json \
+  --action download
+```
+
+Do not run the download until the model revision and storage plan are approved.
+
+An H200 starts only when both `--action run` and the confirmation string are
+provided:
+
+```bash
+modal run modal_qwen_runner.py \
+  --request-path path/to/real_agent_turn_request.json \
+  --action run \
+  --confirm-paid-run RUN_H200 \
+  --output-path path/to/model_turn_output.json
+```
+
+The H200 path should be used only after a real shared match-group input passes
+the Scenario 1 validator. A full scientific result still requires live
+Scenario 1 inputs, downstream handoffs, explicit tool execution evidence, and
+the shared adapter.
 
 ## Runway result summary
 
