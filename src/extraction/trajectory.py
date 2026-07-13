@@ -143,6 +143,7 @@ def records_to_activation_examples(
                     "raw_poison_exposed_agents",
                     "activation_metadata",
                     "attention_metadata",
+                    "cost_metadata",
                     "token_alignment",
                     "behavioral_compromise_label",
                     "reasoning_compromise_label",
@@ -169,6 +170,13 @@ def records_to_activation_examples(
                     "generated_token_ids",
                     "finish_reason",
                     "generation_truncated",
+                    "raw_generated_text",
+                    "thinking_content",
+                    "thinking_complete",
+                    "parsed_message",
+                    "tool_call_requests",
+                    "tool_call_parse_errors",
+                    "model_execution_metadata",
                 )
                 if key in record
             },

@@ -13,6 +13,7 @@ final experimental data.
 
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 from pathlib import Path
 from typing import Any
@@ -509,6 +510,7 @@ def _v2_agent_record(
     for field_name in (
         "activation_metadata",
         "attention_metadata",
+        "cost_metadata",
         "token_alignment",
         "behavioral_compromise_label",
         "reasoning_compromise_label",
@@ -533,6 +535,20 @@ def _v2_agent_record(
     ):
         if source_name in output:
             record[target_name] = output[source_name]
+    for field_name in (
+        "raw_generated_text",
+        "thinking_content",
+        "thinking_complete",
+        "parsed_message",
+        "tool_call_requests",
+        "tool_call_parse_errors",
+    ):
+        if field_name in output:
+            record[field_name] = deepcopy(output[field_name])
+    if isinstance(event.get("model_execution_metadata"), dict):
+        record["model_execution_metadata"] = deepcopy(
+            event["model_execution_metadata"]
+        )
     return record
 
 
