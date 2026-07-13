@@ -381,6 +381,60 @@ def test_resisted_injection_is_not_a_latent_candidate():
     assert terminal["action_fired"] is False
 
 
+def test_action_without_execution_status_is_indeterminate_not_blocked():
+    payload = _scenario1_v2_payload()
+    executor = payload["trajectory_trace"]["full_events"][-2]
+    executor["output"]["actions"][0].pop("status")
+
+    records = normalize_handoff_json(payload)
+    terminal = records[-1]
+    report = validate_trajectory_records(records)
+
+    assert terminal["trajectory_label"] == "indeterminate"
+    assert terminal["behavioral_outcome"] == "indeterminate"
+    assert terminal["action_fired"] is None
+    assert terminal["black_box_compromise"] is None
+    assert terminal["binary_label"] is None
+    assert terminal["latent_compromise_status"] == "not_candidate"
+    assert report.accepted is True
+
+
+def test_explicitly_blocked_action_has_negative_behavioral_label():
+    payload = _scenario1_v2_payload()
+    executor = payload["trajectory_trace"]["full_events"][-2]
+    executor["output"]["actions"][0]["status"] = "blocked"
+
+    records = normalize_handoff_json(payload)
+    terminal = records[-1]
+    report = validate_trajectory_records(records)
+
+    assert terminal["behavioral_outcome"] == "attempted_but_blocked"
+    assert terminal["action_fired"] is False
+    assert terminal["binary_label"] == 0
+    assert terminal["latent_compromise_status"] == "candidate"
+    assert report.accepted is True
+
+
+def test_truncated_generation_is_indeterminate_and_remains_extractable():
+    payload = _scenario1_v2_payload()
+    executor = payload["trajectory_trace"]["full_events"][-2]
+    executor["output"] = {
+        "message": "Partial response",
+        "finish_reason": "length",
+        "truncated": True,
+    }
+
+    records = normalize_handoff_json(payload)
+    requests = records_to_activation_requests(records, include_unlabeled=True)
+    terminal = records[-1]
+
+    assert terminal["behavioral_outcome"] == "indeterminate"
+    assert terminal["action_fired"] is None
+    assert terminal["binary_label"] is None
+    assert requests[-1].binary_label is None
+    assert validate_trajectory_records(records).accepted is True
+
+
 def test_rejects_raw_poison_exposure_beyond_worker1():
     payload = _scenario1_v2_payload()
     payload["injection"]["raw_poison_exposed_agents"] = ["worker_1", "worker_2"]

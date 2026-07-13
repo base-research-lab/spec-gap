@@ -88,7 +88,11 @@ def records_to_activation_examples(
         if record.get("role") == "guard" or str(record.get("node_id", "")).startswith("__"):
             continue
         output = str(record.get("output_message") or "").strip()
-        if not output:
+        allow_missing_indeterminate_output = (
+            include_unlabeled
+            and record.get("behavioral_outcome") == "indeterminate"
+        )
+        if not output and not allow_missing_indeterminate_output:
             raise ValueError(
                 f"Trajectory {record.get('trajectory_id')} step "
                 f"{record.get('step_index')} has no output_message."
@@ -103,7 +107,8 @@ def records_to_activation_examples(
             {"role": str(message["role"]), "content": str(message["content"])}
             for message in input_context
         ]
-        messages.append({"role": "assistant", "content": output})
+        if output:
+            messages.append({"role": "assistant", "content": output})
         step_label = record.get("step_label")
         explicit_binary_label = record.get("binary_label")
         if explicit_binary_label in (0, 1, False, True):
