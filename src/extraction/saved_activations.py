@@ -21,7 +21,7 @@ from torch import Tensor
 from src.infrastructure.qwen_modal import ACTIVATION_ARTIFACT_FORMAT
 
 
-ACTIVATION_INDEX_SCHEMA = "spec_gap.activation_index.v1"
+ACTIVATION_INDEX_SCHEMA = "spec_gap.activation_index.v2"
 CHECKPOINT_NAMES = {
     "last_input_token",
     "last_reasoning_token",

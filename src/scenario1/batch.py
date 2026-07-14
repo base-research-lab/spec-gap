@@ -46,6 +46,17 @@ def has_current_activation_format(record: dict[str, Any]) -> bool:
             required.add("last_visible_answer_token")
         if not required.issubset(names):
             return False
+        forward_scopes = activation.get("checkpoint_forward_scopes")
+        if not isinstance(forward_scopes, dict):
+            return False
+        expected_scopes = {
+            name: (
+                "prompt_only" if name == "last_input_token" else "generated_prefix"
+            )
+            for name in names
+        }
+        if forward_scopes != expected_scopes:
+            return False
     return True
 
 

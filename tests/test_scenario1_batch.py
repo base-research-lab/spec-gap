@@ -62,6 +62,11 @@ def test_current_activation_format_requires_positions_for_each_turn():
                         {"name": "last_reasoning_token"},
                         {"name": "last_visible_answer_token"},
                     ],
+                    "checkpoint_forward_scopes": {
+                        "last_input_token": "prompt_only",
+                        "last_reasoning_token": "generated_prefix",
+                        "last_visible_answer_token": "generated_prefix",
+                    },
                 },
             }]
         }
@@ -73,6 +78,18 @@ def test_current_activation_format_requires_positions_for_each_turn():
         "artifact_format_version"
     )
     assert has_current_activation_format(legacy) is False
+
+    legacy_scope = json.loads(json.dumps(current))
+    legacy_scope["trajectory_trace"]["full_events"][0][
+        "activation_metadata"
+    ].pop("checkpoint_forward_scopes")
+    assert has_current_activation_format(legacy_scope) is False
+
+    wrong_scope = json.loads(json.dumps(current))
+    wrong_scope["trajectory_trace"]["full_events"][0][
+        "activation_metadata"
+    ]["checkpoint_forward_scopes"]["last_input_token"] = "generated_prefix"
+    assert has_current_activation_format(wrong_scope) is False
 
     missing_reasoning = json.loads(json.dumps(current))
     missing_reasoning["trajectory_trace"]["full_events"][0][
