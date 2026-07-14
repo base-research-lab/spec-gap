@@ -11,6 +11,11 @@ build/
 .ipynb_checkpoints/
 results/**/*.json
 results/**/*.csv
+results/**/*.jsonl
+results/**/*.png
+results/**/*.svg
+results/**/*.pdf
+results/**/*.code-workspace
 !results/.gitkeep
 data/**/*.pt
 artifacts/
