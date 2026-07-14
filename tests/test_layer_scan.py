@@ -100,3 +100,32 @@ def test_planner_false_signal_blocks_layer_selection(tmp_path):
     )
     assert result["strata"][0]["exploratory_ranking_qualified"] is False
     assert result["layer_selection_allowed"] is False
+
+
+def test_layer_scan_uses_strict_paired_control_audit(tmp_path):
+    rows = _index_rows(tmp_path)
+    for row in rows:
+        row["agent_id"] = "planner_1"
+        row["agent_role"] = "planner"
+    audit = {
+        "strict_planner_input_control": {
+            "status": "passed",
+            "reason": "Planner inputs match.",
+            "mode_controls": [{"thinking_mode": "off", "status": "passed"}],
+        },
+        "stochastic_planner_output_control": {
+            "status": "not_available",
+            "blocks_stratum_ranking_until_calibrated": False,
+        },
+    }
+
+    result = run_construction_layer_scan(rows, control_audit=audit)
+
+    control = result["pre_injection_negative_control"]
+    assert control["status"] == "strict_input_passed"
+    assert control["blocks_layer_selection"] is False
+    assert control["qualified_mode_checkpoints"] == [{
+        "thinking_mode": "off",
+        "checkpoint": "last_input_token",
+    }]
+    assert result["strata"][0]["exploratory_ranking_qualified"] is True

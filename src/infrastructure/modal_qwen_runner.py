@@ -328,12 +328,43 @@ class Qwen3Runner:
             checkpoints = checkpoint_plan["checkpoints"]
             primary_name = checkpoint_plan["primary_checkpoint"]
             primary_sequence_index = checkpoint_plan["primary_sequence_index"]
-            activation_sequence = sequences[:, : primary_sequence_index + 1]
+            input_checkpoints = [
+                checkpoint
+                for checkpoint in checkpoints
+                if checkpoint["name"] == "last_input_token"
+            ]
+            generated_checkpoints = [
+                checkpoint
+                for checkpoint in checkpoints
+                if checkpoint["name"] != "last_input_token"
+            ]
+            if len(input_checkpoints) != 1 or not generated_checkpoints:
+                raise RuntimeError(
+                    "activation plan must contain one input checkpoint and at least "
+                    "one generated checkpoint"
+                )
+
+            # Isolate the strict input control from the generated continuation.
+            # A longer tensor can select a different GPU attention kernel even
+            # though later tokens are causally masked from this position.
             position_activations = self._extract_position_activations(
+                model_inputs["input_ids"],
+                request["activation_layers"],
+                input_checkpoints,
+            )
+            activation_sequence = sequences[:, : primary_sequence_index + 1]
+            position_activations.update(self._extract_position_activations(
                 activation_sequence,
                 request["activation_layers"],
-                checkpoints,
-            )
+                generated_checkpoints,
+            ))
+            checkpoint_forward_scopes = {
+                "last_input_token": "prompt_only",
+                **{
+                    checkpoint["name"]: "generated_prefix"
+                    for checkpoint in generated_checkpoints
+                },
+            }
             activation_tensor = position_activations[primary_name]
             by_name = {item["name"]: item for item in checkpoints}
             relative_path = activation_artifact_path(request)
@@ -351,6 +382,7 @@ class Qwen3Runner:
                     "primary_checkpoint": primary_name,
                     "position_activations": position_activations,
                     "checkpoint_positions": checkpoints,
+                    "checkpoint_forward_scopes": checkpoint_forward_scopes,
                 },
                 absolute_path,
             )
@@ -370,6 +402,7 @@ class Qwen3Runner:
                 ],
                 "primary_checkpoint": primary_name,
                 "checkpoint_positions": checkpoints,
+                "checkpoint_forward_scopes": checkpoint_forward_scopes,
                 "checkpoint_shapes": {
                     name: list(tensor.shape)
                     for name, tensor in position_activations.items()

@@ -73,11 +73,15 @@ def _record(storage_path, checksum, *, trajectory_id="trajectory-clean", injecte
                 "agent_id": "worker_1",
                 "agent_role": "worker",
                 "hop_index": 1,
-                "input": {"rendered_prompt_hash": "prompt-hash"},
+                "input": {
+                    "rendered_prompt_hash": "prompt-hash",
+                    "input_token_ids": [1, 2, 3],
+                },
                 "output": {
                     "finish_reason": "stop",
                     "truncated": False,
                     "thinking_complete": None,
+                    "generated_token_ids": [4, 5],
                 },
                 "activation_metadata": {
                     "storage_status": "materialized",
@@ -99,6 +103,10 @@ def _record(storage_path, checksum, *, trajectory_id="trajectory-clean", injecte
                     "checkpoint_shapes": {
                         "last_input_token": [3, 4],
                         "last_visible_answer_token": [3, 4],
+                    },
+                    "checkpoint_forward_scopes": {
+                        "last_input_token": "prompt_only",
+                        "last_visible_answer_token": "generated_prefix",
                     },
                     "layer_metadata": {
                         "dtype": "torch.float32",
@@ -128,6 +136,16 @@ def test_build_index_and_summary(tmp_path):
     assert all(row["schema_version"] == ACTIVATION_INDEX_SCHEMA for row in rows)
     assert all(row["labels"]["injection_present"] == 0 for row in rows)
     assert all(row["rendered_prompt_hash"] == "prompt-hash" for row in rows)
+    assert all(row["input_token_count"] == 3 for row in rows)
+    assert all(row["generated_token_count"] == 2 for row in rows)
+    assert {
+        row["checkpoint"]: row["checkpoint_forward_scope"] for row in rows
+    } == {
+        "last_input_token": "prompt_only",
+        "last_visible_answer_token": "generated_prefix",
+    }
+    assert all(len(row["input_token_ids_sha256"]) == 64 for row in rows)
+    assert all(len(row["generated_token_ids_sha256"]) == 64 for row in rows)
     summary = summarize_activation_index(rows)
     assert summary["trajectories"] == 1
     assert summary["model_turns"] == 1

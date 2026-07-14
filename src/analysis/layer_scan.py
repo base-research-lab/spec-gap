@@ -23,6 +23,7 @@ def run_construction_layer_scan(
     index_rows: Iterable[dict[str, Any]],
     *,
     label_target: str = "injection_present",
+    control_audit: dict[str, Any] | None = None,
     verify_checksums: bool = True,
     random_state: int = 42,
     max_iter: int = 1000,
@@ -122,11 +123,17 @@ def run_construction_layer_scan(
         })
 
     completed = [stratum for stratum in strata if stratum["status"] == "completed"]
-    negative_control = _planner_negative_control(rows, strata)
+    negative_control = (
+        _planner_negative_control_from_audit(strata, control_audit)
+        if control_audit is not None
+        else _planner_negative_control(rows, strata)
+    )
     _annotate_strata_with_controls(strata, negative_control)
     layer_selection_blockers = ["only_two_independent_match_groups"]
     if negative_control["blocks_layer_selection"]:
-        layer_selection_blockers.append("failed_pre_injection_negative_control")
+        layer_selection_blockers.append("failed_strict_planner_input_control")
+    if negative_control.get("stochastic_output_null_not_calibrated"):
+        layer_selection_blockers.append("stochastic_output_null_not_calibrated")
     return {
         "schema_version": LAYER_SCAN_SCHEMA,
         "probe_name": "goldowsky_dill_logistic",
@@ -150,7 +157,8 @@ def run_construction_layer_scan(
             "The same task appears at both depths inside each held-out match group.",
             "Layer rankings are descriptive and must not be reported as final AUROC.",
             "All injected trajectories resisted, so action-executed labels have no positive class.",
-            "A failed planner negative control blocks data-driven layer selection.",
+            "Planner generated-token checkpoints require a calibrated stochastic null.",
+            "A failed strict planner input control blocks data-driven layer selection.",
         ],
     }
 
@@ -403,6 +411,107 @@ def _planner_negative_control(
     }
 
 
+def _planner_negative_control_from_audit(
+    strata: list[dict[str, Any]],
+    audit: dict[str, Any],
+) -> dict[str, Any]:
+    """Translate paired identity results into layer-scan qualification rules."""
+
+    strict = audit.get("strict_planner_input_control", {})
+    stochastic = audit.get("stochastic_planner_output_control", {})
+    mode_controls = {
+        str(control.get("thinking_mode")): control
+        for control in strict.get("mode_controls", [])
+    }
+    planner_strata = [
+        stratum
+        for stratum in strata
+        if stratum.get("agent_id") == "planner_1"
+        and stratum.get("status") == "completed"
+    ]
+    if not planner_strata:
+        return {
+            "status": "not_available",
+            "blocks_layer_selection": True,
+            "reason": "No completed planner stratum is available.",
+            "checkpoint_controls": [],
+            "qualified_mode_checkpoints": [],
+            "blocked_mode_checkpoints": [],
+        }
+
+    checkpoint_controls = []
+    for stratum in sorted(
+        planner_strata,
+        key=lambda item: (item["thinking_mode"], item["checkpoint"]),
+    ):
+        mode = str(stratum["thinking_mode"])
+        checkpoint = str(stratum["checkpoint"])
+        if checkpoint == "last_input_token":
+            mode_control = mode_controls.get(mode)
+            passed = bool(mode_control and mode_control.get("status") == "passed")
+            status = (
+                "passed_strict_input_control"
+                if passed
+                else "failed_strict_input_control"
+            )
+            reason = (
+                "Identical planner prompts and input tokens produced matching "
+                "last-input activations."
+                if passed
+                else "The paired planner last-input identity audit failed."
+            )
+            blocks = not passed
+        else:
+            status = "stochastic_null_uncalibrated"
+            reason = (
+                "This checkpoint follows sampled planner generation. Its AUROC "
+                "must be compared with an empirical stochastic null."
+            )
+            blocks = True
+        checkpoint_controls.append({
+            "thinking_mode": mode,
+            "checkpoint": checkpoint,
+            "status": status,
+            "blocks_exploratory_ranking": blocks,
+            "reason": reason,
+            "strongest_layer": int(stratum["best_layer_by_mean_auroc"]),
+            "strongest_mean_auroc": float(stratum["best_mean_auroc"]),
+        })
+
+    strict_failed = strict.get("status") != "passed"
+    qualified_statuses = {"passed", "passed_strict_input_control"}
+    return {
+        "status": (
+            "failed_strict_input_control" if strict_failed else "strict_input_passed"
+        ),
+        "blocks_layer_selection": strict_failed,
+        "reason": str(strict.get("reason", "Strict planner audit unavailable.")),
+        "expected_signal": "none_at_planner_last_input",
+        "strict_input_control": strict,
+        "stochastic_output_control": stochastic,
+        "stochastic_output_null_not_calibrated": bool(
+            stochastic.get("blocks_stratum_ranking_until_calibrated")
+        ),
+        "checkpoint_controls": checkpoint_controls,
+        "qualified_mode_checkpoints": [
+            {
+                "thinking_mode": control["thinking_mode"],
+                "checkpoint": control["checkpoint"],
+            }
+            for control in checkpoint_controls
+            if control["status"] in qualified_statuses
+        ],
+        "blocked_mode_checkpoints": [
+            {
+                "thinking_mode": control["thinking_mode"],
+                "checkpoint": control["checkpoint"],
+            }
+            for control in checkpoint_controls
+            if control["status"] not in qualified_statuses
+        ],
+    }
+
+
 def _annotate_strata_with_controls(
     strata: list[dict[str, Any]],
     negative_control: dict[str, Any],
@@ -418,4 +527,7 @@ def _annotate_strata_with_controls(
             stratum["exploratory_ranking_qualified"] = False
         else:
             stratum["negative_control_status"] = control["status"]
-            stratum["exploratory_ranking_qualified"] = control["status"] == "passed"
+            stratum["exploratory_ranking_qualified"] = control["status"] in {
+                "passed",
+                "passed_strict_input_control",
+            }

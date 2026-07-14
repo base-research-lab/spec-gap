@@ -214,7 +214,9 @@ token checkpoints:
 
 The tensors are stored in `.pt` files. Trajectory JSON stores checkpoint names,
 token positions, shapes, storage paths, and checksums rather than embedding
-floating-point tensors directly.
+floating-point tensors directly. The last-input checkpoint is extracted in a
+separate prompt-only forward pass. Reasoning and answer checkpoints use the
+generated prefix. `checkpoint_forward_scopes` records this distinction.
 
 ## Activation Analysis
 
@@ -239,6 +241,12 @@ Run the exploratory all-layer scan:
 python scripts/03_probe_analysis/08_scan_activation_layers.py
 ```
 
+This command first writes a paired control audit to
+`results/scenario1/activation_control_audit.json` and a layer-level pair table
+to `results/scenario1/activation_control_pairs.csv`. The audit checks exact
+planner prompt and input-token identity, compares clean/injected activations at
+every saved layer, and summarizes how paired distances change across agents.
+
 Create the layer-scan figures:
 
 ```bash
@@ -246,9 +254,15 @@ python scripts/03_probe_analysis/09_plot_layer_scan.py
 ```
 
 The scan uses leave-one-match-group-out evaluation and keeps all related clean,
-injected, 2-hop, and 3-hop trajectories together. Planner activations are a
-pre-retrieval negative control because clean and injected planner inputs are
-identical. A failed planner control blocks data-driven layer selection.
+injected, 2-hop, and 3-hop trajectories together. Planner last-input
+activations are strict pre-retrieval controls because clean and injected
+planner inputs are identical. Planner reasoning and visible-answer checkpoints
+follow sampled generation, so they are treated as stochastic nulls rather than
+exact-identity controls. A failed strict input control blocks data-driven layer
+selection; generated-token checkpoints remain unqualified until their null
+variation is calibrated. A last-input artifact without an explicit
+`prompt_only` extraction scope is also unqualified, even if its paired tensors
+happen to match.
 
 The recorded 16-run batch contains no executed unsafe action. Its current
 all-layer scan therefore uses the construction label `injection_present` and
@@ -289,6 +303,8 @@ figures remain outside Git. Expected local paths are:
 | `experiments/scenario1/trajectories/checkpoints/` | Per-turn resumable checkpoints |
 | `activations/` | Downloaded residual-stream tensors |
 | `results/scenario1/activation_index.jsonl` | Verified turn/checkpoint index |
+| `results/scenario1/activation_control_audit.json` | Planner identity and paired propagation audit |
+| `results/scenario1/activation_control_pairs.csv` | Per-pair, per-layer activation distances |
 | `results/scenario1/construction_layer_scan.json` | Guarded all-layer scan |
 | `results/scenario1/figures/paper/` | Generated PNG, SVG, and PDF figures |
 

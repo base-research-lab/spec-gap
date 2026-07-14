@@ -775,6 +775,25 @@ def _validate_activation_checkpoints(
         raise RequestValidationError(
             "activation checkpoint_shapes must cover every checkpoint"
         )
+    checkpoint_forward_scopes = activation.get("checkpoint_forward_scopes")
+    if checkpoint_forward_scopes is not None:
+        if (
+            not isinstance(checkpoint_forward_scopes, dict)
+            or set(checkpoint_forward_scopes) != set(names)
+        ):
+            raise RequestValidationError(
+                "activation checkpoint_forward_scopes must cover every checkpoint"
+            )
+        expected_scopes = {
+            name: (
+                "prompt_only" if name == "last_input_token" else "generated_prefix"
+            )
+            for name in names
+        }
+        if checkpoint_forward_scopes != expected_scopes:
+            raise RequestValidationError(
+                "activation checkpoint_forward_scopes are inconsistent"
+            )
     for checkpoint in checkpoints:
         name = checkpoint["name"]
         index = checkpoint.get("sequence_index")

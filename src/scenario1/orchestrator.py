@@ -89,6 +89,9 @@ def _v2_activation_metadata(
         "checkpoint_positions": copy.deepcopy(
             activation.get("checkpoint_positions", [])
         ),
+        "checkpoint_forward_scopes": copy.deepcopy(
+            activation.get("checkpoint_forward_scopes", {})
+        ),
         "checkpoint_shapes": copy.deepcopy(
             activation.get("checkpoint_shapes", {})
         ),

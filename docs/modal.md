@@ -186,4 +186,8 @@ named token positions: `last_input_token`, `last_reasoning_token` for thinking
 on, and `last_visible_answer_token`. The original `activations` tensor remains
 the primary last-generated-token view for downstream compatibility. The JSON
 stores the position metadata and one artifact checksum; the `.pt` file stores
-the tensors.
+the tensors. `last_input_token` is extracted in a separate prompt-only forward
+pass so its strict negative control does not depend on the length or content of
+the generated continuation. Reasoning and visible-answer checkpoints use the
+generated prefix. Both the JSON and artifact record these scopes in
+`checkpoint_forward_scopes`.

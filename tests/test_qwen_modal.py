@@ -448,6 +448,11 @@ def test_result_validates_multi_position_activation_metadata():
         "checkpoint_shapes": {
             item["name"]: [2, 5120] for item in checkpoints
         },
+        "checkpoint_forward_scopes": {
+            "last_input_token": "prompt_only",
+            "last_reasoning_token": "generated_prefix",
+            "last_visible_answer_token": "generated_prefix",
+        },
         "sequence_length": 5,
     }
     result = build_generation_result(
@@ -468,6 +473,13 @@ def test_result_validates_multi_position_activation_metadata():
     )
 
     assert result["activation_metadata"]["checkpoint_positions"] == checkpoints
+    invalid_scope = deepcopy(result)
+    invalid_scope["activation_metadata"]["checkpoint_forward_scopes"][
+        "last_input_token"
+    ] = "generated_prefix"
+    with pytest.raises(RequestValidationError, match="forward_scopes"):
+        validate_generation_result(invalid_scope)
+
     tampered = deepcopy(result)
     tampered["activation_metadata"]["checkpoint_positions"][0]["token_id"] = 999
     with pytest.raises(RequestValidationError, match="does not match the sequence"):

@@ -153,6 +153,14 @@ def build_activation_index(
                     f"Trajectory {trajectory_id!r} step {turn.get('step_index')} "
                     "must declare checkpoint_shapes."
                 )
+            forward_scopes = activation.get("checkpoint_forward_scopes")
+            if forward_scopes is None:
+                forward_scopes = {}
+            if not isinstance(forward_scopes, dict):
+                raise ValueError(
+                    f"Trajectory {trajectory_id!r} step {turn.get('step_index')} "
+                    "checkpoint_forward_scopes must be an object when present."
+                )
             turn_input = turn.get("input")
             turn_output = turn.get("output")
             if not isinstance(turn_input, dict):
@@ -167,6 +175,18 @@ def build_activation_index(
                 )
             rendered_prompt_hash = _required_string(
                 turn_input, "rendered_prompt_hash"
+            )
+            input_token_ids = _required_token_ids(
+                turn_input,
+                "input_token_ids",
+                trajectory_id=trajectory_id,
+                step_index=turn.get("step_index"),
+            )
+            generated_token_ids = _required_token_ids(
+                turn_output,
+                "generated_token_ids",
+                trajectory_id=trajectory_id,
+                step_index=turn.get("step_index"),
             )
 
             for checkpoint_metadata in checkpoints:
@@ -211,6 +231,12 @@ def build_activation_index(
                     "document_set_id": _required_string(record, "document_set_id"),
                     "outcome_class": _required_string(labels, "outcome_class"),
                     "rendered_prompt_hash": rendered_prompt_hash,
+                    "input_token_count": len(input_token_ids),
+                    "input_token_ids_sha256": _token_ids_sha256(input_token_ids),
+                    "generated_token_count": len(generated_token_ids),
+                    "generated_token_ids_sha256": _token_ids_sha256(
+                        generated_token_ids
+                    ),
                     "finish_reason": turn_output.get("finish_reason"),
                     "generation_truncated": turn_output.get("truncated"),
                     "thinking_complete": turn_output.get("thinking_complete"),
@@ -229,6 +255,7 @@ def build_activation_index(
                         ),
                     },
                     "checkpoint": checkpoint,
+                    "checkpoint_forward_scope": forward_scopes.get(checkpoint),
                     "checkpoint_position": dict(checkpoint_metadata),
                     "layers": list(layers),
                     "shape": list(shape),
@@ -509,6 +536,34 @@ def _binary_or_none(value: Any, *, field: str) -> int | None:
     if value not in (False, True, 0, 1):
         raise ValueError(f"Label {field!r} must be binary or null.")
     return int(value)
+
+
+def _required_token_ids(
+    value: dict[str, Any],
+    field: str,
+    *,
+    trajectory_id: str,
+    step_index: Any,
+) -> list[int]:
+    token_ids = value.get(field)
+    if not isinstance(token_ids, list) or not token_ids:
+        raise ValueError(
+            f"Trajectory {trajectory_id!r} step {step_index} must contain "
+            f"non-empty {field}."
+        )
+    if any(
+        not isinstance(token_id, int) or isinstance(token_id, bool) or token_id < 0
+        for token_id in token_ids
+    ):
+        raise ValueError(
+            f"Trajectory {trajectory_id!r} step {step_index} has invalid {field}."
+        )
+    return token_ids
+
+
+def _token_ids_sha256(token_ids: Sequence[int]) -> str:
+    payload = json.dumps(list(token_ids), separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _verify_checksum(path: Path, expected_checksum: str | None) -> None:

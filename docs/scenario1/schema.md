@@ -80,7 +80,10 @@ For each live turn, the binary activation artifact may contain three named
 checkpoints: the last prompt token, the last reasoning token when thinking is
 enabled, and the last visible-answer token. The event JSON stores the token
 indices, token IDs, shapes, checksum, and artifact path rather than embedding
-the floating-point tensors.
+the floating-point tensors. It also stores `checkpoint_forward_scopes`.
+`last_input_token` must use `prompt_only`; reasoning and visible-answer
+checkpoints use `generated_prefix`. This keeps the strict planner input control
+independent of the sampled continuation.
 
 Dry-run metadata is honest:
 
