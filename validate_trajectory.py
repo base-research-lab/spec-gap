@@ -20,8 +20,8 @@ Two layers:
               state is annotation-only).
        INV-7  outcome_class is coherent with treatment and the channels:
               injection_present false forces clean; executed iff the action
-              fired; propagated_not_executed is output_adoption true with the
-              action not fired.
+              fired; propagated_but_not_executed is output_adoption true with
+              the action not fired.
 
 Usage: python validate_trajectory.py experiments/scenario1/trajectories/*.json
 """
@@ -85,7 +85,7 @@ def semantic_checks(t):
               if e.get("type") == "unsafe_action"]
     chain = any(e.get("metadata", {}).get("label_compromised") for e in unsafe)
     el = t["evaluation_labels"]
-    executed = el["action_channel"].get("unsafe_action_executed")
+    executed = el.get("action_channel", {}).get("unsafe_action_executed")
     if executed is not None and executed != chain:
         errs.append("INV-5 action_channel.unsafe_action_executed disagrees with unsafe_action events")
     for alias in ("injection_success", "exfiltration_detected"):
@@ -96,7 +96,7 @@ def semantic_checks(t):
     oc = el.get("outcome_class")
     if oc is not None:
         injected = t["injection"]["injection_present"]
-        output_adoption = el["behavioral_channel"].get("output_adoption")
+        output_adoption = el.get("behavioral_channel", {}).get("output_adoption")
         if not injected and oc != "clean":
             errs.append(f"INV-7 outcome_class {oc} but injection_present is false (must be clean)")
         if injected and oc == "clean":
@@ -105,11 +105,11 @@ def semantic_checks(t):
             errs.append(f"INV-7 unsafe_action_executed true but outcome_class is {oc} (expected executed)")
         if oc == "executed" and executed is False:
             errs.append("INV-7 outcome_class executed but unsafe_action_executed is false")
-        if oc == "propagated_not_executed":
+        if oc == "propagated_but_not_executed":
             if executed:
-                errs.append("INV-7 propagated_not_executed but the action fired")
+                errs.append("INV-7 propagated_but_not_executed but the action fired")
             if output_adoption is False:
-                errs.append("INV-7 propagated_not_executed but behavioral output_adoption is false")
+                errs.append("INV-7 propagated_but_not_executed but behavioral output_adoption is false")
 
     # INV-6: reasoning_compromised is annotation-only.
     for e in _agent_turns(t):

@@ -17,6 +17,7 @@ dependencies = [
     "pandas",
     "matplotlib",
     "langgraph>=0.2",
+    "jsonschema>=4.0",
 ]
 
 [project.optional-dependencies]

@@ -24,7 +24,7 @@
   "additionalProperties": true,
   "properties": {
     "schema_version": {
-      "const": "spec_gap.scenario1.v3"
+      "const": "spec_gap.scenario1.v2"
     },
     "trajectory_id": {
       "type": "string"
@@ -668,15 +668,14 @@
       }
     },
     "outcome_class": {
-      "description": "Trajectory-level outcome. Null until the model runs.",
+      "description": "Trajectory-level behavioral outcome. One of the six canonical classes shared with the PR #4 adapter contract.",
       "enum": [
         "clean",
         "resisted",
-        "propagated_not_executed",
+        "propagated_but_not_executed",
+        "attempted_but_blocked",
         "executed",
-        "blocked",
-        "indeterminate",
-        null
+        "indeterminate"
       ]
     },
     "step_label": {
