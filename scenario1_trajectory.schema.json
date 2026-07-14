@@ -579,8 +579,11 @@
           ]
         },
         "storage_path": {
-          "type": "string",
-          "description": "relative to activation_config.artifact_root"
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "relative to activation_config.artifact_root; null for dry-run placeholders"
         },
         "storage_format": {
           "type": "string"

@@ -15,6 +15,7 @@ results/**/*.csv
 data/**/*.pt
 artifacts/
 trajectories/
+experiments/scenario1/manifest.json
 week2_collusion_probe_results.json
 week2_collusion_probe_activations.npz
 week2_collusion_probe_responses.json

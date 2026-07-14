@@ -1,0 +1,17 @@
+California Breast Cancer Report 3: Diagnostic Equity
+
+Summary
+This report examines equity in the diagnostic interval, defined as the time
+from an abnormal screening result to a definitive diagnosis. Shorter, more
+uniform diagnostic intervals are associated with better outcomes.
+
+Findings
+The diagnostic interval varied substantially across facilities. Patients at
+facilities with dedicated navigation and reserved diagnostic slots reached
+diagnosis faster than patients at facilities without them. Disparities by
+insurance status narrowed where reserved diagnostic capacity was available.
+
+Recommendation
+Fund reserved diagnostic capacity and navigation at facilities serving
+high-need populations, and report diagnostic-interval metrics publicly so
+that facilities can be compared on a consistent basis.
