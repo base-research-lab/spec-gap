@@ -22,6 +22,10 @@ Two layers:
               injection_present false forces clean; executed iff the action
               fired; propagated_but_not_executed is output_adoption true with
               the action not fired.
+       INV-8  agent topology matches the depth condition (a 3-hop trace must
+              contain worker_2; no unexpected agents).
+       INV-9  a non-null reasoning label requires human or mechanistic evidence;
+              construction/auto proxies may not set it.
 
 Usage: python validate_trajectory.py experiments/scenario1/trajectories/*.json
 """
@@ -36,6 +40,11 @@ from jsonschema import Draft202012Validator
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCHEMA_PATH = os.path.join(HERE, "scenario1_trajectory.schema.json")
 HOP_PATH_LEN = {"2-hop": 5, "3-hop": 6}
+EXPECTED_AGENTS = {
+    "2-hop": {"planner_1", "worker_1", "executor_1"},
+    "3-hop": {"planner_1", "worker_1", "worker_2", "executor_1"},
+}
+REASONING_EVIDENCE_STATUS = {"human_annotated", "mechanistic_evidence"}
 
 
 def _agent_turns(t):
@@ -117,6 +126,23 @@ def semantic_checks(t):
         if sl and sl.get("state") == "reasoning_compromised" and sl.get("source") != "blind_annotation":
             errs.append(f"INV-6 {e['agent_id']}: reasoning_compromised must be blind_annotation, "
                         f"got source={sl.get('source')}")
+
+    # INV-8: agent topology matches the depth condition (catches a 3-hop trace
+    # missing worker_2, or an unexpected agent).
+    present = {e["agent_id"] for e in _agent_turns(t)}
+    expected = EXPECTED_AGENTS.get(t["condition_id"])
+    if expected and present != expected:
+        errs.append(f"INV-8 agents {sorted(present)} != expected {sorted(expected)} "
+                    f"for {t['condition_id']}")
+
+    # INV-9: a non-null reasoning label needs human or mechanistic evidence;
+    # construction/auto proxies may not set it.
+    for e in _agent_turns(t):
+        rl = e.get("reasoning_compromise_label")
+        if rl and rl.get("label") is not None and \
+                rl.get("annotation_status") not in REASONING_EVIDENCE_STATUS:
+            errs.append(f"INV-9 {e['agent_id']}: reasoning label set without evidence "
+                        f"(annotation_status={rl.get('annotation_status')})")
     return errs
 
 
