@@ -141,10 +141,11 @@ Run commands from the repository root.
 | 3 | `scripts/02_model_execution/03_modal_qwen_runner.py` | One model-turn result, activations, and cost record |
 | 4 | `scripts/02_model_execution/04_run_scenario1_live.py` | One complete live trajectory |
 | 5 | `scripts/02_model_execution/05_run_scenario1_batch.py` | Resumable thinking-on/off trajectory matrix |
-| 6 | `scripts/03_probe_analysis/07_build_activation_index.py` | Checkpoint-aware activation index |
-| 7 | `scripts/03_probe_analysis/08_scan_activation_layers.py` | Controlled all-layer scan |
-| 8 | `scripts/03_probe_analysis/06_analyze_depth_degradation.py` | AUROC, calibration, Temporal Divergence, and depth summaries |
-| 9 | `scripts/03_probe_analysis/09_plot_layer_scan.py` | PNG, SVG, and PDF layer-scan figures |
+| 6 | `scripts/02_model_execution/06_repair_prompt_activations.py` | Legacy-only prompt checkpoint repair and verification |
+| 7 | `scripts/03_probe_analysis/07_build_activation_index.py` | Checkpoint-aware activation index |
+| 8 | `scripts/03_probe_analysis/08_scan_activation_layers.py` | Controlled all-layer scan |
+| 9 | `scripts/03_probe_analysis/06_analyze_depth_degradation.py` | AUROC, calibration, Temporal Divergence, and depth summaries |
+| 10 | `scripts/03_probe_analysis/09_plot_layer_scan.py` | PNG, SVG, and PDF layer-scan figures |
 
 The full live batch is resumable. Each paid model turn is checkpointed before
 the runner advances to the next agent or trajectory.
@@ -185,6 +186,23 @@ Use `--max-new-trajectories 1` to bound a batch while checking a new
 environment. Modal releases the GPU after the app stops; `modal app list`
 reports recent app state and active task counts.
 
+The first saved batch predates the prompt-only input checkpoint contract. Its
+model outputs and generated-token activations remain valid, so Step 6 repairs
+only `last_input_token` instead of rerunning generation. Validate the repair
+plan without a GPU:
+
+```bash
+modal run \
+  scripts/02_model_execution/06_repair_prompt_activations.py::repair_prompt_activations \
+  --action validate \
+  --scope smoke_pair
+```
+
+The paid repair is deliberately split into a two-artifact matched-pair check
+and the remaining artifacts. The full repair should run only after the first
+pair has identical prompt hashes, token IDs, and all-layer input activations.
+New runs already use prompt-only extraction and do not need this migration.
+
 See [the Modal guide](docs/modal.md) for model caching, token accounting, cost
 records, and artifact paths.
 
@@ -217,6 +235,9 @@ token positions, shapes, storage paths, and checksums rather than embedding
 floating-point tensors directly. The last-input checkpoint is extracted in a
 separate prompt-only forward pass. Reasoning and answer checkpoints use the
 generated prefix. `checkpoint_forward_scopes` records this distinction.
+Legacy repair records also preserve the original artifact under
+`activation_backups/prompt_only_last_input_v1/` and record zero generated
+tokens for the repair operation.
 
 ## Activation Analysis
 
@@ -302,6 +323,8 @@ figures remain outside Git. Expected local paths are:
 | `experiments/scenario1/trajectories/live/<thinking-mode>/` | Completed live trajectory JSON |
 | `experiments/scenario1/trajectories/checkpoints/` | Per-turn resumable checkpoints |
 | `activations/` | Downloaded residual-stream tensors |
+| `activation_backups/` | Original activation artifacts retained during a targeted repair |
+| `results/scenario1/activation_repair/` | Smoke and full-repair verification reports |
 | `results/scenario1/activation_index.jsonl` | Verified turn/checkpoint index |
 | `results/scenario1/activation_control_audit.json` | Planner identity and paired propagation audit |
 | `results/scenario1/activation_control_pairs.csv` | Per-pair, per-layer activation distances |
@@ -337,6 +360,7 @@ Run the activation-loader and layer-scan checks:
 ```bash
 python -m pytest \
   tests/test_saved_activations.py \
+  tests/test_activation_repair.py \
   tests/test_layer_scan.py \
   tests/test_layer_scan_figures.py \
   tests/test_layer_scan_paper_figures.py -q

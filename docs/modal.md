@@ -191,3 +191,64 @@ pass so its strict negative control does not depend on the length or content of
 the generated continuation. Reasoning and visible-answer checkpoints use the
 generated prefix. Both the JSON and artifact record these scopes in
 `checkpoint_forward_scopes`.
+
+## Repairing legacy input checkpoints
+
+The initial 16-run batch was saved before `last_input_token` used its own
+prompt-only forward pass. The generated responses and generated-token
+activations do not need to be rerun. The repair command reads each saved input
+token sequence, computes only the final prompt-token activation, and replaces
+only that tensor.
+
+First inspect the plan. This is local validation and starts no remote method or
+GPU:
+
+```bash
+modal run \
+  scripts/02_model_execution/06_repair_prompt_activations.py::repair_prompt_activations \
+  --action validate \
+  --scope smoke_pair
+```
+
+The first paid check repairs only the clean and injected thinking-off planners
+from one matched 2-hop group:
+
+```bash
+modal run \
+  scripts/02_model_execution/06_repair_prompt_activations.py::repair_prompt_activations \
+  --action run \
+  --scope smoke_pair \
+  --confirm-paid-run RUN_H200_ACTIVATION_REPAIR_SMOKE
+```
+
+The command stops with an error unless those two records have the same prompt
+hash, the same input token IDs, and bitwise-identical `last_input_token`
+activations at all 64 layers. After that check passes, repair the remaining
+legacy artifacts:
+
+```bash
+modal run \
+  scripts/02_model_execution/06_repair_prompt_activations.py::repair_prompt_activations \
+  --action run \
+  --scope all \
+  --confirm-paid-run RUN_H200_ACTIVATION_REPAIR_ALL
+```
+
+The repair uses one H200 model container and processes selected artifacts in
+sequence. It does not call generation, change a generated token, or replace a
+reasoning or visible-answer activation. Each original artifact is retained at:
+
+```text
+activation_backups/prompt_only_last_input_v1/activations/<trajectory_id>/<thinking_mode>/step_<step_index>.pt
+```
+
+The updated checkpoint JSON and live trajectory JSON record the repair method,
+old and new checksums, forward-pass scope, model revision, prompt and token
+hashes, and a cost record with `generated_tokens: 0`. A retry is safe: a remote
+artifact that was repaired before local metadata was written is detected and
+returned without performing the forward pass again.
+
+The command writes a compact local run report under
+`results/scenario1/activation_repair/`. The smoke report includes the exact
+all-layer equality result; the full report lists every repaired turn and its
+estimated method cost.

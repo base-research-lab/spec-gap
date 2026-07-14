@@ -85,6 +85,13 @@ the floating-point tensors. It also stores `checkpoint_forward_scopes`.
 checkpoints use `generated_prefix`. This keeps the strict planner input control
 independent of the sampled continuation.
 
+When an older artifact is migrated to this contract, the event also records
+`activation_repair_metadata` and `activation_repair_cost_metadata`. The repair
+provenance identifies the replaced checkpoint, original checksum, model
+revision, prompt hash, and input-token hash. It must state that generated
+outputs and generated-token checkpoint tensors were preserved. The repair cost
+record has zero generated tokens.
+
 Dry-run metadata is honest:
 
 ```json

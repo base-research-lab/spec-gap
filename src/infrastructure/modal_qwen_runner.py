@@ -32,6 +32,12 @@ from src.infrastructure.modal_costs import (
     build_token_usage,
     resolve_modal_input_id,
 )
+from src.scenario1.activation_repair import (
+    ACTIVATION_REPAIR_METHOD,
+    ACTIVATION_REPAIR_RESULT_SCHEMA,
+    activation_repair_backup_path,
+    validate_activation_repair_request,
+)
 
 
 APP_NAME = "spec-gap-qwen3-32b"
@@ -181,6 +187,258 @@ class Qwen3Runner:
         return {
             checkpoint["name"]: stacked[index]
             for index, checkpoint in enumerate(checkpoints)
+        }
+
+    @modal.method()
+    def repair_prompt_activation(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Replace only the saved last-input state with a prompt-only forward."""
+
+        started_at = datetime.now(timezone.utc).isoformat()
+        started_monotonic = time.perf_counter()
+        modal_input_id = resolve_modal_input_id(
+            modal.current_input_id(),
+            modal.current_function_call_id(),
+        )
+        request = validate_activation_repair_request(payload)
+        if self.model_metadata["resolved_revision"] != request["model_revision"]:
+            raise ValueError("repair request does not match the loaded model revision")
+
+        torch = self.torch
+        artifact_path = ARTIFACT_MOUNT / request["storage_path"]
+        if not artifact_path.is_file():
+            raise FileNotFoundError(
+                f"activation artifact is missing from the Volume: {artifact_path}"
+            )
+        existing_bytes = artifact_path.read_bytes()
+        existing_checksum = hashlib.sha256(existing_bytes).hexdigest()
+        artifact = torch.load(
+            artifact_path,
+            map_location="cpu",
+            weights_only=True,
+        )
+        if not isinstance(artifact, dict):
+            raise ValueError("activation artifact must contain an object")
+        expected_scopes = request["expected_checkpoint_forward_scopes"]
+        existing_scopes = artifact.get("checkpoint_forward_scopes")
+        if existing_scopes not in (None, {}, expected_scopes):
+            raise ValueError("artifact checkpoint scopes are partial or inconsistent")
+        status = "already_repaired" if existing_scopes == expected_scopes else "repaired"
+
+        if artifact.get("artifact_format_version") != request[
+            "artifact_format_version"
+        ]:
+            raise ValueError("artifact format does not match the repair request")
+        if artifact.get("layers") != request["layers"]:
+            raise ValueError("artifact layers do not match the repair request")
+        if artifact.get("primary_checkpoint") != request["primary_checkpoint"]:
+            raise ValueError("artifact primary checkpoint does not match")
+        if artifact.get("checkpoint_positions") != request[
+            "checkpoint_positions"
+        ]:
+            raise ValueError("artifact checkpoint positions do not match")
+        positions = artifact.get("position_activations")
+        if not isinstance(positions, dict) or set(positions) != set(
+            expected_scopes
+        ):
+            raise ValueError(
+                "artifact position tensors do not cover every checkpoint"
+            )
+        for name, tensor in positions.items():
+            if (
+                not isinstance(tensor, torch.Tensor)
+                or list(tensor.shape) != request["checkpoint_shapes"][name]
+                or tensor.dtype != torch.bfloat16
+            ):
+                raise ValueError(f"artifact checkpoint {name!r} is inconsistent")
+        primary_tensor = positions[request["primary_checkpoint"]]
+        if not isinstance(artifact.get("activations"), torch.Tensor) or not torch.equal(
+            artifact["activations"], primary_tensor
+        ):
+            raise ValueError("artifact primary activation tensor is inconsistent")
+
+        if status == "repaired":
+            if existing_checksum != request["expected_checksum_sha256"]:
+                raise ValueError(
+                    "Volume artifact checksum does not match the saved model turn"
+                )
+            backup_storage_path = activation_repair_backup_path(
+                request["storage_path"]
+            )
+            backup_path = ARTIFACT_MOUNT / backup_storage_path
+            backup_path.parent.mkdir(parents=True, exist_ok=True)
+            if backup_path.exists():
+                backup_checksum = hashlib.sha256(backup_path.read_bytes()).hexdigest()
+                if backup_checksum != request["expected_checksum_sha256"]:
+                    raise ValueError("existing Volume backup has the wrong checksum")
+            else:
+                backup_path.write_bytes(existing_bytes)
+
+            input_checkpoint = next(
+                checkpoint
+                for checkpoint in request["checkpoint_positions"]
+                if checkpoint["name"] == "last_input_token"
+            )
+            input_ids = torch.tensor(
+                [request["input_token_ids"]],
+                dtype=torch.long,
+                device=self.model.device,
+            )
+            prompt_activations = self._extract_position_activations(
+                input_ids,
+                request["layers"],
+                [input_checkpoint],
+            )["last_input_token"]
+            if list(prompt_activations.shape) != request["checkpoint_shapes"][
+                "last_input_token"
+            ]:
+                raise RuntimeError("prompt-only activation shape is inconsistent")
+            generated_tensors = {
+                name: tensor.clone()
+                for name, tensor in positions.items()
+                if name != "last_input_token"
+            }
+
+            repaired_at = datetime.now(timezone.utc).isoformat()
+            repair_metadata = {
+                "schema_version": ACTIVATION_REPAIR_RESULT_SCHEMA,
+                "repair_method": ACTIVATION_REPAIR_METHOD,
+                "repaired_at": repaired_at,
+                "model_revision": request["model_revision"],
+                "input_token_ids_sha256": request["input_token_ids_sha256"],
+                "rendered_input_sha256": request["rendered_input_sha256"],
+                "previous_checksum_sha256": request[
+                    "expected_checksum_sha256"
+                ],
+                "replaced_checkpoint": "last_input_token",
+                "generated_outputs_preserved": True,
+                "generated_checkpoint_tensors_preserved": True,
+            }
+            artifact["position_activations"][
+                "last_input_token"
+            ] = prompt_activations
+            artifact["checkpoint_forward_scopes"] = expected_scopes
+            artifact["activation_repair_metadata"] = repair_metadata
+            temporary_path = artifact_path.with_name(
+                f".{artifact_path.name}.{modal_input_id}.tmp"
+            )
+            torch.save(artifact, temporary_path)
+            verified = torch.load(
+                temporary_path,
+                map_location="cpu",
+                weights_only=True,
+            )
+            if (
+                verified.get("checkpoint_forward_scopes") != expected_scopes
+                or not torch.equal(
+                    verified["position_activations"]["last_input_token"],
+                    prompt_activations,
+                )
+            ):
+                temporary_path.unlink(missing_ok=True)
+                raise RuntimeError("saved repair artifact failed verification")
+            for name, tensor in generated_tensors.items():
+                if not torch.equal(
+                    verified["position_activations"][name],
+                    tensor,
+                ):
+                    temporary_path.unlink(missing_ok=True)
+                    raise RuntimeError(
+                        f"repair changed generated checkpoint {name!r}"
+                    )
+            if not torch.equal(verified["activations"], primary_tensor):
+                temporary_path.unlink(missing_ok=True)
+                raise RuntimeError("repair changed the primary activation tensor")
+            os.replace(temporary_path, artifact_path)
+            artifact_volume.commit()
+        else:
+            backup_storage_path = activation_repair_backup_path(
+                request["storage_path"]
+            )
+            repair_metadata = artifact.get("activation_repair_metadata")
+            if not isinstance(repair_metadata, dict):
+                raise ValueError(
+                    "already-repaired artifact is missing repair provenance"
+                )
+            if repair_metadata.get("previous_checksum_sha256") != request[
+                "expected_checksum_sha256"
+            ]:
+                raise ValueError(
+                    "already-repaired artifact does not match the requested origin"
+                )
+            backup_path = ARTIFACT_MOUNT / backup_storage_path
+            if (
+                not backup_path.is_file()
+                or hashlib.sha256(backup_path.read_bytes()).hexdigest()
+                != request["expected_checksum_sha256"]
+            ):
+                raise ValueError("already-repaired artifact has no valid backup")
+
+        repaired_bytes = artifact_path.read_bytes()
+        new_checksum = hashlib.sha256(repaired_bytes).hexdigest()
+        primary_tensor = artifact["position_activations"][
+            request["primary_checkpoint"]
+        ]
+        activation_metadata = {
+            "storage_status": "materialized",
+            "storage_path": request["storage_path"],
+            "checksum_sha256": new_checksum,
+            "shape": list(primary_tensor.shape),
+            "dtype": str(primary_tensor.dtype),
+            "layers": request["layers"],
+            "token_position": request["token_position"],
+            "token_id": request["token_id"],
+            "artifact_format_version": request["artifact_format_version"],
+            "primary_checkpoint": request["primary_checkpoint"],
+            "checkpoint_positions": request["checkpoint_positions"],
+            "checkpoint_forward_scopes": expected_scopes,
+            "checkpoint_shapes": request["checkpoint_shapes"],
+            "sequence_length": request["sequence_length"],
+        }
+        token_usage = build_token_usage(
+            input_token_count=len(request["input_token_ids"]),
+            generated_token_count=0,
+            thinking_token_count=0,
+            final_output_token_count=0,
+        )
+        finished_at = datetime.now(timezone.utc).isoformat()
+        cost_metadata = build_gpu_cost_record(
+            trajectory_id=request["trajectory_id"],
+            step_index=request["step_index"],
+            agent_id=request["agent_id"],
+            thinking_mode=request["thinking_mode"],
+            started_at=started_at,
+            finished_at=finished_at,
+            elapsed_seconds=time.perf_counter() - started_monotonic,
+            modal_input_id=modal_input_id,
+            modal_task_id=os.getenv("MODAL_TASK_ID"),
+            token_usage=token_usage,
+            runtime_metadata={
+                "operation": ACTIVATION_REPAIR_METHOD,
+                "app_name": APP_NAME,
+                "model_name": MODEL_ID,
+                "model_revision": self.model_metadata["resolved_revision"],
+                "modal_environment": os.getenv("MODAL_ENVIRONMENT"),
+                "modal_cloud_provider": os.getenv("MODAL_CLOUD_PROVIDER"),
+                "modal_region": os.getenv("MODAL_REGION"),
+            },
+        )
+        cost_path = ARTIFACT_MOUNT / cost_metadata["storage_path"]
+        cost_path.parent.mkdir(parents=True, exist_ok=True)
+        cost_path.write_text(json.dumps(cost_metadata, indent=2) + "\n")
+        artifact_volume.commit()
+        return {
+            "schema_version": ACTIVATION_REPAIR_RESULT_SCHEMA,
+            "status": status,
+            "trajectory_id": request["trajectory_id"],
+            "step_index": request["step_index"],
+            "agent_id": request["agent_id"],
+            "thinking_mode": request["thinking_mode"],
+            "new_checksum_sha256": new_checksum,
+            "backup_storage_path": backup_storage_path,
+            "activation_metadata": activation_metadata,
+            "repair_metadata": repair_metadata,
+            "cost_metadata": cost_metadata,
+            "artifact_bytes": repaired_bytes,
         }
 
     @modal.method()
