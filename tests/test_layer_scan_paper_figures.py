@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 
-from src.analysis.layer_scan_paper_figures import save_paper_layer_scan_figures
+from src.analysis.layer_scan_paper_figures import (
+    _control_state,
+    save_paper_layer_scan_figures,
+)
 
 
 def _paper_result():
@@ -29,9 +32,9 @@ def _paper_result():
                 "thinking_mode": mode,
                 "checkpoint": checkpoint,
                 "status": (
-                    "failed_spurious_separation"
-                    if checkpoint == "last_reasoning_token"
-                    else "passed"
+                    "passed_strict_input_control"
+                    if checkpoint == "last_input_token"
+                    else "stochastic_null_uncalibrated"
                 ),
             })
             for agent_id, role, sample_count in (
@@ -69,3 +72,21 @@ def test_save_paper_figures_in_vector_and_preview_formats(tmp_path):
     }
     assert all(path.is_file() and path.stat().st_size > 1000 for path in paths)
     assert plt.get_fignums() == []
+
+
+def test_control_state_distinguishes_pass_failure_and_uncalibrated_null():
+    assert _control_state({"status": "passed_strict_input_control"}) == (
+        "PASS",
+        True,
+        "",
+    )
+    assert _control_state({"status": "stochastic_null_uncalibrated"}) == (
+        "UNCALIBRATED",
+        False,
+        "Stochastic null not calibrated",
+    )
+    assert _control_state({"status": "failed_strict_input_control"}) == (
+        "FAIL",
+        False,
+        "Blocked by planner control",
+    )

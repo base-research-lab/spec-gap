@@ -38,6 +38,7 @@ AGENT_LABELS = {
     "executor_1": "Executor",
 }
 FORMATS = ("png", "svg", "pdf")
+QUALIFIED_CONTROL_STATUSES = frozenset({"passed", "passed_strict_input_control"})
 
 
 def save_paper_layer_scan_figures(
@@ -84,8 +85,8 @@ def _planner_control_figure(result: dict[str, Any]) -> plt.Figure:
                 if stratum is None or stratum.get("status") != "completed":
                     continue
                 control = _find_control(result, mode, checkpoint)
-                status = "PASS" if control and control["status"] == "passed" else "FAIL"
-                linestyle = "-" if status == "PASS" else "--"
+                status, qualified, _ = _control_state(control)
+                linestyle = "-" if qualified else "--"
                 _plot_fold_curves(
                     axis,
                     stratum,
@@ -123,7 +124,7 @@ def _planner_control_figure(result: dict[str, Any]) -> plt.Figure:
             0.005,
             (
                 "Faint lines are held-out match groups; bold lines are their mean. "
-                "n=2 groups. Dashed checkpoints failed the control."
+                "n=2 groups. Dashed checkpoints are not qualified for layer selection."
             ),
             ha="center",
             fontsize=7.5,
@@ -232,20 +233,21 @@ def _appendix_heatmap(result: dict[str, Any]) -> plt.Figure:
                     ordered.append(stratum)
     matrix = []
     labels = []
-    failed_rows = []
+    unqualified_rows = []
+    qualification_messages = []
     for stratum in ordered:
         control = _find_control(
             result,
             stratum["thinking_mode"],
             stratum["checkpoint"],
         )
-        failed = control is None or control["status"] != "passed"
+        status, qualified, message = _control_state(control)
         layers, means = _mean_series(stratum)
         if layers != list(range(64)):
             raise ValueError("Paper heatmap requires complete layers 0 through 63.")
-        matrix.append([np.nan] * 64 if failed else means)
-        failed_rows.append(failed)
-        status = "FAIL" if failed else "PASS"
+        matrix.append(means if qualified else [np.nan] * 64)
+        unqualified_rows.append(not qualified)
+        qualification_messages.append(message)
         labels.append(
             f"{stratum['thinking_mode']} | {AGENT_LABELS[stratum['agent_id']]} | "
             f"{CHECKPOINT_LABELS[stratum['checkpoint']]} [{status}]"
@@ -273,12 +275,12 @@ def _appendix_heatmap(result: dict[str, Any]) -> plt.Figure:
             fontweight="bold",
             pad=10,
         )
-        for row, failed in enumerate(failed_rows):
-            if failed:
+        for row, unqualified in enumerate(unqualified_rows):
+            if unqualified:
                 axis.text(
                     31.5,
                     row,
-                    "Blocked by planner control",
+                    qualification_messages[row],
                     ha="center",
                     va="center",
                     fontsize=6.5,
@@ -290,8 +292,9 @@ def _appendix_heatmap(result: dict[str, Any]) -> plt.Figure:
             0.5,
             0.005,
             (
-                "Grey rows failed the matched planner control. n=2 independent "
-                "groups; values are descriptive and not used for final layer selection."
+                "Grey rows are not qualified by the matched planner control. "
+                "n=2 independent groups; values are descriptive and not used for "
+                "final layer selection."
             ),
             ha="center",
             fontsize=7.5,
@@ -371,6 +374,21 @@ def _find_control(
         if control.get("thinking_mode") == mode
         and control.get("checkpoint") == checkpoint
     ), None)
+
+
+def _control_state(
+    control: dict[str, Any] | None,
+) -> tuple[str, bool, str]:
+    """Return a display label, qualification flag, and blocked-row message."""
+
+    if control is None:
+        return "NOT AVAILABLE", False, "Planner control not available"
+    status = str(control.get("status", ""))
+    if status in QUALIFIED_CONTROL_STATUSES:
+        return "PASS", True, ""
+    if status == "stochastic_null_uncalibrated":
+        return "UNCALIBRATED", False, "Stochastic null not calibrated"
+    return "FAIL", False, "Blocked by planner control"
 
 
 def _modes(result: dict[str, Any]) -> list[str]:
