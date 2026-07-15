@@ -23,6 +23,7 @@ THINKING_MODES = {"on": True, "off": False}
 ALLOWED_AGENT_ROLES = {"planner", "worker", "worker2", "executor"}
 RAW_POISON_AGENT_ID = "worker_1"
 ACTIVATION_ARTIFACT_FORMAT = "spec_gap.activation_positions.v1"
+ACTIVATION_TOKEN_POSITION = "last_generated_non_special_token"
 ACTIVATION_CHECKPOINT_NAMES = {
     "last_input_token",
     "last_reasoning_token",
@@ -266,7 +267,7 @@ def validate_generation_request(payload: Any) -> dict[str, Any]:
         "generation_settings": _validate_settings(payload.get("generation_settings")),
         "extract_activations": extract_activations,
         "activation_layers": _validate_layers(payload.get("activation_layers")),
-        "activation_token_position": "last_generated_non_special_token",
+        "activation_token_position": ACTIVATION_TOKEN_POSITION,
     }
 
 
@@ -821,7 +822,12 @@ def _validate_activation_checkpoints(
             not isinstance(shape, list)
             or len(shape) != 2
             or shape[0] != len(activation["layers"])
-            or any(not isinstance(size, int) or size < 1 for size in shape)
+            or any(
+                not isinstance(size, int)
+                or isinstance(size, bool)
+                or size < 1
+                for size in shape
+            )
         ):
             raise RequestValidationError(
                 f"activation checkpoint {name} has an invalid shape"

@@ -24,6 +24,7 @@ from src.scenario1.activation_repair import (
     activation_repair_backup_path,
     apply_activation_repair_result,
     build_activation_repair_plan,
+    reconcile_activation_repair_metadata,
     select_activation_repairs,
     summarize_activation_repair_plan,
     validate_activation_repair_request,
@@ -341,6 +342,59 @@ def test_repair_request_rejects_path_or_token_tampering(tmp_path):
         validate_activation_repair_request(wrong_tokens)
 
 
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    [
+        (
+            lambda request: request["layers"].__setitem__(0, False),
+            "requires all 64 Qwen layers",
+        ),
+        (
+            lambda request: request.__setitem__("token_id", True),
+            "primary token_id is inconsistent",
+        ),
+        (
+            lambda request: request.__setitem__(
+                "token_position", "last_input_token"
+            ),
+            "token_position must be",
+        ),
+        (
+            lambda request: request["checkpoint_shapes"][
+                "last_input_token"
+            ].__setitem__(1, True),
+            "invalid shape",
+        ),
+        (
+            lambda request: request.__setitem__("input_token_ids", None),
+            "token IDs must be",
+        ),
+        (
+            lambda request: request["checkpoint_positions"].__setitem__(0, 7),
+            "checkpoint_positions must contain objects",
+        ),
+    ],
+)
+def test_repair_request_rejects_bool_and_position_tampering(
+    tmp_path,
+    mutate,
+    message,
+):
+    output_root = _write_live_pair(tmp_path)
+    item = select_activation_repairs(
+        build_activation_repair_plan(
+            output_root / "live",
+            output_root / "checkpoints",
+        ),
+        scope="smoke_pair",
+    )[0]
+    tampered = copy.deepcopy(item["request"])
+    mutate(tampered)
+
+    with pytest.raises(RequestValidationError, match=message):
+        validate_activation_repair_request(tampered)
+
+
 def test_local_source_preflight_checks_the_saved_checksum(tmp_path):
     output_root = _write_live_pair(tmp_path)
     selected = select_activation_repairs(
@@ -449,6 +503,32 @@ def test_apply_repair_rejects_a_changed_generated_checkpoint(tmp_path):
         apply_activation_repair_result(item, payload, artifact_root=tmp_path)
 
 
+def test_apply_repair_rejects_changed_artifact_token_metadata(tmp_path):
+    output_root = _write_live_pair(tmp_path)
+    item = select_activation_repairs(
+        build_activation_repair_plan(
+            output_root / "live",
+            output_root / "checkpoints",
+        ),
+        scope="smoke_pair",
+    )[0]
+    request = item["request"]
+    artifact = torch.load(
+        io.BytesIO(
+            _repaired_artifact_bytes(request, _repair_metadata(request))
+        ),
+        map_location="cpu",
+        weights_only=True,
+    )
+    artifact["token_position"] = "last_input_token"
+    buffer = io.BytesIO()
+    torch.save(artifact, buffer)
+    payload = _repair_result(item, new_bytes=buffer.getvalue())
+
+    with pytest.raises(ValueError, match="artifact metadata changed"):
+        apply_activation_repair_result(item, payload, artifact_root=tmp_path)
+
+
 def test_apply_repair_can_resume_after_artifact_write(tmp_path):
     output_root = _write_live_pair(tmp_path)
     item = select_activation_repairs(
@@ -476,6 +556,87 @@ def test_apply_repair_can_resume_after_artifact_write(tmp_path):
     assert saved["activation_repair_metadata"]["repair_method"] == (
         ACTIVATION_REPAIR_METHOD
     )
+
+
+def test_reconcile_completes_checkpoint_written_live_missing_transaction(tmp_path):
+    output_root = _write_live_pair(tmp_path)
+    item = select_activation_repairs(
+        build_activation_repair_plan(
+            output_root / "live",
+            output_root / "checkpoints",
+        ),
+        scope="smoke_pair",
+    )[0]
+    original_live = Path(item["live_path"]).read_bytes()
+    payload = _repair_result(item)
+    apply_activation_repair_result(item, payload, artifact_root=tmp_path)
+    Path(item["live_path"]).write_bytes(original_live)
+
+    partial_plan = build_activation_repair_plan(
+        output_root / "live",
+        output_root / "checkpoints",
+    )
+    partial = next(
+        candidate
+        for candidate in partial_plan
+        if candidate["trajectory_id"] == item["trajectory_id"]
+        and candidate["step_index"] == item["step_index"]
+    )
+    assert partial["status"] == "metadata_sync_required"
+
+    summary = reconcile_activation_repair_metadata(
+        partial,
+        artifact_root=tmp_path,
+    )
+
+    assert summary["status"] == "metadata_reconciled"
+    refreshed = build_activation_repair_plan(
+        output_root / "live",
+        output_root / "checkpoints",
+    )
+    completed = next(
+        candidate
+        for candidate in refreshed
+        if candidate["trajectory_id"] == item["trajectory_id"]
+        and candidate["step_index"] == item["step_index"]
+    )
+    assert completed["status"] == "complete"
+    live = json.loads(Path(item["live_path"]).read_text())
+    event = next(
+        candidate
+        for candidate in live["trajectory_trace"]["full_events"]
+        if candidate.get("type") == "agent_turn"
+        and candidate["step_index"] == item["step_index"]
+    )
+    assert event["activation_metadata"]["checkpoint_forward_scopes"][
+        "last_input_token"
+    ] == "prompt_only"
+    assert event["output"]["generated_token_ids"] == [100 + item["step_index"]]
+
+
+def test_local_validation_can_verify_pending_and_complete_plan_items(tmp_path):
+    output_root = _write_live_pair(tmp_path)
+    plan = build_activation_repair_plan(
+        output_root / "live",
+        output_root / "checkpoints",
+    )
+    item = select_activation_repairs(plan, scope="smoke_pair")[0]
+    apply_activation_repair_result(
+        item,
+        _repair_result(item),
+        artifact_root=tmp_path,
+    )
+    mixed_plan = build_activation_repair_plan(
+        output_root / "live",
+        output_root / "checkpoints",
+    )
+
+    result = validate_local_activation_repair_sources(
+        mixed_plan,
+        artifact_root=tmp_path,
+    )
+
+    assert result["verified_source_count"] == len(mixed_plan) == 6
 
 
 def test_smoke_verification_requires_exact_matched_planner_activations(tmp_path):

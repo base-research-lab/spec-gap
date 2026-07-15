@@ -15,6 +15,7 @@ from src.infrastructure.modal_qwen_runner import Qwen3Runner, app  # noqa: E402
 from src.scenario1.activation_repair import (  # noqa: E402
     apply_activation_repair_result,
     build_activation_repair_plan,
+    reconcile_activation_repair_metadata,
     select_activation_repairs,
     summarize_activation_repair_plan,
     validate_local_activation_repair_sources,
@@ -49,6 +50,13 @@ def repair_prompt_activations(
 ) -> None:
     """Validate by default; a paid repair requires a scope-specific guard."""
 
+    if action not in {"validate", "reconcile", "run"}:
+        raise ValueError("action must be validate, reconcile, or run")
+    if action == "reconcile" and (scope != "all" or max_repairs != 0):
+        raise ValueError(
+            "metadata reconciliation requires --scope all and no --max-repairs"
+        )
+
     plan = build_activation_repair_plan(trajectory_root, checkpoint_root)
     selected = select_activation_repairs(
         plan,
@@ -56,8 +64,14 @@ def repair_prompt_activations(
         max_repairs=max_repairs,
     )
     preview = summarize_activation_repair_plan(plan, selected, scope=scope)
+    metadata_sync_items = [
+        item for item in plan if item["status"] == "metadata_sync_required"
+    ]
+    source_validation_items = plan if scope == "all" else selected
+    if action == "reconcile" and metadata_sync_items:
+        source_validation_items = metadata_sync_items
     source_preflight = validate_local_activation_repair_sources(
-        selected,
+        source_validation_items,
         artifact_root=artifact_root,
     )
     preview.update({
@@ -69,10 +83,38 @@ def repair_prompt_activations(
     })
     print(json.dumps(preview, indent=2), flush=True)
 
-    if any(item["status"] == "metadata_sync_required" for item in plan):
+    if action == "reconcile":
+        reconciled = [
+            reconcile_activation_repair_metadata(
+                item,
+                artifact_root=artifact_root,
+            )
+            for item in metadata_sync_items
+        ]
+        refreshed_plan = build_activation_repair_plan(
+            trajectory_root,
+            checkpoint_root,
+        )
+        remaining = [
+            item
+            for item in refreshed_plan
+            if item["status"] == "metadata_sync_required"
+        ]
+        if remaining:
+            raise RuntimeError("activation metadata reconciliation is incomplete")
+        print(json.dumps({
+            "status": "completed",
+            "action": "reconcile",
+            "reconciled_turns": len(reconciled),
+            "repairs": reconciled,
+            "model_called": False,
+            "gpu_started": False,
+        }, indent=2), flush=True)
+        return
+    if metadata_sync_items:
         raise ValueError(
-            "a prior repair was only partially applied; reconcile local metadata "
-            "before starting new GPU work"
+            "a prior repair was only partially applied; run --action reconcile "
+            "--scope all before starting new GPU work"
         )
     pre_run_smoke_verification = None
     if scope == "all" or (scope == "smoke_pair" and not selected):
@@ -92,8 +134,6 @@ def repair_prompt_activations(
             flush=True,
         )
         return
-    if action != "run":
-        raise ValueError("action must be validate or run")
     expected_confirmation = CONFIRMATIONS.get(scope)
     if confirm_paid_run != expected_confirmation:
         raise ValueError(

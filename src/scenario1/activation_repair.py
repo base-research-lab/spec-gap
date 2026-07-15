@@ -18,6 +18,7 @@ from typing import Any, Iterable
 from src.infrastructure.modal_costs import validate_gpu_cost_record
 from src.infrastructure.qwen_modal import (
     ACTIVATION_ARTIFACT_FORMAT,
+    ACTIVATION_TOKEN_POSITION,
     MODEL_LAYER_COUNT,
     MODEL_REVISION,
     RequestValidationError,
@@ -46,8 +47,17 @@ def checkpoint_forward_scopes(
 ) -> dict[str, str]:
     """Return the controlled forward-pass scope for each checkpoint."""
 
-    names = [checkpoint.get("name") for checkpoint in checkpoints]
-    if not names or any(not isinstance(name, str) or not name for name in names):
+    names: list[str] = []
+    for checkpoint in checkpoints:
+        if not isinstance(checkpoint, dict):
+            raise RequestValidationError("checkpoints must contain objects")
+        name = checkpoint.get("name")
+        if not isinstance(name, str) or not name:
+            raise RequestValidationError(
+                "checkpoint names must be non-empty strings"
+            )
+        names.append(name)
+    if not names:
         raise RequestValidationError("checkpoint names must be non-empty strings")
     if len(names) != len(set(names)) or "last_input_token" not in names:
         raise RequestValidationError(
@@ -62,7 +72,12 @@ def checkpoint_forward_scopes(
 def token_ids_sha256(token_ids: Iterable[int]) -> str:
     """Hash a token sequence with an unambiguous JSON encoding."""
 
-    normalized = list(token_ids)
+    try:
+        normalized = list(token_ids)
+    except TypeError as error:
+        raise RequestValidationError(
+            "token IDs must be a non-empty list of non-negative integers"
+        ) from error
     if not normalized or any(
         not isinstance(token_id, int)
         or isinstance(token_id, bool)
@@ -152,6 +167,10 @@ def validate_activation_repair_request(payload: Any) -> dict[str, Any]:
         )
 
     input_token_ids = request.get("input_token_ids")
+    if not isinstance(input_token_ids, list):
+        raise RequestValidationError(
+            "token IDs must be a non-empty list of non-negative integers"
+        )
     expected_token_hash = token_ids_sha256(input_token_ids)
     if request.get("input_token_ids_sha256") != expected_token_hash:
         raise RequestValidationError("input_token_ids_sha256 does not match")
@@ -176,13 +195,28 @@ def validate_activation_repair_request(payload: Any) -> dict[str, Any]:
             "artifact_format_version is not the current multi-position format"
         )
     layers = request.get("layers")
-    if layers != list(range(MODEL_LAYER_COUNT)):
+    if (
+        not isinstance(layers, list)
+        or any(
+            not isinstance(layer, int) or isinstance(layer, bool)
+            for layer in layers
+        )
+        or layers != list(range(MODEL_LAYER_COUNT))
+    ):
         raise RequestValidationError(
             f"repair requires all {MODEL_LAYER_COUNT} Qwen layers"
+        )
+    if request.get("token_position") != ACTIVATION_TOKEN_POSITION:
+        raise RequestValidationError(
+            f"token_position must be {ACTIVATION_TOKEN_POSITION!r}"
         )
     checkpoints = request.get("checkpoint_positions")
     if not isinstance(checkpoints, list) or not checkpoints:
         raise RequestValidationError("checkpoint_positions must be non-empty")
+    if any(not isinstance(checkpoint, dict) for checkpoint in checkpoints):
+        raise RequestValidationError(
+            "checkpoint_positions must contain objects"
+        )
     expected_scopes = checkpoint_forward_scopes(checkpoints)
     if not set(expected_scopes).issubset(_CHECKPOINT_NAMES):
         raise RequestValidationError("checkpoint_positions contain an unknown name")
@@ -247,7 +281,13 @@ def validate_activation_repair_request(payload: Any) -> dict[str, Any]:
             "primary_checkpoint must identify a generated-token checkpoint"
         )
     by_name = {checkpoint["name"]: checkpoint for checkpoint in checkpoints}
-    if request.get("token_id") != by_name[primary].get("token_id"):
+    primary_token_id = request.get("token_id")
+    if (
+        not isinstance(primary_token_id, int)
+        or isinstance(primary_token_id, bool)
+        or primary_token_id < 0
+        or primary_token_id != by_name[primary].get("token_id")
+    ):
         raise RequestValidationError("primary token_id is inconsistent")
     shapes = request.get("checkpoint_shapes")
     if not isinstance(shapes, dict) or set(shapes) != set(names):
@@ -259,7 +299,12 @@ def validate_activation_repair_request(payload: Any) -> dict[str, Any]:
             not isinstance(shape, list)
             or len(shape) != 2
             or shape[0] != MODEL_LAYER_COUNT
-            or any(not isinstance(size, int) or size < 1 for size in shape)
+            or any(
+                not isinstance(size, int)
+                or isinstance(size, bool)
+                or size < 1
+                for size in shape
+            )
         ):
             raise RequestValidationError(f"checkpoint {name!r} has an invalid shape")
     sequence_length = request.get("sequence_length")
@@ -277,7 +322,12 @@ def activation_repair_backup_path(storage_path: str) -> str:
     """Return the immutable Volume/local backup path for an original artifact."""
 
     path = PurePosixPath(storage_path)
-    if path.is_absolute() or ".." in path.parts or path.parts[0] != "activations":
+    if (
+        not path.parts
+        or path.is_absolute()
+        or ".." in path.parts
+        or path.parts[0] != "activations"
+    ):
         raise RequestValidationError("storage_path is not a safe activation path")
     return PurePosixPath(
         "activation_backups", ACTIVATION_REPAIR_METHOD, *path.parts
@@ -328,12 +378,20 @@ def build_activation_repair_plan(
             )
             saved_result = _load_json_object(checkpoint_path, "model-turn checkpoint")
             normalized_result = validate_generation_result(saved_result)
-            _validate_turn_views(record, event, normalized_result)
             request = build_activation_repair_request(normalized_result)
             event_activation = event["activation_metadata"]
             expected_scopes = request["expected_checkpoint_forward_scopes"]
             raw_scopes = request["existing_checkpoint_forward_scopes"]
             event_scopes = event_activation.get("checkpoint_forward_scopes")
+            metadata_sync_candidate = (
+                raw_scopes == expected_scopes and event_scopes in (None, {})
+            )
+            _validate_turn_views(
+                record,
+                event,
+                normalized_result,
+                allow_original_activation_checksum=metadata_sync_candidate,
+            )
             if raw_scopes == expected_scopes and event_scopes == expected_scopes:
                 status = "complete"
             elif raw_scopes in (None, {}) and event_scopes in (None, {}):
@@ -735,32 +793,13 @@ def apply_activation_repair_result(
     )
     if event is None:
         raise ValueError("live trajectory no longer contains the repaired turn")
-    activation = event["activation_metadata"]
-    raw_activation = result["activation_metadata"]
-    activation.update({
-        "sequence_length": raw_activation["sequence_length"],
-        "storage_path": raw_activation["storage_path"],
-        "storage_status": raw_activation["storage_status"],
-        "artifact_format_version": raw_activation["artifact_format_version"],
-        "primary_checkpoint": raw_activation["primary_checkpoint"],
-        "checkpoint_positions": copy.deepcopy(
-            raw_activation["checkpoint_positions"]
-        ),
-        "checkpoint_forward_scopes": copy.deepcopy(
-            raw_activation["checkpoint_forward_scopes"]
-        ),
-        "checkpoint_shapes": copy.deepcopy(raw_activation["checkpoint_shapes"]),
-        "activation_repair_metadata": copy.deepcopy(result["repair_metadata"]),
-        "activation_repair_cost_metadata": copy.deepcopy(
-            result["cost_metadata"]
-        ),
-    })
-    activation["layer_metadata"].update({
-        "shape": copy.deepcopy(raw_activation["shape"]),
-        "dtype": raw_activation["dtype"],
-        "checksum_sha256": raw_activation["checksum_sha256"],
-        "token_id": raw_activation["token_id"],
-    })
+    _update_live_activation_metadata(
+        event,
+        activation_metadata=result["activation_metadata"],
+        repair_metadata=result["repair_metadata"],
+        cost_metadata=result["cost_metadata"],
+    )
+    _validate_turn_views(record, event, saved_result)
     errors = validate_payload(record)
     if errors:
         raise ValueError(
@@ -783,6 +822,167 @@ def apply_activation_repair_result(
             "estimated_h200_cost_usd"
         ],
     }
+
+
+def reconcile_activation_repair_metadata(
+    item: dict[str, Any],
+    *,
+    artifact_root: str | Path,
+) -> dict[str, Any]:
+    """Finish a checkpoint-written/live-record-missing local repair transaction.
+
+    This path performs no model call. It validates the repaired artifact, its
+    immutable original backup, the per-turn checkpoint, and the repair cost
+    record before copying the already-saved metadata into the live trajectory.
+    """
+
+    if item.get("status") != "metadata_sync_required":
+        raise ValueError("metadata reconciliation requires metadata_sync_required")
+    current_request = validate_activation_repair_request(item["request"])
+    checkpoint_path = Path(item["checkpoint_path"])
+    saved_result = validate_generation_result(
+        _load_json_object(checkpoint_path, "model-turn checkpoint")
+    )
+    activation = saved_result.get("activation_metadata")
+    repair_metadata = saved_result.get("activation_repair_metadata")
+    cost_metadata = saved_result.get("activation_repair_cost_metadata")
+    if not isinstance(activation, dict) or not isinstance(repair_metadata, dict):
+        raise ValueError("repaired checkpoint is missing activation provenance")
+    previous_checksum = repair_metadata.get("previous_checksum_sha256")
+    if not isinstance(previous_checksum, str) or not _SHA256.fullmatch(
+        previous_checksum
+    ):
+        raise ValueError("repaired checkpoint has an invalid previous checksum")
+
+    legacy_request = copy.deepcopy(current_request)
+    legacy_request["expected_checksum_sha256"] = previous_checksum
+    root = Path(artifact_root).resolve()
+    artifact_path = (root / current_request["storage_path"]).resolve()
+    backup_storage_path = activation_repair_backup_path(
+        current_request["storage_path"]
+    )
+    backup_path = (root / backup_storage_path).resolve()
+    if not artifact_path.is_relative_to(root) or not backup_path.is_relative_to(root):
+        raise ValueError("repair reconciliation paths escape artifact_root")
+    if not artifact_path.is_file() or not backup_path.is_file():
+        raise FileNotFoundError(
+            "repair reconciliation requires the repaired artifact and its backup"
+        )
+    artifact_bytes = artifact_path.read_bytes()
+    new_checksum = hashlib.sha256(artifact_bytes).hexdigest()
+    if new_checksum != current_request["expected_checksum_sha256"]:
+        raise ValueError("repaired artifact checksum does not match the checkpoint")
+
+    persisted_result = validate_activation_repair_result(
+        {
+            "schema_version": ACTIVATION_REPAIR_RESULT_SCHEMA,
+            "status": "already_repaired",
+            "trajectory_id": current_request["trajectory_id"],
+            "step_index": current_request["step_index"],
+            "agent_id": current_request["agent_id"],
+            "thinking_mode": current_request["thinking_mode"],
+            "new_checksum_sha256": new_checksum,
+            "backup_storage_path": backup_storage_path,
+            "activation_metadata": activation,
+            "repair_metadata": repair_metadata,
+            "cost_metadata": cost_metadata,
+            "artifact_bytes": artifact_bytes,
+        },
+        legacy_request,
+    )
+    backup_bytes = backup_path.read_bytes()
+    if hashlib.sha256(backup_bytes).hexdigest() != previous_checksum:
+        raise ValueError("original activation backup checksum is inconsistent")
+    _validate_repaired_artifact_bytes(
+        backup_bytes,
+        artifact_bytes,
+        request=legacy_request,
+        repair_metadata=persisted_result["repair_metadata"],
+    )
+
+    live_path = Path(item["live_path"])
+    record = _load_json_object(live_path, "live trajectory")
+    event = next(
+        (
+            candidate
+            for candidate in record["trajectory_trace"]["full_events"]
+            if candidate.get("type") == "agent_turn"
+            and candidate.get("step_index") == current_request["step_index"]
+            and candidate.get("agent_id") == current_request["agent_id"]
+        ),
+        None,
+    )
+    if event is None:
+        raise ValueError("live trajectory no longer contains the repaired turn")
+    _update_live_activation_metadata(
+        event,
+        activation_metadata=persisted_result["activation_metadata"],
+        repair_metadata=persisted_result["repair_metadata"],
+        cost_metadata=persisted_result["cost_metadata"],
+    )
+    _validate_turn_views(record, event, saved_result)
+    from src.scenario1.validator import validate_payload
+
+    errors = validate_payload(record)
+    if errors:
+        raise ValueError(
+            "reconciled live trajectory failed validation: " + "; ".join(errors)
+        )
+    _atomic_write_json(live_path, record)
+    return {
+        "trajectory_id": current_request["trajectory_id"],
+        "step_index": current_request["step_index"],
+        "agent_id": current_request["agent_id"],
+        "thinking_mode": current_request["thinking_mode"],
+        "status": "metadata_reconciled",
+        "checksum_sha256": new_checksum,
+        "live_path": live_path.as_posix(),
+    }
+
+
+def _update_live_activation_metadata(
+    event: dict[str, Any],
+    *,
+    activation_metadata: dict[str, Any],
+    repair_metadata: dict[str, Any],
+    cost_metadata: dict[str, Any],
+) -> None:
+    """Copy validated repaired activation metadata into one live event."""
+
+    activation = event.get("activation_metadata")
+    if not isinstance(activation, dict) or not isinstance(
+        activation.get("layer_metadata"), dict
+    ):
+        raise ValueError("live event is missing activation layer metadata")
+    activation.update({
+        "requested_layers": copy.deepcopy(activation_metadata["layers"]),
+        "layers_extracted": copy.deepcopy(activation_metadata["layers"]),
+        "token_position_convention": activation_metadata["token_position"],
+        "sequence_length": activation_metadata["sequence_length"],
+        "storage_path": activation_metadata["storage_path"],
+        "storage_status": activation_metadata["storage_status"],
+        "artifact_format_version": activation_metadata[
+            "artifact_format_version"
+        ],
+        "primary_checkpoint": activation_metadata["primary_checkpoint"],
+        "checkpoint_positions": copy.deepcopy(
+            activation_metadata["checkpoint_positions"]
+        ),
+        "checkpoint_forward_scopes": copy.deepcopy(
+            activation_metadata["checkpoint_forward_scopes"]
+        ),
+        "checkpoint_shapes": copy.deepcopy(
+            activation_metadata["checkpoint_shapes"]
+        ),
+        "activation_repair_metadata": copy.deepcopy(repair_metadata),
+        "activation_repair_cost_metadata": copy.deepcopy(cost_metadata),
+    })
+    activation["layer_metadata"].update({
+        "shape": copy.deepcopy(activation_metadata["shape"]),
+        "dtype": activation_metadata["dtype"],
+        "checksum_sha256": activation_metadata["checksum_sha256"],
+        "token_id": activation_metadata["token_id"],
+    })
 
 
 def _validate_repaired_artifact_bytes(
@@ -819,6 +1019,8 @@ def _validate_repaired_artifact_bytes(
             artifact.get("artifact_format_version")
             != request["artifact_format_version"]
             or artifact.get("layers") != request["layers"]
+            or artifact.get("token_position") != request["token_position"]
+            or artifact.get("token_id") != request["token_id"]
             or artifact.get("primary_checkpoint") != request["primary_checkpoint"]
             or artifact.get("checkpoint_positions")
             != request["checkpoint_positions"]
@@ -873,6 +1075,8 @@ def _validate_turn_views(
     record: dict[str, Any],
     event: dict[str, Any],
     result: dict[str, Any],
+    *,
+    allow_original_activation_checksum: bool = False,
 ) -> None:
     expected = {
         "trajectory_id": record["trajectory_id"],
@@ -898,6 +1102,7 @@ def _validate_turn_views(
     if not isinstance(raw_activation, dict) or not isinstance(event_activation, dict):
         raise ValueError("both turn views require activation metadata")
     comparisons = {
+        "storage_status": raw_activation.get("storage_status"),
         "storage_path": raw_activation.get("storage_path"),
         "artifact_format_version": raw_activation.get("artifact_format_version"),
         "primary_checkpoint": raw_activation.get("primary_checkpoint"),
@@ -908,10 +1113,36 @@ def _validate_turn_views(
     for field, expected_value in comparisons.items():
         if event_activation.get(field) != expected_value:
             raise ValueError(f"saved and live activation {field} differ")
-    if event_activation.get("layer_metadata", {}).get(
-        "checksum_sha256"
-    ) != raw_activation.get("checksum_sha256"):
-        raise ValueError("saved and live activation checksums differ")
+    if event_activation.get("requested_layers") != raw_activation.get("layers"):
+        raise ValueError("saved and live requested activation layers differ")
+    if event_activation.get("layers_extracted") != raw_activation.get("layers"):
+        raise ValueError("saved and live extracted activation layers differ")
+    if event_activation.get("token_position_convention") != raw_activation.get(
+        "token_position"
+    ):
+        raise ValueError("saved and live activation token positions differ")
+    event_layer = event_activation.get("layer_metadata")
+    if not isinstance(event_layer, dict):
+        raise ValueError("live event is missing activation layer metadata")
+    for field in ("shape", "dtype", "token_id"):
+        if event_layer.get(field) != raw_activation.get(field):
+            raise ValueError(f"saved and live activation {field} differ")
+    event_checksum = event_layer.get("checksum_sha256")
+    raw_checksum = raw_activation.get("checksum_sha256")
+    if event_checksum != raw_checksum:
+        repair_metadata = result.get("activation_repair_metadata")
+        original_checksum = (
+            repair_metadata.get("previous_checksum_sha256")
+            if isinstance(repair_metadata, dict)
+            else None
+        )
+        if not (
+            allow_original_activation_checksum
+            and event_checksum == original_checksum
+            and isinstance(original_checksum, str)
+            and _SHA256.fullmatch(original_checksum)
+        ):
+            raise ValueError("saved and live activation checksums differ")
 
 
 def _load_json_object(path: Path, description: str) -> dict[str, Any]:

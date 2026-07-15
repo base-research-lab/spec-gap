@@ -230,6 +230,10 @@ class Qwen3Runner:
             raise ValueError("artifact format does not match the repair request")
         if artifact.get("layers") != request["layers"]:
             raise ValueError("artifact layers do not match the repair request")
+        if artifact.get("token_position") != request["token_position"]:
+            raise ValueError("artifact token position does not match")
+        if artifact.get("token_id") != request["token_id"]:
+            raise ValueError("artifact primary token ID does not match")
         if artifact.get("primary_checkpoint") != request["primary_checkpoint"]:
             raise ValueError("artifact primary checkpoint does not match")
         if artifact.get("checkpoint_positions") != request[
@@ -248,6 +252,7 @@ class Qwen3Runner:
                 not isinstance(tensor, torch.Tensor)
                 or list(tensor.shape) != request["checkpoint_shapes"][name]
                 or tensor.dtype != torch.bfloat16
+                or not bool(torch.isfinite(tensor.float()).all())
             ):
                 raise ValueError(f"artifact checkpoint {name!r} is inconsistent")
         primary_tensor = positions[request["primary_checkpoint"]]

@@ -248,6 +248,22 @@ hashes, and a cost record with `generated_tokens: 0`. A retry is safe: a remote
 artifact that was repaired before local metadata was written is detected and
 returned without performing the forward pass again.
 
+If a local process stops after writing the per-turn checkpoint but before
+writing the matching live trajectory, finish that metadata-only transaction
+without starting a GPU:
+
+```bash
+modal run \
+  scripts/02_model_execution/06_repair_prompt_activations.py::repair_prompt_activations \
+  --action reconcile \
+  --scope all
+```
+
+Reconciliation verifies the repaired artifact, original backup, checksums,
+repair provenance, cost record, and unchanged generated checkpoints before it
+updates the live trajectory. A full validation also checksum-checks every
+planned local artifact, including artifacts already marked complete.
+
 The command writes a compact local run report under
 `results/scenario1/activation_repair/`. The smoke report includes the exact
 all-layer equality result; the full report lists every repaired turn and its
