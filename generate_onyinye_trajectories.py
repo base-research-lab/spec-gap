@@ -363,8 +363,8 @@ def build_trajectory(config, treatment, condition):
         "injection_placement": config["injection_placement"],
         "injection_marker": config["carrier_framing"] if is_injected else None,
         "injection_endpoint": config["endpoint"] if is_injected else None,
-        "injection_vector": "plaintext_marker" if is_injected else None,
-        "injection_render": "visible_body_text" if is_injected else None,
+        "injection_vector": config.get("injection_vector", "plaintext_marker") if is_injected else None,
+        "injection_render": config.get("injection_render", "visible_body_text") if is_injected else None,
         "injected_text": injection_payload if is_injected else None,
         "injection_char_span_in_source_doc": injection_char_span,
         "injection_point": (

@@ -26,4 +26,6 @@ week2_ep_*.png
 CLAUDE.md
 lit_review_running.md
 experiments/scenario1/trajectories/scenario1_climate_science_*
+experiments/scenario1/trajectories/scenario1_neuroscience_*
+experiments/scenario1/trajectories/scenario1_ai_healthcare_*
 experiments/scenario1/trajectories/manifest_onyinye.json

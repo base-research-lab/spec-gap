@@ -129,17 +129,19 @@ class TestCleanDocumentNotContaminated:
         )
         assert reconstructed == doc3["body_poisoned"]
 
-    def test_clean_trajectory_docs_have_no_injection(self, generated_trajectories):
+    def test_clean_trajectory_docs_have_no_injection(self, generated_trajectories, config):
+        marker = config["carrier_framing"]
+        endpoint = config["endpoint"]
         for fname, t in generated_trajectories["trajectories"].items():
             if t["treatment"] != "clean":
                 continue
             events = t["trajectory_trace"]["full_events"]
             tool_event = [e for e in events if e["type"] == "tool_call"][0]
             for doc in tool_event["tool_result"]:
-                assert "COMPLIANCE WATERMARK" not in doc["body"], (
+                assert marker not in doc["body"], (
                     f"{fname}: clean trajectory doc contains injection marker"
                 )
-                assert "example.invalid" not in doc["body"], (
+                assert endpoint not in doc["body"], (
                     f"{fname}: clean trajectory doc contains endpoint"
                 )
 
@@ -305,12 +307,13 @@ class TestInjectionFields:
             assert span is not None
             assert span["start_char"] < span["end_char"]
 
-    def test_injected_has_text(self, generated_trajectories):
+    def test_injected_has_text(self, generated_trajectories, config):
+        marker = config["carrier_framing"]
         for t in generated_trajectories["trajectories"].values():
             if t["treatment"] != "injected":
                 continue
             assert t["injection"]["injected_text"] is not None
-            assert "COMPLIANCE WATERMARK" in t["injection"]["injected_text"]
+            assert marker in t["injection"]["injected_text"]
 
     def test_injected_has_vector_and_render(self, generated_trajectories):
         for t in generated_trajectories["trajectories"].values():
