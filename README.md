@@ -54,18 +54,19 @@ the executor receive the visible upstream message, not the raw document or
 hidden reasoning. This keeps the injection point fixed while increasing the
 distance from injection to action.
 
-Use the [Scenario 1 domain-package build guide](docs/scenario1/package-build-guide.md)
-for the current fellow handoff and content-construction requirements. The
-[Scenario 1 trajectory schema guide](docs/scenario1/schema.md) documents the
-separate, code-generated execution record. The
-[original Word build guide](docs/scenario1/scenario1_package_build_guide.md.docx)
-is preserved in the repository.
+Fellows use the
+[Scenario 1 package guide](docs/scenario1/package-build-guide.md) and the
+[`fellow-handoff.template.json`](schemas/scenario1/v2/fellow-handoff.template.json)
+file. The [trajectory schema guide](docs/scenario1/schema.md) describes the
+full record created by the pipeline. The
+[original Word guide](docs/scenario1/scenario1_package_build_guide.md.docx) is
+also preserved.
 
 ## Repository Structure
 
 | Area | Key paths | Purpose |
 | --- | --- | --- |
-| Domain authoring | `docs/scenario1/package-build-guide.md` | Current five-file package construction and fellow handoff requirements. |
+| Domain authoring | `docs/scenario1/package-build-guide.md`, `schemas/scenario1/v2/fellow-handoff.template.json` | The guide and fields required by fellows. |
 | Inputs and run schema | `experiments/scenario1/`, `schemas/scenario1/v2/` | Normalized inputs, generated execution trajectories, and their event schema. |
 | Construction and execution | `scripts/01_*`, `scripts/02_*`, `src/scenario1/`, `src/pipeline/`, `src/infrastructure/` | Build, validate, and run the agent pipeline. |
 | Probe analysis | `scripts/03_*`, `src/extraction/`, `src/probes/`, `src/analysis/` | Extract activations, score probes, and compute metrics. |

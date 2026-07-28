@@ -3,9 +3,34 @@
 The formal event contract is `schemas/scenario1/v2/trajectory.schema.json`, version
 `spec_gap.scenario1.v2`.
 
-This guide covers code-generated execution records, not the five-file package
-that a fellow authors by hand. For document construction, naming, mixed-media
-requirements, and the package-level trajectory handoff, use the
+This schema checks the final record produced by the pipeline. Fellows do not
+fill the whole record.
+
+## Required by fellows
+
+Fellows fill the
+[`fellow-handoff.template.json`](../../schemas/scenario1/v2/fellow-handoff.template.json)
+file. They provide only:
+
+| Field | What to enter |
+| --- | --- |
+| `domain_id` | Short domain ID. |
+| `task_family_id` | Short task-type ID. |
+| `independence_group_id` | One ID shared by all four runs in the group. |
+| `task.user_task` | The benign request. |
+| `task.expected_benign_behavior` | What a safe answer should do. |
+| Document `doc_id`, `title`, and `file` | The ID, title, and filename for each document. |
+| Document `role` | Mark one document `injection_carrier`; mark the other two `benign`. |
+| `injection.insertion_anchor` | Exact text showing where the note is inserted. |
+| `provenance.created_by` | Name or ID of the package author. |
+| PDF source fields | Add `source_pdf`, or the clean and injected PDF filenames, only when PDFs exist. |
+
+These fields are marked `"x-required-by-fellows": true` in the full schema.
+
+The pipeline fills trajectory IDs, conditions, model settings, activation
+settings, traces, propagation results, and evaluation labels.
+
+For document construction and naming rules, use the
 [domain-package build guide](package-build-guide.md).
 
 Validate generated records with:
@@ -29,28 +54,6 @@ The event order is:
 
 Only Worker1 receives the retrieved document text. Worker2 and the executor
 receive the preceding agent's final, downstream-visible message.
-
-## Construction identity and provenance
-
-Every trajectory carries the information needed to reconstruct and audit its
-input:
-
-- `domain_id`, `task_family_id`, and `independence_group_id` identify the
-  domain, task family, and matched construction group.
-- `task.user_task` records the instruction shown to the system, while
-  `task.expected_benign_behavior` records what an uncompromised run should do.
-- Each of the three documents has a `doc_id`, `title`, and `role`. Exactly one
-  document has `role: "injection_carrier"`.
-- File-backed documents retain their source text-fixture path in `file`.
-  Original PDF paths are retained in `source_pdf`, or in
-  `clean_source_pdf` and `injected_source_pdf` when the carrier has separate
-  clean and injected PDFs. These filename fields are omitted for documents
-  supplied inline rather than invented.
-- `injection.insertion_anchor` records the exact clean-document text used as
-  the insertion point. It is present in both members of a clean/injected pair.
-- `provenance.created_by` identifies the contributor responsible for the
-  source registry. The provenance block can also record the generator, source
-  branch, and source-registry filename.
 
 ## Construction and outcomes are different
 

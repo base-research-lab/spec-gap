@@ -1,0 +1,42 @@
+{
+  "_instructions": "Required by fellows. Fill only this template. Remove PDF fields that do not apply.",
+  "domain_id": "FILL",
+  "task_family_id": "FILL",
+  "independence_group_id": "FILL",
+  "task": {
+    "user_task": "FILL",
+    "expected_benign_behavior": "FILL"
+  },
+  "document_set": {
+    "documents": [
+      {
+        "doc_id": "FILL",
+        "title": "FILL",
+        "file": "FILL",
+        "source_pdf": "FILL OR REMOVE",
+        "role": "benign"
+      },
+      {
+        "doc_id": "FILL",
+        "title": "FILL",
+        "file": "FILL",
+        "source_pdf": "FILL OR REMOVE",
+        "role": "benign"
+      },
+      {
+        "doc_id": "FILL",
+        "title": "FILL",
+        "file": "FILL",
+        "clean_source_pdf": "FILL OR REMOVE",
+        "injected_source_pdf": "FILL OR REMOVE",
+        "role": "injection_carrier"
+      }
+    ]
+  },
+  "injection": {
+    "insertion_anchor": "FILL"
+  },
+  "provenance": {
+    "created_by": "FILL"
+  }
+}

@@ -17,6 +17,14 @@ from src.infrastructure.qwen_modal import CONTROLLED_GENERATION_SETTINGS, MODEL_
 
 REGISTRIES = gen.load_registries()
 SCHEMA = json.load(open(V.SCHEMA_PATH))
+FELLOW_TEMPLATE_PATH = (
+    gen.PROJECT_ROOT
+    / "schemas"
+    / "scenario1"
+    / "v2"
+    / "fellow-handoff.template.json"
+)
+FELLOW_TEMPLATE = json.load(open(FELLOW_TEMPLATE_PATH))
 VALIDATOR = Draft202012Validator(SCHEMA)
 CANONICAL_OUTCOMES = {
     "clean",
@@ -95,6 +103,75 @@ def test_schema_requires_construction_and_source_provenance():
     }.issubset(documents["items"]["properties"])
     assert "insertion_anchor" in SCHEMA["$defs"]["injection"]["required"]
     assert "created_by" in SCHEMA["$defs"]["provenance"]["required"]
+
+
+def test_schema_marks_only_fellow_supplied_fields():
+    assert SCHEMA["$comment"] == (
+        "The required list applies to the final record. "
+        "Fellows fill only fields marked x-required-by-fellows."
+    )
+    document_properties = (
+        SCHEMA["properties"]["document_set"]["properties"]["documents"]["items"][
+            "properties"
+        ]
+    )
+    fellow_fields = [
+        SCHEMA["properties"]["domain_id"],
+        SCHEMA["properties"]["task_family_id"],
+        SCHEMA["properties"]["independence_group_id"],
+        SCHEMA["properties"]["task"]["properties"]["user_task"],
+        SCHEMA["properties"]["task"]["properties"]["expected_benign_behavior"],
+        document_properties["doc_id"],
+        document_properties["title"],
+        document_properties["file"],
+        document_properties["source_pdf"],
+        document_properties["clean_source_pdf"],
+        document_properties["injected_source_pdf"],
+        document_properties["role"],
+        SCHEMA["$defs"]["injection"]["properties"]["insertion_anchor"],
+        SCHEMA["$defs"]["provenance"]["properties"]["created_by"],
+    ]
+    assert all(field["x-required-by-fellows"] is True for field in fellow_fields)
+    assert all(
+        field["description"].startswith("Required by fellows")
+        for field in fellow_fields
+    )
+    for generated_field in (
+        "schema_version",
+        "trajectory_id",
+        "treatment",
+        "model",
+        "activation_config",
+        "trajectory_trace",
+        "evaluation_labels",
+    ):
+        assert "x-required-by-fellows" not in SCHEMA["properties"][generated_field]
+
+
+def test_fellow_template_contains_only_handoff_sections():
+    assert set(FELLOW_TEMPLATE) == {
+        "_instructions",
+        "domain_id",
+        "task_family_id",
+        "independence_group_id",
+        "task",
+        "document_set",
+        "injection",
+        "provenance",
+    }
+    documents = FELLOW_TEMPLATE["document_set"]["documents"]
+    assert len(documents) == 3
+    assert [document["role"] for document in documents] == [
+        "benign",
+        "benign",
+        "injection_carrier",
+    ]
+    assert set(FELLOW_TEMPLATE["task"]) == {
+        "user_task",
+        "expected_benign_behavior",
+    }
+    assert set(FELLOW_TEMPLATE["injection"]) == {"insertion_anchor"}
+    assert set(FELLOW_TEMPLATE["provenance"]) == {"created_by"}
 
 
 def test_records_preserve_requested_construction_metadata(records):

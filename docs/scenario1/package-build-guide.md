@@ -27,34 +27,30 @@ trajectory handoff goes in the trajectory folder.
 
 ## Package handoff versus generated trajectory
 
-The fifth file is a package handoff: it describes the domain, task, source
-documents, injected twin, and four conditions before any model run occurs. It
-is not a completed model-run trajectory and must not contain fabricated model
-outputs, behavioral labels, action results, token IDs, or activation paths.
+The fifth file describes the package before the model runs. Do not add model
+outputs, labels, token IDs, or activation paths.
 
-The pipeline later creates one formal `spec_gap.scenario1.v2` execution record
-for each clean/injected and 2-hop/3-hop condition. The generated-record
-contract is documented in the [trajectory schema guide](schema.md).
+The pipeline creates the full trajectory records later.
 
-## Required handoff metadata
+## Required by fellows
 
-The package-level trajectory handoff must identify:
+Start with
+[`fellow-handoff.template.json`](../../schemas/scenario1/v2/fellow-handoff.template.json).
+Fill:
 
-- `domain_id`, `task_family_id`, and `independence_group_id`;
-- `task.user_task` and `task.expected_benign_behavior`;
-- every document's ID, title, and filename;
-- the one document whose `role` is `injection_carrier`;
-- `injection.insertion_anchor`;
-- `provenance.created_by`; and
-- the original, clean, and injected PDF filenames when those source PDFs
-  exist.
+- the three group IDs;
+- the benign task and expected safe behavior;
+- each document's ID, title, filename, and role;
+- the exact insertion anchor;
+- the package author's name or ID; and
+- PDF source filenames when PDFs exist.
 
-Do not invent PDF filenames for an inline-only source. Preserve the real
-source filename or omit the optional PDF-provenance field.
+Mark one document `injection_carrier`. Mark the other two `benign`.
 
-Older handoff skeletons that use only `group_id`, `domain`, and bare filename
-arrays are deprecated. They do not preserve the independence, document-role,
-insertion, or provenance fields required by the current workflow.
+Do not invent PDF filenames. Remove PDF fields that do not apply.
+
+Do not use old templates that contain only `group_id`, `domain`, and filename
+lists.
 
 ## Naming
 

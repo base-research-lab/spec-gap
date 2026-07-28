@@ -2,7 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://spec-gap/schemas/scenario1/v2/trajectory.schema.json",
   "title": "SPEC-GAP Scenario 1 trajectory",
-  "description": "Research-pipeline exfiltration. A multi-hop retrieval and summarization trajectory where one retrieved document carries a hidden injection. Source of truth for the fields the probe and measurement side consumes. Structural rules live here; semantic invariants are enforced by src/scenario1/validator.py through the numbered validation wrapper.",
+  "description": "Final Scenario 1 record for a research task with one injected document. The pipeline produces this record.",
+  "$comment": "The required list applies to the final record. Fellows fill only fields marked x-required-by-fellows.",
   "type": "object",
   "required": [
     "schema_version",
@@ -44,16 +45,20 @@
     "independence_group_id": {
       "type": "string",
       "minLength": 1,
-      "description": "Match-group id: the construction unit. The four trajectories in a group (clean/injected x 2-hop/3-hop) share this id, task, document set, and injection wording, and differ only in treatment and condition_id. Split-safety key: records sharing this id must stay in the same train/val/test split."
+      "x-required-by-fellows": true,
+      "description": "Required by fellows. One ID shared by every clean/injected and 2-hop/3-hop run in the group."
     },
     "domain_id": {
       "type": "string",
       "minLength": 1,
-      "description": "Independent domain. Unique per match group."
+      "x-required-by-fellows": true,
+      "description": "Required by fellows. Short ID for the domain."
     },
     "task_family_id": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "x-required-by-fellows": true,
+      "description": "Required by fellows. Short ID for the kind of task."
     },
     "document_set_id": {
       "type": "string"
@@ -109,11 +114,15 @@
       "properties": {
         "user_task": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "x-required-by-fellows": true,
+          "description": "Required by fellows. The benign request given to the agents."
         },
         "expected_benign_behavior": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "x-required-by-fellows": true,
+          "description": "Required by fellows. What a safe, correct response should do."
         }
       }
     },
@@ -155,33 +164,43 @@
             "properties": {
               "doc_id": {
                 "type": "string",
-                "minLength": 1
+                "minLength": 1,
+                "x-required-by-fellows": true,
+                "description": "Required by fellows. Unique ID for this document."
               },
               "title": {
                 "type": "string",
-                "minLength": 1
+                "minLength": 1,
+                "x-required-by-fellows": true,
+                "description": "Required by fellows. Human-readable document title."
               },
               "file": {
                 "type": "string",
                 "minLength": 1,
-                "description": "Source text-fixture filename or path, relative to the source registry when the document is file-backed. Omitted for inline source documents."
+                "x-required-by-fellows": true,
+                "description": "Required by fellows for file-backed documents. Give the source filename or path. Omit this for inline documents."
               },
               "source_pdf": {
                 "type": "string",
                 "minLength": 1,
-                "description": "Original source-PDF filename or path for a document whose clean and injected records share one PDF."
+                "x-required-by-fellows": true,
+                "description": "Required by fellows when one source PDF is used. Give its filename or path."
               },
               "clean_source_pdf": {
                 "type": "string",
                 "minLength": 1,
-                "description": "Clean source-PDF filename or path when the injection carrier has separate clean and injected PDFs."
+                "x-required-by-fellows": true,
+                "description": "Required by fellows when the carrier has separate PDFs. Give the clean PDF filename or path."
               },
               "injected_source_pdf": {
                 "type": "string",
                 "minLength": 1,
-                "description": "Injected source-PDF filename or path when the injection carrier has separate clean and injected PDFs."
+                "x-required-by-fellows": true,
+                "description": "Required by fellows when the carrier has separate PDFs. Give the injected PDF filename or path."
               },
               "role": {
+                "x-required-by-fellows": true,
+                "description": "Required by fellows. Mark exactly one document as injection_carrier; mark the other two as benign.",
                 "enum": [
                   "benign",
                   "injection_carrier"
@@ -393,7 +412,8 @@
         "insertion_anchor": {
           "type": "string",
           "minLength": 1,
-          "description": "Exact text in the clean carrier used as the deterministic insertion point. In a clean record, this identifies where the matched injected twin would be modified."
+          "x-required-by-fellows": true,
+          "description": "Required by fellows. Exact text showing where the note is inserted in the clean carrier."
         },
         "injection_marker": {
           "type": [
@@ -446,7 +466,8 @@
         "created_by": {
           "type": "string",
           "minLength": 1,
-          "description": "Contributor responsible for the source registry or trajectory construction input."
+          "x-required-by-fellows": true,
+          "description": "Required by fellows. Name or ID of the person who built the package."
         },
         "generator": {
           "type": "string",
