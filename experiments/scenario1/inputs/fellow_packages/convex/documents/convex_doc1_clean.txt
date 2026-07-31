@@ -1,0 +1,282 @@
+Convex Optimization Learning Set Student Edition
+Contents
+1 Why modeling comes first 2
+2 Standard form 3
+3 Convex sets: the line-segment test 4
+4 Convex functions: four recognition tools 5
+4.1 Tool 1: known building blocks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+4.2 Tool 2: second derivative or Hessian . . . . . . . . . . . . . . . . . . . . . . . . . 6
+4.3 Tool 3: epigraphs and sublevel sets . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+4.4 Tool 4: composition rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+5 Why local minima are global 7
+6 Problem classes and solver structure 8
+7 Disciplined convex programming 8
+8 Mixed-media laboratory 9
+9 Practice set 9
+10Answer sketches 10
+11Chapter summary 10
+1Convex Optimization Learning Set Student Edition
+Learning objectives
+By the end of this chapter, you should be able to:
+• translate an informal decision problem into variables, an objective, and con-
+straints;
+• rewrite a model in standard minimization form;
+• decide whether sets and smooth functions are convex using line segments, Hes-
+sians, epigraphs, and sublevel sets;
+• use simple composition rules and recognize common formulation traps;
+• identify linear programs (LPs), quadratic programs (QPs), second-order cone pro-
+grams (SOCPs), and semidefinite programs (SDPs);
+• check a basic model with Excel Solver and CVXPY’s disciplined convex program-
+ming rules.
+1 Why modeling comes first
+Optimization begins before any solver runs. The model decides what counts as a decision,
+what counts as success, and which restrictions are real. A perfectly executed algorithm
+cannot rescue an incorrect formulation.
+A useful modeling workflow is:
+1. Name the decision variables. State units and allowed values.
+2. Separate data from decisions. Prices, capacities, and observed measurements are
+parameters, not variables.
+3. Write one objective. Decide whether the goal is minimization or maximization.
+4. Translate every restriction. Include signs, bounds, equalities, and logical assump-
+tions.
+5. Check dimensions and units. Adding dollars to kilograms is a modeling error, not a
+math detail.
+6. Classify the structure. Convexity and problem class guide the solution method.
+Key idea: A model is an argument
+A strong formulation makes a claim: among all decisions that satisfy the constraints,
+the objective correctly ranks what is better. Before solving, ask whether that claim
+matches the real decision.
+2Convex Optimization Learning Set Student Edition
+2 Standard form
+A broad convex optimization problem is commonly written as
+min
+x∈Rn
+f0(x)
+subject to fi(x) ≤ 0, i = 1,...,m,
+Ax = b,
+where the objective f0 and inequality functions fi are convex, while the equality constraints
+are affine.
+The form is flexible:
+• maximize u(x) by minimizing −u(x);
+• rewrite g(x) ≥ 0 as −g(x) ≤ 0;
+• rewrite ℓ ≤ xj ≤ u as ℓ − xj ≤ 0 and xj − u ≤ 0;
+• preserve affine equalities as equalities rather than replacing them with two inequalities
+unless a solver interface requires it.
+Worked example: Production planning from narrative to LP
+A workshop can make tables (x1) and shelves (x2). Each table uses 2 labor hours and
+1 unit of wood. Each shelf uses 1 labor hour and 1 unit of wood. At most 6 labor
+hours and 4 wood units are available. Profit is 3 units per table and 2 per shelf.
+Step 1: decisions. x1,x2 are nonnegative production quantities.
+Step 2: objective. Maximize 3x1 + 2x2, or equivalently minimize −3x1 − 2x2.
+Step 3: resources.
+2x1 + x2 ≤ 6, x1 + x2 ≤ 4, x1,x2 ≥ 0.
+Step 4: classify. The objective and every constraint are affine, so this is an LP .
+Step 5: solve geometrically. A linear objective reaches an optimum at a vertex of a
+nonempty bounded polyhedron. Evaluating the vertices gives the optimum (x1,x2) =
+(2,2) with profit 10.
+3Convex Optimization Learning Set Student Edition
+Figure 1: The feasible region is the shaded polygon. The best objective contour touches
+it at the starred vertex.
+Common mistake: Leaving assumptions implicit
+If production must be integral, the model is a mixed-integer program rather than a
+convex LP . Convexity depends on the feasible set, not only on the formula printed in
+the objective.
+3 Convex sets: the line-segment test
+A set C ⊆ Rn is convex when
+θx + (1 − θ)y ∈ C for all x,y ∈ C and θ ∈ [0,1].
+Geometrically, every line segment joining two feasible points remains feasible.
+4Convex Optimization Learning Set Student Edition
+Figure 2: The line-segment test distinguishes a convex set from a disconnected nonconvex
+set.
+Important convex sets include:
+• affine sets {x : Ax = b};
+• halfspaces {x : aT x ≤ b};
+• norm balls {x : ∥x∥ ≤ r};
+• polyhedra, which are intersections of finitely many halfspaces and affine sets;
+• the positive semidefinite cone Sn
++ = {X = XT : X ⪰ 0}.
+Key idea: Intersection rule
+Any intersection of convex sets is convex. This explains why a feasible set built from
+many convex inequalities and affine equalities remains convex.
+Checkpoint: Convex-set recognition
+Decide whether each set is convex.
+1. {x ∈ R2 : x1 + x2 ≤ 3, x1 ≥ 0}
+2. {x ∈ R2 : ∥x∥2 = 1}
+3. {x ∈ R2 : ∥x∥2 ≤ 1}
+Answers: (1) yes, an intersection of halfspaces; (2) no, the sphere excludes interior
+points of chords; (3) yes, a norm ball.
+4 Convex functions: four recognition tools
+A function f : C → R on a convex domain is convex if
+f(θx + (1 − θ)y) ≤ θf(x) + (1 − θ)f(y).
+This says the function lies below every chord joining two points on its graph.
+5Convex Optimization Learning Set Student Edition
+4.1 Tool 1: known building blocks
+Affine functions, norms, exponentials, maxima of affine functions, and nonnegative weighted
+sums of convex functions are convex. Negative logarithms are convex on positive argu-
+ments.
+4.2 Tool 2: second derivative or Hessian
+For a twice-differentiable scalar function, f′′(x) ≥ 0 on an interval implies convexity. For
+f : Rn → R, convexity follows when
+∇2
+f(x) ⪰ 0 for every x in the domain.
+For a quadratic f(x) = 1
+2xT Px + qT x + r, the Hessian is P. The quadratic is convex exactly
+when the symmetric part of P is positive semidefinite.
+Worked example: Ridge regression is a convex QP
+Given a design matrix A, observations b, and λ ≥ 0, ridge regression solves
+min
+x
+∥Ax − b∥2
+2 + λ∥x∥2
+2 .
+Expanding shows a quadratic Hessian
+2AT
+A + 2λI ⪰ 0.
+Therefore the objective is convex. When AT A+λI ≻ 0, the objective is strictly convex
+and the minimizer is unique:
+x∗
+= (AT
+A + λI)−1
+AT
+b.
+The inverse formula is useful conceptually, but numerical solvers use linear-system
+methods rather than explicitly forming an inverse.
+4.3 Tool 3: epigraphs and sublevel sets
+The epigraph of f is
+epif = {(x,t) : f(x) ≤ t}.
+A function is convex exactly when its epigraph is convex. In addition, every sublevel set
+{x : f(x) ≤ α} of a convex function is convex.
+6Convex Optimization Learning Set Student Edition
+Figure 3: Epigraphs provide a geometric definition of convex functions; sublevel sets
+connect functions to feasible regions.
+4.4 Tool 4: composition rules
+Safe composition rules prevent plausible-looking but invalid arguments.
+• If h is convex and nondecreasing, and g is convex, then h ◦ g is convex.
+• If h is convex and nonincreasing, and g is concave, then h ◦ g is convex.
+• Affine composition preserves convexity: f(Ax + b) is convex whenever f is convex.
+Common mistake: “Convex inside convex” is not a rule
+The composition of two convex functions need not be convex. Monotonicity and do-
+main information matter. For example, h(u) = u2 is convex but not globally nonde-
+creasing, so h(g(x)) cannot be certified from convexity of g alone.
+5 Why local minima are global
+Suppose f is convex and C is convex. Let x∗ be a local minimizer. If some y ∈ C had
+f(y) < f(x∗), then for sufficiently small θ > 0, the point
+z = (1 − θ)x∗
++ θy
+would remain arbitrarily close to x∗ and feasible. Convexity would give
+f(z) ≤ (1 − θ)f(x∗
+) + θf(y) < f(x∗
+),
+contradicting local optimality. Therefore every local minimizer is global.
+Key idea: What convexity buys you
+Convexity does not automatically make computation easy, but it removes deceptive
+local minima and gives strong optimality certificates. That changes both theory and
+algorithm design.
+7Convex Optimization Learning Set Student Edition
+6 Problem classes and solver structure
+LP: affine objective and affine constraints
+QP: convex quadratic objective with affine constraints
+SOCP: affine terms plus second-order cone constraints
+SDP: affine matrix expressions constrained to be PSD
+Increasing expressive power
+and specialized structure
+Class Canonical pattern Typical applications
+LP mincT x subject to Ax = b, Gx ≤ h production, transport, allocation
+QP min 1
+2xT Px + qT x with P ⪰ 0 regression, portfolio design, control
+SOCP ∥Aix + bi∥2 ≤ cT
+i x + di robust optimization, engineering de-
+sign
+SDP F0 +
+∑
+i xiFi ⪰ 0 control, relaxations, matrix completion
+Worked example: A robust linear inequality becomes an SOCP
+Suppose an uncertain coefficient is a = ā + u with ∥u∥2 ≤ ρ. Requiring
+aT
+x ≤ b for every allowed u
+is equivalent to
+āT
+x + ρ∥x∥2 ≤ b.
+The worst perturbation aligns with x, since max∥u∥≤ρ uT x = ρ∥x∥2. The resulting norm
+inequality is convex and has SOCP form.
+7 Disciplined convex programming
+Disciplined convex programming (DCP) is a rule system that verifies a model by tracking
+the curvature and sign of every expression. DCP is conservative: an expression can be
+mathematically convex yet fail the syntactic check until it is rewritten.
+For example,
+√
+1 + x2 is convex. A direct expression such as sqrt(1 + square(x)) may
+not pass a DCP checker because the outer square root is concave and increasing. The
+equivalent norm form √
+1 + x2 = ∥(1,x)∥2
+is recognized immediately.
+Listing 1: CVXPY check for a convex quadratic program
+import cvxpy as cp
+8Convex Optimization Learning Set Student Edition
+import numpy as np
+x = cp.Variable(4)
+A = np.array([[1., 2., 0., 1.],
+[0., 1., 1., 0.]])
+b = np.array([1., 0.5])
+lam = 0.2
+problem = cp.Problem(
+cp.Minimize(cp.sum_squares(A @ x - b) + lam * cp.sum_squares(x)),
+[x >= 0]
+)
+print(problem.is_dcp()) # True
+problem.solve()
+print(problem.value, x.value)
+8 Mixed-media laboratory
+Mixed-media lab: Excel Solver: graphical LP
+Create cells for x1, x2, profit, labor used, and wood used. Configure Solver as follows:
+• objective: maximize profit 3x1 + 2x2;
+• changing cells: x1,x2;
+• constraints: 2x1 + x2 ≤ 6, x1 + x2 ≤ 4, and nonnegativity;
+• method: Simplex LP .
+Then change profit coefficients and record when the optimal vertex changes. The
+chart should update automatically.
+Mixed-media lab: PSD checker for a 2 × 2 matrix
+For P =
+[
+a b
+b c
+]
+, create cells for a,b,c. A symmetric 2 × 2 matrix is PSD exactly when
+a ≥ 0, c ≥ 0, and ac − b2 ≥ 0. Use conditional formatting to label the quadratic convex
+or nonconvex. Compare this rule with Excel’s eigenvalue output if available.
+9 Practice set
+Easy
+1. Rewrite maxx logx subject to 1 ≤ x ≤ 4 as a minimization problem.
+2. Is the intersection of two norm balls convex? Explain in one sentence.
+3. Classify min4x1 + 7x2 subject to affine equalities and inequalities.
+9Convex Optimization Learning Set Student Edition
+Medium
+4. Determine whether f(x) = x4 is convex on R.
+5. Show that f(x) = max{2x − 1,−x + 3} is convex.
+6. Put ∥Ax − b∥2 ≤ t into a recognizable conic form and name the class.
+Hard
+7. Prove that every sublevel set of a convex function is convex.
+8. A covariance matrix Σ is PSD. Prove that xT Σx is convex and explain why this matters
+in portfolio optimization.
+9. Find a convex reformulation of minx maxi(aT
+i x+bi) by introducing an epigraph variable.
+10 Answer sketches
+1. Minimize −logx with constraints 1 − x ≤ 0 and x − 4 ≤ 0.
+2. Yes. Each ball is convex and intersections preserve convexity.
+3. LP .
+4. f′′(x) = 12x2 ≥ 0.
+5. A pointwise maximum of affine functions is convex.
+6. ∥Ax − b∥2 ≤ t is a second-order cone constraint; the problem is an SOCP when the
+remaining pieces fit.
+7. For x,y in the sublevel set, convexity gives f(θx + (1 − θ)y) ≤ θf(x) + (1 − θ)f(y) ≤ α.
+8. The Hessian is 2Σ ⪰ 0. Variance is therefore a convex risk term.
+9. Introduce t, minimize t, and require aT
+i x + bi ≤ t for every i.
+11 Chapter summary
+• Standard form separates the objective, convex inequalities, and affine equalities.
+• Convex sets pass the line-segment test; convex functions satisfy the chord inequality.
+• Hessians, epigraphs, sublevel sets, and composition rules form a practical recognition
+toolkit.
+• LP , QP , SOCP , and SDP structure determines which solver technology is appropriate.
+• DCP makes modeling discipline computationally checkable.
+10

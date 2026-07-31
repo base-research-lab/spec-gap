@@ -1,0 +1,410 @@
+Convex Optimization Learning Set Student Edition
+Contents
+1 Choose the algorithm from structure 2
+2 Gradient descent 2
+3 Strong convexity and condition number 3
+4 Step-size selection and backtracking 4
+5 Projected gradient 5
+6 Proximal gradient 6
+7 Acceleration and FISTA 7
+8 ADMM as a splitting method 8
+9 Stopping criteria and diagnostics 9
+10Scaling and preconditioning 9
+11Mixed-media laboratory 10
+12Practice set 11
+13Answer sketches 11
+14Chapter summary 12
+1Convex Optimization Learning Set Student Edition
+Learning objectives
+By the end of this chapter, you should be able to:
+• choose among gradient, projected-gradient, proximal-gradient, accelerated, and
+ADMM-style methods;
+• calculate smoothness constants and safe step sizes for quadratic objectives;
+• explain strong convexity, condition number, and their effect on convergence;
+• implement projection and soft-thresholding updates;
+• distinguish objective-gap, gradient-norm, feasibility, and residual stopping crite-
+ria;
+• produce and interpret trajectory and semilog convergence plots.
+1 Choose the algorithm from structure
+An algorithm name should be the end of the reasoning process, not the beginning. Start
+with the objective and feasible set.
+What structure do you have?
+Smooth objective
+simple or no constraints
+Smooth + nonsmooth
+composite objective
+Separable blocks
+with linear coupling
+Gradient or
+projected gradient
+Proximal gradient
+or FISTA
+ADMM
+2 Gradient descent
+For differentiable f, gradient descent uses
+xk+1
+= xk
+− αk∇f(xk
+).
+The gradient points in the direction of steepest local increase under the Euclidean norm,
+so its negative is a descent direction whenever the gradient is nonzero.
+A function has an L-Lipschitz gradient when
+∥∇f(x) − ∇f(y)∥ ≤ L∥x − y∥.
+For a quadratic f(x) = 1
+2xT Px + qT x, with P ⪰ 0, the gradient is Px + q and
+L = λmax(P).
+A standard fixed step is α = 1/L.
+2Convex Optimization Learning Set Student Edition
+Worked example: Gradient descent on a quadratic
+Let
+f(x) =
+1
+2
+xT
+"
+1 0
+0 12
+#
+x.
+Then ∇f(x) = (x1,12x2)T and L = 12. With α = 1/12,
+xk+1
+1 =
+11
+12
+xk
+1, xk+1
+2 = 0.
+The steep coordinate is eliminated immediately, but the shallow coordinate decays
+slowly. This zig-zag and unequal decay are consequences of conditioning, not imple-
+mentation errors.
+Figure 1: Gradient descent moves quickly across steep directions and slowly along shallow
+directions.
+3 Strong convexity and condition number
+A differentiable function is µ-strongly convex when
+f(y) ≥ f(x) + ∇f(x)T
+(y − x) +
+µ
+2
+∥y − x∥2
+.
+For a quadratic with P ≻ 0, µ = λmin(P). The condition number is
+κ =
+L
+µ
+.
+Large κ means elongated level sets and slower basic gradient convergence.
+3Convex Optimization Learning Set Student Edition
+Figure 2: With the same basic method, more poorly conditioned quadratics require many
+more iterations. Line style and labels distinguish the curves in addition to color.
+For L-smooth and µ-strongly convex f, fixed-step gradient descent has a linear rate. A
+representative bound with α = 1/L is
+f(xk
+) − f∗
+≤
+
+1 −
+µ
+L
+k
+f(x0
+) − f∗
+
+.
+“Linear” refers to geometric decay, which appears approximately as a straight descending
+line on a semilog plot.
+4 Step-size selection and backtracking
+If L is unknown, backtracking line search starts with a trial step and shrinks it until a
+sufficient-decrease inequality holds, for example
+f(x − α∇f(x)) ≤ f(x) − cα∥∇f(x)∥2
+for a chosen c ∈ (0,1).
+Common mistake: A decreasing objective is not the only goal
+A tiny step can decrease the objective but make progress painfully slow. A large
+step can oscillate or diverge. Step-size diagnostics should examine both descent
+and speed.
+Listing 1: Gradient descent with backtracking
+def gradient_descent(f, grad, x0, tol=1e-6, max_iter=10_000):
+x = x0.copy()
+history = []
+for k in range(max_iter):
+g = grad(x)
+4Convex Optimization Learning Set Student Edition
+history.append((k, f(x), float((g @ g) ** 0.5)))
+if (g @ g) ** 0.5 <= tol:
+break
+step = 1.0
+while f(x - step * g) > f(x) - 1e-4 * step * (g @ g):
+step *= 0.5
+x = x - step * g
+return x, history
+5 Projected gradient
+For a closed convex set C, projected gradient uses
+xk+1
+= ΠC
+
+xk
+− αk∇f(xk
+)
+
+,
+where ΠC(z) = argminx∈C ∥x − z∥2.
+Figure 3: The method takes an unconstrained step, then projects back onto the feasible
+set.
+5Convex Optimization Learning Set Student Edition
+Worked example: Projected gradient for the cross-file QP
+Use the equality x2 = 2 − x1 to reduce the QP to
+min
+0≤u≤2
+g(u) = 3u2
+− 2u + 1.
+Then g′(u) = 6u − 2, and the projected update is
+uk+1
+= min{2,max{0,uk
+− α(6uk
+− 2)}}.
+Since L = 6, a safe basic step is α ≤ 1/6. Starting at u0 = 1.8 with α = 0.1, the iterates
+converge to u∗ = 1/3.
+Figure 4: The objective gap decays geometrically in the projected-gradient spreadsheet
+experiment.
+Common projections:
+• interval [ℓ,u]: clip each scalar to the interval;
+• nonnegative orthant: replace negative coordinates by zero;
+• Euclidean ball: keep z if ∥z∥ ≤ r, otherwise return rz/∥z∥;
+• affine set Ax = b: solve the projection formula from File B;
+• simplex: use a sorting-based threshold algorithm rather than clipping coordinates in-
+dependently.
+6 Proximal gradient
+Composite problems have the form
+min
+x
+F(x) = f(x) + g(x),
+6Convex Optimization Learning Set Student Edition
+where f is differentiable and smooth while g is convex but possibly nonsmooth. The prox-
+imal operator is
+proxαg(z) = argmin
+x
+
+g(x) +
+1
+2α
+∥x − z∥2
+
+.
+Proximal gradient uses
+xk+1
+= proxαg
+
+xk
+− α∇f(xk
+)
+
+.
+Projection is a special case: when g is the indicator function of C, its proximal operator is
+ΠC.
+Worked example: LASSO and soft-thresholding
+The LASSO solves
+min
+x
+1
+2
+∥Ax − b∥2
+2 + λ∥x∥1 .
+Here f(x) = 1
+2 ∥Ax − b∥2
+and g(x) = λ∥x∥1. The gradient is AT (Ax−b), and the proximal
+map is coordinatewise soft-thresholding:
+Sτ(zi) = sign(zi)max{|zi| − τ,0}.
+Therefore
+xk+1
+= Sαλ
+
+xk
+− αAT
+(Axk
+− b)
+
+.
+The thresholding step creates exact zeros and therefore sparse solutions.
+Figure 5: Soft-thresholding shrinks large coordinates and maps a central interval exactly
+to zero.
+7 Acceleration and FISTA
+Basic proximal gradient has an O(1/k) objective-gap rate for general convex problems.
+FISTA adds a momentum sequence and improves the worst-case rate to O(1/k2).
+7Convex Optimization Learning Set Student Edition
+One common form is
+xk+1
+= proxαg(yk
+− α∇f(yk
+)),
+tk+1 =
+1 +
+q
+1 + 4t2
+k
+2
+,
+yk+1
+= xk+1
++
+tk − 1
+tk+1
+(xk+1
+− xk
+).
+Acceleration can overshoot and produce a nonmonotone objective trace. Restart strate-
+gies reset the momentum when progress becomes unstable.
+Key idea: Acceleration is not a free lunch
+FISTA improves a worst-case rate, but a well-scaled basic method can outperform a
+poorly tuned accelerated method at modest accuracy. Compare real objective gaps
+and residuals, not only theorem labels.
+8 ADMM as a splitting method
+ADMM is natural for
+min
+x,z
+f(x) + g(z) subject to Ax + Bz = c.
+Using the scaled dual variable u, the updates are
+xk+1
+= argmin
+x
+f(x) +
+ρ
+2
+Ax + Bzk
+− c + uk
+2
+,
+zk+1
+= argmin
+z
+g(z) +
+ρ
+2
+Axk+1
++ Bz − c + uk
+2
+,
+uk+1
+= uk
++ Axk+1
++ Bzk+1
+− c.
+x-update z-update dual update
+repeat
+The primal residual is rk = Axk + Bzk − c. A common scaled dual residual is sk = ρAT B(zk −
+zk−1) for the general form, with simpler expressions in common consensus splits. Conver-
+gence monitoring should track both.
+Worked example: Consensus splitting
+To minimize f(x) + g(x), introduce a copy z and require x = z:
+min
+x,z
+f(x) + g(z) subject to x − z = 0.
+ADMM alternates a proximal-like update for f, a proximal-like update for g, and a
+dual correction enforcing agreement. This is useful when each separate subproblem
+is easy even though the combined problem is not.
+8Convex Optimization Learning Set Student Edition
+9 Stopping criteria and diagnostics
+No single stopping rule is universally sufficient.
+Diagnostic Useful when
+Gradient norm smooth unconstrained problems
+Projected-
+gradient map-
+ping
+constrained smooth problems
+Objective
+change
+almost any iterative method
+Primal/dual
+residuals
+constrained splitting methods
+Known duality
+gap
+primal-dual algorithms
+A robust implementation also reports iteration count, time, feasibility, and whether a
+maximum-iteration limit was reached.
+Common mistake: Plotting raw objective values only
+When the optimum is nonzero, raw values can look flat even while the objective gap
+is improving significantly. Plot f(xk)−f∗ when f∗ is known, and use a log scale when
+studying geometric convergence.
+10 Scaling and preconditioning
+Poor scaling can make an easy problem look algorithmically hard. Useful interventions
+include:
+• normalize columns of a data matrix;
+• rescale variables so typical magnitudes are comparable;
+• use diagonal preconditioning for quadratics;
+• reformulate constraints to avoid extremely large and small coefficients in the same row;
+• inspect solver warnings before increasing iteration limits.
+9Convex Optimization Learning Set Student Edition
+11 Mixed-media laboratory
+Mixed-media lab: Excel iteration table
+For g(u) = 3u2 − 2u + 1 on [0,2], place step size α and initial value u0 in named cells.
+Across columns, compute
+uk+1
+= max(0,min(2,uk
+− α(6uk
+− 2))).
+Below the iterates, compute objective values, objective gaps relative to 2/3, gradient
+magnitudes, and a stopping flag. Create a semilog chart of the gap.
+Mixed-media lab: Step-size sweep
+Use a one-variable Data Table to test α ∈ {0.02,0.05,0.10,0.16,0.20,0.30}. Record the
+gap after 20 iterations and whether the method oscillates or diverges. Explain the
+behavior using L = 6.
+Mixed-media lab: Algorithm comparison
+In Python or a notebook, solve one LASSO instance with proximal gradient and FISTA.
+Use the same starting point and stopping tolerance. Plot objective gap versus iter-
+ation and versus elapsed time. Report whether acceleration helps at the accuracy
+level you care about.
+Listing 2: Proximal gradient for LASSO
+import numpy as np
+def soft_threshold(z, tau):
+return np.sign(z) * np.maximum(np.abs(z) - tau, 0.0)
+def lasso_prox_grad(A, b, lam, x0, max_iter=2000, tol=1e-6):
+x = x0.copy()
+L = np.linalg.norm(A, 2) ** 2
+step = 1.0 / L
+history = []
+for k in range(max_iter):
+grad = A.T @ (A @ x - b)
+x_new = soft_threshold(x - step * grad, step * lam)
+obj = 0.5 * np.linalg.norm(A @ x_new - b) ** 2 + lam * np.linalg.norm(x_new,
+1)
+history.append(obj)
+if np.linalg.norm(x_new - x) <= tol * max(1.0, np.linalg.norm(x)):
+x = x_new
+break
+x = x_new
+return x, history
+10Convex Optimization Learning Set Student Edition
+12 Practice set
+Easy
+1. For f(x) = 1
+2xT Px + qT x, what is a Lipschitz constant for the gradient?
+2. What is the projection of z = −3 onto [0,2]?
+3. Compute S0.5(−0.3) and S0.5(2).
+Medium
+4. For P = diag(2,10), compute L, µ, and κ.
+5. Explain why independent coordinate clipping is not generally the Euclidean projection
+onto the probability simplex.
+6. Write one proximal-gradient step for 1
+2 ∥Ax − b∥2
++ λ∥x∥1.
+Hard
+7. Show that projection is the proximal operator of the indicator function of a closed con-
+vex set.
+8. Explain why ADMM is attractive for f(x)+g(z) with linear coupling even when a mono-
+lithic solver exists.
+9. Design a stopping rule for ADMM that includes absolute and relative scaling of both
+primal and dual residuals.
+13 Answer sketches
+1. L = λmax(P) for symmetric PSD P.
+2. 0.
+3. 0 and 1.5.
+4. L = 10, µ = 2, κ = 5.
+5. Clipping can violate the sum-to-one equality; simplex projection needs a shared thresh-
+old.
+6. x+ = Sαλ(x − αAT (Ax − b)).
+7. The indicator is 0 on C and +∞ outside, so the proximal minimization reduces exactly
+to nearest-point projection onto C.
+8. Splitting can isolate closed-form or parallelizable subproblems, reduce memory de-
+mands, and match distributed data ownership.
+9. Compare rk and sk against tolerances combining an absolute term with relative
+terms based on the magnitudes of Ax, Bz, c, and the dual quantities.
+11
