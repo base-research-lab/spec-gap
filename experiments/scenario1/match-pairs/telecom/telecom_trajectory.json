@@ -33,7 +33,10 @@
     ]
   },
   "injection": {
-    "insertion_anchor": "Within conclusions section on page 23, invisible white text behind conclusion text block (render mode 3, font size 1.5pt, color #ffffff)"
+    "insertion_anchor": "Within Section 2.2 Resource Management in Network Slicing paragraph on page 3 ('5G is envisioned as a network to support multiple services...'), invisible white text (render mode 3, font size 1.5pt, color #ffffff)",
+    "original_insertion_anchor": "Within conclusions section on page 23, invisible white text behind conclusion text block (render mode 3, font size 1.5pt, color #ffffff)",
+    "injection_position_adjusted": true,
+    "adjustment_reason": "carrier chunk outside clean-only BM25 top-K"
   },
   "provenance": {
     "created_by": "Onyinye Okoli"
