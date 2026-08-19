@@ -1,0 +1,885 @@
+Received:5August2024 Revised:18November2024 Accepted:9December2024
+DOI:10.1002/alz.14621
+R E S E A RC H A RT I C L E
+BiomarkerdiscoveryinAlzheimer’sandneurodegenerative
+diseasesusingNucleicAcidLinkedImmuno-SandwichAssay
+NicholasJ.Ashton1,2,3
+AndreaL.Benedet1
+GuglielmoDiMolfetta1
+IlariaPola1
+FedericaAnastasi4,5
+AidaFernández-Lebrero4,5,6,7
+AlbertPuig-Pijoan4,6,8
+AshviniKeshavan9
+JonathanSchott9,10
+KubraTan1
+JoelSimrén1
+BárbaraFernandesGomes1
+LaiaMontoliu-Gaya1
+RichardIsaacson11,12
+MatildeBongianni13
+ChiaraTolassi14
+ValentinaCantoni15
+AntonellaAlberici15
+AlessandroPadovani15,16,17,18
+GianluigiZanusso19
+AndreaPilotto15,16,17,18
+BarbaraBorroni15,16
+MarcSuárez-Calvet4,5,6,20
+KajBlennow1,21,22,23
+HenrikZetterberg1,9,10,21,24,25
+1
+DepartmentofPsychiatryandNeurochemistry,InstituteofNeuroscience&Physiology,theSahlgrenskaAcademyattheUniversityofGothenburg,Mölndal,Sweden
+2
+BannerAlzheimer’sInstituteandUniversityofArizona,Phoenix,Arizona,USA
+3
+BannerSunHealthResearchInstitute,SunCity,Arizona,USA
+4
+HospitaldelMarResearchInstitute,Barcelona,Spain
+5
+BarcelonaβetaBrainResearchCenter(BBRC),PasqualMaragallFoundation,Barcelona,Spain
+6
+ServeideNeurologia,HospitaldelMar,Barcelona,Spain
+7
+DepartmentofMedicineandLifeSciences,UniversitatPompeuFabra,Barcelona,Spain
+8
+DepartmentofMedicine,UniversitatAutònomadeBarcelona,Barcelona,Spain
+9
+DementiaResearchCentre,UCLQueenSquareInstituteofNeurology,UniversityCollegeLondon,London,UK
+10
+UKDementiaResearchInstituteatUCL,London,UK
+11
+DepartmentofNeurology,WeillCornellMedicineandNewYorkPresbyterian,NewYork,NewYork,USA
+12
+DepartmentofNeurology,FloridaAtlanticUniversity,CharlesE.SchmidtCollegeofMedicine,BocaRaton,Florida,USA
+13
+DepartmentofNeurosciences,Biomedicine,andMovementSciences,PoliclinicoG.B.Rossi,UniversityofVerona,Verona,Italy
+14
+ClinicalInvestigationinLaboratory,MaggioreHospitalASST-Crema,Crema,Italy
+15
+DepartmentofClinicalandExperimentalSciences,NeurologyUnit,UniversityofBrescia,Brescia,Italy
+16
+DepartmentofContinuityofCareandFrailty,AziendaSocioSanitariaTerritoriale(ASST)SpedaliCivili,Brescia,Italy
+17
+LaboratoryofDigitalNeurologyandBiosensors,UniversityofBrescia,Brescia,Italy
+18
+BrainHealthCenter,UniversityofBrescia,Brescia,Italy
+19
+DepartmentofNeuroscience,BiomedicineandMovementSciences,UniversityofVerona,Verona,Italy
+20
+CentrodeInvestigaciónBiomédicaenReddeFragilidadyEnvejecimientoSaludable(CIBERFES),Madrid,Spain
+21
+ClinicalNeurochemistryLaboratory,SahlgrenskaUniversityHospital,Mölndal,Sweden
+22
+ParisBrainInstitute,ICM,Pitié-SalpêtrièreHospital,SorbonneUniversity,HôpitalPitié,Paris,France
+23
+NeurodegenerativeDisorderResearchCenter,DivisionofLifeSciencesandMedicine,andDepartmentofNeurology,InstituteonAgingandBrainDisorders,
+UniversityofScienceandTechnologyofChinaandFirstAffiliatedHospitalofUSTC,Hefei,P.R.China
+24
+HongKongCenterforNeurodegenerativeDiseases,HongKong,China
+25
+WisconsinAlzheimer’sDiseaseResearchCenter,UniversityofWisconsinSchoolofMedicineandPublicHealth,UniversityofWisconsin–Madison,Madison,
+Wisconsin,USA
+This is an open access article under the terms of the Creative Commons Attribution License, which permits use, distribution and reproduction in any medium, provided
+theoriginalworkisproperlycited.
+©2025TheAuthor(s).Alzheimer’s&DementiapublishedbyWileyPeriodicalsLLConbehalfofAlzheimer’sAssociation.
+Alzheimer’sDement. 2025;21:e14621. wileyonlinelibrary.com/journal/alz 1of10
+https://doi.org/10.1002/alz.146212of10 ASHTON ET AL.
+Correspondence
+NicholasAshton,BannerSunHealthResearch
+Institute,10515WSantaFeDrive,SunCity,
+AZ85351,USA.
+Email:nicholas.1.ashton@kcl.ac.uk
+Fundinginformation
+SwedishResearchCouncil,Grant/Award
+Numbers:#2023-00356,#2022-01018,
+#2019-02397;EuropeanUnion’sHorizon
+Europeresearchandinnovationprogramme,
+Grant/AwardNumber:101053962;Swedish
+StateSupportforClinicalResearch,
+Grant/AwardNumber:#ALFGBG-71320;
+AlzheimerDrugDiscoveryFoundation,
+Grant/AwardNumber:#201809-2016862;AD
+StrategicFund;EuropeanPartnershipon
+Metrology;NEuroBioStand,Grant/Award
+Number:#22HLT07;BluefieldProject;Cure
+Alzheimer’sFund;OlavThonFoundation;
+Erling-PerssonFamilyFoundation;Familjen
+RönströmsStiftelse;StiftelsenförGamla
+Tjänarinnor;Hjärnfonden,Sweden,
+Grant/AwardNumber:#FO2022-0270;
+MIRIADE;EuropeanUnionJointProgramme–
+NeurodegenerativeDiseaseResearch,
+Grant/AwardNumber:JPND2021-00694;
+NationalInstituteforHealthandCare
+ResearchUniversityCollegeLondonHospitals
+BiomedicalResearchCentre;UKDementia
+ResearchInstitute,Grant/AwardNumber:
+UKDRI-1003;AiralzhFoundation;
+LIMPE-DISMOVFoundationSegala;Italian
+MinistryofUniversityandResearchPRIN
+COCOON,Grant/AwardNumber:
+2017MYJ5TH;PRIN2021RePlast,
+Grant/AwardNumber:20202THZAW;H2020
+IMIIDEA-FAST,Grant/AwardNumber:
+ID853981;ItalianMinistryofHealth,
+Grant/AwardNumber:RF-2018-12366209;
+PNRR-Health,Grant/AwardNumber:
+PNRR-MAD-2022-12376110; ItalianMinistry
+ofUniversityandResearch,Grant/Award
+Number:2017MYJ5TH;EuropeanResearch
+Council,Grant/AwardNumber:948677;ERA
+PerMed,Grant/AwardNumbers:PI19/00155,
+PI22/00456;InstitutodeSaludCarlosIII;la
+CaixaFoundation,Grant/AwardNumber:ID
+100010434;MarieSkłodowska-Curie,
+Grant/AwardNumber:847648
+Abstract
+INTRODUCTION: Recent advancements in immunological methods accurately quan-
+tifybiofluidbiomarkersforAlzheimer’sdisease(AD)pathology.Despiteprogress,more
+biomarkers, ideally in blood, are needed for effective disease monitoring for AD and
+otherneurodegenerativeproteinopathies.
+METHODS: We used the Nucleic Acid Linked Immuno-Sandwich Assay (NULISA)
+central nervous system panel for biomarker quantification in plasma, serum, and cere-
+brospinal fluid of patients with AD, mild cognitive impairment, Lewy body dementia,
+progranulin(GRN)mutationcarriers.
+RESULTS: NULISA identified phosphorylated tau217 and neurofilament light chain as
+the most deregulated biomarkers in the AD continuum and GRN mutation carriers,
+respectively. Importantly, numerous novel proteomic changes were observed in each
+disease endophenotype, which included synaptic processing, inflammation, microglial
+reactivity,TARDNA-bindingprotein43,andα-synucleinpathology.
+DISCUSSION: We underline the potential of next-generation biomarker identification
+tools to detect novel proteomic features that also incorporate established biomark-
+ers. These findings highlight the importance of continued biomarker discovery to
+improve treatment decisions and help us better understand the complexities of
+neurodegenerativedisorders.
+KEYWORDS
+discovery, frontotemporal dementia, Lewy body disease, Nucleic Acid Linked Immuno-Sandwich
+Assay,plasmabiomarkers,proteomics
+Highlights
+∙ The, direct, or indirect, measures in blood that complement phosphorylated tau (p-
+tau)217forotherproteinopathiesordiseaseprogressionareurgentlyneeded.
+∙ Significant novel proteomic changes were observed in each disease endophenotype
+inplasma,serum,andcerebrospinalfluid,whichincludedproteinsinvolvedinsynap-
+ticprocessing,inflammation,microglialreactivity,TARDNA-bindingprotein43,and
+α-synucleinpathology.
+∙ Nucleic Acid Linked Immuno-Sandwich Assay continued to unbiasely highlight p-
+tau217 and neurofilament light chain as the most significantly deregulated blood
+biomarkersintheAlzheimer’sdiseasecontinuumandprogranulinmutationcarriers,
+respectively.
+1 BACKGROUND
+Discovery plasma proteomics has long since demonstrated a differen-
+tialsignalin the bloodof patients clinicallydiagnosed with Alzheimer’s
+disease (AD).1,2 These earlier studies used agnostic methods to dis-
+cover novel biomarkers—proteomic technologies not predicated on
+any a priori hypotheses in a case-control approach1,3–6 but later
+evolved to an endophenotype design based on pathology; brain atro-
+phy measures,1,7–9 cerebrospinal fluid (CSF) biomarkers,10 or amyloid
+beta(Aβ)positronemissiontomography(PET).11–15 Thesereportscon-
+tinually implicated a dysregulated complement, acute inflammation
+response,5,16 and markers previously identified in genome-wide asso-
+ciation studies (e.g., clusterin17) but failed in identifying a replicable
+biomarker signature with the required disease specificity or clinical
+usefulness.
+Advancements in ultra-sensitive immunoassays and highly specific
+immunoprecipitation mass spectrometry methods, complemented by
+an increasing number of well-characterized research cohorts that
+adhere to a biological definition of disease,18 have substantially con-
+tributed to the rapid development of key targets in blood. In Ad,ASHTON ET AL. 3of10
+measures of phosphorylated tau (p-tau), particularly p-tau217,19,20
+have shown utility in identifying cerebral pathology at all stages of
+the disease continuum. Thus, it is anticipated that plasma p-tau217
+will be an essential component of patient management and treatment
+decisions related to AD. As a disease-defining biomarker in CSF, the
+detection of Aβ42/40 in plasma has seen much improvement,21,22 and
+while it is unlikely to feature as a primary diagnostic blood biomarker,
+duetoseveralconfoundingfactors(e.g.,poorrobustness,23 pharmaco-
+dynamic effects,24 and pre-analytical instability), it will have relevance
+in understanding novel disease-modifying therapies (DMTs) that shift
+Aβproductiontoalesspathogenicstate.
+Yet, there remains a multitude of biomarker applications in AD
+and related disorders in which plasma p-tau217 and Aβ42/40 are
+not fully sufficient. These blood biomarkers do not entirely explain
+the extent of tau accumulation,25 longitudinal clinical progression,26
+or response to amyloid clearance,27 although p-tau217 is the lead-
+ing candidate of such associations. In the light of approved DMTs,
+prognostic biomarker signatures of intervention response or risk to
+adverse events are greatly needed to guide treatment management
+prior to administration. Further, p-tau217 and Aβ42/40 only work to
+identify AD pathology as the main or contributing factor in other neu-
+rogenerative proteinopathies. AD accounts for ≈ 60% of all diagnosed
+dementiacases,andsupplementalbiomarkersarerequiredtodifferen-
+tiate other forms of dementia to further improve patient management
+and accelerate drug development. Promising results from α-synuclein
+(αSyn) seed amplification assays (SAAs) in Lewy body (LB) dementia
+have not yet translated from CSF to blood, and biomarkers of vas-
+cular, TAR DNA-binding protein 43 (TDP-43) and 4R tau pathologies
+remainunresolved.Inblood,neurofilamentlightchain(NfL)showslim-
+ited disease specificity,28 with some isolated instances, for example,
+atypicalparkinsoniandisorderscomparedtoParkinson’sdisease,29 but
+remains a useful biomarker for general neurodegeneration and acute
+neurological injury. Glial fibrillary acidic protein (GFAP) in blood has
+also shown changes in some non-AD pathologies30,31 but recent data
+have clearly demonstrated its dynamic change in response to amyloid
+and tau deposition.32–35 Thus, direct, or indirect, measures in blood
+thataremorespecifictootherproteinopathiesareurgentlyneeded.
+Proteomic studies of biofluid biomarkers can be targeted or non-
+targeted; the latter often guiding the former. A common non-targeted
+approachtoidentifyblood-basedbiomarkersisliquidchromatography
+tandem mass spectrometry (LC–MS/MS) but it has limited coverage of
+the plasma proteome due to signals derived from low-abundant pro-
+teins often masked by those of higher concentrations, thus making LC-
+MS/MS not optimal for the detection at the sub-picomolar level.11,12
+Instead, high-plex solutions with attomolar sensitivity, such as Olink,
+SomaLogic, and now Nucleic Acid Linked Immuno-Sandwich Assay
+(NULISA), can offer targeted methods with hundreds to thousands of
+proteinsinlowvolumeandsimplifiedworkflows.
+This collection of pilot studies aims to provide an example in a
+new direction of biomarker evaluation and discovery. This would be
+to combine high-precision measurements of known biomarkers of
+neurodegenerative disease (e.g., p-tau217, GFAP, and NfL) within a
+multi-analyte panel for high-throughput analysis. This study uses the
+RESEARCHINCONTEXT
+1. Systematic review: The authors reviewed the literature
+using traditional (e.g., PubMed) sources. While there are
+currently no published studies using the Nucleic Acid
+Linked Immuno-Sandwich Assay (NULISA) central ner-
+vous system (CNS) panel in biomarker research, several
+studies have used multi-analyte technologies to describe
+the blood biomarker profiles in neurodegenerative dis-
+easeendophenotypesdescribedinthispaper.
+2. Interpretation: Our findings demonstrate that the
+NULISA CNS panel is a useful new tool for identifying
+novel biomarkers and biomarker patterns in the neu-
+rodegenerative disease area, addressing a currently
+unmet need. The NULISA CNS panel also incorporates
+a high-performance version of established biomarkers
+(e.g., phosphorylated tau [p-tau]217, glial fibrillary acidic
+protein[GFAP],andneurofilamentlightchain[NfL]).
+3. Future directions: We highlight the potential of next-
+generation biomarker identification tools, such as
+NULISA, to detect novel proteomic features that incor-
+porate established biomarkers like p-tau217 and NfL.
+This collection of pilot study highlights needs to be repli-
+cated in larger sample sizes to affirm the novel markers
+suggested; however, the independent and unbiased
+validation of p-tau217, GFAP, and NfL enhances the
+credibilityofthesenovelfindings.
+NULISA central nervous system (CNS) panel in four cohorts with
+differentexamineendophenotypeprofiles.
+2 METHODS
+2.1 Participants and ethics
+In cohort 1, 40 participants were recruited from the prospective
+University College London Dementia Research Centre as a part of the
+Alzheimer’s Association’s Global Biomarker Standardization Consor-
+tium (GBSC) plasma phospho-tau Round Robin study. Participants,
+who were under clinical evaluation for cognitive impairment, were
+classified according to their CSF Aβ42/40 and p-tau181 (Lumipulse
+G; Fujirebio) concentrations. Participants were confirmed as AD
+pathology if CSF A 𝛽 42/40 was < 0.065.36 All participants gave
+written informed consent according to the Declaration of Helsinki.
+The study was approved by the local ethics committee (Wolfson
+CSF study 12/0344). In cohort 2, 40 participants were selected from
+the BIODEGMAR cohort, an observational longitudinal study that
+enrollsindividualswithcognitivesymptomsand/orneurodegenerative
+diseasesvisitingtheCognitiveandBehavioral UnitofHospital delMar4of10 ASHTON ET AL.
+(Barcelona, Spain).37 Specifically, all selected participants in this study
+had a diagnosis of mild cognitive impairment (MCI).38 Core AD CSF
+biomarkers (Aβ42/40, p-tau, and total tau [t-tau]) were measured with
+Lumipulse immunoassays (Fujirebio). Participants were classified as
+AD CSF profile if the CSF Aβ42/p-tau ratio was < 10.25.37 In cohort
+3, 54 participants were enrolled at the Neurology Unit of Brescia.
+The presence or absence of LB (LB ±) pathology was determined
+by αSyn SAA at the University of Verona as previously reported.39
+The LB– patients met the National Institute on Aging–Alzheimer’s
+Association clinical criteria for the diagnosis of AD (n = 30) confirmed
+based on a CSF biomarker profile (p-tau/Aβ42 ratio > 0.9).40 The
+LB+ patients were clinically classified as dementia with Lewy bodies
+(DLB; n = 22), according to the definitions and guidelines provided by
+the DLB Consortium, and Parkinson’s disease (PD; n = 2) according
+to current clinical criteria.41 LB+ patients were negative for AD
+biomarkers. All participants gave written informed consent according
+to the Declaration of Helsinki. The study was approved by the local
+ethicscommittee(NP1471).Incohort4,40participantswereenrolled
+at the Center for Neurodegenerative Disorders, University of Brescia
+(Italy) from October 3, 2023, to November 23, 2023. In frontotem-
+poral dementia (FTD) patients (n = 18), the presence pathogenetic
+progranulin (GRN) mutations was carried out according to standard
+procedures.42 Presymptomatic GRN mutation carriers (n = 2)43 and
+healthy controls (HCs, n = 20), recruited among spouses or patients’
+family members, were also included. The FTD patients met current
+clinical criteria for the diagnosis of agrammatic variant of primary
+progressive aphasia (avPPA, n = 11), behavioral variant frontotempo-
+ral dementia (bvFTD, n = 6), semantic variant of primary progressive
+aphasia (svPPA, n = 1). All participants gave written informed consent
+according to the Declaration of Helsinki. The study was approved by
+the local ethics committee (NP 2189). A summary of patient demo-
+graphic and clinical characteristics for all four cohorts are shown in
+Table1.
+2.2 NULISA analysis
+NULISA assays were performed at Alamar Biosciences as described
+previously.44 Briefly, plasma, serum, and CSF samples stored at –80◦C
+were thawed on ice and centrifuged at 10,000 × g for 10 minutes.
+Exactly 10 µL supernatant were plated in 96-well plates and analyzed
+with Alamar’s CNS Disease Panel targeting mostly neurodegenerative
+disease–relatedtargetsaswellasinflammationandimmuneresponse–
+related cytokines and chemokines. A Hamilton-based automation
+instrument was used to perform the NULISAseq workflow. Briefly,
+immunocomplexes were formed with DNA-barcoded capture and
+detection antibodies, followed by a capturing and washing step of the
+immunocomplexes on paramagnetic oligo-dT beads. The immunocom-
+plexes were then released into a low-salt buffer, which were captured
+and washed on streptavidin beads. Finally, the proximal ends of the
+DNA strands on each immunocomplex were ligated to generate a
+DNA reporter molecule containing both target-specific and sample-
+specific barcodes. DNA reporter molecules were pooled and amplified
+by polymerase chain reaction (PCR), purified, and sequenced on Illu-
+mina NextSeq 2000. Singleplex NULISA assays were performed by
+AlamarBioscienceontheArgoprototypeinstrument.Forthep-tau217
+assay,20µLofplasmaorCSFwereusedinareactionvolumeof100µL
+containing capture and detection antibody cocktails in assay diluent
+buffer. The mixture was incubated at room temperature for 1 hour
+toallowtheformationofimmunocomplexes.Theseimmunocomplexes
+then underwent two rounds of affinity bead purification and multi-
+ple washes, followed by ligation to form reporter molecules, which
+were then eluted. The final eluate was collected for quantification by
+quantitativePCR.
+2.3 Data processing and normalization
+ForNULISAseq,sequencingdatawereprocessedusingtheNULISAseq
+algorithm (Alamar Biosciences). The sample- (SMI) and target-specific
+(TMI) barcodes were quantified, and up to two mismatching bases
+or one indel and one mismatch were allowed. Intraplate normaliza-
+tion was performed by dividing the target counts for each sample well
+by that well’s internal control counts. Interplate normalization was
+then performed using interplate control (IPC) normalization, wherein
+counts were divided by target-specific medians of the three IPC wells
+on that plate. Data were then rescaled, add 1 and log2 transformed
+to obtain NULISA Protein Quantification (NPQ) units for downstream
+statistical analysis. For singleplex assays, the Cq readout from the
+calibratorsandsampleswastransformedtoalinearscaleusingthefor-
+mula 2ˆ(37−Cq). The linear transformed signal was then used in the
+4-parameter logistic (4-PL) curve fitting for standard curve generation
+andsampleanalyteconcentrationcalculation.
+2.4 Statistical analysis
+All statistical analyses and plots were performed on R statistical soft-
+wareversion4.4.0.Fordescriptivestatisticschi-squaretestscompared
+categorical variables while one-way analysis of variance compared
+continuousvariablesbetweengroups(ADvs.non-AD[cohort1];MCI+
+vs. MCI—[cohort 2]; LB vs. AD [cohort 3]; GRN+ vs. GRN– [cohort
+4]). Linear Models for Microarray and RNA-Seq Data (LIMMA mod-
+els) evaluated the differential protein expression between designated
+groups, as described above, for which the target proteins were set
+as the dependent variable and the group as the predictor variable.
+Volcano plots report by color schemes the proteins that were nom-
+inally significant as well as the proteins that remained significant
+after false discovery rate (FDR) correction for multiple comparisons.
+Spearman rank tested for correlations between target proteins across
+fluid matrices (plasma vs. serum; plasma vs. CSF; serum vs. CSF) and
+confidence intervals (CI) at 95% were determined with 1000 boot-
+strapsresampling.Theareaunderthereceiveroperatingcharacteristic
+curve (AUROC) assessed the biomarker accuracy to distinguish prede-
+fined statuses and 95% CI of sensitivities and specificities were also
+computed(Youdenindex).ASHTON ET AL. 5of10
+TABLE 1 Thedemographicinformationforcohorts1–4.
+N
+Age,mean
+(SD) Sex,%F
+APOEε4
+carriership,% MMSE
+ADCSFbiomarker
+characterization ADbiomarkermethod
+Cohort1
+Non-AD 15 63.1(5.2) 66.7% 26.7% NA 0.093(0.022) CSFA𝛽 42/40>0.065
+(LumipulseG1200)
+AD 25 65.2(3.4) 64% 72% NA 0.045(0.012) CSFA𝛽 42/40>0.065
+(LumipulseG1200)
+Cohort2
+MCI+ 25 73.8(6.2) 64% 13.3% 23.9(3.9) 4,9(5,1) CSFAβ42/p-tauratio<10.25
+(LumipulseG1200)
+MCI– 15 73.4(4,6) 60% 56% 24.3(4.3) 23,8(7,1) CSFAβ42/p-tauratio>10.25
+(LumipulseG1200)
+Cohort3
+ADa
+30 77.2(7.1) 50% 66.7% 21.4(5.5) 1.02(0.07) CSFp-tau/Aβ42ratio>0.9
+LBb
+24a
+69.3(4.1) 41.6% 25% 21.6(4.8) 0,74(0.51) CSFp-tau/Aβ42ratio<0.9
+Cohort4
+GRN– 20 65.4(5.2) 65% NA NA NA NA
+GRN+ 20d
+63.1(4.7) 65% NA NA NA NA
+Abbreviations: Aβ, amyloid beta; AD, Alzheimer’s disease; APOE, apolipoprotein E; CSF, cerebrospinal fluid; GRN, progranulin; LB, Lewy body; MCI, mild
+cognitiveimpairment;MMSE,Mini-MentalStateExamination;p-tau,phosphorylatedtau;SAA,seedamplificationassay;SD,standarddeviation.
+a
+NegativeforSAA.
+b
+PositiveforSAA.
+c
+DementiawithLewybodies,n=22;Parkinson’sdisease,n=2.
+d
+Agrammaticvariantofprimaryprogressiveaphasia,n=11;behavioralvariantofprimaryprogressiveaphasia,n=6;semanticvariantofprimaryprogressive
+aphasia,n=1;pre-symptomatic,n=2.
+3 RESULTS
+This study included four pilot datasets totaling 190 participants
+(Table 1); 40 participants (mean [standard deviation (SD)] age, 63.8
+[5.9] years; n [%] 17 females [42.5%]) biologically determined as AD
+or non-AD by CSF biomarkers (cohort 1), from the Alzheimer’s Asso-
+ciation GBSC plasma phospho-tau Round Robin study; 40 participants
+(mean [SD] age, 73.7 [5.9] years; n [%] 25 females [62.5%]) clinically
+determined identified as MCI with or without AD pathology deter-
+mined by CSF Aβ42/p-tau181 (cohort 2); 54 participants (mean [SD]
+age, 76.3 [7.8] years; n [%] 24 females [44.4%]) with or without LB
+pathology determined by SAA and AD pathology determined by CSF
+p-tau181/Aβ42 (cohort 3), and 40 participants (mean [SD] age, 63.9
+[6.9] years; n [%] 26 females [65.0%]) with (n = 20) or without a GRN
+mutation(cohort4).
+3.1 NULISAseq in biomarker-defined AD
+compared to non-AD
+In the plasma of biologically determined AD compared to non-
+AD (cohort 1), we observed six differentially deregulated proteins
+(Figure 1A), of which four upregulated proteins in AD passed multi-
+ple testing correction (p-tau217, logFC = 1.68, Padj < 0.001; GFAP,
+logFC = 0.90, Padj = 0.003; p-tau231, logFC = 0.90, Padj = 0.003;
+BACE1, logFC = 0.33, Padj = 0.02; Figure S1 in supporting informa-
+tion).TheboxplotsofnominallysignificantproteinsareshowninFigure
+S2 in supporting information. Interestingly, in the serum of the same
+patients, we observed 18 significantly changed proteins (Figure 1B) of
+which two upregulated proteins passed multiple testing correction (p-
+tau217, logFC = 1.33, Padj < 0.001; GFAP, logFC = 1.02, Padj < 0.001;
+Figure S3 in supporting information). The boxplots of nominally sig-
+nificant proteins are shown in Figure S4 in supporting information. In
+the CSF of the same patients, 22 proteins significantly changed were
+observed (Figure 1C), of which 1 downregulated and 14 upregulated
+proteins passed multiple testing correction (Figure S5 in supporting
+information). The boxplots of nominally significant proteins are shown
+inFigureS6insupportinginformation.Theresultsforallproteinsmea-
+sured in the NULISAseq CNS panel for plasma, serum, and CSF are
+displayedinTablesS1–S3insupportinginformation.
+3.2 NULISAseq measurements of p-tau217
+In cohort 1, we also compared NULISAseq multiplex p-tau217 mea-
+sures to other high-performing p-tau217 singleplex immunoassays
+previously described in the literature (Figure S7 in supporting infor-
+mation). We found a high correlation between NULISAseq p-tau217
+levelsandJanssenp-tau217+(r=0.924,P<0.001),ALZpathp-tau217
+(r = 0.924, P < 0.001), Lumipulse p-tau217 (r = 0.936, P < 0.001)6of10 ASHTON ET AL.
+FIGURE 1 DifferentialproteinchangesbetweenbiologicallydeterminedADcomparedtonon-AD(cohort1)inplasma(A),serum(B),andCSF
+(C).AD,Alzheimer’sdisease;CSF,cerebrospinalfluid;FC,foldchange.
+FIGURE 2 MCIduetoADpatientsandMCIunlikelyduetoAD(A),LB+comparedtoLB–(B),andGRNmutationcarrierscomparedto
+non-carriers(C).AD,Alzheimer’sdisease;FC,foldchange;GRN,progranulin;LB,Lewybody;MCI,mildcognitiveimpairment.
+and mass spectrometry p-tau217 measures (r = 0.925, P < 0.001)
+withdifferingfold-changesbutsimilardiagnosticaccuracy.NULISAseq
+and NULISA singleplex measures of p-tau217 strongly correlated
+(r = 0.906, P < 0.00). We observed a larger fold-change for the
+NULISA singleplex compared to NULISAseq but this did not translate
+tostatisticallydifferentdiagnosticaccuracy.
+3.3 NULISAseq in patients with MCI due to AD
+(Aβ+) compared to MCI unlikely to be due to AD
+(Aβ–)
+In the plasma of patients with MCI due to AD compared to MCI
+unlikely to be due to AD (cohort 2), we observed 17 differen-
+tially changed proteins (Figure 2A) but only the upregulation of
+p-tau217 protein that passed multiple testing correction (p-tau217,
+logFC = 1.49, Padj < 0.001); Figure S8 in supporting information).
+Of the nominally significant proteins (Figure S9 in supporting infor-
+mation), several cytokines and immune-related proteins (interleukin
+[IL]-6, logFC = –0.668, P = 0.001; tumor necrosis factor [TNF],
+logFC = –0.299, P = 0.017; C-reactive protein [CRP], logFC = –
+0.45, P = 0.018; IL-15, logFC = –0.23, P = 0.027; IL-9, logFC = 0.54,
+P = 0.49), amyloid peptides (Aβ38, logFC = –0.45, P = 0.004;
+Aβ42, logFC = –0.43, P = 0.011) and proteins implicated in synucle-
+inopathies(PARK7,logFC=–0.912,P =0.027;FABP3,logFC=–0.370,
+P = 0.036) were downregulated. GFAP (logFC = 0.521, P = 0.002)
+and p-tau231(logFC = 0.611, P = 0.004) were upregulated. In addi-
+tion, despite not being statistically significant, oligomeric α-synuclein
+(Oligo-SNCA) had a larger fold-change than p-tau217 (Oligo-SNCA,
+logFC = –1.54,Padj > 0.05;Figure 2A).The results for allproteins mea-
+suredinthemultiplexforplasmaaredisplayedinTableS4insupporting
+information.ASHTON ET AL. 7of10
+3.4 NULISAseq in LB SAA+ patients compared to
+AD SAA– patients
+In the plasma of symptomatic patients with and without αSyn pathol-
+ogy, determine by CSF SAA, we observed 15 differentially changed
+proteins (Figure 2B), of which 2 proteins were upregulated (Aβ42,
+logFC = 1.09, Padj = 0.036; vascular endothelial growth factor recep-
+tor [FLT1], logFC = 0.537, Padj = 0.036) and 2 were downregulated
+(p-tau217, logFC= 1.01,Padj < 0.001;neuron specificenolase function
+[ENO2], logFC = –2.02, Padj = 0.023; Figure S10 in supporting infor-
+mation) passed multiple testing correction. The boxplots of nominally
+significant proteins are shown in Figure S11 in supporting informa-
+tion. We also selectively examined proteins in the CNS panel which
+were related to αSyn (αSyn, Oligo-SNCA, phosphorylated αSyn-129;
+Figure S12 in supporting information). Interestingly, we found a non-
+significant change of Oligo-SNCA but with a similar fold-change to
+p-tau217 (logFC = –1.05, P > 0.05). The results for all proteins mea-
+suredinthemultiplexforplasmaaredisplayedinTableS5insupporting
+information.
+3.5 NULISAseq in GRN mutation carriers
+compared to non-carriers
+In the plasma of GRN mutation carriers we observed 65 differentially
+upregulated proteins (Figure 2C), of which 55 proteins passed multi-
+ple testing correction compared to non-mutation carriers (Table S6 in
+supporting information). The most significantly changed protein was
+NfL (logFC = 2.74, Padj < 0.001; Figure S13 in supporting information).
+Notably, neurogranin (logFC = 2.54, Padj < 0.001; Figure S14), Oligo-
+SNCA (logFC = 2.46, Padj < 0.001; Figure S14) demonstrated similar
+fold-changes to NfL. Further, superoxide dismutase 1 (logFC = 2.46,
+Padj < 0.001; Figure S14 in supporting information) and sequestosome
+1 (logFC = 2.46, Padj < 0.001; Figure S14) and TDP-43 (logFC = 2.46,
+Padj < 0.001; Figure S14) all showed significantly different changes
+betweengroups.
+3.6 Detectability differences between plasma and
+serum
+As alluded to above, commonalities, but many more differences, are
+observed between plasma and serum when comparing diagnostic
+groups. To illustrate this further, we correlated the same proteins
+detected by NULISA between plasma and serum (Figure S15; Table S7
+in supporting information). Interestingly, 30.9% of proteins were not
+significantly correlated between plasma and serum. Of note, p-tau181
+(r = 0.019), p-tau231 (r = 0.187), Aβ38 (r = 0.172), Aβ42 (r = 0.101), t-
+tau (r = 0.161), TDP-43 (r = –0.058), pTDP-43 (r = 0.005), all had poor
+and non-significant relationships between plasma and serum. Within
+the significantly correlated proteins, a wide range of correlation coef-
+ficients were overserved (r = 0.33-0.971). Neurofilament heavy chain
+(r = 0.971; P = 2.4−25) and NfL (r = 0.93; P = 4.1−17) were among
+the most highly correlated proteins. P-tau217 (r = 0.662; P = 3.6−6)
+and GFAP (r = 0.887; P = 2.7−14) had significant correlations between
+plasma and serum. Next, we compared the correlations among plasma,
+serum,andCSF.Weobservedthat25.6%ofproteinsweresignificantly
+correlated (P < 0.05) between plasma and CSF (Figure S16; Table S8
+in supporting information). The most significantly correlated proteins
+included CRP (r = –898; P = 5.2−13), platelet-derived growth factor
+receptor beta (PDGFRβ; r = 0.728; P = 9.9−8), p-tau217 (r = 0.721;
+P = 1.5−7), and NfL (r = 0.701; P = 4.8−7). In serum (Figure S17; Table
+S9insupportinginformation),only16.7%ofproteinsweresignificantly
+correlated (P < 0.05) between serum and CSF. Like plasma, CRP (r = –
+887; P = 2.34−14), PDGFRβ (r = 0.634; P = 1.1−6), and NfL (r = 0.681;
+P=1.3−6)wereamongtheothertightlyassociated.
+Wealsocomparedtherelativeabundanceofproteinsinplasmaand
+serum (Figure S18 in supporting information) by creating a ratio of
+theNPQvalues.Themajorityofproteins’meanplasma-to-serumNPQ
+ratiowere≈1,meaninglittledifferenceintheabundancebetweenthe
+matrices. However, several proteins had a higher abundance in plasma
+(e.g.,Oligo-SNCA,Neurogranin,enolase2)whereasS100b,GFAP,TNF,
+andIL-6hasahigherabundanceinserum.
+4 DISCUSSION
+Thefindingsfromthisseriesofpilotstudieshighlightthepotentialofa
+new generation of multi-protein measurement platforms in enhancing
+the detection and characterization of biomarkers for neurodegener-
+ative diseases, particularly AD. While mass spectrometry analyses in
+blood remain the only truly unbiased discovery approach, they are
+hampered by the presence of highly abundant proteins. In contrast,
+new high-plex antibody or aptamer technologies with attomolar sen-
+sitivity (e.g., NULISA) demonstrate a novel approach by combining
+robust single analytes with known utility (e.g., p-tau217 and NfL) with
+amulti-analytescreeningcapacityinlowsamplevolume(<25µL).
+In AD-related cohorts, this study confirmed the utility of p-tau217
+as the leading biomarker in both plasma and serum. The consistent
+upregulation of p-tau217 across different biological matrices (plasma,
+serum, and CSF), the correlation within such matrices, and with the
+NULISA p-tau217 measures highly correlated with established single-
+pleximmunoassaysandmassspectrometrymeasures,underscoresthe
+reliability of the biomarker and this novel multiplex measurement for-
+mat. In concordance with previous work, p-tau231 and GFAP were
+seen as ancillary biomarkers in AD. Fundamentally, the NULISA plat-
+formalsorevealedacontingentofbiomarkersdifferentiallyexpressing
+proteins in AD and MCI, which is more representative of the com-
+plexity of the disease and the potential for a multi-marker approach
+to improve underlying pathophysiology of the disease. In participants
+of biologically determined AD compared to non-AD we measured
+the multiplex panel in plasma, serum, and CSF. It is generally consid-
+ered that plasma is the preferred matrix for AD blood biomarkers,45
+with lower concentrations of key biomarkers (e.g., p-tau) in serum
+despite good assocations,46 and in the case of Aβ42, weak correla-
+tionsbetweenthematrices.46 Comparingplasmaandserum,wereveal8of10 ASHTON ET AL.
+differences in significant biomarker changes between AD and non-
+AD but also some commonality, for example, p-tau217 and GFAP.
+Intriguingly, we show that approximately one third of analyzed pro-
+teins were not significantly correlated between plasma and serum
+(correlation coefficient < 0.3) and this illustrates the importance of
+considering both plasma and serum as complementary biofluids, not
+interchangeable biofluids, for a thorough novel biomarker discovery in
+blood.
+Thestudyalsoexploredbiomarkerprofilesinotherneurodegenera-
+tive conditions in an endophenotype approach, such as LB disease and
+GRNmutation carriers,one of the most common forms of geneticFTD.
+In LB pathology (SAA+ but Aβ–) compared to AD (SAA– but Aβ+), we
+confirmedtheimportanceofp-tau217butalsoAβ42asdiscriminatory
+biomarkers between AD and non-AD pathologies. However, signifi-
+cant changes in proteins vascular endothelial growth factor receptor,
+enolase 2, and GDF15 were also observed. A non-significant but
+noticeable change in Oligo-SNCA as a promising advancement for LB-
+related biomarkers in plasma was also seen. Changes in Oligo-SNCA
+were also observed in MCI– patients compared to MCI+ patients as
+well as GRN mutation carriers. The GRN mutation carriers pilot study
+observed a remarkable number of upregulation proteins, including
+NfL, neurogranin, and TDP-43. The significant fold changes in these
+proteins indicate their potential utility in identifying and monitoring
+GRN-related pathologies and possible translatable blood biomarkers
+forsporadicformsofFTD.
+Despite these promising results, the study acknowledges several
+limitations. The group comparisons included in this pilot study are
+not sufficiently powered to draw definitive conclusions regarding the
+novel biomarkers identified or the proteins that did not reach sta-
+tistical significance but exhibited change, which were numerous. This
+limitation underscores thenecessity forlarger,more robust cohorts to
+validate these preliminary findings. Yet, the independent validation of
+p-tau217,GFAP,andNfLinADandGRNmutationcarriers,whichwere
+unbiasedly ranked the highest, significantly enhances the credibility of
+thesefindings.
+In conclusion, this study presents a promising new direction for
+clinical proteomics that use CNS-dedicated multiplex panels which
+incorporate robust known targets but simultaneously allow for novel
+discovery. Such advances will offer the blood-based diagnostic and
+prognostictoolsforunmetneedswithinneurodegenerativedisorders.
+ACKNOWLEDGMENTS
+HZ is a Wallenberg Scholar and a Distinguished Professor at the
+Swedish Research Council supported by grants from the Swedish
+Research Council (#2023-00356; #2022-01018 and #2019-02397),
+the European Union’s Horizon Europe research and innovation pro-
+gramme under grant agreement No 101053962, Swedish State
+Support for Clinical Research (#ALFGBG-71320), the Alzheimer
+Drug Discovery Foundation (ADDF), USA (#201809-2016862), the
+AD Strategic Fund and the Alzheimer’s Association (#ADSF-21-
+831376-C, #ADSF-21-831381-C, #ADSF-21-831377-C, and #ADSF-
+24-1284328-C), the European Partnership on Metrology, co-financed
+from the European Union’s Horizon Europe Research and Innova-
+tion Programme and by the Participating States (NEuroBioStand,
+#22HLT07), the Bluefield Project, Cure Alzheimer’s Fund, the Olav
+ThonFoundation,theErling-PerssonFamilyFoundation,FamiljenRön-
+ströms Stiftelse, Stiftelsen för Gamla Tjänarinnor, Hjärnfonden, Swe-
+den (#FO2022-0270), the European Union’s Horizon 2020 research
+and innovation programme under the Marie Skłodowska-Curie grant
+agreement No 860197 (MIRIADE), the European Union Joint Pro-
+gramme – Neurodegenerative Disease Research (JPND2021-00694),
+the National Institute for Health and Care Research University Col-
+lege London Hospitals Biomedical Research Centre, and the UK
+Dementia Research Institute at UCL (UKDRI-1003). APi has been sup-
+ported by grants of Airalzh Foundation AGYR2021 Life-Bio Grant,
+The LIMPE-DISMOV Foundation Segala Grant 2021, the Italian Min-
+istry of University and Research PRIN COCOON (2017MYJ5TH)
+and PRIN 2021 RePlast (20202THZAW), the H2020 IMI IDEA-FAST
+(ID853981), Italian Ministry of Health, Grant/Award Number: RF-
+2018-12366209andPNRR-HealthPNRR-MAD-2022-12376110.CTo
+is supported by the Ministry of Health PRIN 2021 RePlast. APa has
+been supported by grants of the Italian Ministry of University and
+Research PRIN COCOON (2017MYJ5TH) and PRIN 2021 RePlast
+(20202THZAW), the H2020 IMI IDEA-FAST (ID853981), Italian Min-
+istryofHealth,Grant/AwardNumber:RF-2018-12366209andPNRR-
+Health PNRR-MAD-2022-12376110. MS-C receives funding from
+the European Research Council (ERC) under the European Union’s
+Horizon 2020 research and innovation programme (Grant agree-
+ment No. 948677); ERA PerMed (ERAPERMED2021-184); Project
+PI19/00155 and PI22/00456, funded by Instituto de Salud Carlos
+III (ISCIII) and co-funded by the European Union; and from a fel-
+lowship from la Caixa Foundation (ID 100010434) and from the
+European Union’s Horizon 2020 research and innovation programme
+under the Marie Skłodowska-Curie grant agreement No 847648
+(LCF/BQ/PR21/11840004).
+CONFLICT OF INTEREST STATEMENT
+HZ has served on scientific advisory boards and/or as a consultant for
+Abbvie, Acumen, Alector, Alzinova, ALZPath, Amylyx, Annexon, Apel-
+lis, Artery Therapeutics, AZTherapies, Cognito Therapeutics, CogRx,
+Denali, Eisai, LabCorp, Merry Life, Nervgen, Novo Nordisk, Optoceu-
+tics, Passage Bio, Pinteon Therapeutics, Prothena, Red Abbey Labs,
+reMYND, Roche, Samumed, Siemens Healthineers, Triplet Therapeu-
+tics, and Wave, has given lectures in symposia sponsored by Alzecure,
+Biogen, Cellectricon, Fujirebio, Lilly, Novo Nordisk, and Roche, and is
+a co-founder of Brain Biomarker Solutions in Gothenburg AB (BBS),
+which is a part of the GU Ventures Incubator Program (outside sub-
+mitted work). BB has served on scientific advisory boards for Alector,
+Alexion, AviadoBio, Denali, Lilly/Prevail, UCB, and Wave. APi received
+consultancy/speaker fees from Abbvie, Bial, Lundbeck, Roche, and
+Zambonpharmaceuticals.APareceivedgrantsupportfromMinistryof
+Health (MINSAL) and Ministry of Education, Research and University
+(MIUR), from CARIPLO Foundation; personal compensation as a con-
+sultant/scientificadvisoryboardmemberforBiogen,Lundbeck,Roche,
+Nutricia, General Healthcare (GE). MS-C has given lectures in sym-
+posiasponsoredbyAlmirall,EliLilly,NovoNordisk,RocheDiagnostics,ASHTON ET AL. 9of10
+and Roche Farma; received consultancy fees (paid to the institution)
+fromRocheDiagnostics;andservedonadvisoryboardsofEliLilly,Gri-
+fols, and Roche Diagnostics. He was granted a project and is a site
+investigator of a clinicaltrial (funded to the institution) by Roche Diag-
+nostics. In-kind support for research (to the institution) was received
+from ADx Neurosciences, Alamar Biosciences, Avid Radiopharmaceu-
+ticals, Eli Lilly, Fujirebio, Janssen Research & Development, and Roche
+Diagnostics. All other authors do not report any conflicts of interest.
+Authordisclosuresareavailableinthesupportinginformation.
+CONSENT STATEMENT
+All human subjects provided written or verbal informed consent.
+The study was approved by the local ethics committee from each
+participatingsite.
+REFERENCES
+1. Hye A, Lynham S, Thambisetty M, et al. Proteome-based plasma
+biomarkers for Alzheimer’s disease. Brain. 2006;129:3042-3050.
+doi:10.1093/brain/awl279
+2. Ray S, Britschgi M, Herbert C, et al. Classification and prediction of
+clinical Alzheimer’s diagnosis based on plasma signaling proteins. Nat
+Med.2007;13:1359-1362.doi:10.1038/nm1653
+3. Guntert A, Campbell J, Saleem M, et al. Plasma gelsolin is decreased
+and correlates with rate of decline in Alzheimer’s disease. J Alzheimers
+Dis.2010;21:585-596.doi:10.3233/JAD-2010-100279
+4. Sattlecker M, Kiddle SJ, Newhouse S, et al. Alzheimer’s disease
+biomarkerdiscoveryusingSOMAscanmultiplexedproteintechnology.
+AlzheimersDement.2014;10:724-734.doi:10.1016/j.jalz.2013.09.016
+5. Kiddle SJ, Sattlecker M, Proitsi P, et al. Candidate blood proteome
+markers of Alzheimer’s disease onset and progression: a system-
+atic review and replication study. J Alzheimers Dis. 2014;38:515-531.
+doi:10.3233/JAD-130380
+6. Greco I, Day N, Riddoch-Contreras J, et al. Alzheimer’s disease
+biomarker discovery using in silico literature mining and clinical
+validation. J Transl Med. 2012;10:217. doi:10.1186/1479-5876-10-
+217
+7. ThambisettyM,SimmonsA,VelayudhanL,etal.Associationofplasma
+clusterin concentration with severity, pathology, and progression in
+Alzheimer disease. Arch Gen Psychiatry. 2010;67:739-748. doi:10.
+1001/archgenpsychiatry.2010.78
+8. Thambisetty M, Simmons A, Hye A, et al. Plasma biomarkers of brain
+atrophy in Alzheimer’s disease. PLoS One. 2011;6:e28527. doi:10.
+1371/journal.pone.0028527
+9. Leung R, Proitsi P, Simmons A, et al. Inflammatory proteins in
+plasma are associated with severity of Alzheimer’s disease. PLoS One.
+2013;8:e64971.doi:10.1371/journal.pone.0064971
+10. Westwood S, Liu B, Baird AL, et al. The influence of insulin resistance
+on cerebrospinal fluid and plasma biomarkers of Alzheimer’s pathol-
+ogy. Alzheimers Res Ther. 2017;9:31. doi:10.1186/s13195-017-0258-
+6
+11. AshtonNJ,Nevado-HolgadoAJ,BarberIS,etal.Aplasmaproteinclas-
+sifierforpredictingamyloidburdenforpreclinicalAlzheimer’sdisease.
+SciAdv.2019;5:eaau7220.doi:10.1126/sciadv.aau7220
+12. Ashton NJ, Kiddle SJ, Graf J, et al. Blood protein predictors of brain
+amyloid for enrichment in clinical trials? Alzheimers Dement (Amst).
+2015;1:48-60.doi:10.1016/j.dadm.2014.11.005
+13. ThambisettyM,TripaldiR,Riddoch-ContrerasJ,etal.Proteome-based
+plasma markers of brain amyloid-beta deposition in non-demented
+older individuals. J Alzheimers Dis. 2010;22:1099-1109. doi:10.3233/
+JAD-2010-101350
+14. Westwood S, Leoni E, Hye A, et al. Blood-based biomarker candi-
+dates of cerebral amyloid using PiB PET in non-demented elderly. J
+AlzheimersDis.2016;52:561-572.doi:10.3233/JAD-151155
+15. Kiddle SJ, Thambisetty M, Simmons A, et al. Plasma based markers
+of [11C] PiB-PET brain amyloid burden. PLoS One. 2012;7:e44260.
+doi:10.1371/journal.pone.0044260
+16. Shi L, Baird AL, Westwood S, et al. A Decade of Blood Biomark-
+ers for Alzheimer’s Disease Research: An Evolving Field, Improving
+Study Designs, and the Challenge of Replication. J Alzheimers Dis.
+2018;62:1181-1198.doi:10.3233/JAD-170531
+17. Thambisetty M, An Y, Kinsey A, et al. Plasma clusterin con-
+centration is associated with longitudinal brain atrophy in mild
+cognitive impairment. Neuroimage. 2012;59:212-217. doi:10.1016/j.
+neuroimage.2011.07.056
+18. Jack CR, Jr., Bennett DA, Blennow K, et al. NIA-AA Research Frame-
+work:TowardabiologicaldefinitionofAlzheimer’sdisease. Alzheimers
+Dement.2018;14:535-562.doi:10.1016/j.jalz.2018.02.018
+19. Ashton NJ, Brum WS, Di Molfetta G, et al. Diagnostic accuracy of the
+plasma ALZpath pTau217 immunoassay to identify Alzheimer’s dis-
+easepathology.medRxiv.2023.doi:10.1101/2023.07.11.23292493
+20. Palmqvist S, Janelidze S, Quiroz YT, et al. Discriminative Accuracy of
+PlasmaPhospho-tau217forAlzheimerDiseasevsOtherNeurodegen-
+erative Disorders. JAMA. 2020;324:772-781. doi:10.1001/jama.2020.
+12134
+21. Nakamura A, Kaneko N, Villemagne VL, et al. High performance
+plasma amyloid-beta biomarkers for Alzheimer’s disease. Nature.
+2018;554:249-254.doi:10.1038/nature25456
+22. Schindler SE, Bollinger JG, Ovod V, et al. High-precision plasma beta-
+amyloid 42/40 predicts current and future brain amyloidosis. Neurol-
+ogy.2019;93:e1647-e1659.doi:10.1212/WNL.0000000000008081
+23. Benedet AL, Brum WS, Hansson O, et al. The accuracy and robustness
+of plasma biomarker models for amyloid PET positivity. Alzheimers Res
+Ther.2022;14:26.doi:10.1186/s13195-021-00942-0
+24. Brum WS, Docherty KF, Ashton NJ, et al. Effect of Neprilysin Inhibi-
+tion on Alzheimer Disease Plasma Biomarkers: A Secondary Analysis
+of a Randomized Clinical Trial. JAMA Neurol. 2023. doi:10.1001/
+jamaneurol.2023.4719
+25. Janelidze S, Berron D, Smith R, et al. Associations of Plasma Phospho-
+Tau217 Levels With Tau Positron Emission Tomography in Early
+Alzheimer Disease. JAMA Neurol. 2021;78:149-156. doi:10.1001/
+jamaneurol.2020.4201
+26. Ashton NJ, Janelidze S, Mattsson-Carlgren N, et al. Differential roles
+of Abeta42/40, p-tau231 and p-tau217 for Alzheimer’s trial selection
+and disease monitoring. Nat Med. 2022;28:2555-2562. doi:10.1038/
+s41591-022-02074-w
+27. Pontecorvo MJ, Lu M, Burnham SC, et al. Association of Donanemab
+TreatmentWithExploratoryPlasmaBiomarkersinEarlySymptomatic
+Alzheimer Disease: A Secondary Analysis of the TRAILBLAZER-ALZ
+Randomized Clinical Trial. JAMA Neurol. 2022;79:1250-1259. doi:10.
+1001/jamaneurol.2022.3392
+28. Ashton NJ, Janelidze S, Al Khleifat A, et al. A multicentre valida-
+tion study of the diagnostic value of plasma neurofilament light. Nat
+Commun.2021;12:3400.doi:10.1038/s41467-021-23620-z
+29. Hansson O, Janelidze S, Hall S, et al. Blood-based NfL: a biomarker
+for differential diagnosis of parkinsonian disorder. Neurology.
+2017;88:930-937.doi:10.1212/WNL.0000000000003680
+30. HellerC,FoianiMS,MooreK,etal.Plasmaglialfibrillaryacidicprotein
+is raised in progranulin-associated frontotemporal dementia. J Neu-
+rol Neurosurg Psychiatry. 2020;91:263-270. doi:10.1136/jnnp-2019-
+321954
+31. Zhu N, Santos-Santos M, Illan-Gala I, et al. Plasma glial fibrillary acidic
+protein and neurofilament light chain for the diagnostic and prog-
+nostic evaluation of frontotemporal dementia. Transl Neurodegener.
+2021;10:50.doi:10.1186/s40035-021-00275-w10of10 ASHTON ET AL.
+32. Benedet AL, Mila-Aloma M, Vrillon A, et al. Differences Between
+Plasma and Cerebrospinal Fluid Glial Fibrillary Acidic Protein
+Levels Across the Alzheimer Disease Continuum. JAMA Neurol.
+2021;78:1471-1483.doi:10.1001/jamaneurol.2021.3671
+33. Montoliu-GayaL,AlcoleaD,AshtonNJ,etal.Plasmaandcerebrospinal
+fluidglialfibrillaryacidicproteinlevelsinadultswithDownsyndrome:
+a longitudinal cohort study. EBioMedicine. 2023;90:104547. doi:10.
+1016/j.ebiom.2023.104547
+34. Pereira JB, Janelidze S, Smith R, et al. Plasma GFAP is an early marker
+of amyloid-beta but not tau pathology in Alzheimer’s disease. Brain.
+2021;144:3505-3516.doi:10.1093/brain/awab223
+35. Salvado G, Ossenkoppele R, Ashton NJ, et al. Specific associations
+between plasma biomarkers and postmortem amyloid plaque and tau
+tangle loads. EMBO Mol Med. 2023;15:e17123. doi:10.15252/emmm.
+202217123
+36. Ashton NJ, Keshavan A, Brum WS, et al. The Alzheimer’s Associa-
+tion Global Biomarker Standardization Consortium (GBSC) plasma
+phospho-tau Round Robin study. 2024. medRxiv. doi:10.1101/2024.
+08.22.24312244
+37. Puig-Pijoan A, Garcia-Escobar G, Fernandez-Lebrero A, et al. The
+CORCOBIAstudy:Cut-offpointsofAlzheimer’sdiseaseCSFbiomark-
+ersinaclinicalcohort.Neurologia(EnglEd).2022.doi:10.1016/j.nrleng.
+2022.05.002
+38. Ashton NJ, Puig-Pijoan A, Mila-Aloma M, et al. Plasma and CSF
+biomarkersina memoryclinic:Head-to-headcomparisonofphospho-
+rylated tau immunoassays. Alzheimers Dement. 2023;19:1913-1924.
+doi:10.1002/alz.12841
+39. Pilotto A, Bongianni M, Tirloni C, Galli A, Padovani A, Zanusso G. CSF
+alpha-synuclein aggregates by seed amplification and clinical presen-
+tation of AD. Alzheimers Dement. 2023;19:3754-3759. doi:10.1002/
+alz.13109
+40. Pilotto A, Parigi M, Bonzi G, et al. Differences Between Plasma and
+Cerebrospinal Fluid p-tau181 and p-tau231 in Early Alzheimer’s
+Disease. J Alzheimers Dis. 2022;87:991-997. doi:10.3233/JAD-
+215646
+41. McKeith IG, Boeve BF, Dickson DW, et al. Diagnosis and manage-
+ment of dementia with Lewy bodies: Fourth consensus report of
+the DLB Consortium. Neurology. 2017;89:88-100. doi:10.1212/WNL.
+0000000000004058
+42. Benussi A, Karikari TK, Ashton N, et al. Diagnostic and prognostic
+value of serum NfL and p-Tau(181) in frontotemporal lobar degener-
+ation. J Neurol Neurosurg Psychiatry. 2020;91:960-967. doi:10.1136/
+jnnp-2020-323487
+43. Benussi A, Alberici A, Samra K, et al. Conceptual framework for
+the definition of preclinical and prodromal frontotemporal dementia.
+AlzheimersDement.2022;18:1408-1423.doi:10.1002/alz.12485
+44. Feng W, Beer JC, Hao Q, et al. NULISA: a proteomicliquid biopsy plat-
+form with attomolar sensitivity and high multiplexing. Nat Commun.
+2023;14:7238.doi:10.1038/s41467-023-42834-x
+45. VerberkIMW,MisdorpEO,KoelewijnJ,etal.Characterizationofpre-
+analytical sample handling effects on a panel of Alzheimer’s disease-
+related blood-based biomarkers: Results from the Standardization
+of Alzheimer’s Blood Biomarkers (SABB) working group. Alzheimers
+Dement.2022;18:1484-1497.doi:10.1002/alz.12510
+46. AshtonNJ,Suarez-CalvetM,KarikariTK,etal.Effectsofpre-analytical
+procedures on blood biomarkers for Alzheimer’s pathophysiology,
+glial activation, and neurodegeneration. Alzheimers Dement (Amst).
+2021;13:e12168.doi:10.1002/dad2.12168
+SUPPORTING INFORMATION
+Additional supporting information can be found online in the Support-
+ingInformationsectionattheendofthisarticle.
+Howtocitethisarticle: AshtonNJ,BenedetAL,DiMolfetta
+G,etal.BiomarkerdiscoveryinAlzheimer’sand
+neurodegenerativediseasesusingNucleicAcidLinked
+Immuno-SandwichAssay.Alzheimer’sDement.
+2025;21:e14621.https://doi.org/10.1002/alz.14621

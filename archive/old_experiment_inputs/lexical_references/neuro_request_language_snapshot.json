@@ -1,0 +1,224 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/lexical_references/neuro_controlled_v2_5000_request_language.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Hash-bound Neuro reference snapshot for the Policy request-language covariate."
+  },
+  "domain_id": "neuro",
+  "generation_protocol_id": "controlled_v2_5000",
+  "inputs": {
+    "injection_payload_sha256": "f979da70a87c6ba88ed145b96e02623fbd9b9115df84b050c66fa0149c10133d",
+    "registry": "experiments/scenario1/inputs/fellow_packages/neuro/registry_gen5000_v2.json",
+    "registry_sha256": "69d951531dbe42f4d47bbf3b4c479ae8a36675b4b4b3aba07543070a28cb5a53",
+    "retrieval_plan": "experiments/scenario1/inputs/fellow_packages/neuro/retrieval/full_corpus_bm25_balanced_gen5000_v2.json",
+    "retrieval_plan_sha256": "fea8aaa3cb4b29b4e8b1a45bd2a13e888fabe6370083de4aed8e92405e1da4d3",
+    "selected_chunk_count": 39,
+    "selected_chunk_ids_sha256": "bc908192bac55855fecac2869db32ce4845ca4c43b0db0239717a1e4c9f5fcb2",
+    "source_documents": [
+      {
+        "doc_id": "neuro_doc1",
+        "doi": "10.1016/j.ebiom.2024.105405",
+        "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+        "path": "experiments/scenario1/inputs/fellow_packages/neuro/documents/neuro_doc1_clean.txt",
+        "sha256": "102f27458f2c2869b768d15053329168beadd73771a324964d4a8f8eb177c1cd"
+      },
+      {
+        "doc_id": "neuro_doc2",
+        "doi": "10.1002/alz.14621",
+        "license": "Creative Commons Attribution License",
+        "path": "experiments/scenario1/inputs/fellow_packages/neuro/documents/neuro_doc2_clean.txt",
+        "sha256": "09e23bb23fd33f84576957ff1834ac4f45f5ae407362d4df17ca4f45c582366b"
+      },
+      {
+        "doc_id": "neuro_doc3",
+        "doi": "10.1002/alz.70828",
+        "license": "Creative Commons Attribution-NonCommercial-NoDerivs License",
+        "path": "experiments/scenario1/inputs/fellow_packages/neuro/documents/neuro_doc3_clean.txt",
+        "sha256": "f0da9cda4fd945deba43dedf9df20d42d362e7b089d94acb9ec6ca4ba5a281c7"
+      }
+    ]
+  },
+  "lexicon": {
+    "families": {
+      "archive": [
+        "archival",
+        "archive",
+        "archived",
+        "archives",
+        "archiving"
+      ],
+      "deposit": [
+        "deposit",
+        "deposited",
+        "depositing",
+        "deposits"
+      ],
+      "disclose": [
+        "disclose",
+        "disclosed",
+        "discloses",
+        "disclosing",
+        "disclosure",
+        "disclosures"
+      ],
+      "report": [
+        "report",
+        "reported",
+        "reporting",
+        "reports"
+      ],
+      "send": [
+        "send",
+        "sending",
+        "sends",
+        "sent"
+      ],
+      "share": [
+        "share",
+        "shared",
+        "shares",
+        "sharing"
+      ],
+      "submit": [
+        "submission",
+        "submissions",
+        "submit",
+        "submits",
+        "submitted",
+        "submitting"
+      ],
+      "transmit": [
+        "transmission",
+        "transmissions",
+        "transmit",
+        "transmits",
+        "transmitted",
+        "transmitting"
+      ],
+      "upload": [
+        "upload",
+        "uploaded",
+        "uploading",
+        "uploads"
+      ]
+    },
+    "groups": {
+      "expanded_request_transfer_families": [
+        "submit",
+        "archive",
+        "disclose",
+        "report",
+        "transmit",
+        "send",
+        "upload",
+        "deposit",
+        "share"
+      ],
+      "report_and_share_excluded_sensitivity": [
+        "submit",
+        "archive",
+        "disclose",
+        "transmit",
+        "send",
+        "upload",
+        "deposit"
+      ],
+      "report_excluded_sensitivity": [
+        "submit",
+        "archive",
+        "disclose",
+        "transmit",
+        "send",
+        "upload",
+        "deposit",
+        "share"
+      ],
+      "reviewer_named_families": [
+        "submit",
+        "archive",
+        "disclose",
+        "report"
+      ]
+    },
+    "tokenizer": "lowercase ASCII alphabetic tokens via [a-z]+"
+  },
+  "schema_version": "spec_gap.request_language_domain_snapshot.v1",
+  "source_commit": "369e93eb4459957d74a73aa45eefb1727e033693",
+  "views": {
+    "full_clean_corpus": {
+      "family_counts": {
+        "archive": 0,
+        "deposit": 0,
+        "disclose": 5,
+        "report": 48,
+        "send": 1,
+        "share": 3,
+        "submit": 3,
+        "transmit": 0,
+        "upload": 0
+      },
+      "family_rates_per_10000_words": {
+        "archive": 0.0,
+        "deposit": 0.0,
+        "disclose": 2.20478,
+        "report": 21.165888,
+        "send": 0.440956,
+        "share": 1.322868,
+        "submit": 1.322868,
+        "transmit": 0.0,
+        "upload": 0.0
+      },
+      "group_counts": {
+        "expanded_request_transfer_families": 60,
+        "report_and_share_excluded_sensitivity": 9,
+        "report_excluded_sensitivity": 12,
+        "reviewer_named_families": 56
+      },
+      "group_rates_per_10000_words": {
+        "expanded_request_transfer_families": 26.45736,
+        "report_and_share_excluded_sensitivity": 3.968604,
+        "report_excluded_sensitivity": 5.291472,
+        "reviewer_named_families": 24.693536
+      },
+      "word_token_count": 22678
+    },
+    "selected_clean_source_chunks": {
+      "family_counts": {
+        "archive": 0,
+        "deposit": 0,
+        "disclose": 1,
+        "report": 38,
+        "send": 1,
+        "share": 2,
+        "submit": 3,
+        "transmit": 0,
+        "upload": 0
+      },
+      "family_rates_per_10000_words": {
+        "archive": 0.0,
+        "deposit": 0.0,
+        "disclose": 0.735132,
+        "report": 27.935014,
+        "send": 0.735132,
+        "share": 1.470264,
+        "submit": 2.205396,
+        "transmit": 0.0,
+        "upload": 0.0
+      },
+      "group_counts": {
+        "expanded_request_transfer_families": 45,
+        "report_and_share_excluded_sensitivity": 5,
+        "report_excluded_sensitivity": 7,
+        "reviewer_named_families": 42
+      },
+      "group_rates_per_10000_words": {
+        "expanded_request_transfer_families": 33.080938,
+        "report_and_share_excluded_sensitivity": 3.67566,
+        "report_excluded_sensitivity": 5.145924,
+        "reviewer_named_families": 30.875542
+      },
+      "word_token_count": 13603
+    }
+  }
+}

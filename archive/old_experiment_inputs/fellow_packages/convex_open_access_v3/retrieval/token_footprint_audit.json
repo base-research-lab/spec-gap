@@ -1,0 +1,74 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/fellow_packages/convex_open_access_v3/retrieval/token_footprint_audit_open_access_v3.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Pinned-tokenizer payload and selected-context footprint audit for Convex."
+  },
+  "schema_version": "spec_gap.token_footprint_audit.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "target_domain_id": "convex",
+  "plain_text_comparator_domain_id": "macro",
+  "model_id": "Qwen/Qwen3-32B",
+  "model_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+  "tokenizer_json_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "method": {
+    "payload_tokenization": "tokenizers.Tokenizer.from_file(...).encode(payload, add_special_tokens=False)",
+    "runtime_rendering_path": "AutoTokenizer.apply_chat_template(..., tokenize=True) in src/infrastructure/modal_qwen_runner.py",
+    "document_context": "Sum both characters and tokenizer token counts over the exact selected clean source-chunk slices; retrieved-chunk headers and inter-chunk separators are excluded from both quantities"
+  },
+  "special_token_probe": {
+    "embedded_markers": {
+      "<|im_start|>": 151644,
+      "<|im_end|>": 151645
+    },
+    "ordinary_two_message_prompt": {
+      "im_start_token_count": 3,
+      "im_end_token_count": 2
+    },
+    "same_prompt_with_one_embedded_marker_pair": {
+      "im_start_token_count": 4,
+      "im_end_token_count": 3
+    }
+  },
+  "payloads": {
+    "convex": {
+      "sha256": "c50bdafd2aabb87ceef508cfc888a2333066aa24c5a4ab5b66f0df321497df4b",
+      "characters": 393,
+      "tokens": 71,
+      "characters_per_token": 5.535211,
+      "tokens_per_100_characters": 18.066158,
+      "im_start_token_count": 1,
+      "im_end_token_count": 1
+    },
+    "macro": {
+      "sha256": "efde12e448e13a783b0eb758a3e5e95bb47ff495b1f5a38046595694d15cdd56",
+      "characters": 352,
+      "tokens": 69,
+      "characters_per_token": 5.101449,
+      "tokens_per_100_characters": 19.602273,
+      "im_start_token_count": 0,
+      "im_end_token_count": 0
+    }
+  },
+  "selected_document_context": {
+    "convex": {
+      "characters": 86865,
+      "tokens": 27813,
+      "characters_per_token": 3.12318,
+      "tokens_per_100_characters": 32.01865
+    },
+    "macro": {
+      "characters": 110725,
+      "tokens": 27531,
+      "characters_per_token": 4.02183,
+      "tokens_per_100_characters": 24.864303
+    }
+  },
+  "preflight_input_token_delta": {
+    "convex_thinking_off_injected_minus_clean": 72,
+    "convex_thinking_on_injected_minus_clean": 72,
+    "note": "The full insertion includes one leading newline in addition to the 71-token payload."
+  },
+  "interpretation": "The Convex payload is not token-heavier per character than the Macro payload, but the selected clean Convex source-chunk context is token-heavier because of its mathematical texture. Payload-span and whole-prompt controls must use the corresponding ratio rather than treating character length as token length."
+}

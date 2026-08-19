@@ -1,0 +1,851 @@
+Academic Editor: Gabriela Dobrota
+Received: 31 December 2024
+Revised: 22 January 2025
+Accepted: 24 January 2025
+Published: 29 January 2025
+Citation: Pappas, A., & Boukas,N.
+(2025). Examining Impact of Inflation
+andInflation Volatility on Economic
+Growth: Evidence from European
+UnionEconomies. Economies,13(2),31.
+https://doi.org/10.3390/
+economies13020031
+Copyright: © 2025 by the authors.
+LicenseeMDPI, Basel, Switzerland.
+Thisarticle is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Article
+Examining Impact of Inflation and Inflation Volatility on
+Economic Growth: Evidence from European Union Economies
+Anastasios Pappas 1,* and Nikolaos Boukas 2
+1 Hellenic Fiscal Council, Greece and Department of Economics, National and Kapodistrian University of
+Athens, 15772 Athens, Greece
+2 Center for Sustainable Management for Tourism, Sport and Events (CESMATSE), European University
+Cyprus, Nicosia 22006, Cyprus; n.boukas@euc.ac.cy
+* Correspondence: taspappas@econ.uoa.gr
+Abstract: Examining the economies of the European Union from 2000 to 2023, we have
+found no strong evidence that the inflation rate has a negative impact on economic growth.
+In contrast, in line with conventional economic theory, higher interest rates are associated
+with lower economic growth. The results remain consistent even after controlling for
+various control variables, non-linearities and endogeneity issues. These findings suggest
+that an aggressive tightening of monetary policy in the euro area, aimed at rapidly bringing
+inflation under control, could actually be detrimental to economic growth. Since the
+negative effects of monetary tightening on growth are clear, while the benefits of rapidly
+reducing inflation on economic growth are ambiguous, the European Central Bank must be
+cautious about both the intensity and the duration of monetary tightening.
+Keywords: economic growth; inflation; inflation volatility; interest rates; European Union;
+panel data
+JEL Classification: E31; E40; E52; E58; O40
+1. Introduction
+TherecentinflationaryepisodeintheEuropeanUnioncompelledtheEuropeanCentral
+Bank (ECB) to significantly tighten its monetary policy, to counteract inflationary pressures.
+Over a fourteen-month period, from July 2022 to September 2023, the ECB increased its
+key interest rates by 450 basis points. This aggressive monetary tightening raises concerns
+about its potential adverse impact on economic growth, given that higher interest rates
+tend to negatively influence investments and consumption.
+Conversely, a relatively high inflation rate may adversely affect economic activity.
+Apart from the inflation rate, economic activity may be negatively influenced by inflation
+volatility, as highlighted by Friedman (1977). In this respect, as far as monetary policy is
+concerned, the ECB is confronted with a dilemma, given that both high interest rates and
+inflation or inflation volatility have the potential to hinder economic growth.
+This study presents evidence regarding the relationship between inflation rate, in-
+flation volatility, and growth in EU economies from 2000 to 2023. In addition, this study
+focuses on the effects of high interest rates on economic growth in Europe. The econometric
+results suggest that when focusing exclusively on economic growth, there is no trade-off in
+the ECB’s policy choices. We find no statistically significant evidence indicating that the in-
+flation rate affected growth in European economies during the period 2000–2023. However,
+some evidence that inflation volatility negatively affects growth exists. Furthermore, higher
+Economies 2025, 13, 31 https://doi.org/10.3390/economies13020031Economies 2025, 13, 31 2 of 18
+interest rates are strongly related to lower real gross domestic product (GDP) growth for
+European economies during the aforementioned period.
+This study makes two significant contributions to the existing literature. First, it sheds
+light on an area that has not yet been extensively investigated: the nexus between inflation
+rate and inflation volatility with real gross domestic product (GDP) growth in European
+Union economies after the establishment of the ECB. Second, this study contributes to
+the ongoing debate regarding the level of ECB interest rates. In the current circumstances
+where the ECB is confronted with the dilemma of either maintaining high interest rates or
+reducing them, it is crucial to consider, as per the findings of this study, that while high
+interest rates harm economic growth, the inflation rate does not seem to significantly affect
+real economic activity. Therefore, a growth-friendly policy should align with a trajectory of
+lower interest rates.
+The remainder of this paper is organized as follows: Section 2 reviews the relevant
+literature. Section 3 provides an overview of the variables, data, and econometric method-
+ology employed in this study. Section 4 presents the empirical findings derived from both
+linear and non-linear panel data models. Section 5 explores the robustness of the primary
+findings, conducting a series of rigorous robustness tests. Finally, Section 6 concludes
+the paper.
+2. Literature Review
+2.1. Early Studies on Relationship Between Inflation and Growth
+The relationship between inflation and economic growth has been extensively investi-
+gated for decades, beginning in the 1960s1. After the 1980s, interest in this relationship was
+rekindled, leading to the publication of a significant number of research papers attempting
+to explore whether inflation and growth are directly or inversely associated. Fischer (1993)
+finds evidence that inflation may harm growth by reducing investment and the rate of
+productivity growth. Nevertheless, these results are valid only for very high inflation
+episodes. However, the study does not find evidence that low inflation is a clear-cut path
+for high growth, even over long periods. Barro (1996) provides evidence of a negative
+relationship between inflation and growth through a channel of lower investments. How-
+ever, these results hold for high inflation experiences, and the magnitudes of the adverse
+effects on growth are quite mild. Bruno (1995) and Bruno and Easterly (1996, 1998) also
+investigate the relationship between growth and inflation. Their findings suggest that this
+relationship turns negative only when high-frequency data are examined, and specifically,
+only when the inflation rate surpasses a particular threshold, which they propose to be 40%
+annually. The main finding in the aforementioned studies is that they reveal the negative
+effects of inflation on growth, particularly at high inflation rates and notably well beyond a
+double-digit range. All these findings can be summed up by Rogoff’s (2003, p. 79) phrase
+that inflation surpassing the 40 percent mark can be deemed acutely damaging. It should
+be noted that a significant amount of research was conducted during the 1990s, such as
+those by Levine and Renelt (1992), Levine and Zervos (1993), and Sala-I-Martin (1997a),
+which failed to establish a robust relationship between inflation and economic growth.
+However, during the same period, another series of studies highlighted the potential
+negative impact of inflation rates on growth, even at lower levels. Using a panel of 23
+industrial countries, Burdekin et al. (1994) estimated that a swift shift from zero inflation to
+10% inflation could reduce the growth rate by one to two percentage points. Sarel (1995)
+lowered this threshold to 8%. By examining 87 economies during the period 1970–1990, it
+was concluded that the relationship between inflation and economic growth is non-linear.
+He finds that when inflation is low (below 8%), the effect on growth is not significantly
+negative; in fact, it may even be slightly positive. However, above the structural break ofEconomies 2025, 13, 31 3 of 18
+the 8% annual inflation rate, the effect becomes negative. Gylfason and Herbertsson (2001),
+employing panel regressions for 170 countries from 1960 to 1992, identified a threshold at
+which inflation rates exceeding 10% to 20% per year generally have an adverse impact on
+economic growth. Beyond this threshold, the effect of inflation on growth becomes negative.
+Furthermore, Ghosh and Phillips (1998) further reduced this threshold to 5%, arguing that
+the moderate or intermediate inflation range—perhaps 5–30 percent per year—negatively
+affects economic growth.
+2.2. Inflation and Growth: More Recent Empirical Evidence
+In more recent empirical studies, there have been thresholds above which inflation
+has a negative impact on economic growth. Arawatari et al. (2018) find that when inflation
+exceeds a threshold level of 15–20%, a sharp decline in the long-run growth rate of income
+is observed. Similarly, He (2023) identifies a zero marginal effect on growth at 5% inflation
+using ordinary least squares (OLS) estimation and at 3% using instrumental variables (IVs)
+estimation.
+Moreover, the inflation threshold varies according to the group of countries analyzed.
+Burdekin et al. (2004) criticize the grouping of industrial and developing economies when
+examining the relationship between inflation and growth, suggesting that it may lead
+to unreliable results. Their paper concludes that the threshold where inflation becomes
+harmful for growth is lower than 20–40%; using a linear specification, they found a higher
+threshold for industrial countries (8%) than for developing countries (3%). Furthermore,
+Eggoh and Khan (2014) confirm the sensitivity of the relationship between inflation and
+growth to the choice of country groups. They find a threshold of 12.4% annual inflation
+for the global set of 102 developing and developed economies. However, this threshold
+varied among different groups of economies: 3.4% for advanced economies, 10% for upper-
+middle-income economies, 12% for middle-income economies, and approximately 20%
+for low-income economies. Similarly, Espinoza et al. (2010) placed a threshold above
+10% for developing countries after examining a panel of 165 countries and data for 1960–
+2007. For advanced economies, the threshold is found to be much lower. Ghossoub
+(2023) also identifies a threshold where the correlation between inflation and economic
+growth becomes negative. This threshold is higher for developing economies compared
+to advanced ones, due to more concentrated banking systems and higher regulation in
+developing countries.
+The existence of a threshold means that inflation below a certain turning point may
+be beneficial for economic growth. Using over 100 years of U.S. data, Ahmed and Rogers
+(2000) find that the effects of relatively low inflation on output are positive. Pollin and
+Zhu (2006), analyzing a set of 80 countries between 1961 and 2000, observed that higher
+inflation is associated with moderate gains in gross domestic product (GDP) growth up
+to a threshold of approximately 15–18%. Recently, Zhou (2019) proposed a theoretical
+explanation of a potential channel through which moderate inflation could have a positive
+effect on economic growth through investment. In this regard, inflation may have a positive
+effect on growth by reducing the liquidity risk of investment projects. In addition, Huang
+et al. (2021) explain that inflation can have a positive effect on growth if variety-expanding
+R&D (entry) is subject to a cash-in-advance (CIA) constraint. A CIA constraint requires
+cash to be available before certain activities, such as consumption, production, or R&D
+investment, can take place. This constraint affects how inflation influences economic
+growth, as described in the Schumpeterian growth model. Furthermore, Yilmazkuday
+(2021) finds that inflation may result in higher long-run growth especially in countries
+with weaker institutions. When these countries have limited access to direct capital (likeEconomies 2025, 13, 31 4 of 18
+investments from private sectors or foreign investors), increasing the money supply can act
+as a substitute and boost real investment in the economy.
+2.3. Inflation Volatility and Growth
+In addition to the inflation rate, inflation volatility was examined for its potential
+adverse effects on growth. As mentioned in the Introduction, Friedman (1977) stressed that
+inflation volatility, rather than inflation rate, adversely affects economic growth. Inflation
+volatility could detrimentally affect economic activity by increasing the recorded rate of
+unemployment. Empirical research has explored these theoretical arguments. Judson
+and Orphanides (1999) examined a panel of 119 countries over the period 1959–1992 and
+concluded that inflation volatility was robustly and significantly negatively correlated
+with income growth across inflation levels and country type. Apergis (2005) investigated
+the impact of inflation uncertainty on the growth of OECD countries from 1969 to 1999
+and found that the effects are negative. Accordingly, Fountas et al. (2006) confirmed the
+detrimental effect of inflation on real growth through the nominal uncertainty channel for
+G7 countries. Friedman’s (1977) hypothesis was recently validated by Živkov et al. (2020),
+who discovered a negative impact of inflation uncertainty on gross domestic product (GDP)
+growth in eight Central and Eastern European countries.
+2.4. Inflation and Growth in European Union Economies
+This current literature review provides broad findings. First, it is often observed that
+there is a relatively high threshold, typically above two digits in inflation rates, where
+inflation turns negative for growth when grouping economies with different characteristics,
+such as developing and developed countries. Second, the formation of groups with similar
+economic characteristics may have contributed to more robust and conclusive results.
+Third, inflation volatility, and not just a high inflation rate, may have detrimental effects on
+economic growth.
+Therefore, focusing on EU economies may yield more robust findings regarding the
+nexus between inflation, inflation volatility, and growth within a group of countries sharing
+similar economic characteristics, steering clear hyperinflation observations2 and operating
+under the same central bank’s monetary policy3.
+To the best of our knowledge, the literature on inflation, inflation volatility, and
+growth exclusively focused on European countries is relatively scarce. Pintilescu et al.
+(2014) examined ten European emerging economies for the period 1990 to 2013, aiming
+to investigate the impact of inflation uncertainty on output growth. Their research has
+revealed only a few significant causal relationships. Specifically, a relationship between
+inflation volatility and output growth was identified in only two of the ten countries.
+Cuaresma and Silgoner (2014) examined the impact of inflation on growth for a panel of 14
+European Union countries, specifically from 1960 to 1999, in the years preceding monetary
+unification. Their results validated the hypothesis that the relationship between inflation
+and growth is positive for very low inflation, insignificant thereafter, and negative for high
+two digit inflation. More recently, Živkov et al. (2020) discovered that inflation in eight
+Central and Eastern European countries has an indirect impact on gross domestic product
+(GDP) growth via inflation uncertainty.Economies 2025, 13, 31 5 of 18
+3. Methodology and Data Set
+3.1. Linear Specification
+The growth regression equation with country fixed effects and year dummies is
+as follows:
+Gj,t = β1 ×Yj,t + β2 × Zj,t + β3 × Vj,t + β4 × Xj,t + δj + γt + εj,t (1)
+where Yj,t is a vector of variables that always appear in the regressions based on the
+standard growth literature (Levine & Renelt, 1992; Levine & Zervos, 1993; Barro, 1991, 1996;
+Sala-I-Martin, 1997a, 1997b; Reinhart & Rogoff, 2010): (i) trade openness, measured as the
+ratio of imports plus exports to gross domestic product (XM); (ii) investment, measured as
+the ratio of gross fixed capital formation to gross domestic product (Inv); and (iii) public
+debt to gross domestic product (Debt) as a fiscal policy indicator.
+Furthermore, Zj,t is the first variable of interest, the inflation rate, measured by the
+annual rate of change in the Harmonized Index Of Consumer Prices (HICP); and Vj,t is the
+second variable of interest and inflation rate volatility. Inflation rate volatility is measured
+in two ways. First, it is measured as the moving averages of the standard deviation of
+year-on-year inflation rates over three-year periods (HICP_V) (Hafer, 1986; Davis & Kanago,
+2000; Blanchard & Simon, 2001). To capture the extent of possible short-term fluctuations in
+inflation, an alternative measure is also considered: the moving average of the standard
+deviation of monthly intra-year inflation (HICP_V_alt) (Judson & Orphanides, 1999)4.
+In addition, Xj,t represents a vector that includes one additional control variable
+selected from a pool of N variables, which are also considered in the growth literature.
+The pool consists of the following variables: (i) monetary conditions (King & Watson,
+1996; Arestis & Demetriades, 1997) proxied by long-term interest rates and specifically the
+average annual yield of 10-year government bonds (LTIR); (ii) credit expansion (King &
+Levine, 1993; De Gregorio & Guidotti, 1995; Sala-I-Martin, 1997a, 1997b) (Credit) proxied
+by the total credit to the private non-financial sector as an annual rate of change; (iii) the
+size of the government (Barro, 1996, 2003; Burdekin et al., 2004) measured by the total
+expenditures of the general government as a percentage of gross domestic product (GG);
+(iv) expenditures on research and development activities for both the private and public
+sectors as a share of gross domestic product (R&D) (Zachariadis, 2004; Pessoa, 2010); (v) a
+measure of education (Barro, 1991, 1996; Bils & Klenow, 2000), which is the upper secondary
+and post-secondary non-tertiary education as a percentage of total population, from 15 to
+64 years (EDU); and (vi) an index measuring the quality of institutions (Hall & Jones, 1999;
+Barro, 1996, 2003; Rodrik et al., 2004) (Institutions), which is the sum of the scores of the six
+governance indicators of the World Bank.
+It should be noted that the choice of control is guided by specific considerations. The
+purpose here is not to present an exhaustive account of the determinants of growth, but
+rather to isolate the effects of inflation and inflation volatility on economic growth. The
+adoption of a parsimonious specification that accounts for unobservable heterogeneity may
+be sufficient to satisfactorily address the central research question.
+The dependent variable, Gj,t, is the annual rate of change (percentage) in real gross
+domestic product (GDP) per capita. δi are country fixed effects that account for cross-
+sectional unobserved heterogeneity, γt are time fixed effects5 to capture aggregate time
+shocks, and εi,t is the idiosyncratic error term.
+The research covers the period from 2000 to 2023 using annual data with unbalanced
+panels. The data set is primarily sourced from the EUROSTAT database, with the exception
+of the credit expansion variable (Credit), obtained from the Federal Reserve Bank of SaintEconomies 2025, 13, 31 6 of 18
+Louis, and the quality of institutions variable (Institutions), sourced from the World Bank’s
+Worldwide Governance Indicators (see Table A1 in Appendix A).
+3.2. Non-Linear Specifications
+To capture the potential non-linearities between the relationship of inflation, inflation
+volatility, and growth, two alternative specifications are employed. First, following Pollin
+and Zhu (2006), a squared term of the inflation rate is introduced in the model (Z2j,t).
+Gj,t = β1 ×Yj,t + β2 × Zj,t + β3 × Z Squaredj,t + β4 × Vj,t + β5 × Xj,t + δj + γt + εj,t (2)
+Introducing non-linearity into the model by including the squared inflation rate
+allowed the regression equation to be estimated as a second-degree polynomial. This
+approach captures changes in slopes that are dependent on variations in the independent
+variable. Consequently, the slope of the estimating equation can vary in response to
+fluctuations in the inflation rate, facilitating the identification of turning points in the
+relationship between the inflation rate and economic growth.
+Second, the interaction between the inflation rate and inflation volatility is examined
+by modifying the baseline model by introducing the interaction term (β4 ×Zj,t ×Vj,t
+
+.
+Gj,t = β1 ×Yj,t + β2 × Zj,t + β3 × Vj,t + β4 × Zj,t × Vj,t + β5 × Xj,t + δj + γt + εj,t (3)
+The rationale for including the interaction term is that individually relatively high
+inflation and inflation volatility may not significantly affect real output. However, when
+combined, inflation and inflation volatility may increase the impact on the economy. A
+positive (negative) and statistically significant coefficient β4 indicates that the combination
+of inflation rate and inflation volatility amplifies (dampens) the effect of inflation and
+inflation volatility on economic growth.
+4. Results
+Table 1 provides the preliminary results concerning the relationship between inflation,
+inflation volatility, and economic growth. Concerning the impact of the inflation rate on
+gross domestic product (GDP) growth, no statistically significant findings were observed.
+Similarly, there is no evidence of a significant relationship between inflation volatility and
+growth across the various specifications. Notably, in only 1 out of 14 cases, when credit
+growth is introduced as an additional control variable, the volatility of inflation (measured
+as the standard deviation of year-on-year inflation rates over a three-year period, –HICP_V)
+is found to be negatively and significantly (at the 10% significance level) associated with
+gross domestic product growth in European economies.
+While these linear specifications may not be theoretically the most preferred, they
+demonstrate the isolated effects of inflation rate, inflation volatility, and other control
+variables on growth before addressing non-linearity issues. Additionally, control variables
+such as investments and trade openness, which are standard in the growth literature, are
+consistently found to have a positive and statistically significant effect on gross domestic
+product growth. Interestingly, the debt-to-GDP ratio is also positively associated with
+gross domestic product growth, suggesting that during the period 2000–2023, growth coin-
+cided with public debt accumulation and did not hinder EU economies from expanding.
+Regarding the remaining control variables, long-term interest rates (LTIRs) and general
+government expenditures (GG) were both negatively associated with gross domestic prod-
+uct growth. In contrast, the level of education (EDU) was found to be positively related to
+gross domestic product growth.Economies 2025, 13, 31 7 of 18
+Table 1. Baseline model results.
+Dependent:
+GDP_C (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14)
+Constant −3.903 * −3.668 0.835 0.973 −4.811 * −4.971 * 7.63 *** 8.36 −4.755 * −4.506 * −11.137 *** −10.998 *** −3.328 −3.15
+(1.971) (2.175) (1.85) (1.86) (2.582) (2.817) (2.216) (2.322) (2.443) (2.587) (2.586) (2.773) (2.024) (2.193)
+HICP −0.1 −0.139 −0. 098 −0.137 −0.116 −0.137 −0.097 −0.116 −0.108 −0.153 −0.071 −0.099 −0.097 −0.136
+(0.084) (0.104) (0.093) (0.119) (0.091) (0.105) (0.079) (0.093) (0.09) (0.107) (0.084) (0.098) (0.083) (0.102)
+HICP_V −0.333 −0. 338 −0.548 * −0.259 −0.358 −0.306 −0.336
+(0.255) (0.245) (0.269) (0.224) (0.259) (0.248) (0.083)
+HICP_V_alt −0.934 −0.233 −0.781 −0.976 −0.901 −1.063 −0.9348
+(0.828) (0.729) (0.926) (0.764) (0.80) (0.711) (0.821)
+Inv 0.216 *** 0.227 *** 0.195 *** 0.200 *** 0.225 ** 0.23 ** 0.18 ** 0.186 ** 0.219 ** 0.231 ** 0.206 *** 0.215 *** 0.216 *** 0.226 **
+(0.065) (0.072) (0.062) (0.066) (0.089) (0.092) (0.071) (0.01) (0.08) (0.086) (0.064) (0.07) (0.065) (0.072)
+XM 0.032 ** 0.029 ** 0.021 * 0.019 * 0.034 ** 0.033 ** 0.021 ** 0.018 * 0.033 ** 0.03 ** 0.035 *** 0.032 *** 0.032 ** 0.03 **
+(0.012) (0.012) (0.011) (0.011) (0.016) (0.016) (0.01) (0.010) (0.012) (0.011) (0.01) (0.009) (0.012) (0.012)
+Debt 0.022 * 0.019 * 0.037 *** 0. 035 *** 0.023 ** 0.02 ** 0.040 *** 0.038 *** 0.023 * 0.019 0.015 0.013 0.021 * 0.018 *
+(0.012) (0.01) (0.012) (0.011) (0.01) (0.009) (0.011) (0.01) (0.013) (0.011) (0.012) (0.011) (0.011) (0.01)
+LTIRs −0.553 *** −0.588 ***
+(0.187) (0.093)
+Credit 0.034 0.033
+(0.022) (0.016)
+GG −0.239 *** −0.248 ***
+(0.042) (0.046)
+R&D 0.677 0.604
+(0.792) (0.791)
+Edu 0.158 *** 0.161 ***
+(0.039) (0.041)
+Institutions 0.09 −0.082
+(0.156) (0.147)
+Observations 643 643 627 627 541 541 643 643 632 632 637 637 643 643
+Countries 27 27 27 27 24 24 27 27 27 27 27 27 27 27
+R-squared 0.613 0.610 0.653 0.650 0.629 0.621 0.639 0.639 0.621 0.617 0.633 0.631 0.614 0.610
+Country FE Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes
+Year FE Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes
+Note: This table presents the estimation results for the baseline model described in Equation (1). Robust standard errors are reported in the parentheses. ***, **, and * denote statistical
+significance at the 1, 5, and 10% levels, respectively.Economies 2025, 13, 31 8 of 18
+Table 2 presents the results of the non-linear models (Equations (2) and (3)). Given
+that one of the primary objectives of this study is to center on the European Central Bank’s
+policy regarding inflation and considering that long-term interest rates were found to be
+significant in the linear specifications, we exclusively included this variable as an additional
+control variable, alongside the other three standard control variables (investments, trade
+openness, and public debt to gross domestic product ratio)6. The inflation rate remains a
+statistically insignificant determinant of growth even when its quadratic term is introduced
+into the model. The same holds true for the two alternative inflation volatility variables.
+When exploring the potential interaction between inflation and inflation volatility in the
+first case, no significant difference was observed. Interestingly, when delving into the
+interaction between inflation and intra-year inflation volatility, both variables were not
+found to be significantly associated with growth.
+Table 2. Non-linear model results.
+Dependent: GDP_C (1) (2) (3) (4)
+Constant 0.591 0.513 0.571 −0.455
+(1.909) (1.959) (1.821) (1.922)
+HICP −0.019 −0.019 0.017 0.022
+(0.154) (0.166) (0.106) (0.167)
+HICPˆ2 −0.006 −0.011
+(0.007) (0.008)
+HICP_V −0.293 −0.175
+(0.246) (0.252)
+HICP_V_alt −0.231 0.749
+(0.717) (0.79)
+HICP* HICP_V −0.026 **
+(0.011)
+HICP* HICP_V_alt −0.214 **
+(0.255)
+Inv 0.194 *** 0.196 *** 0.186 *** 0.196 ***
+(0.061) (0.062) (0.059) (0.06)
+XM 0.021 * 0.02 * 0.021 * 0.020 *
+(0.011) (0.011) (0.012) (0.011)
+Debt 0.038 *** 0.037 *** 0.038 *** 0.035 ***
+(0.012) (0.012) (0.012) (0.011)
+LTIRs −0.555 *** −0.584 *** −0.572 *** −0.605 ***
+(0.077) (0.093) (0.082) (0.093)
+Observations 627 627 627 627
+Countries 27 27 27 27
+R-squared 0.654 0.651 0.655 0.653
+Country FE Yes Yes Yes Yes
+Year FE Yes Yes Yes Yes
+Note: This table presents the estimation results for the non-linear models described in Equations (2) and (3).
+Robust standard errors are reported in the parentheses. ***, **, and * denote statistical significance at the 1, 5, and
+10% levels, respectively.
+Overall, the results from both linear and non-linear specifications did not succeed
+in identifying a robust negative relationship between inflation or inflation volatility and
+economic growth for EU economies during the period 2000–2023.Economies 2025, 13, 31 9 of 18
+5. Robustness Checks
+To ensure the consistency of the previous findings, several robustness tests were
+conducted by employing different estimation techniques, both static and dynamic. To
+address potential cross-sectional dependence, regressions were performed using Driscoll
+and Kraay (1998) standard errors. In this framework, the residuals are assumed to be
+heteroskedastic, autocorrelated up to some lag, and correlated between panels, making it
+applicable to unbalanced panels.
+To mitigate potential endogeneity issues, the Generalized Method of Moments (GMM)
+estimator developed by Arellano and Bond (1991) was employed in both static and dynamic
+frameworks. The lagged values of the explanatory variables (Barro & Sala-i-Martin, 2003)
+are utilized as instruments along with the log of population size (Boone, 1996; Dalgaard
+et al., 2004), which serves to control for the varying sizes of EU countries. Additionally,
+a political variable, specifically the frequency of government changes within a year (Armin-
+geon et al., 2024), was introduced as an instrument to account for political stability across
+different EU countries. The presumed exogeneity of government changes is leveraged to ef-
+fectively address temporal variations in policy shifts unrelated to the specific determinants
+of economic growth considered in the analysis.
+To further exploit the dynamic dimension of the relationship between inflation, in-
+flation volatility, and growth, the bias-corrected least squares dummy variable (LSDVC)
+estimator using the Anderson–Hsiao estimator and Monte-Carlo experiments (Kiviet, 1995)
+is also employed7. More specifically, to resolve the endogeneity bias issue, we followed
+the instrumental variable developed by Anderson and Hsiao (1982) within an estimator
+consistent with the coefficients of the time-varying covariates.
+It should be noted that in the baseline regressions, interest rates consistently demon-
+strate a significant relationship with growth. Therefore, interest rates are retained as
+additional control variables in the regressions, which are conducted as part of the robust-
+ness checks.
+The results of the robustness tests (Table 3) are consistent with the baseline results
+regarding inflation rate and interest rates. A statistically significant negative relationship
+between economic growth and the inflation rate is not observed in most cases. On the con-
+trary, in the GMM and LSDVC models, the inflation rate seems to be positively correlated
+with economic growth. This result is consistent with explanations that consider inflation to
+be beneficial for investment and thus positively correlated with growth (Pollin & Zhu, 2006;
+Zhou, 2019; Huang et al., 2021; Yilmazkuday, 2021). On the other hand, inflation volatility
+turned out to have a negative impact on economic growth. Moreover, interest rates show a
+consistently significant negative association in all cases. Regarding the remaining control
+variables, investment seems to be the variable that is systematically positively associated
+with GDP growth.
+Finally, to control whether the participation of an EU country in the European Mone-
+tary Union (EMU) influences growth and may alter the previous results, a dummy variable
+is constructed and introduced into various models (Table 4). The dummy variable, denoted
+as “EMU”, takes the value of one for the year in which a European country joins the EMU
+and zero otherwise.Economies 2025, 13, 31 10 of 18
+Table 3. Robustness checks.
+Dependent: GDP_C (1) (2) (3) (4) (5) (6) (7) (8)
+Driscoll–Kraay GMM Dynamic GMM LSDVC
+Constant 0.835 0.973 - - 14.29 ** 4.432 - -
+(3.110) (3.140) - - (6.23) (6.162) - -
+HICP −0.098 −0.137 0.569 *** 0.378 *** 0.814 *** 0.483 *** 0.321 *** 0.133 *
+(0.070) (0.088) (0.125) (0.110) (0.186) (0.164) (0.071) (0.067)
+HICP_V −0.338 ** −1.093 *** −1.359 *** −0.828 ***
+(0.131) (0.188) (0.271) (0.145)
+HICP_V_alt −0.233 −5.344 *** −8.905 ** −2.296 ***
+(0.695) (1.935) (3.274) (0.858)
+Inv 0.195 ** 0.200 ** 0.075 0.119 −0.229 0.13 0.114 * 0.137 **
+(0.081) (0.084) (0.138) (0.107) (0.191) (0.159) (0.063) (0.064)
+XM 0.021 * 0.019 * 0.001 −0.006 −0.022 0.003 0.012 0.002
+(0.011) (0.011) (0.012) (0.013) (0.014) (0.016) (0.010) (0.010)
+Debt 0.037 * 0.035 * −0.028 −0.046 −0.048 * −0.004 −0.006 −0.010
+(0.018) (0.019) (0.021) (0.030) (0.025) (0.029) (0.012) (0.012)
+LTIRs −0.552 *** −0.588 *** −0.415 *** −0.584 *** −0.575 *** −0.455 ** −0.330 *** −0.402 ***
+(0.173) (0.184) (0.123) (0.137) (0.146) (0.17) (0.089) (0.091)
+Dependent (t − 1) 0.025 0.131 0.092 ** 0.150 ***
+(0.08) (0.086) (0.042) (0.042)
+Observations 627 627 627 627 609 609 628 628
+Countries 27 27 27 27 27 27 27 27
+Adj. R-squared 0.653 0.649 - - - - - -
+Hansen J statistic
+(p-value) - - 0.99 0.99 0.785 0.77 - -
+Instruments - - 202 202 41 41 - -
+Country FE Yes Yes Yes Yes Yes Yes - -
+Year FE Yes Yes Yes Yes Yes Yes - -
+Note: Robust standard errors are reported in parentheses in specifications (3)–(6). Driscoll–Kraay standard errors
+are reported in parentheses in specifications (1) and (2). Bootstrapped standard errors based on 100 replications
+are reported in parentheses for specifications (7) and (8), respectively. ***, **, and * denote statistical significance at
+the 1, 5, and 10% levels, respectively.
+The introduction of the EMU variable did not significantly change the previous results.
+The inflation rate remained either statistically insignificant or a positive determinant of GDP
+per capita growth in all specifications. Inflation volatility shows in some cases a significant
+and negative correlation with growth. The EMU dummy is statistically significant and
+negatively related to growth in all cases, implying that joining the euro area has a negative
+impact on the growth rate of EMU member countries. Regarding long-term interest
+rates, there is consistently a statistically significant negative impact on GDP growth in
+EU economies.Economies 2025, 13, 31 11 of 18
+Table 4. Robustness checks with EMU dummy variable.
+Dependent: GDP_C (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12)
+Linear FE Non-Linear FE Driscoll–Kraay GMM Dynamic GMM LSDVC
+Constant 2.447 2.618 2.3 2.192 2.447 2.618 - - 18.733 4.663
+(2.24) (2.317) (2.325) (2.371) (3.308) (3.362) - - (11.313) 8.399
+HICP −0.083 −0.12 −0.041 −0.012 −0.083 −0.120 0.544 *** 0.406 *** 1.12 *** 0.415 *** 0.341 *** 0.159 **
+(0.088) (0.111) (0.154) (0.166) (0.071) (0.085) (0.133) (0.114) (0.241) (0.141) (0.070) (0.066)
+HICPˆ2 −0.003 −0.01
+(0.007) (0.008)
+HICP_V −0.377 −0.353 −0.377 *** −1.145 *** −2.131 −0.836 ***
+(0.247) (0.253) (0.111) (0.227) (0.395) (0.142)
+HICP_V_alt −0.433 −0.427 −0.433 −7.101 *** −7.949 ** −2.524 ***
+(0.644) (0.641) (0.650) (2.224) (3.055) (0.847)
+Inv 0. 164 *** 0.169 *** 0.163 *** 0.167 *** 0.164 * 0.169 * −0.095 −0.074 −0.471 0.048 0.052 0.074
+(0.053) (0.058) (0.053) (0.055) (0.084) (0.087) (0.115) (0.151) (0.312) (0.234) (0.063) (0.064)
+XM 0.025 * 0.023 * 0.025 * 0.024 * 0. 025 ** 0.023 * 0.047 ** 0.046 * 0.019 0.029 * 0.023 ** 0.013
+(0.013) (0.012) (0.013) (0.013) (0.012) (0.011) (0.021) (0.027) (0.023) (0.015) (0.010) (0.010)
+Debt 0.034 *** 0.033 ** 0.035 *** 0.034 *** 0.034 * 0.033 * −0.045 −0.062 0.004 0.023 −0.011 −0.015
+(0.012) (0.012) (0.012) (0.012) (0.018) (0.019) (0.030) (0.042) (0.035) (0.028) (0.012) (0.012)
+LTIRs −0.602 *** −0.638 *** −0.603 *** −0.634 *** −0.602 *** −0.638 *** −0.562 *** −0.676 *** −0.583 ** −0.44 ** −0.431 *** −0.506 ***
+(0.108) (0.131) (0.11) (0.131) (0.174) (0.186) (0.152) (0.206) (0.244) (0.168) (0.089) (0.092)
+EMU −1.806 * −1.756 * −1.786 * −1.714 * −1.806 *** −1.756 ** −9.402 ** −8.179 *** −10.351 *** −6.106 * −3.583 *** −3.650 ***
+(0.958) (0.924) (0.959) (0.914) (0.576) (0.641) (4.168) (3.047) (2.064) (3.345) (0.822) (0.850)
+Dependent (t − 1) −0.115 0.105 0.067 * 0.127 ***
+(0.441) (0.11) (0.041) (0.041)
+Observations 627 627 627 627 627 627 627 627 609 609 628 628
+Countries 27 27 27 27 27 27 27 27 27 27 27 27
+Adj. R-squared 0.664 0.660 0.664 0.661 0.664 0.659 - - - - - -
+Hansen J statistic
+(p-value) - - - - - - 0.99 0.99 0.764 0.732 - -
+Instruments - - - - - - 202 202 41 41 - -
+Country FE Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes - -
+Year FE Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes - -
+Note: Robust standard errors are reported in parentheses for specifications (1)–(4) and (7)–(10). Driscoll–Kraay standard errors are reported in parentheses in specifications (5) and (6).
+Bootstrapped standard errors based on 100 replications are reported in parentheses for specifications (11) and (12), respectively. ***, **, and * denote statistical significance at the 1, 5, and
+10% levels, respectively.Economies 2025, 13, 31 12 of 18
+6. Short Discussion
+Bernanke et al. (1997) examined the role of monetary policy in postwar U.S. business
+cycles, focusing primarily on oil price shocks that resulted in higher inflation rates. The
+central question addressed in this study was whether oil price shocks were the primary
+drivers of U.S. recessions or whether monetary tightening was the major cause of economic
+downturns. Their research revealed that the output response is inversely correlated with the
+FED rate response. The sharpest decline in output occurred during the period 1976–1985,
+when monetary tightening was the most aggressive, presumably reflecting the Federal
+Reserve’s increased concern with inflation during the Volcker regime. Thus, a substantial
+part of the impact of oil price shocks on the economy resulted not from the change in oil
+prices per se, but from the resulting tightening of monetary policy. More recently, Khan
+(2022) challenged the view that inflation targeting should not be seen as a panacea for
+chronic macroeconomic ills. He finds that the average growth rate is significantly lower in
+inflation-targeting countries, by more than half a percentage point, than in non-inflation-
+targeting countries. In addition, long-term unemployment rises significantly in inflation-
+targeting countries, by more than 1½ percentage points, compared to non-adopters.
+The recent global inflationary episode, which spurred inflation in European economies,
+prompted the ECB to sharply increase interest rates to steer the European inflation rate
+towards the two percent target. However, as indicated by the results of this study, this
+path may come at a cost to European Union economies in terms of growth, potentially
+sacrificing foregone growth during the stabilization process. Notably, the growth rates of
+the EU-27 and EZ-20 economies experienced a sharp decrease, from 3.4% in 2022 to 0.4% in
+2023, with high interest rates potentially contributing to this steep decline. This does not
+necessarily imply that the ECB should adopt a stance of inaction, as proposed by DeLong
+(2023), who suggests that the current episode of inflation might be economic remobilization.
+Other proposals, such as those advocating for a higher inflation target of around 4% (see,
+e.g., Blanchard et al., 2010; Ball, 2014; Krugman, 2014), could provide the ECB with more
+room for maneuvering, to avoid the prolonged preservation of high interest rates. The
+findings of this study may support this argument because no robust evidence was found
+that inflation rate has a direct negative impact on the economic growth of EU economies8.
+Therefore, a reduction in the ECB’s interest rates may be a remedy for better gross domestic
+product growth performance in EU economies in the coming period.
+7. Conclusions
+This study investigated the relationship between inflation, inflation volatility, and
+economic growth in European Union economies from 2000 to 2023. The results indicate
+that inflation did not demonstrate a consistent negative impact on gross domestic product
+growth during the examined period. None of the specifications showed a negative and
+statistically significant relationship between inflation and growth. By contrast, in instances
+where the relationship between inflation rate and growth was found to be statistically
+significant, the sign was positive, indicating a positive link between these two variables.
+Moreover, there is some evidence suggesting that inflation volatility negatively affects
+growth. Notably, the research highlights a persistent negative association between high
+interest rates and economic growth in EU countries, providing crucial insight into the
+potential risks associated with aggressive monetary tightening.
+The findings of this study call for careful consideration of policy choices, particularly
+in balancing inflation control against the imperative to promote economic growth. As
+the European Central Bank addresses the challenges posed by inflationary pressures,
+this study argues for a prudent and flexible approach to monetary policy. The observed
+slowdown in gross domestic product growth rates in 2023 following significant interest rateEconomies 2025, 13, 31 13 of 18
+hikes underscores the importance of nuanced decision making by monetary authorities.
+Moreover, recent discussions on the European Central Bank’s (ECB’s) neutral interest rate
+suggest that a gradual move towards this level may be more conducive to sustainable
+economic growth than the tight monetary policy of higher interest rates. This research
+contributes to the ongoing discourse on the ECB’s policy considerations regarding its key
+interest rates and possible alignment with proposals for a higher inflation target. Such
+an approach could provide the ECB with greater maneuverability and help mitigate the
+adverse effects of prolonged high interest rates on EU economies by allowing a moderately
+higher rate of inflation than targeted.
+The present study is based on the analysis of data on the relationship between inflation
+and economic growth in EU economies after the creation of the single European currency,
+a topic that has not been extensively studied. We believe that the results shed light on this
+particular relationship in Europe after the creation of the single currency. However, there
+are limitations and considerations that need to be taken into account. One limitation is that
+we have considered only one measure of inflation: the Harmonized Index of Consumer
+Prices (HICP). While this measure is widely used for data analysis, other important aspects
+of inflation could be examined in future research. For example, it would be valuable to
+examine how different types of inflation (e.g., public spending inflation, supply inflation,
+imported inflation) affect growth in EU economies. In addition, the time span selected for
+the present study (2000–2023) includes periods of both low and high inflation. However,
+specific types of inflation, such as creeping and galloping inflation, could also be considered
+for further study using threshold regression models.
+Furthermore, our study has limitations when considering certain macroeconomic and
+political forces affecting the European Union and the institutional role of the European
+Central Bank (ECB). For example, the reason why the high inflation rate does not seem
+to have a negative impact on the growth of EU economies could be attributed to the
+existence of the ECB, which in a way guarantees a moderate inflation rate and a low
+inflation volatility for EU economies. Thus, some adverse effects of moderate inflation
+may not be revealed due to the presence of strong institutions such as the ECB. In the
+same vein, participation in the Economic and Monetary Union (EMU) means that the
+participating governments are obliged to support their banks, which are members of the
+Eurosystem, with guarantees (Dantas et al., 2023). In this sense, participation in the EMU
+has helped to make the economies of its member countries more stable and resilient to
+inflationary pressures (Agarwal & Baron, 2024), a fact that cannot be captured in this
+particular study. Moreover, an advantage of the ECB’s low-inflation-targeting policy is
+that it can use an expansionary monetary policy in times of financial turmoil, such as the
+Global Financial Crisis of 2008 and the Euro Area Debt Crisis of 2010 (Acharya et al., 2014;
+Verner & Gyöngyösi, 2020), because inflation is generally under control. Otherwise, the
+ECB could not be very active in easing monetary policy in an environment of moderate or
+high inflation. Moreover, the ECB’s policy of controlling inflation may allow EMU countries
+to more easily absorb exogenous shocks, such as those from Brexit (Campello et al., 2022) or
+other disruptions caused by the rise in political populism in Europe (Verner & Gyöngyösi,
+2020). EU economies are characterized by strong institutional features due to the existence
+of the EMU. These features may have fostered economic growth in ways that cannot be
+derived directly from this study. Therefore, the results should be interpreted with some
+caution, as they may not fully capture the complexity of inflation dynamics in different
+contexts or periods. With this caveat in mind, further research may be needed to explore
+features not captured by our analysis. Future research could address these limitations
+by examining the impact of inflation on economic growth in different regions and over
+different time periods. For example, studies could focus on Latin American countries,Economies 2025, 13, 31 14 of 18
+which have experienced more frequent and severe inflationary shocks, to see whether the
+findings hold in a different context.
+Author Contributions: Conceptualization, A.P.; methodology, A.P.; software, A.P.; validation, A.P.
+and N.B.; formal analysis, A.P. and N.B.; investigation, A.P.; resources, A.P. and N.B.; data curation,
+A.P.; writing—original draft preparation, A.P.; writing—review and editing, A.P. and N.B. All authors
+have read and agreed to the published version of the manuscript.
+Funding: This research received no external funding.
+Informed Consent Statement: Not applicable.
+Data Availability Statement: Datasets are available on request.
+Conflicts of Interest: The authors declare no conflict of interest.
+Appendix A
+Table A1. Description of variables.
+Variable Name Definition Source
+Dependent variable
+GDP_C
+Gross domestic product at market prices—chain-linked volumes, percentage
+change on previous year, per capita
+Eurostat
+Independent variables Eurostat
+Inflation (HICP)
+Harmonized Index of Consumer Prices (HICP)—annual average rate
+of change
+Eurostat
+Inflation Volatility (HICP_V)
+The moving averages of the standard deviation of year-on-year inflation rates
+over the last three-year period
+Own calculations
+Inflation Volatility 2 (HICP_V_alt)
+The moving averages of the standard deviation of the intra-year monthly
+inflation rate over 12 months
+Own calculations
+Fixed Investments to GDP (Inv) Gross fixed capital formation, percentage of gross domestic product (GDP) Eurostat
+Trade Openess (XM)
+Total trade (sum of imports and exports) as a percentage of gross domestic
+product (GDP), in current prices
+Eurostat
+Gross Debt/GDP (Debt) General government gross debt as a share of gross domestic product (GDP) Eurostat
+Long-term interest rates (LTIRs)
+The 10 year government bond yield. Average value. European Monetary
+Union (EMU) convergence criterion
+Eurostat
+Credit expansion (Credit) Total credit to private non-financial sector. Percent change from year ago Federal Reserve
+Bank of St. Louis
+Public expenditures to GDP (GG)
+Total expenditures of general government as a percentage of gross domestic
+product (GDP)
+Eurostat
+R&D activities to GDP (R&D)
+The value of R&D activities for all sectors of the economy as percentage of
+gross domestic product (GDP)
+Eurostat
+Education level (Edu)
+Upper secondary and post-secondary non-tertiary education (levels 3 and 4).
+Percentage of total population, from 15 to 64 years
+Eurostat
+Institutions
+The sum of the scores of the six governance indicators of the World Bank:
+Control of Corruption, Government Effectiveness, Political Stability and
+Absence of Violence/Terrorism, Regulatory Quality, Rule of Law, Voice
+and Accountability
+Worldwide
+Governance
+Indicators,
+World Bank
+Instrumental variables
+Population growth The logarithm of the population size as of January 1st Eurostat
+Government change
+A variable that assigns a value of one each time there is a change in
+government within a year. Government changes are considered when any of
+the following occurs: (a) elections, (b) voluntary resignation of Prime
+Minister, (c) resignation of Prime Minister due to health reasons, (d)
+dissension within government (break up of the coalition), (e) lack of
+parliamentary support, (f) intervention by the head of state, and (g)
+broadening of the coalition through the inclusion of new parties
+Armingeon et al.
+(2024)Economies 2025, 13, 31 15 of 18
+Table A2. Correlation matrix.
+Variables (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)
+(1) GDP_C 1.000
+(2) HICP 0.159 * 1.000
+(3) HICP_V −0.022 0.675 * 1.000
+(4) HICP_V_alt −0.135 * 0.195 * 0.203 * 1.000
+(5) Debt −0.247 * −0.216 * −0.129 * 0.365 * 1.000
+(6) Inv 0.244 * 0.209 * 0.030 −0.221 * −0.471 * 1.000
+(7) XM 0.077 −0.014 0.042 0.273 * −0.273 * −0.037 1.000
+(8) LTIRs −0.118 * 0.228 * 0.180 * 0.091 * 0.050 −0.029 −0.231 * 1.000
+(9) Credit 0.178 * 0.108 * −0.116 * −0.164 * −0.234 * 0.237 * −0.014 0.160 * 1.000
+(10) GG −0.426 * −0.182 * −0.140 * −0.012 0.521 * −0.303 * −0.339 * −0.010 −0.138 * 1.000
+(11) R&D −0.238 * −0.174 * −0.186 * −0.205 * 0.102 * −0.028 −0.155 * −0.380 * −0.086 * 0.607 * 1.000
+(12) Edu 0.191 * 0.163 * 0.179 * −0.413 * −0.349 * 0.213 * −0.141 * 0.087 * 0.057 −0.080 * −0.068 1.000
+(13) Institutions −0.178 * −0.255 * −0.252 * −0.099 * −0.087 * −0.001 0.234 * −0.367 * 0.065 0.254 * 0.663 * −0.301 * 1.000
+(14) Lpop −0.101 * 0.006 −0.066 −0.226 * 0.376 * −0.066 −0.686 * 0.036 −0.037 0.347 * 0.266 * 0.085 * −0.104 * 1.000
+(15) Gov_chan −0.011 0.005 0.052 −0.074 −0.009 0.058 −0.097 * 0.071 −0.042 0.043 −0.034 0.103 * −0.086 * 0.079 1.000
+Note: * denotes statistical significance at maximum level of significance of 5%.Economies 2025, 13, 31 16 of 18
+Table A3. Variance inflation factor.
+VIF 1/VIF
+R&D 3.69 0.271
+Debt 3.406 0.294
+GG 2.874 0.348
+Institutions 2.817 0.355
+XM 2.666 0.375
+Lpop 2.666 0.375
+HICP_V_alt 2.108 0.474
+HICP 1.858 0.538
+LTIRs 1.694 0.59
+Inv 1.683 0.594
+Edu 1.654 0.605
+HICP_V 1.522 0.657
+Credit 1.225 0.816
+Gov_chan 1.041 0.96
+Mean VIF 2.208
+Note: This table shows the Variance Inflation Factor (VIF) values for the predictor variables. The VIF values
+measure the extent of multicollinearity among the predictor variables in the regression model. A VIF value
+greater than 10 typically indicates high multicollinearity, which can affect the stability and interpretation of the
+regression coefficients. In our analysis, all VIF values are below 10, with a mean VIF of 2.21, indicating no serious
+multicollinearity issues. The 1/VIF values (tolerance values) are the reciprocal of the VIF values. In our results,
+the tolerance values are all above 0.1, further confirming that multicollinearity is not a significant concern in
+our models. Overall, these results suggest that the predictor variables are sufficiently independent of each other,
+allowing for the reliable estimation of the regression coefficients and valid interpretation of the model.
+Notes
+1 See for instance Phillips (1962), Sidrauski (1967), Thirlwall and Barton (1971), and Dornbusch and Frenkel (1973).
+2 The sample used in this study has only one observation of inflation above 40% annually out of 643 observations. In this manner,
+the concern raised by Bruno and Easterly (1998), suggesting that the negative correlation between inflation and economic growth
+is attributed to hyperinflation episodes, is overcome.
+3 Our sample comprises all EU economies, regardless of whether they have adopted the euro. The research operates under
+the assumption that the European Central Bank’s (ECB’s) monetary policy significantly influences EU countries that do not
+participate in the Economic and Monetary Union (EMU). However, the results are also controlled specifically for EMU countries.
+4 The inclusion of both the inflation rate and inflation volatility in the same regression may raise concerns about potential
+multicollinearity problems. However, as shown in Tables A2 and A3, the correlation between the variables is quite low, indicating
+that a serious multicollinearity problem is not present. Additionally, separated regressions were run one with inflation and
+another one with inflation volatility instead of putting these two variables in a single regression. Due to space considerations,
+these results are not presented; however, they are available upon request.
+5 Robust standard errors are employed to address any potential heteroskedasticity and autocorrelation in the residuals.
+6 The additional control variables were also examined following the methodology of linear specifications. The results remained
+consistent even when the supplementary control variables were introduced to the non-linear models. Due to space considerations,
+these results are not presented; however, they are available upon request.
+7 The study employs the dynamic GMM specification and the LSDVC estimator to avoid the Nickell bias (Nickell, 1981) that may
+arise when running a dynamic fixed effects panel regression, especially in this case where the number of cross-sections is larger
+than the time dimension. Including a lagged dependent variable in a panel framework can result in biased and inconsistent
+estimates due to the autocorrelation introduced by its correlation with the unobserved heterogeneity component.
+8 While the indirect negative impact of inflation is also not profound, as evidenced by Nakamura et al. (2018), who found little
+evidence that the Great Inflation of the late 1970s and early 1980s led to a substantial increase in price dispersion, which is
+considered one of the major costs of inflation.
+References
+Acharya, V., Drechsler, I., & Schnabl, P. (2014). A pyrrhic victory? Bank bailouts and sovereign credit risk. The Journal of Finance, 69(6),
+2689–2739. [CrossRef]
+Agarwal, I., & Baron, M. (2024). Inflation and disintermediation. Journal of Financial Economics, 160, 103902. [CrossRef]Economies 2025, 13, 31 17 of 18
+Ahmed, S., & Rogers, J. H. (2000). Inflation and the great ratios: Long term evidence from the U.S. Journal of Monetary Economics, 45(1),
+3–35. [CrossRef]
+Anderson, T., & Hsiao, C. (1982). Formulation and estimation of dynamic models using panel data. Journal of Econometrics, 18(1), 47–82.
+[CrossRef]
+Apergis, N. (2005). Inflation uncertainty and growth: Evidence from panel data. Australian Economic Papers, 44(2), 186–197. [CrossRef]
+Arawatari, R., Hori, T., & Mino, K. (2018). On the nonlinear relationship between inflation and growth: A theoretical exposition. Journal
+of Monetary Economics, 94, 79–93. [CrossRef]
+Arellano, M., & Bond, S. (1991). Some tests of specification for panel data: Monte carlo evidence and an application to employment
+equations. Review of Economic Studies, 38, 277–297. [CrossRef]
+Arestis, P., & Demetriades, P. (1997). Financial development and economic growth: Assessing the evidence. The Economic Journal,
+107(442), 783–799. [CrossRef]
+Armingeon, K., Engler, S., Leemann, L., & Weisstanner, D. (2024). Comparative political data set 1960–2022. University of Zurich;
+Leuphana University Lueneburg; University of Lucerne.
+Ball, L. (2014). The case for a long-run inflation target of four percent. IMF Working Paper, 2014(092), 1–19. [CrossRef]
+Barro, R. J. (1991). Economic growth in a cross section of countries. The Quarterly Journal of Economics, 106(2), 407–443. [CrossRef]
+Barro, R. J. (1996). Inflation and growth. In Federal reserve bank of St. Louis review, May/June (pp. 153–169). Federal Reserve Bank of St.
+Louis. [CrossRef]
+Barro, R. J. (2003). Determinants of economic growth in a panel of countries. Annals of Economics and Finance, 4(2), 231–274.
+Barro, R. J., & Sala-i-Martin, X. (2003). Economic growth (2nd ed., Vol. 1). MIT Press Books, The MIT Press.
+Bernanke, B. S., Gertler, M., Watson, M., Sims, C. A., & Friedman, B. M. (1997). Systematic monetary policy and the effects of oil price
+shocks. Brookings Papers on Economic Activity, 1997(1), 91–157. [CrossRef]
+Bils, M., & Klenow, P. J. (2000). Does schooling cause growth? American Economic Review, 90(5), 1160–1183. [CrossRef]
+Blanchard, O., Dell’ariccia, G., & Mauro, P. (2010). Rethinking macroeconomic policy. Journal of Money, Credit and Banking, 42(s1),
+199–215. [CrossRef]
+Blanchard, O., & Simon, J. (2001). The long and large decline in U.S. output volatility. Brookings Papers on Economic Activity, 2001(1),
+135–164. [CrossRef]
+Boone, P. (1996). Politics and the effectiveness of foreign aid. European Economic Review, 40, 289–329. [CrossRef]
+Bruno, M. (1995). Does inflation really lower growth? Finance and Development, 32, 35–38.
+Bruno, M., & Easterly, W. (1996). Inflation and growth: In search of a stable relationship. Federal Reserve Bank of St. Louis, 78, 139–146.
+[CrossRef]
+Bruno, M., & Easterly, W. (1998). Inflation crises and long-run growth. Journal of Monetary Economics, 41, 3–26. [CrossRef]
+Burdekin, R. C. K., Denzau, A. T., Keil, M. W., Sitthiyot, T., & Willett, T. D. (2004). When does inflation hurt economic growth? Different
+nonlinearities for different economies. Journal of Macroeconomics, 26(3), 519–532. [CrossRef]
+Burdekin, R. C. K., Goodwin, T., Salamun, S., & Willett, T. D. (1994). The effects of inflation on economic growth in industrial and
+developing countries: Is there a difference? Applied Economics Letters, 1(10), 175–177. [CrossRef]
+Campello, M., Campello, M., Cortes, G. S., D’almeida, F., D’almeida, F., Kankanhalli, G., & Kankanhalli, G. (2022). Exporting
+uncertainty: The impact of brexit on corporate America. Journal of Financial and Quantitative Analysis, 57(8), 3178–3222. [CrossRef]
+Cuaresma, J. C., & Silgoner, M. (2014). Economic growth and inflation in Europe: A tale of two thresholds. JCMS: Journal of Common
+Market Studies, 52(4), 843–860. [CrossRef]
+Dalgaard, C., Hansen, H., & Tarp, F. (2004). On the empirics of foreign aid and growth. The Economic Journal, 114(496), F191–F216.
+[CrossRef]
+Dantas, M. M., Merkley, K. J., & Silva, F. B. G. (2023). Government guarantees and banks’ income smoothing. Journal of Financial Services
+Research, 63(2), 123–173. [CrossRef]
+Davis, G., & Kanago, B. (2000). The level and uncertainty of inflation: Results from OECD forecasts. Economic Inquiry, 38(1), 58–72.
+[CrossRef]
+De Gregorio, J., & Guidotti, P. E. (1995). Financial development and economic growth. World Development, 23(3), 433–448. [CrossRef]
+DeLong, B. (2023). The first inflation problem of the twenty-first century. Review of Keynesian Economics, 11(2), 117–128. [CrossRef]
+Dornbusch, R., & Frenkel, J. A. (1973). Inflation and growth: Alternative approaches. Journal of Money, Credit and Banking, 5(1), 141.
+[CrossRef]
+Driscoll, J. C., & Kraay, A. C. (1998). Consistent covariance matrix estimation with spatially dependent panel data. The Review of
+Economics and Statistics, 80(4), 549–560. [CrossRef]
+Eggoh, J. C., & Khan, M. (2014). On the nonlinear relationship between inflation and economic growth. Research in Economics, 68(2),
+133–143. [CrossRef]
+Espinoza, R. A., Prasad, A., Leon, H. L., & Leon, G. (2010). Estimating the inflation-growth nexus: A smooth transition model. IMF
+Working Papers, 10(76), 1–22. [CrossRef]Economies 2025, 13, 31 18 of 18
+Fischer, S. (1993). The role of macroeconomic factors in growth. Journal of Monetary Economics, 32(3), 485–512. [CrossRef]
+Fountas, S., Karanasos, M., & Kim, J. (2006). Inflation uncertainty, output growth uncertainty and macroeconomic performance. Oxford
+Bulletin of Economics and Statistics, 68(3), 319–343. [CrossRef]
+Friedman, M. (1977). Nobel lecture: Inflation and unemployment. Journal of Political Economy, 85(3), 451–472. [CrossRef]
+Ghosh, A., & Phillips, S. (1998). Warning: Inflation may be harmful to your growth. IMF Staff Papers, 45(4), 672–710. [CrossRef]
+Ghossoub, E. A. (2023). Economic growth, inflation, and banking sector competition. Economic Modelling, 129, 1–12. [CrossRef]
+Gylfason, T., & Herbertsson, T. T. (2001). Does inflation matter for growth? Japan and the World Economy, 13(4), 405–428. [CrossRef]
+Hafer, R. (1986). Inflation uncertainty and a test of the friedman hypothesis. Journal of Macroeconomics, 8(3), 365–372. [CrossRef]
+Hall, R. E., & Jones, C. I. (1999). Why do some countries produce so much more output per worker than others? The Quarterly Journal of
+Economics, 114(1), 83–116. [CrossRef]
+He, Q. (2023). The inverted-U effect of inflation on growth: Cross-country evidence. Economic Modelling, 128, 1–12. [CrossRef]
+Huang, C., Chang, J., & Ji, L. (2021). Inflation, market structure, and innovation-driven growth with distinct cash constraints. Oxford
+Economic Papers, 73(3), 1270–1303. [CrossRef]
+Judson, R., & Orphanides, A. (1999). Inflation, volatility and growth. International Finance, 2(1), 117–138. [CrossRef]
+Khan, N. (2022). Does Inflation targeting really promote economic growth? Review of Political Economy, 34(3), 564–584. [CrossRef]
+King, R. G., & Levine, R. (1993). Finance, entrepreneurship and growth. Journal of Monetary Economics, 32(3), 513–542. [CrossRef]
+King, R. G., & Watson, M. W. (1996). Money, prices, interest rates and the business cycle. The Review of Economics and Statistics, 78(1), 35.
+[CrossRef]
+Kiviet, J. F. (1995). On bias, inconsistency, and efficiency of various estimators in dynamic panel data models. Journal of Econometrics,
+68(1), 53–78. [CrossRef]
+Krugman, P. (2014). Inflation targets reconsidered. Navigating Monetary Policy in the New Normal, 8, 110.
+Levine, R., & Renelt, D. (1992). A sensitivity analysis of cross-country growth regressions. The American Economic Review, 82(4), 942–963.
+Levine, R., & Zervos, S. J. (1993). What we have learned about policy and growth from cross-country regressions? The American
+Economic Review, 83(2), 426–430.
+Nakamura, E., Steinsson, J., Sun, P., & Villar, D. (2018). The elusive costs of inflation: Price dispersion during the U.S. great Inflation.
+The Quarterly Journal of Economics, 133(4), 1933–1980. [CrossRef]
+Nickell, S. (1981). Biases in dynamic models with fixed effects. Econometrica, 49(6), 1417. [CrossRef]
+Pessoa, A. (2010). R&D and economic growth: How strong is the link? Economics Letters, 107(2), 152–154. [CrossRef]
+Phillips, A. W. (1962). Employment, inflation and growth. Economica, 29(113), 1–16. [CrossRef]
+Pintilescu, C., Jemna, D., Viorică, E., & Asandului, M. (2014). Inflation, output growth, and their uncertainties: Empirical evidence for a
+causal relationship from european emerging economies. Emerging Markets Finance and Trade, 50(sup4), 78–94. [CrossRef]
+Pollin, R., & Zhu, A. (2006). Inflation and economic growth: A cross-country nonlinear analysis. Journal of Post Keynesian Economics,
+28(4), 593–614. [CrossRef]
+Reinhart, C. M., & Rogoff, K. S. (2010). Growth in a time of debt. American Economic Review, 100(2), 573–578. [CrossRef]
+Rodrik, D., Subramanian, A., & Trebbi, F. (2004). Institutions rule: The primacy of institutions over geography and integration in
+economic development. Journal of Economic Growth, 9(2), 131–165. [CrossRef]
+Rogoff, S. K. (2003). Globalization and global disinflation. Economic Review, Federal Reserve Bank of Kansas City, 88(4), 45–78.
+Sala-I-Martin, X. X. (1997a). I just ran two million regressions. The American Economic Review, 87(2), 178–183.
+Sala-I-Martin, X. X. (1997b). I just ran four million regressions. In NBER working papers 6252. National Bureau of Economic Research,
+Inc. [CrossRef]
+Sarel, M. (1995). Nonlinear effects of inflationon economic growth. IMF Working Papers, 95(56), 1. [CrossRef]
+Sidrauski, M. (1967). Inflation and economic growth. Journal of Political Economy, 75(6), 796–810. [CrossRef]
+Thirlwall, A., & Barton, C. (1971). Inflation and growth: The international evidence. PSL Quarterly Review, 24(98), 263–275. [CrossRef]
+Verner, E., & Gyöngyösi, G. (2020). Household debt revaluation and the real economy: Evidence from a foreign currency debt crisis.
+American Economic Review, 110(9), 2667–2702. [CrossRef]
+Yilmazkuday, H. (2021). Inflation and growth: The role of institutions. Journal of Economics and Finance, 46(1), 167–187. [CrossRef]
+Zachariadis, M. (2004). R&D-induced Growth in the OECD? Review of Development Economics, 8(3), 423–439. [CrossRef]
+Zhou, G. (2019). Inflation, liquidity, and long-run growth. Macroeconomic Dynamics, 23(2), 888–906. [CrossRef]
+Živkov, D., Kovačević, J., & Papić-Blagojević, N. (2020). Measuring the effects of inflation and inflation uncertainty on output growth in
+the central and eastern European countries. Baltic Journal of Economics, 20(2), 218–242. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

@@ -1,0 +1,213 @@
+1
+Vol.:(0123456789)
+Scientific Reports | (2020)10:13590 |https://doi.org/10.1038/s41598-020-70479-z
+www.nature.com/scientificreports
+Comparing different deep learning
+architectures for classification
+of chest radiographs
+Keno K. Bressem1*
+, LisaC.Adams2
+,Christoph Erxleben1
+, Bernd Hamm1,2
+,
+Stefan M. Niehues1
+&Janis L.Vahldiek1
+Chest radiographs are among the most frequently acquired images in radiology and are often the
+subject of computer vision research. However, most of the models used to classify chest radiographs
+are derived from openly available deep neural networks, trained on large image datasets.These
+datasets differ from chest radiographs in that they are mostly color images and have substantially
+more labels.Therefore, very deep convolutional neural networks (CNN) designed for ImageNet and
+often representing more complex relationships, might not be required for the comparably simpler task
+of classifying medical image data.Sixteen different architectures ofCNN were compared regarding
+the classification performance on two openly available datasets, theCheXpert andCOVID-19 Image
+DataCollection.Areas under the receiver operating characteristics curves (AUROC) between 0.83 and
+0.89 could be achieved on theCheXpert dataset.On theCOVID-19 Image DataCollection, all models
+showed an excellent ability to detectCOVID-19 and non-COVID pneumonia withAUROC values
+between 0.983 and 0.998. It could be observed, that more shallow networks may achieve results
+comparable to their deeper and more complex counterparts with shorter training times, enabling
+classification performances on medical image data close to the state-of-the-art methods even when
+using limited hardware.
+Chest radiographs are among the most frequently used imaging procedures in radiology. They have been widely
+employed in the field of computer vision, as chest radiographs are a standardized technique and, if compared
+to other radiological examinations such as computed tomography or magnetic resonance imaging, contain a
+smaller group of relevant pathologies. Although many artificial neural networks for the classification of chest
+radiographs have been developed, it is still subject to intensive research.
+Only a few groups design their own networks from scratch, while most use already established architectures,
+such as ResNet-50 or DenseNet-121 (with 50 and 121 representing the number of layers within the respective
+neural network)1–6
+. These neural networks have often been trained on large, openly available datasets, such as
+ImageNet, and are therefore already able to recognize numerous image features. When training a model for a
+new task, such as the classification of chest radiographs, the use of pre-trained networks may improve the train-
+ing speed and accuracy of the new model, since important image features that have already been learned can be
+transferred to the new task and do not have to be learned again. However, the feature space of freely available
+data sets such as ImageNet differs from chest radiographs as they contain color images and more categories. The
+ImageNet Challenge includes 1,000 possible categories per image, while CheXpert, a large freely available data
+set of chest radiographs, only distinguishes between 14 categories (or classes)7
+, and the COVID-19 Image Data
+Collection only differentiates between three ­ classes8
+. Although the ImageNet challenge showed a trend towards
+higher accuracies through increasing the number of layers in a CNN, this may not be necessary for a medical
+image classification task.
+In radiology, sometimes only limited features of an image can be decisive for the diagnosis. Therefore, images
+cannot be scaled down as much as desired, as the required information would otherwise be lost. But the more
+complex a CNN, the more resources are required for training and deployment. As up-scaling the input-images
+resolution exponentially increases memory usage during training for large neural networks that evaluate many
+OPEN
+1
+Charité Universitätsmedizin Berlin, Campus Benjamin Franklin, Hindenburgdamm 30, 12203 Berlin,
+Germany. 2
+Charité Universitätsmedizin Berlin, Campus Mitte, Charitéplatz 1, 10117 Berlin, Germany. *
+email:
+keno‑kyrill.bressem@charite.de2
+Vol:.(1234567890)
+Scientific Reports | (2020)10:13590 | https://doi.org/10.1038/s41598-020-70479-z
+www.nature.com/scientificreports/
+parameters, the size of a mini batch needs to be reduced earlier and more strongly (in ranges between 2 and 16),
+which may affect optimizers such as the stochastic gradient descent.
+Therefore, it remains to be determined, which of the available artificial neural networks designed for and
+trained on the ImageNet dataset will perform best for the classification of chest radiographs. The hypothesis of
+this work is that the number of layers in a CNN is not necessarily decisive for good performance on medical
+data. CNN with fewer layers might perform similarly to deeper/more complex networks, while at the same time
+requiring less resources. Therefore, we systematically investigate the performance of sixteen openly available
+CNN on the CheXpert dataset and the COVID-19 Image Data Collection.
+Methods
+Data preparation. The free available CheXpert dataset consists of 224,316 chest radiographs from 65,240
+patients. Fourteen findings have been annotated for each image: enlarged cardiomediastinum, cardiomegaly,
+lung opacity, lung lesion, edema, consolidation, pneumonia, atelectasis, pneumothorax, pleural effusion, pleural
+other, fracture and support devices. Hereby the findings can be annotated as present (1), absent (NA) or uncer-
+tain (−1). Similar to previous work on the classification of the CheXpert ­ dataset3,9
+, we trained these networks
+on a subset of labels: cardiomegaly, edema, consolidation, atelectasis and pleural effusion. As we only aim at
+network comparison and not on maximal precision of a neural network, for this analysis, each image with an
+uncertainty label was excluded, and other approaches such as zero imputation or self-training were also not
+adopted. Furthermore, only frontal radiographs were used, leaving 135,494 images from 53,388 patients for
+training. CheXpert offers an additional dataset with 235 images (201 images after excluding uncertainty labels
+and lateral radiographs), annotated by two independent radiologists, which is intended as an evaluation dataset
+and was therefore used for this purpose.
+The COVID-19 Image Data Collection is a dataset focusing on chest radiographs for the novel coronavirus
+SARS-CoV-2withtheassociatedCOVID-19pneumonia.Thedatasetisstillunderactivedevelopment,atthetime
+of our analysis it consists out of 46,754 chest radiographs, of which 30,174 represent normal cases without pneu-
+monia, 16,384 are cases with non-COVID-19 pneumonia and 196 include radiographs of confirmed COVID-19
+pneumonia. We split the set into a dataset for training and validation consisting of 43,754 cases (28,240 normal,
+15,333 non-COVID-19 pneumonia and 181 COVID-19) and a dataset for testing consisting including 3,000
+cases (1,934 normal, 1,051 non-COVID-19 pneumonia and 15 COVID-19).
+Data augmentation. For the first and second training session, the images were scaled to 320×320 pixels,
+using bilinear interpolation, and pixel values were normalized. During training, multiple image transformations
+were applied: flipping of the images alongside the horizontal and vertical axis, rotation of up to 10°, zooming of
+up to 110%, adding of random lightning or symmetric wrapping.
+Model training. 15 different convolutional neural networks (CNN) of five different architectures (ResNet,
+DenseNet, VGG, SqueezeNet, Inception v4 and AlexNet) were trained on two ­ datasets1,2,10–13
+. All training was
+done using the Python programming language (https​://www.pytho​n.org, version 3.8) with the PyTorch (https​
+://pytor​ch.org) and FastAI (https​://fast.ai) libraries on a workstation running on Ubuntu 18.04 with two Nvidia
+GeForce RTX 2080ti graphic cards (11 GB of RAM each)14,15
+. In the first training session, batch size was held
+constant at 16 for all models, while it was increased to 32 for all networks in the second session. We decided
+to use two different batch sizes, because maximum batch size is limited mainly by the available GPU-RAM
+and therefore can only increase to a limited amount, especially in larger and thus more memory-demanding
+networks. Especially with increased image resolution, lowering the batch size will be the major limitation to
+network performance.
+Each model was trained for eight epochs, whereas during the first five epochs only the classification-head of
+each network was trained. Thereafter, the model was unfrozen and trained as whole for three additional epochs.
+Before training and after the first five epochs, the optimal learning rate was ­ determined16
+. For CheXpert, it was
+between 1e−1 and 1e−2 for the first five epochs and between 1e−5 and 1e−6 for the rest of the training, while
+for the COVID-19 Image Data Collection, it was between 1e−2 and 1e−3 for the first five epochs and 1e−5 and
+1e−6 for the rest of the training. We trained one multilabel classification head for each model for the CheXpert
+dataset and a multi-class model for the COVID-19 Image Data Collection. Since the performance of a neural
+network can be subject to minor random fluctuations, the training was repeated for a total of five times. The
+predictions on the validation data set were then exported as comma separated values (CSV) for evaluation.
+Evaluation. Evaluation was performed using the “R” statistical environment including the “tidyverse” and
+“ROCR” ­libraries17–19
+. Predictions on the validation dataset of the five models for each network architecture
+were pooled so that the models could be evaluated as a consortium. For each individual prediction as well as the
+pooled predictions, receiver operation characteristic (ROC) curves and precision recall curves (PRC) were plot-
+tedandtheareasundereachcurvewerecalculated(AUROCandAUPRC).AUROCandAUPRCwerechosenas
+they enable a comparison of different models, independent of a chosen threshold for the classification. Sensitiv-
+ity and specificity were calculated with an individual cut-off for each network. The cut-off was chosen so that the
+sum of sensitivity and specificity was the highest achievable for the respective network.
+Results
+The CheXpert validation dataset consists of 234 studies from 200 patients, not used for training with no uncer-
+tainty-labels. After excluding lateral radiographs (n=32), 202 images from 200 patients remained. The dataset
+presents class imbalances (% positives for each finding: cardiomegaly 33%, edema 21%, consolidation 16%,3
+Vol.:(0123456789)
+Scientific Reports | (2020)10:13590 | https://doi.org/10.1038/s41598-020-70479-z
+www.nature.com/scientificreports/
+atelectasis 37%, pleural effusion 32%), so that the AUPRC as well as the AUROC are reported. The performance
+of the tested networks is compared to the AUROC reported by Irvin et al.3
+However, only values for AUROC,
+but not for AUPRC, are provided there.
+In most cases, the best results were achieved with a batch size of 32, so all the information provided below
+refers to models trained with this batch size. Results achieved with smaller batch sizes of 16 will be explicitly
+mentioned.
+Area Under the Receiver Operating Characteristic Curve. On the CheXpert dataset, deeper CCN
+generallyachievedhigherAUROCvaluesthanshallownetworks(Table1andFigs.1,2,3).Regardingthepooled
+AUROC for the detection of the five pathologies, ResNet-152 (0.882), DenseNet-161 (0.881) and ResNet-50
+(0.881) performed best (Irvin et al. CheXpert baseline 0.889)3
+. Broken down for individual findings, the most
+accurate detection of atelectasis was achieved by ResNet-18 (0.816, batch size 16), ResNet-101 (0.813, batch
+size 16), VGG-19 (0.813, batch size 16) and ResNet-50 (0.811). For detection of cardiomegaly, the best four
+models surpassed the CheXpert baseline of 0.828 (ResNet-34 0.840, ResNet-152 0.836, DenseNet-161 0.834,
+ResNet-50 0.832). For congestion, the highest AUROC was achieved using ResNet-152 (0.917), ResNet-50
+(0.916)andDenseNet-161(0.913).PulmonaryedemawasmostaccuratelydetectedusingDenseNet-161(0.923),
+DenseNet-169 (0.922) and DenseNet-201 (0.922). For pleural effusion, the four best models were ResNet-152
+Table 1.  Area under the receiver operating characteristic curves—CheXpert. This table shows the different
+areas under the receiver operating characteristic curve (AUROC) for each of the network architectures and
+individual findings as well as the pooled AUROC per model. According to the pooled AUROC, ResNet-152,
+ResNet-50 und DenseNet-161 were the best models, while SqueezeNet and AlexNet showed the poorest
+performance. For cardiomegaly, ResNet-34, ResNet-50, ResNet-152 and DenseNet-161 could surpass the
+CheXpert baseline provided by Irvin et al. ResnEt-50, ResNet-101, ResNet-152 and DenseNet-169 could also
+surpass the CheXpert baseline for pleural effusion. A batch size of 32 often lead to better results compared to a
+batch size of 16.
+Network Batchsize Atelectasis Cardiomegaly Consolidation Edema Effusion Pooled
+CheXpert baseline 16 0.818 0.828 0.938 0.934 0.928 0.889
+AlexNet 16 0.790 0.755 0.857 0.894 0.881 0.835
+DenseNet-121 16 0.809 0.794 0.895 0.883 0.906 0.857
+DenseNet-161 16 0.800 0.817 0.885 0.900 0.923 0.865
+DenseNet-169 16 0.805 0.795 0.898 0.891 0.909 0.860
+DenseNet-201 16 0.805 0.812 0.891 0.886 0.916 0.862
+Inception v4 16 0.796 0.832 0.899 0.917 0.934 0.876
+ResNet-101 16 0.813 0.810 0.905 0.889 0.907 0.865
+ResNet-152 16 0.801 0.809 0.908 0.896 0.916 0.866
+ResNet-18 16 0.816 0.797 0.905 0.868 0.899 0.857
+ResNet-34 16 0.799 0.798 0.902 0.891 0.905 0.859
+ResNet-50 16 0.798 0.799 0.890 0.880 0.913 0.856
+SqueezeNet-1.0 16 0.761 0.755 0.833 0.907 0.885 0.828
+SqueezeNet-1.1 16 0.767 0.764 0.880 0.903 0.879 0.839
+VGG-13 16 0.798 0.752 0.886 0.867 0.872 0.835
+VGG-16 16 0.809 0.766 0.892 0.879 0.883 0.846
+VGG-19 16 0.811 0.786 0.901 0.890 0.884 0.854
+AlexNet 32 0.791 0.768 0.856 0.894 0.886 0.839
+DenseNet-121 32 0.808 0.828 0.879 0.904 0.926 0.869
+DenseNet-161 32 0.809 0.834 0.913 0.923 0.928 0.881
+DenseNet-169 32 0.809 0.816 0.900 0.922 0.934 0.876
+DenseNet-201 32 0.795 0.820 0.904 0.922 0.931 0.874
+Inception v4 32 0.796 0.834 0.901 0.933 0.941 0.881
+ResNet-101 32 0.797 0.823 0.911 0.915 0.936 0.876
+ResNet-152 32 0.802 0.836 0.917 0.920 0.937 0.882
+ResNet-18 32 0.796 0.822 0.908 0.903 0.911 0.868
+ResNet-34 32 0.797 0.840 0.903 0.902 0.919 0.872
+ResNet-50 32 0.811 0.832 0.916 0.913 0.934 0.881
+SqueezeNet-1.0 32 0.773 0.769 0.880 0.913 0.895 0.846
+SqueezeNet-1.1 32 0.785 0.789 0.895 0.904 0.898 0.854
+VGG-13 32 0.800 0.762 0.883 0.896 0.907 0.850
+VGG-16 32 0.798 0.776 0.890 0.911 0.906 0.856
+VGG-19 32 0.787 0.790 0.879 0.911 0.916 0.8574
+Vol:.(1234567890)
+Scientific Reports | (2020)10:13590 | https://doi.org/10.1038/s41598-020-70479-z
+www.nature.com/scientificreports/
+(0.937), ResNet-101 (0.936), ResNet-50 (0.934) and DenseNet-169 (0.934), all of which performed superior to
+the CheXpert baseline of 0.928.
+On the COVID-19 dataset, the AUROC did not substantially differ between the models with a range of the
+pooled values between 0.98 and 0.998 (Table 2, Appendix Figures S1–S3 in Supplementary Information). The
+highest pooled AUROC of 0.998 was achieved using a DenseNet-169 and DensNet-201 with AUROC values of
+1.00 for the detection of COVID-19 and 0.997 for the detection of non-COVID-19 pneumonia or the absence
+of pneumonia.
+Area Under the Precision Recall Curve and Sensitivity and Specificity. For AUPRC, CNN with
+less convolutional layers could achieve higher values than deeper network-architectures (Table S1 and Appen-
+dix Figures S1–S3 in Supplementary Information). The highest pooled values for the AUPRC were achieved by
+training VGG-16 (0.709), AlexNet (0.701) and ResNet-34 (0.688). For atelectasis, CGG-16 and AlexNet both
+achieved the highest AUPRC of 0.732, followed by Resnet-35 with 0.652. Cardiomegaly was most accurately
+Figure 1.   ROC curves for AlexNet, DenseNet and Inception v4 models. The colored lines represent a single
+training, black lines represent the pooled performance over five trainings. The figure was generated in ­ R20
+.

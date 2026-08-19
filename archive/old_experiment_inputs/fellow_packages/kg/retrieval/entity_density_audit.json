@@ -1,0 +1,60 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/fellow_packages/kg/retrieval/entity_density_proxy_gen5000_v2.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Matched-cell lexical density sensitivity audit for the Knowledge Graphs payload."
+  },
+  "schema_version": "spec_gap.entity_density_proxy.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "target_domain_id": "kg",
+  "plain_text_comparator_domain_id": "macro",
+  "cell": {
+    "depth": "2-hop",
+    "thinking_mode": "off",
+    "agent_id": "worker_1",
+    "shared_upstream_planner_fixture": "Retrieve and summarize the selected evidence."
+  },
+  "scope": "System and user message content joined by one newline; chat-template wrappers and tool schema excluded because they are shared across the comparison.",
+  "proxy": {
+    "word_token_regex": "\\b[A-Za-z][A-Za-z-]*\\b",
+    "capitalized_multi_token_span_regex": "\\b(?:[A-Z][A-Za-z-]*|[A-Z]{2,})(?:[ \\t]+(?:[A-Z][A-Za-z-]*|[A-Z]{2,})){1,}\\b",
+    "rate": "non-overlapping capitalized multi-token spans per 1,000 regex word tokens"
+  },
+  "cells": {
+    "kg_clean": {
+      "message_content_sha256": "c873c610fb252bd9895894e9c9bc1f078e4c67b59d3b2df996007e9c4b2cd2f0",
+      "characters": 110861,
+      "word_tokens": 15544,
+      "capitalized_multi_token_spans": 352,
+      "spans_per_1000_words": 22.645394
+    },
+    "kg_injected": {
+      "message_content_sha256": "f16d69309bc1bcafe79886a64c5de084be90e659ef40db65ca99e08b24105de6",
+      "characters": 111234,
+      "word_tokens": 15583,
+      "capitalized_multi_token_spans": 353,
+      "spans_per_1000_words": 22.652891
+    },
+    "macro_clean": {
+      "message_content_sha256": "00b66f139ea89b1c5f3820562584f97f532012bd4c412ec840579704b58687ce",
+      "characters": 113762,
+      "word_tokens": 14798,
+      "capitalized_multi_token_spans": 364,
+      "spans_per_1000_words": 24.597919
+    },
+    "macro_injected": {
+      "message_content_sha256": "11f4f0feb6bed4f60c5ffe0ec70db7c648e06b1153f48800d39aa5d34d5f4f78",
+      "characters": 114115,
+      "word_tokens": 14843,
+      "capitalized_multi_token_spans": 366,
+      "spans_per_1000_words": 24.658088
+    }
+  },
+  "clean_comparison": {
+    "kg_minus_macro_spans_per_1000_words": -1.952525,
+    "kg_to_macro_rate_ratio": 0.920622,
+    "kg_percent_difference": -7.938
+  },
+  "interpretation": "KG is not a high entity-density outlier relative to Macro under this simple reproducible proxy. This check does not measure all named entities or relation phrases, so a richer NER-based or density-matched control is still required before attributing pooled-probe signal to injection semantics."
+}

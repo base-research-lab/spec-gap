@@ -1,0 +1,1814 @@
+MathematicalProgramming(2021)186:157–183
+https://doi.org/10.1007/s10107-019-01449-1
+FULL LENGTH PAPER
+Series A
+Implementabletensormethodsinunconstrainedconvex
+optimization
+Yurii Nesterov1
+Received:29March2018/Accepted:4November2019/Publishedonline:21November2019
+©TheAuthor(s)2019
+Abstract
+In this paper we develop new tensor methods for unconstrained convex optimization,
+which solve at each iteration an auxiliary problem of minimizing convex multivariate
+polynomial. We analyze the simplest scheme, based on minimization of a regularized
+local model of the objective function, and its accelerated version obtained in the
+frameworkofestimatingsequences.Theirratesofconvergence arecompared withthe
+worst-case lower complexity bounds for corresponding problem classes. Finally, for
+the third-order methods, we suggest an efficient technique for solving the auxiliary
+problem, which is based on the recently developed relative smoothness condition
+(Bauschke et al. in Math Oper Res 42:330–348, 2017; Lu et al. in SIOPT 28(1):333–
+354,2018).Withthiselaboration,thethird-ordermethodsbecomeimplementableand
+very fast. The rate of convergence in terms of the function value for the accelerated
+third-order scheme reaches the level O
+
+1
+k4
+
+, where k is the number of iterations.
+This is very close to the lower bound of the order O
+
+1
+k5
+
+, which is also justified in
+this paper. At the same time, in many important cases the computational cost of one
+iteration of this method remains on the level typical for the second-order methods.
+Keywords High-order methods · Tensor methods · Convex optimization · Worst-case
+complexity bounds · Lower complexity bounds
+MathematicsSubjectClassification 90C25 · 90C06 · 65K05
+Research results presented in this paper were obtained in the framework of ERC Advanced Grant 788368
+and Russian Science Foundation (Grant 17-11-01027).
+B Yurii Nesterov
+Yurii.Neterov@uclouvain.be
+1 Center for Operations Research and Econometrics (CORE), Catholic University of Louvain (UCL),
+Louvain-la-Neuve, Belgium
+123158 Y.Nesterov
+1 Introduction
+Motivation In the last decade, we observe an increasing interest to the complexity
+analysis of the high-order methods. Starting from the paper [31] containing the first
+global rate of convergence of Cubic Regularization of Newton Method, it became
+more and more common to provide the second-order methods with the worst-case
+complexity bounds on different problem classes (see, for example, [5,11,12]). New
+efficiency measurementsinthisfieldnaturallygenerated anewspectrumofquestions,
+starting from the possibilities to accelerate the second-order methods (see [27]) up
+to the lower complexity bounds (see [1,2,13,18]) and attempts of constructing the
+optimal methods [24].
+Another possibility of accelerating the minimization processes consists in the
+increase of the power of oracle. The idea of using the high-order approximations in
+Optimizationisnotnew.Initially,suchapproximationswereemployedintheoptimal-
+ity conditions (see, for example [22]). However, it seems that the majority of attempts
+ofusingthehigh-ordertensorsinoptimizationmethodsfailedbythestandardobstacle
+related to the enormous complexity of minimization of nonconvex multivariate poly-
+nomials. To the best of our knowledge, the only theoretical analysis of such schemes
+for convex problems can be found in an unpublished preprint [3], which is concluded
+by a pessimistic comment on practical applicability of these methods. For noncon-
+vex problems, several recent papers [8–10,14] contain the complexity analysis for
+high-order methods designed for generating points with small norm of the gradient.
+For the auxiliary nonconvex optimization problem, these methods need to guaran-
+tee a sufficient level for the first-order optimality condition and the local decrease of
+the objective function. However, for nonconvex functions even this moderate goal is
+difficult to achieve.
+The key observation, which underlies all results of this paper, is that an appro-
+priately regularized Taylor approximation of convex function is a convex multivariate
+polynomial.Thisisindeedaverynaturalpropertysincethisregularizedapproximation
+usually belongs to the epigraph of convex function. Thus, the auxiliary optimization
+problem in the high-order (or tensor) methods becomes generally solvable by many
+powerfulmethodsofConvexOptimization.Thisfactexplainsourinteresttocomplex-
+ity analysis of the simplest tensor scheme (Sect. 2), based on the convex regularized
+Taylor approximation, and to its accelerated version (Sect. 3). The latter method is
+obtained by the technique of estimating functions (see [25–27]). Therefore it is sim-
+ilar to Algorithm 4.2 in [3]. The main difference consists in the correct choice of
+parameters ensuring convexity of the auxiliary problem. We show that this algorithm
+converges with the rate O(
+1
+k
+p+1
+), where k is the number of iterations and p is the
+degree of the tensor.
+In the next Sect. 4, we derive lower complexity bounds for the tensor methods. We
+show that the lower bound for the rate of convergence is of the order O
+
+1
+k
+3p+1
+2
+
+.
+This resultisbetter thanthe bound in[1]and coincide withthebound in[2].However,
+it seems that our justification is simpler.
+123Implementabletensormethodsinunconstrainedconvex… 159
+For practical implementations, the most important results are included in Sect. 5,
+where we discuss an efficient scheme for minimizing the regularized Taylor approxi-
+mationofdegreethree.Thisauxiliaryconvexproblemcanbetreatedintheframework
+of relative smoothness condition. The first element of this approach was introduced
+in [4], for generalizing the Lipschitz condition for the norm of the gradient. In [21] it
+wasshownthatthesameextensioncanbeappliedtotheconditionofstrongconvexity.
+This second step is important since it leads to linearly convergent methods for func-
+tions with nonstandard growth properties. The auxiliary problem with the third-order
+tensor isa good application of this technique. We show that the corresponding method
+converges linearly, with the rate depending on an absolute constant. In the end of
+the section, we argue that the complexity of one iteration of the resulting third-order
+scheme is often of the same order as that of the second-order methods.
+In the last Sect. 6 we discuss the presented results and mention the open problems.
+Notations and generalities In what follows, we denote by E a finite-dimensional
+real vector space, and by E∗ its dual spaced composed by linear functions on E. For
+such a function s ∈ E∗, we denote by s,x its value at x ∈ E. Using a self-adjoint
+positive-definite operator B : E → E∗ (notation B = B∗  0), we can endow these
+spaces with conjugate Euclidean norms:
+x = Bx,x1/2, x ∈ E, g∗ = g, B−1g1/2, g ∈ E∗.
+Sometimes,intheformulasinvolvingproductsoflinearoperators,itwillbeconvenient
+to treat x ∈ E as a linear operator from R to E, and x∗ as a linear operator from E∗ to
+R. In this case, xx∗ is a linear operator from E∗ to E, acting as follows:
+(xx∗)g = g,xx ∈ E, g ∈ E∗.
+For a smooth function f : dom f → R with convex and open domain dom f ⊆ E,
+denote by ∇ f (x) its gradient, and by ∇2 f (x) its Hessian evaluated at point x ∈
+dom f ⊆ E. Note that
+∇ f (x) ∈ E∗, ∇2 f (x)h ∈ E∗, x ∈ dom f , h ∈ E.
+In what follows, we often work with directional derivatives. For p ≥ 1, denote by
+Dp f (x)[h1,...,hp]
+the directional derivative of function f at x along directions hi ∈ E, i = 1,..., p.
+Note that Dp f (x)[·] is a symmetric p-linear form. Its norm is defined in the standard
+way:
+Dp f (x) = max
+h1,...,hp
+
+Dp f (x)[h1,...,hp] : hi ≤ 1, i = 1,..., p . (1.1)
+123160 Y.Nesterov
+For example, for any x ∈ dom f and h1,h2 ∈ E, we have
+Df (x)[h1] = ∇ f (x),h1, D2 f (x)[h1,h2] = ∇2 f (x)h1,h2.
+Thus, for the Hessian, our definition corresponds to the spectral norm of self-adjoint
+linear operator (maximal module of all eigenvalues computed with respect to operator
+B).
+If all directions h1,...,hp are the same, we apply notation
+Dp f (x)[h]p, h ∈ E.
+Then, Taylor approximation of function f (·) at x ∈ dom f can be written as follows:
+f (x + h) = x,p(h) + o(hp), x + h ∈ dom f ,
+x,p(y)
+def
+= f (x) +
+p
+i=1
+1
+i! Di f (x)[y − x]i, y ∈ E.
+Note that in general, we have (see, for example, Appendix 1 in [30])
+Dp f (x) = max
+h
+Dp f (x)[h]p : h ≤ 1 . (1.2)
+Similarly, since for x, y ∈ dom f being fixed, the form Dp f (x)[·,...,·] −
+Dp f (y)[·,...,·] is p-linear and symmetric, we also have
+Dp
+f (x) − Dp
+f (y) = max
+h
+Dp
+f (x)[h]p
+− Dp
+f (y)[h]p
+: h ≤ 1 .
+(1.3)
+Inthispaper,weconsiderfunctionsfromtheproblemclassesFp,whichareconvex
+and p times differentiable on E. Denote by Lp its uniform bound for the Lipschitz
+constant of their pth derivative:
+Dp f (x) − Dp f (y) ≤ Lpx − y, x, y ∈ dom f , p ≥ 1. (1.4)
+Sometimes, if an ambiguity can arise, we us notation Lp( f ).
+Assuming that f ∈ Fp and Lp < +∞, by the standard integration arguments we
+can bound the residual between function value and its Taylor approximation:
+| f (y) − x,p(y)| ≤
+Lp
+(p+1)!y − xp+1, x, y ∈ dom f . (1.5)
+If p ≥ 2,then applying thesame reasoning forfunctions ∇ f (·),hand ∇2 f (·)h,h
+with direction h ∈ E being fixed, we get the following guarantees:
+123Implementabletensormethodsinunconstrainedconvex… 161
+∇ f (y) − ∇x,p(y)∗ ≤
+Lp
+p! y − xp, (1.6)
+∇2 f (y) − ∇2x,p(y) ≤
+Lp
+(p−1)!y − xp−1, (1.7)
+which are valid for all x, y ∈ dom f .
+2 Convex tensor approximations
+In our methods, we use the following power prox function
+dp(x) = 1
+pxp, p ≥ 2. (2.1)
+Note that
+∇dp(x) = xp−2Bx,
+∇2dp(x) = (p − 2)xp−4Bxx∗B + xp−2B
+ xp−2B.
+(2.2)
+All results of this paper are based on the following observation. From now on, for
+the sake of simplicity, we assume that dom f = E.
+Theorem1 Let f ∈ Fp with p ≥ 2 and Lp < +∞. Then for any x, y ∈ E we have
+∇2 f (y)  ∇2x,p(y) +
+Lp
+(p−1)!y − xp−1B. (2.3)
+Moreover, for any M ≥ Lp and any x ∈ E, function1
+x,p,M(y) = x,p(y) + M
+(p−1)!dp+1(y − x) (2.4)
+is convex and
+f (y) ≤ x,p,M(y), y ∈ E. (2.5)
+Proof Let us fix arbitrary x and y from dom f . Then for any direction h ∈ E we have
+(∇2 f (y) − ∇2x,p(y))h,h ≤ ∇2 f (y) − ∇2x,p(y) · h2
+(1.7)
+≤
+Lp
+(p−1)!y − xp−1h2,
+1 In our notation, the approximation function in [3] was chosen as x,p(y) + M
+p! dp+1(y − x). Thus, we
+cannot guarantee that this polynomial is convex.
+123162 Y.Nesterov
+and this is (2.3). Further,
+0  ∇2 f (y)
+(2.3)
+ ∇2x,p(y) +
+Lp
+(p−1)!y − xp−1B
+ ∇2x,p(y) + M
+(p−1)!y − xp−1B
+(2.2)
+ ∇2x,p(y) + M
+(p−1)!∇2dp+1(y − x)
+(2.4)
+= ∇2x,p,M(y).
+Thus, function x,p,M(·) is convex. Finally,
+f (y)
+(1.5)
+≤ x,p(y) +
+Lp
+(p+1)!(p + 1)dp+1(y − x)
+≤ x,p(y) + M
+p!dp+1(y − x)
+≤ x,p,M(y).
+ 
+The statements of Theorem 1 explain our interest to the following point:
+Tp,M(x) ∈ Argmin
+y∈E
+x,p,M(y) (2.6)
+with M ≥ Lp. We are going to use such points for solving the problem
+f∗ = min
+x∈E
+f (x), (2.7)
+startingfromsomepoint x0 ∈ E,where f ∈ Fp and Lp < +∞.Weassumethatthere
+exists at least one solution x∗ of this problem and that the level sets of f are bounded:
+max
+x∈L(x0)
+x − x∗ ≤ D < +∞,
+L(x0)
+def
+= {x ∈ E : f (x) ≤ f (x0)}. (2.8)
+In this case, in view of (2.5), the level sets of function x,p,M(·) are also bounded.
+Therefore, point T = Tp,M(x) is well defined. It satisfies the following first-order
+optimality condition:
+∇x,p(T) + M
+(p−1)!T − xp−1B(T − x) = 0. (2.9)
+123Implementabletensormethodsinunconstrainedconvex… 163
+Multiplying this equality by T − x, we get
+M
+(p−1)!T − xp+1 = ∇x,p(T),x − T. (2.10)
+Denote rp,M(x) = x − Tp,M(x).
+Lemma1 For any x ∈ E and M ≥ Lp we have
+f (Tp,M(x)) ≤ min
+y∈E
+f (y) +
+pM+Lp
+(p+1)! y − xp+1 , (2.11)
+∇ f (Tp,M(x))∗ ≤
+pM+Lp
+p! x − Tp,M(x)p, (2.12)
+∇ f (Tp,M(x)),x − Tp,M(x) ≥ (p−1)!
+2Mr
+p−1
+p,M (x)
+∇ f (Tp,M(x))2
+∗ +
+M2−L2
+p
+2M(p−1)!r
+p+1
+p,M (x).
+(2.13)
+First two inequalities of this lemma are already known (see, for example, [8]). We
+provide them with a simple proof for the reader convenience.
+Proof Denote T = Tp,M(x) and r = x − T. Then,
+f (T)
+(2.5)
+≤ min
+y∈E
+x,p,M(y) = min
+y∈E
+p,x(y) + pM
+(p+1)!y − xp+1
+(1.5)
+≤ min
+y∈E
+f (y) +
+pM+Lp
+(p+1)! y − xp+1 .
+and this is inequality (2.11). Further,
+∇ f (T) − ∇x,p(T)∗
+(1.6)
+≤
+Lp
+p! rp. (2.14)
+Therefore, we get the following bound:
+∇ f (T)∗ ≤ ∇ f (T) − ∇x,p(T)∗ + ∇x,p(T)∗
+(2.14)
+≤
+Lp
+p! rp + ∇x,p(T)∗
+(2.9)
+=
+
+Lp
+p! + M
+(p−1)!
+
+rp,
+which leads to (2.12). Finally,
+∇ f (T) + Mrp−1
+(p−1)! B(T − x)∗
+(2.9)
+= ∇ f (T) − ∇x,p(T)∗
+(2.14)
+≤
+Lp
+(p−1)!rp.
+123164 Y.Nesterov
+Squaring both sides of this bound, we get:
+∇ f (T)2
+∗ + 2Mrp−1
+(p−1)! ∇ f (T),T − x + M2r2p
+[(p−1)!]2 ≤
+L2
+p+1r2p
+[(p−1)!]2 ,
+and this is (2.13).  
+Corollary1 For any x ∈ E and M ≥ Lp, we have
+∇ f (Tp,M(x),x − Tp,M(x) ≥ c(p)
+M [M2 − L2
+p]
+p−1
+2p ∇ f (Tp,M(x))
+p+1
+p
+∗ , (2.15)
+where c(p) = p
+p−1
+
+p−1
+p+1
+1−p
+2p
+[(p − 1)!]
+1
+p .
+Proof Indeed, in view of inequality (2.13), we have the following bound:
+∇ f (T),x − T ≥ a
+τ + bτα,
+where a = (p−1)!
+2M ∇ f (Tp,M(x))2
+∗, b =
+M2−L2
+p
+2M(p−1)!, τ = r
+p−1
+p,M (x), and α = p+1
+p−1. Note
+that
+min
+τ>0
+a
+τ + bτα = (1 + α)
+a
+α
+ α
+1+α b
+1
+1+α .
+It remains to substitute in this bound the values of our parameters a, b, and α.  
+Let us estimate now the rate of convergence of the following process:
+xt+1 = Tp,M(xt), t ≥ 0 (2.16)
+where M ≥ Lp. Thus, in view of Theorem 1, point xt+1 is a solution to the auxiliary
+convex problem (2.6).
+Theorem2 Letsequence{xt}t≥0 begeneratedbymethod(2.16)asappliedtoproblem
+(2.7). Then for all t ≥ 0 we have f (xt+1) ≤ f (xt). At the same time,
+f (xt) − f∗ ≤
+(pM+Lp)Dp+1
+(p+1)!
+
+1+(t−1)
+
+1
+p+1
+ p+1
+p
+p ≤
+(pM+Lp)Dp+1
+p!
+
+p+1
+t
+p
+, t ≥ 1.
+(2.17)
+Proof In view of inequality (2.5), method (2.16) is monotone. Hence, for all t ≥ 0 we
+have
+xt − x∗ ≤ D. (2.18)
+123Implementabletensormethodsinunconstrainedconvex… 165
+Let us prove the first inequality in (2.17). First of all, let us estimate the difference
+f (x1) − f∗. We have
+f (x1)
+(2.11)
+≤ min
+y∈E
+f (y) +
+pM+Lp
+(p+1)! y − x0p+1
+(2.18)
+≤ f∗ +
+(pM+Lp)Dp+1
+(p+1)! ,
+and this is (2.17) for t = 1.
+Further, for any t ≥ 1, we have
+f (xt+1)
+(2.11)
+≤ min
+y∈E
+f (y) +
+pM+Lp
+(p+1)! y − xtp+1
+(2.18)
+≤ min
+α∈[0,1]
+f (xt + α(x∗ − xt)) +
+(pM+Lp)Dp+1
+(p+1)! αp+1
+≤ min
+α∈[0,1]
+f (xt) − α( f (xt) − f∗) +
+(pM+Lp)Dp+1
+(p+1)! αp+1 .
+The minimum of the above objective in α ≥ 0 is achieved for
+α∗ =
+
+( f (xt)− f∗)p!
+(pM+Lp)Dp+1
+1
+p
+≤
+
+( f (x1)− f∗)p!
+(pM+Lp)Dp+1
+1
+p (2.17)
+≤
+
+1
+p+1
+1
+p
+< 1.
+Thus, we conclude that
+f (xt+1) ≤ f (xt) − α∗
+
+f (xt) − f∗ −
+(pM+Lp)Dp+1
+(p+1)! α
+p
+∗
+
+= f (xt) − pα∗
+p+1( f (xt) − f∗).
+Denoting δt = f (xt) − f∗, we get the following estimate:
+δt − δt+1 ≥ Cδ
+p+1
+p
+t , t ≥ 1,
+where C = p
+p+1
+
+p!
+(pM+Lp)Dp+1
+1
+p
+. Thus, for μt = Cpδt, the recursive inequality is
+as follows:
+μt − μt+1 ≥ μ
+p+1
+p
+t , t ≥ 1.
+123166 Y.Nesterov
+Then,
+1
+μ
+1/p
+t+1
+− 1
+μ
+1/p
+t
+=
+μ
+1/p
+t −μ
+1/p
+t+1
+μ
+1/p
+t+1μ
+1/p
+t
+= 1
+μ
+1/p
+t+1μ
+1/p
+t
+
+μ
+1/p
+t − μ
+1/p
+t
+
+1 + μt+1−μt
+μt
+1/p
+
+≥ 1
+μ
+1/p
+t+1μ
+1/p
+t
+
+μ
+1/p
+t − μ
+1/p
+t
+
+1 + μt+1−μt
+pμt
+
+= μt−μt+1
+pμtμ
+1/p
+t+1
+≥
+μ
+1/p
+t
+pμ
+1/p
+t+1
+≥ 1
+p.
+This means that 1
+μt
+≥
+
+1
+μ
+1/p
+1
++ t−1
+p
+p
+. Note that
+1
+μ
+1/p
+1
+= 1
+Cδ
+1/p
+1
+= p+1
+p
+
+(pM+Lp)Dp+1
+p!( f (x1)− f∗)
+1
+p (2.17)
+≥ 1
+p(p + 1)
+p+1
+p .
+Therefore,
+δt = C−pμt =
+
+p+1
+p
+p (pM+Lp)Dp+1
+p! μt
+≤
+
+p+1
+p
+p (pM+Lp)Dp+1
+p!
+
+1
+p(p + 1)
+p+1
+p + t−1
+p
+−p
+=
+(pM+Lp)Dp+1
+p!
+
+(p + 1)1/p + t−1
+p+1
+−p
+,
+and this is (2.17).  
+3 Accelerated tensor methods
+In order to accelerate method (2.16), we apply a variant of the estimating sequences
+technique, which becomes a standard tool for accelerating the usual Gradient and
+Second-Order Methods (see, for example, [25–27]). In our situation, this idea can be
+applied to tensor methods in the following way.
+For solving the problem (2.7), we choose a constant M ≥ Lp and recursively
+update the following sequences.
+• Sequence of estimating functions
+ψk(x) = k(x) + C
+p!dp+1(x − x0), k = 1,2,..., (3.1)
+where k(x) are linear functions in x ∈ E, and C is a positive parameter.
+• Minimizing sequence {xk}∞
+k=1.
+123Implementabletensormethodsinunconstrainedconvex… 167
+• Sequence of scaling parameters {Ak}∞
+k=1:
+Ak+1
+def
+= Ak + ak, k = 1,2,....
+For these objects, we are going to maintain the following relations:
+R1
+k : Ak f (xk) ≤ ψ∗
+k ≡ min
+x∈E
+ψk(x),
+R2
+k : ψk(x) ≤ Ak f (x) +
+pM+Lp+C
+p! dp+1(x − x0), ∀x ∈ E.
+⎫
+⎪ ⎬
+⎪ ⎭
+, k ≥ 1. (3.2)
+Let us ensure that relations (3.2) hold for k = 1. We choose
+x1 = Tp,M(x0), 1(x) ≡ f (x1), x ∈ E, A1 = 1. (3.3)
+Then ψ∗
+1 = f (x1), so R1
+1 holds. On the other hand, in view of definition (3.1), we get
+ψ1(x) = f (x1) + C
+p!dp+1(x − x0)
+(2.11)
+≤ min
+y∈E
+
+f (y) +
+pM+Lp
+(p+1)! y − x0p+1
+
++ C
+p!dp+1(x − x0),
+and R2
+1 follows.
+Assume now that relations (3.2) hold for some k ≥ 1. Denote
+vk = argmin
+x∈E
+ψk(x).
+Let us choose some ak > 0 and M ≥ Lp. Define
+αk = ak
+Ak+ak
+, yk = (1 − αk)xk + αkvk, xk+1 = Tp,M(yk),
+ψk+1(x) = ψk(x) + ak[ f (xk+1) + ∇ f (xk+1),x − xk+1].
+(3.4)
+In view of R2
+k and convexity of f , for any x ∈ E we have
+ψk+1(x) ≤ Ak f (x) +
+pM + Lp + C
+p!
+dp+1(x − x0)
++ak[ f (xk+1) + ∇ f (xk+1),x − xk+1]
+≤ (Ak + ak) f (x) +
+pM + Lp + C
+p!
+dp+1(x − x0),
+and this is R2
+k+1. Let us show now that, for the appropriate choices of ak, C and M,
+relation R1
+k+1 is also valid.
+123168 Y.Nesterov
+Indeed, in view of R1
+k and Lemma 4 in [27], for any x ∈ E, we have
+ψk(x) ≡ k(x) + C
+p!dp+1(x − x0) ≥ ψ∗
+k + C
+(p+1)! · (1
+2)p−1x − vkp+1
+≥ Ak f (xk) + C
+(p+1)! · (1
+2)p−1x − vkp+1.
+(3.5)
+Denote γp = C
+p! · (1
+2)p−1. Then,
+ψ∗
+k+1 = min
+x∈E
+{ψk(x) + ak[ f (xk+1) + ∇ f (xk+1),x − xk+1]}
+(3.5)
+≥ min
+x∈E
+
+Ak f (xk) +
+γp
+p + 1
+x − vkp+1
++ ak[ f (xk+1)
++∇ f (xk+1),x − xk+1]
+
+≥ min
+x∈E
+
+(Ak + ak) f (xk+1) + Ak∇ f (xk+1),xk − xk+1
++ak∇ f (xk+1),x − xk+1 +
+γp
+p + 1
+x − vkp+1
+
+(3.4)
+= min
+x∈E
+
+Ak+1 f (xk+1) + ∇ f (xk+1), Ak+1yk − akvk − Akxk+1
++ak∇ f (xk+1),x − xk+1 +
+γp
+p + 1
+x − vkp+1
+
+= min
+x∈E
+
+Ak+1 f (xk+1) + Ak+1∇ f (xk+1), yk − xk+1
++ak∇ f (xk+1),x − vk +
+γp
+p + 1
+x − vkp+1
+
+.
+Further, if we choose M ≥ Lp, then by inequality (2.15) we have
+∇ f (xk+1), yk − xk+1 ≥ c(p)
+M [M2 − L2
+p]
+p−1
+2p ∇ f (xk+1)
+p+1
+p
+∗ .
+Hence, our choice of parameters must ensure the following inequality:
+Ak+1
+c(p)
+M
+[M2
+− L2
+p]
+p−1
+2p ∇ f (xk+1)
+p+1
+p
+∗ + ak∇ f (xk+1),x − vk
++
+γp
+p + 1
+x − vkp+1
+≥ 0,
+for all x ∈ E. Minimizing this expression in x ∈ E, we come to the following
+condition:
+Ak+1
+c(p)
+M [M2 − L2
+p]
+p−1
+2p ≥ p
+p+1
+
+1
+γp
+1
+p
+a
+p+1
+p
+k .
+123Implementabletensormethodsinunconstrainedconvex… 169
+Substituting in this inequality expressions for corresponding constants, we obtain
+Ak+1
+p
+p+1
+
+p−1
+p+1
+1−p
+2p
+[(p − 1)!]
+1
+p 1
+M [M2 − L2
+p]
+p−1
+2p ≥ p
+p+1
+
+p!
+C 2p−1
+1
+p
+a
+p+1
+p
+k .
+After cancellations, we get
+Ak+1
+
+1 −
+L2
+p
+M2
+
+C2
+M2−L2
+p
+ 1
+2p
+≥ 2a
+p+1
+p
+k
+
+p
+2
+
+p+1
+p−1
+1
+p
+
+p+1
+p−1. (3.6)
+For the sake of notation, let us choose
+C = p
+2
+
+(p+1)
+(p−1)(M2 − L2
+p). (3.7)
+Then, inequality (3.6) becomes simpler:
+Ak+1 ≥ 2
+
+(p+1)M2
+(p−1)(M2−L2
+p)
+a
+p+1
+p
+k . (3.8)
+Let us choose some α > 0 and define
+Ak = 1
+αkp+1,
+ak = Ak+1 − Ak = 1
+α((k + 1)p+1 − kp+1).
+(3.9)
+Note that for any k ≥ 0, using trivial inequality (1 − τ)p ≥ 1 − pτ, 0 ≤ τ ≤ 1, we
+get
+ak · A
+− p
+p+1
+k+1 = α
+− 1
+p+1 · (k+1)p+1−kp+1
+(k+1)p = α
+− 1
+p+1
+
+k + 1 − k
+
+1 − 1
+k+1
+p
+≤ α
+− 1
+p+1
+
+1 + kp
+k+1
+
+≤ α
+− 1
+p+1 (1 + p).
+Thus, Ak+1 ≥ α
+1
+p
+
+1
+p+1
+p+1
+p
+a
+p+1
+p
+k . Now, if we choose
+α = (p + 1)p+1
+
+4(p+1)M2
+(p−1)(M2−L2
+p)
+p
+2
+, (3.10)
+then α
+− 1
+p+1 (1 + p) =
+
+(p−1)(M2−L2
+p)
+4(p+1)M2
+ p
+2(p+1)
+, and inequality (3.8) is satisfied for all
+k ≥ 0.
+123170 Y.Nesterov
+Now we are ready to write down the accelerated tensor method. Define
+Ak =
+
+(p−1)(M2−L2
+p)
+4(p+1)M2
+p
+2 
+k
+p+1
+p+1
+, ak = Ak+1 − Ak, k ≥ 0. (3.11)
+Accelerated Tensor Method
+Initialization: Choose x0 ∈ E and M > Lp. Compute x1 = Tp,M(x0).
+Define C = p
+2
+
+(p+1)
+(p−1)(M2 − L2
+p) and ψ1(x) = f (x1) + C
+p!dp+1(x − x0).
+Iteration k, (k ≥ 1):
+1. Compute vk = argmin
+x∈E
+ψk(x) and choose yk = Ak
+Ak+1
+xk + ak
+Ak+1
+vk.
+2. Compute xk+1 = Tp,M(yk) and update
+ψk+1(x) = ψk(x) + ak[ f (xk+1) + ∇ f (xk+1),x − xk+1].
+(3.12)
+The above discussion proves the following theorem.
+Theorem3 Let the sequence {xk}∞
+k=1 be generated by method (3.12) as applied to the
+problem (2.7). Then for any k ≥ 1 we have:
+f (xk) − f (x∗) ≤
+pM+Lp+C
+(p+1)!
+
+4(p+1)M2
+(p−1)(M2−L2
+p)
+p
+2 
+p+1
+k
+p+1
+x0 − x∗p+1. (3.13)
+Proof Indeed, we have shown that
+Ak f (xk)
+R1
+k
+≤ ψ∗
+k
+R2
+k
+≤ Ak f (x∗) +
+pM+Lp+C
+(p+1)! x0 − x∗p+1.
+Thus, (3.13) follows from (3.11).  
+Notethatthepointvk canbefoundin(3.12)byaclosed-formexpression.Consider
+sk = ∇k(x).
+123Implementabletensormethodsinunconstrainedconvex… 171
+Since function k(·) is linear, this vector is the same for all x ∈ E. Therefore, the point
+vk is a solution of the following minimization
+min
+x∈E
+sk,x + C
+(p+1)!x − x0p+1 .
+The first-order optimality condition for this problem is as follows:
+sk + C
+p!x − x0p−1B(x − x0) = 0.
+Thus, we get the following closed-form expression for its solution:
+vk = x0 −
+
+p!
+Csk
+p−1
+∗
+1
+p
+· B−1sk.
+4 Lower complexity bounds for tensor methods
+For constructing functions, which are difficult for all tensor methods, it is convenient
+to assume that E = E∗ = Rn, and B = In, the identity n × n-matrix. Thus, in this
+section we work with the standard Euclidean norm
+x =
+ n
+i=1
+(x(i))2
+1/2
+, x ∈ Rn.
+For an integer parameter p ≥ 1, define the following function:
+ηp+1(x) = 1
+p+1
+n
+i=1
+|x(i)|p+1, x ∈ Rn.
+Clearly, ηp+1 ∈ Fp. On the other hand, for any x and h ∈ Rn, we have
+Dkηp+1(x)[h]k = p!
+(p+1−k)!
+n
+i=1
+|x(i)|p+1−k(h(i))k, if k is even,
+Dkηp+1(x)[h]k = p!
+(p+1−k)!
+n
+i=1
+|x(i)|p−kx(i)(h(i))k, if k is odd.
+Therefore, for all x, y, and h from Rn, by Cauchy-Schwartz inequality we have
+|Dpηp+1(x)[h]p − Dpηp+1(y)[h]p| ≤ p!x − y
+ n
+i=1
+(h(i))2p
+1/2
+≤ p! x − y hp.
+(4.1)
+Thus, Lp(ηp+1) = p!.
+123172 Y.Nesterov
+Forintegerparameterk,2 ≤ k ≤ n,letusdefinethefollowingk×k uppertriangular
+matrix with two nonzero diagonals:
+Uk =
+⎛
+⎜
+⎜
+⎜
+⎜
+⎝
+1 −1 0 ... 0
+0 1 −1 ... 0
+... ...
+0 0 ... 1 −1
+0 0 ... 0 1
+⎞
+⎟
+⎟
+⎟
+⎟
+⎠
+, U−1
+k =
+⎛
+⎜
+⎜
+⎜
+⎜
+⎝
+1 1 1 ... 1
+0 1 1 ... 1
+... ...
+0 0 ... 1 1
+0 0 ... 0 1
+⎞
+⎟
+⎟
+⎟
+⎟
+⎠
+Now we can introduce n ×n upper triangular matrix Ak with the following structure:
+Ak =
+
+Uk 0
+0 In−k
+
+.
+Note that
+Ak2
+= max
+x∈Rn
+{Ax2
+: x ≤ 1}
+= max
+x∈Rn
+"k−1 #
+i=1
+(x(i)
+− x(i+1)
+)2
++
+n #
+i=k
+(x(i)
+)2
+: x ≤ 1
+$
+≤ max
+x∈Rn
+"k−1 #
+i=1
+
+2(x(i)
+)2
++ 2(x(i+1)
+)2
+
++
+n #
+i=k
+(x(i)
+)2
+: x ≤ 1
+$
+≤ 4. (4.2)
+Our parametric family of difficult functions is defined in the following way:
+fk(x) = ηp+1(Akx) − e1,x, 2 ≤ k ≤ p, (4.3)
+where e1 = (1,0,...,0)T . Let us compute its optimal solution from the first-order
+optimality condition
+AT
+k ∇ηp+1(Akx∗
+k ) = e1.
+Thus, Akx∗
+k = y∗
+k , where y∗
+k satisfies equation ∇ηp+1(y∗
+k ) = A−T
+k e1 = êk
+def
+= 
+ēk
+0n−k
+
+, with ēk ∈ Rk being the vector of all ones, and 0n−k beng the origin in
+Rn−k.
+Thus, in coordinate form, vector y∗
+k can be found from the following equations:
+|(y∗
+k )(i)|p−2(y∗
+k )(i) = 1, i = 1,...,k,
+|(y∗
+k )(i)|p−2(y∗
+k )(i) = 0, i = k + 1,...,n.
+123Implementabletensormethodsinunconstrainedconvex… 173
+In other words, y∗
+k = êk and vector x∗
+k = A−1
+k êk has the following coordinates:
+(x∗
+k )(i) = (k − i + 1)+, i = 1,...,n, (4.4)
+where (τ)+ = max{0,τ}. Consequently,
+f ∗
+k = ηp+1(êk) − e1,x∗
+k  = k
+p+1 − k = − kp
+p+1,
+x∗
+k 2 =
+k
+i=1
+i2 = k(k+1)(2k+1)
+6 ≤ (k+1)3
+3 .
+(4.5)
+Let us describe now the abilities of tensor methods of degree p ≥ 2 in generating
+new test points. We assume that the response of oracle at point x̄ ∈ Rn consists in the
+following collection of multi-linear forms:
+f (x̄), Dk f (x̄)[h]k, k = 1,..., p.
+Therefore, we assume that the method is able to compute stationary points of the
+following polynomial functions
+φa,γ,m(h) =
+p
+i=1
+a(i)Di f (x̄)[h]i + γhm
+(4.6)
+with coefficients a ∈ Rp, γ > 0 and m > 1. Denote by x̄, f (a,γ,m) the set of all
+stationary points of this function. Then we can define the linear subspace
+Sf (x̄) = Lin
+
+x̄, f (a,γ,m) : a ∈ Rp, γ > 0, m > 1
+
+.
+Our assumption about the rules of tensor methods is as follows.
+Assumption1 Themethodgeneratesasequenceoftestpoints{xk}k≥0 satisfyingrecur-
+sive condition
+xk+1 ∈ x0 +
+k #
+i=0
+Sf (xi), k ≥ 0. (4.7)
+Notethatfortheabsolutemajorityofthefirst-order,second-order,andtensormeth-
+ods this assumption is satisfied.
+Let us look at the consequences Assumption 1 in the case of minimization of
+function fk(·). Denote
+Rn
+k = {x ∈ Rn : x(i) = 0, i = k + 1,...,n}, 1 ≤ k ≤ n − 1.
+123174 Y.Nesterov
+Lemma2 Any tensor method satisfying Assumption 1 and minimizing function ft(·)
+starting from the point x0 = 0, generates test points {xk}k≥0 satisfying condition
+xk+1 ∈
+k
+i=0
+Sft (xi) ⊆ Rn
+k+1, 0 ≤ k ≤ t − 1. (4.8)
+Proof Let us prove first that inclusion x ∈ Rn
+k with k ≥ 1 implies Sft (x) ⊆ Rn
+k+1.
+Indeed,sincematrix At isuppertriangular,thisinclusionensuresthat y
+def
+= Atx ∈ Rn
+k.
+Therefore, all derivatives of function ft(·) along direction h ∈ Rn have the following
+form:
+Dft(x)[h] = Dηp+1(y)[Ath] − h(1) =
+k
+i=1
+di,1ei, Ath − h(1),
+Di ft(x)[h]k = Dkηp+1(y)[Ath]k =
+k
+i=1
+di,kei, Athk, 2 ≤ k ≤ p,
+withcertaincoefficientsdi,k,i = 1,...,n,k = 1,..., p.Thismeansthatthegradients
+of these derivatives in h are as follows
+∇Dft(x)[h] =
+k
+i=1
+di,1AT
+t ei − e1,
+∇Dk ft(x)[h]k =
+k
+i=1
+kdi,kei, Athk−1AT
+t ei, 2 ≤ k ≤ p,
+Thus ∇Dk ft(x)[h]k ∈ Rn
+k+1 for all k, 1 ≤ k ≤ p. Hence, since the regularization
+termindefinition (4.6)isformedbythestandardEuclidean norm,allstationarypoints
+of this function belong to Rn
+k+1.
+Nowwecanprovestatementofthelemmabyinduction.Fork = 0,wehavex0 = 0,
+and therefore
+∇ ft(x0) = −e1, Di f (x0)[h]i = 0, i = 1,..., p,
+for all h ∈ Rn. Consequently, stationary points of all possible functions φa,γ,m(·)
+belong to Rn
+1 implying Sft (x0) = Rn
+1. Thus, x1 belongs to Rn
+1 by Assumption 1.
+Assume now that all xi ∈ Rn
+k, i = 1,...,k, for some k ≥ 1. Then, as we have
+already seen, Sft (xi) ⊆ Rn
+k+1. Hence, the inclusion (4.8) follows from Assumption 1.
+ 
+Now we can prove the main statement of this section.
+123Implementabletensormethodsinunconstrainedconvex… 175
+Theorem4 Let some tensor method M of degree p satisfies Assumption 1. Assume
+that this method ensures for any function f ∈ Fp with Lp(( f ) < +∞ the following
+rate of convergence:
+min
+0≤k≤t
+f (xk) − f∗ ≤
+Lpx0−x∗p+1
+(p+1)! κ(t) , t ≥ 1, (4.9)
+where {xk}k≥0 is the sequence of test points, generated by method M and x∗ is the
+solution of the problem (2.7). Then for all t ≥ 1 such that 2t + 1 ≤ n we have
+κ(t) ≤ 1
+3p2p+1 (2t + 2)
+3p+1
+2 . (4.10)
+Proof Let us use method M for minimizing function f (x) = f2t+1(x). In view of
+Lemma 2, we have xi ∈ Rn
+t for all i, 0 ≤ i ≤ t. However,
+f2t+1(x) ≡ ft(x), ∀x ∈ Rn
+t .
+At the same time, for all x, y,h ∈ Rn we have
+|Dp
+f2t+1(x)[h]p
+− Dp
+f2t+1(y)[h]p
+|
+= |Dp
+ηp+1(x)[A2t+1h]p
+− Dp
+ηp+1(y)[A2t+1h]p
+|
+(4.1)
+≤ p!x − yA2t+1hp
+(4.2)
+≤ 2p
+p!x − y.
+Therefore, Lp( f2t+1) ≤ 2p p!, and we have
+(p + 1)! κ(t)
+(4.9)
+≤
+Lp( f2t+1)x0−x∗
+2t+1p+1
+min
+0≤k≤t
+f (xk)− f ∗
+2t+1
+≤ 2p p!(2t+2)
+3
+2 (p+1)
+3( f ∗
+t − f ∗
+2t+1)
+= 2p p!(2t+2)
+3
+2 (p+1)
+3(t+1) · p+1
+p .  
+5 Third-order methods: implementationdetails
+Tensor optimization methods, presented in Sects. 2 and 3, are based on the solu-
+tion of the auxiliary optimization problem (2.6). In the existing literature on the tensor
+methods[6,7,20,32],itwassolvedbythestandardlocaltechniqueofNonconvexOpti-
+mization. However, now we know that by Theorem 1, this problem is convex. Hence,
+it is solvable by the standard and very efficient methods of Convex Optimization.
+Sinceweneed tosolvethisproblemateach iterationof themethods,itscomplexity
+significantly affects the total computational time. Since the objective function in the
+problem (2.6) is a convex multivariate polynomial, we there could exist some special
+123176 Y.Nesterov
+efficient algorithms for finding its solution. Unfortunately, at this moment the authors
+failed to find such methods in the literature. Therefore, we present in this section a
+special approach for solving the problem (2.6) with the third degree Taylor approxi-
+mation,whichisbasedontherecentlydevelopedoptimizationframeworkofrelatively
+smooth functions (see [4,21]).
+Let us fix an arbitrary x ∈ E. Consider the following multivariate polynomial of
+degree three:2
+x(h) = ∇ f (x),h + 1
+2∇2 f (x)h,h + 1
+6 D3 f (x)[h]3.
+Since in this section we work only with third-order approximations, we drop the
+corresponding index.
+Recall that D3 f (x)[h1,h2,h3] is a symmetric trilinear form. Hence, D3 f (x)
+[h1,h2] ∈ E∗ is a symmetric bilinear vector function, and D3 f (x)[h] is a linear
+function of h ∈ E, whose values are self-adjoint linear operators from E to E∗ (as
+Hessians).
+Denote p(h) = 1
+6 D3 f (x)[h]3. Then we can define its gradient and Hessian as
+follows:
+∇p(h) = 1
+2 D3 f (x)[h,h], ∇2 p(h) = D3 f (x)[h]. (5.1)
+In this section, our main class of functions is F3, composed by convex functions,
+which are three times continuously differentiable, and for which the constant L3 is
+finite. As we have shown in Theorem 1, our assumptions imply interesting relations
+between derivatives. Let us derive a consequence of the matrix inequality (2.3).
+Lemma3 For any h ∈ E and τ > 0, we have
+−1
+τ ∇2 f (x) − τ
+2 L3h2B  D3 f (x)[h]  1
+τ ∇2 f (x) + τ
+2 L3h2B. (5.2)
+Consequently, for any h,u ∈ E, we get
+D3 f (x)[h,u,u] ≤
+√
+2L3∇2 f (x)u,u1/2uh. (5.3)
+Proof Let us fix arbitrary directions u,h ∈ E. Then, in view of relation (2.3) we have
+0 ≤ ∇2 f (x + h)u,u ≤ ∇2x(h)u,u + 1
+2 L3h2u2
+= (∇2 f (x) + D3 f (x)[h])u,u + 1
+2 L3h2u2
+Thus, replacing h by τh with τ > 0 and dividing the resulting inequality by τ, we get
+−D3 f (x)[h]u,u ≤ 1
+τ ∇2 f (x)u,u + τ
+2 L3h2u2.
+2 We drop the index in this notation since from now on we always have p = 3.
+123Implementabletensormethodsinunconstrainedconvex… 177
+And this is equivalent to the left-hand side of matrix inequality (5.2). Its right-hand
+side can be obtained by replacing h by −h, which gives
+D3 f (x)[h]u,u ≤ 1
+τ ∇2 f (x)u,u + τ
+2 L3h2u2.
+Minimizing the right-hand side of this inequality in τ, we get (5.3).  
+Let us look now at our auxiliary minimization problem:
+x,M(h)
+def
+= x(h) + M
+2 d4(h) → min
+h∈E
+, (5.4)
+where d4(h) = 1
+4h4. In view of Theorem 1, function x,M(·) is convex for
+M = τ2L3 (5.5)
+with τ ≥ 1. For any h ∈ E, we have
+∇2x,M(h) = ∇2 f (x) + D3 f (x)[h] + M
+2 ∇2d4(h)
+(5.2)
+ (1 − 1
+τ )∇2 f (x) + M
+2 ∇2d4(h) − τ
+2 L3h2B
+(2.2)
+ (1 − 1
+τ )∇2 f (x) + M−τL3
+2 ∇2d4(h).
+Let ρx(h) = 1
+2(1 − 1
+τ )∇2 f (x)h,h + M−τL3
+2 d4(h). Then, we have proved that
+∇2x,M(h)  ∇2ρx(h), h ∈ E. (5.6)
+On the other hand,
+∇2x,M(h) = ∇2 f (x) + D3 f (x)[h] + M
+2 ∇2d4(h)
+(5.2)
+ (1 + 1
+τ )∇2 f (x) + M
+2 ∇2d4(h) + τ
+2 L3h2B
+(2.2)
+ (1 + 1
+τ )∇2 f (x) + M+τL3
+2 ∇2d4(h)
+(5.5)
+=
+
+1+τ
+τ−1
+
+(1 − 1
+τ )∇2 f (x) + τ(τ−1)L3
+2 ∇2d4(h)
+
+= τ+1
+τ−1∇2ρx(h).
+Thus, we have proved the following lemma.
+123178 Y.Nesterov
+Lemma4 Let M = τ2L3 with τ > 1. Then function x,M(·) satisfies the strong
+relative smoothness condition
+∇2ρx(h)  ∇2x,M(h)  κ(τ)∇2ρx(h), h ∈ E, (5.7)
+with respect to function ρx(·), where κ(τ) = τ+1
+τ−1.
+As it is shown in [21], condition (5.7) allows to solve problem (5.4) very efficiently
+byakindofprimalgradientmethod.Inaccordancetothisapproach,weneedtodefine
+the Bregman distance of function ρx(·):
+βρx (u,v) = ρx(v) − ρx(u) − ∇ρx(u),v − u
+= 1
+2(1 − 1
+τ )∇2 f (x)(v − u),v − u + τ(τ−1)
+2 L3βd4(u,v),
+and iterate the process
+hk+1 = argmin
+h∈E
+
+∇x,M(hk),h − hk + κ(τ)βρx (hk,h)
+
+.
+In our case, this method has the following form:
+h0 = 0,
+hk+1 = argmin
+h∈E
+∇x,M(hk),h − hk
++
+τ + 1
+2
+
+1
+τ
+∇2
+f (x)(h−hk),h−hk+τL3βd4(hk,h)
+
+, k≥0. (5.8)
+In accordance to Theorem 3.1 in [21], the rate of convergence of this method is as
+follows:
+x,M(hk) − x,M(h∗) ≤
+βρx (h0,h∗)
+
+κ(τ)
+κ(τ)−1
+k
+−1
+=
+τ−1
+2 [1
+τ ∇2 f (x)h∗,h∗+τ
+4 L3h∗4]
+
+τ+1
+2
+k
+−1
+, (5.9)
+where h∗ is the unique optimal solution to problem (5.4).
+Aswecansee,thealgorithm(5.8)isveryfast.Itslinearrateofconvergencedepends
+only on absolute constant τ > 1, which can be chosen reasonably close to one for
+allowing faster convergence of the main tensor methods (2.16) and (3.12). Let us
+discuss two potentially expensive operations in the implementation of method (5.8).
+1. Computation of the gradient ∇x,M(h). Note that
+∇x,M(h) = ∇ f (x) + ∇2 f (x)h + 1
+2 D3 f (x)[h]2.
+In this formula, only the computation of the third derivative may be danger-
+ous. However, this difficulty can be resolved using the technique of automatic
+differentiation (see, for example, [19]). Indeed, assume we have a sequence of
+123Implementabletensormethodsinunconstrainedconvex… 179
+operationsforcomputingthefunctionvalue f (x)withcomputationalcomplexity
+T. Let us fix a direction h ∈ E. Then by forward differentiation, we can generate
+automatically a sequence of operations for computing the value
+gh(x) = ∇2 f (x)h,h
+withcomputationalcomplexity O(T).Now,bybackwarddifferentiationin x,we
+can compute the gradient of this function:
+∇g(x) = D3 f (x)[h,h]
+withcomputationalcomplexity O(T).Thus,theoraclecomplexityofmethod(5.8)
+is proportional to the complexity of computing the function value f (x).
+Another example of simple computation of the third derivative is provided by a
+separable objective function. Assume that E = Rn and
+f (x) =
+N
+i=1
+fi(bi − ai,x),
+where ai ∈ Rn and univariate functions fi(·) are three times continuously differ-
+entiable, i = 1,..., N. Then vector D3 f [h]2 has the following representation:
+D3 f (x)[h]2 = −
+N
+i=1
+ai f 
+i (bi − ai,x)ai,h2.
+Thus, for solving the problem (5.4), we need to compute in advance all values
+f 
+i (bi − ai,x), i = 1,..., N
+(this needs O(nN) operations). After that, each computation of vector D3
+f (x)[h]2 ∈ Rn also needs O(nN) operations. This computation will be cheaper
+for the sparse data.
+2. Solution of the auxiliary problem At all iterations of method (5.8), we need to
+solve an auxiliary problem in the following form:
+min
+h∈E
+
+c,h + 1
+2Ah,h + γ
+4 h4 , (5.10)
+where A  0 and γ > 0. Note that at all these iterations only the vector c
+and coefficients γ are changing, and matrix A = ∇2 f (x) remains the same.
+Therefore, before the algorithm (5.8) starts working, it is reasonable to transform
+this matrix in a tri-diagonal form:
+A = UTUT ,
+123180 Y.Nesterov
+where U ∈ Rn×n is an orthogonal matrix: UUT = I, and T ∈ Rn×n is tri-
+diagonal.
+Denoting now c̃ = UT c, we have:
+min
+h∈E
+
+c,h +
+1
+2
+UTUT
+h,h +
+γ
+4
+h4
+
+= min
+h∈E
+max
+τ>0
+
+c̃,UT
+h +
+1
+2
+TUT
+h,UT
+h +
+γ
+2
+τUT
+h2
+−
+1
+2
+τ2
+
+= max
+τ>0
+min
+h∈E
+
+c̃,UT
+h +
+1
+2
+TUT
+h,UT
+h +
+γ
+2
+τUT
+h2
+−
+1
+2
+τ2
+
+= −min
+τ>0
+
+1
+2
+τ2
++
+1
+2
+(γτI + T)−1
+c̃,c̃
+
+. (5.11)
+Thus, the solution of the primal problem can be retrieved from a solution to the
+univariatedualproblem.Thecomplexityofcomputingitsfunctionvalueandderivative
+is linear in n. Moreover, since its objective function is strongly convex and infinitely
+times differentiable, all reasonable one-dimensional methods have global linear rate
+of convergence and the quadratic convergence in the end.
+Let us estimate the total computational complexity of the method (5.8), assuming
+that the computational time of the value of the objective function is Tf . Assume
+also that its gradient, the product of its Hessian by a vector, and the value of its
+third derivative on two identical vectors can be computed using the fast backward
+differentiation (then the complexity of all these operations is O(Tf )). Then, the most
+expensive operations in this method are as follows.
+• ComputationoftheHessian∇2 f (x)anditstri-diagonalfactorization: O(nTf +n3)
+operations.
+• We need O(ln 1
+ ) iterations of method (5.8), in order to get -solution of the
+auxiliary problem. At each iteration of this method we need:
+– Compute the gradient ∇x,M(hk): O(Tf ) operations.
+– Compute the vector c̃ for the univariate problem in (5.11): O(n2) operations.
+– Solve the dual problem in (5.11) up to accuracy δ: O(n ln 1
+δ ) operations.
+– Compute an approximate solution h = −U(γτI + T)−1c̃ of the problem
+(5.10),usinganapproximatesolutionτ ofthedualproblem: O(n2)operations.
+Thus, we come to the following estimate:
+O
+
+nTf + n3 +
+%
+Tf + n2 + n ln 1
+δ
+&
+ln 1
+
+
+.
+This is the same order of complexity as that of one iteration in Trust Region Methods
+[15] and usual Cubic Regularization [27,31]. However, we can expect that the third-
+order methods converge much faster.
+For the readers, which are not interested in all these computational details, we
+just mention that the Galahad Optimization Library [16] has special subroutines for
+solving the auxiliary problems in the form (5.10).
+123Implementabletensormethodsinunconstrainedconvex… 181
+6 Discussion
+In this paper, we did an important step towards practical implementation of tensor
+methods in unconstrained convex optimization. We have shown that the auxiliary
+optimization problems in these scheme can be reduced to minimization of a convex
+multivariate polynomial. In the important case of third-order tensor, we have proved
+that this problem can be efficiently solved by a special optimization scheme derived
+from the relative smoothness condition.
+Our results highlight several interesting questions. One of the direct consequences
+of our approach is a systematic way of generating convex multivariate polynomials.
+Is it possible to minimize them by some tools of Algebraic Geometry (see [23] for
+the related technique like sums of squares, etc.), or we need to treat them using an
+appropriate technique from Convex Optimization? The results of Sect. 5 demonstrate
+a probably unbeatable superiority of optimization technique for the third-order poly-
+nomials. But what happens with polynomials of higher degree?
+Oneofthedifficultunsolvedproblemsinourapproachisrelatedtodynamicadjust-
+mentoftheLipschitzconstantforthehighestderivative.Thisdynamicestimateshould
+notbemuchbiggerthantheactualLipschitzconstant.Ontheotherhand,itmustensure
+convexity of the auxiliary problem solved at each iteration of the tensor methods. This
+question is clearly crucial for the practical efficiency of the high-order schemes.
+Simple comparison of the complexity bounds in Sects.3 and4 shows thatwe failed
+to develop an optimal tensor scheme. The missing factor in the complexity estimates
+is of the order of O
+
+1
+
+ 1
+p+1 − 2
+3p+1
+
+= O
+
+1
+
+ p−1
+(p+1)(3p+1)
+
+. For p = 3, this factor is
+oftheorderof O
+
+1
+
+ 1
+20
+
+.Thismeansthatfromtheviewpointofpracticalefficiency,
+the cost of one iteration of the hypothetical optimal scheme must be of the same order
+as that of the accelerated tensor method (3.12). Any additional logarithmic factors in
+the complexity bound of this “optimal” method will definitely kill its tiny superiority
+in the convergence rate.
+In the last years, we have seen an increasing interest to universal methods, which
+can adjust to the best possible Hölder condition instead of the Lipschitz one during
+the running optimization process (see [14,17,29]). Of course, it is very interesting
+to extend this philosophy onto the tensor minimization schemes. Another important
+extensioncouldbethetreatmentsoftheconstraints,eitherinfunctionalform,orusing
+the framework of composite minimization [28]. The main difficulty here is related to
+the complexity of the auxiliary optimization problems.
+Oneofthemainrestrictionsforpracticalimplementationofourresultsistheneces-
+sity to know the Lipschitz constant of the corresponding derivative. If our estimate is
+toosmall,thentheauxiliaryproblem(2.6)maylooseconvexity.Consequently,wewill
+loose the fast convergence in the auxiliary process (5.8). However, this observation
+gives us a clue how to tune this constant: if we see that this process is too slow, this
+means that our estimate is too small. But of course it is very interesting to find a recipe
+with better theoretical justification.
+123182 Y.Nesterov
+Acknowledgements The author is very thankful to Geovani Grapiglia for interesting discussions of the
+results. The comments of two anonymous referees were extremely useful.
+Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0 Interna-
+tional License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution,
+and reproduction in any medium, provided you give appropriate credit to the original author(s) and the
+source, provide a link to the Creative Commons license, and indicate if changes were made.
+References
+1. Agarwal, N., Hazan, E.: Lower Bounds for Higher-Order Convex Optimization (2017).
+arXiv:1710.10329v1 [math.OC]
+2. Arjevani, Y., Shamir, O., Shiff, R.: Oracle Complexity of Second-Order Methods for Smooth Convex
+Optimization (2017). arXiv:1705.07260 [math.OC]
+3. Baes, M.: Estimate sequence methods: extensions and approximations. Optim. Online (2009)
+4. Bauschke, H.H., Bolte, J., Teboulle, M.: A descent lemma beyond Lipschitz gradient continuety:
+first-order methods revisited and applications. Math. Oper. Res. 42, 330–348 (2017)
+5. Bian, W., Chen, X., Ye, Y.: Complexity analysis of interior-point algorithms for non-Lipschitz and
+non-convex minimization. Math. Program. 139, 301–327 (2015)
+6. Birgin, E.G., Gardenghi, J.L., Martines, J.M., Santos, S.A.: Remark on Algorithm 566: Modern For-
+tran Routines for Testing Unconsrained Optimization Software with Derivatives up to Third-Order.
+Technical report, Department of Computer Sciences, University of Sao Paolo, Brazil (2018)
+7. Birgin, E.G., Gardenghi, J.L., Martines, J.M., Santos, S.A.: On the Use of Third-Order Models with
+Fourth-Order Regularization for Unconstrained Optimization. Technical report, Department of Com-
+puter Sciences, University of Sao Paolo, Brazil (2018)
+8. Birgin,E.G.,Gardenghi,J.L.,Martines,J.M.,Santos,S.A.,Toint,PhL:Worst-caseevaluationcomplex-
+ity for unconstrained nonlinear optimization using high-order regularization models. Math. Program.
+163, 359–368 (2017)
+9. Carmon, Y., Duchi, J.C., Hinder, O., Sidford, A.: Lower bounds for finding stationary points I. Archiv
+(2017). arXiv:1710.11606
+10. Carmon, Y., Duchi, J.C., Hinder, O., Sidford, A.: Lower bounds for finding stationary points II. Archiv
+(2017). arXiv:1711.00841
+11. Cartis, C., Gould, N.I.M., Toint, PhL: Adaptive cubic overestimation methods for unconstrained opti-
+mization. Part I: motivation, convergence and numerical results. Math. Program. 130(2), 295–319
+(2012)
+12. Cartis, C., Gould, N.I.M., Toint, PhL: Adaptive cubic overestimation methods for unconstrained opti-
+mization. Part II: worst-case function evaluation complexity. Math. Program. 127(2), 245–295 (2011)
+13. Cartis, C., Gould, N.I.M., Toint, PhL: Evaluation complexity of adaptive cubic regularization methods
+for convex unconstrained optimization. Optim. Methods Softw. 27(2), 197–219 (2012)
+14. Cartis,C.,Gould,N.I.M.,Toint,PhL:Universalregularizationmethods–varyingthepower,thesmooth-
+ness and the accuracy. SIAM. J. Optim. 29(1), 595–615 (2019)
+15. Conn, A.R., Gould, N.I.M., Toint, PhL: Trust Region Methods. MOS-SIAM Series on Optimization,
+New York (2000)
+16. Gould, N.I.M., Orban, D., Toint, PhL: GALAHAD, a library of thread-safe Fortran 90 packages for
+large-scale nonlinear optimization. ACM Trans. Math. Softw. 29(4), 353–372 (2003)
+17. Grapiglia, G.N., Nesterov, Yu.: Regularized Newton methods for minimizing functions with Hölder
+continuous Hessians. SIOPT 27(1), 478–506 (2017)
+18. Grapiglia, G.N., Yuan, J., Yuan, Y.: On the convergence and worst-case complexity of trust-region and
+regularization methods for unconstrained optimization. Math. Program. 152, 491–520 (2015)
+19. Griewank, A., Walther, A.: Evaluating Derivatives: Principles and Techniques of Algorithmic Differ-
+entiation. Applied Mathematics, vol. 105, 2nd edn. SIAM, Philadelphia (2008)
+20. Gundersen, G., Steihaug, T.: On large-scale unconstrained optimization problems and higher order
+methods. Optim. Methods. Softw. 25(3), 337–358 (2010)
+21. Lu, H., Freund, R., Nesterov, Yu.: Relatively smooth convex optimization by first-order methods, and
+applications. SIOPT 28(1), 333–354 (2018)
+123Implementabletensormethodsinunconstrainedconvex… 183
+22. Hoffmann, K.H., Kornstaedt, H.J.: Higher-order necessary conditions in abstract mathematical pro-
+gramming. JOTA 26, 533–568 (1978)
+23. Lasserre,J.B.:Moments,PositivePolynomialsandTheirApplications.ImperialCollegePress,London
+(2010)
+24. Monteiro, R.D.C., Svaiter, B.F.: An accelerated hybrid proximal extragradient method for convex
+optimization and its implications to second-order methods. SIOPT 23(2), 1092–1125 (2013)
+25. Nesterov, Yu.: Introductory Lectures on Convex Optimization. Kluwer, Boston (2004)
+26. Nesterov,Yu.:Smoothminimizationofnon-smoothfunctions.Math.Program.103(1),127–152(2005)
+27. Nesterov, Yu.: Accelerating the cubic regularization of Newton’s method on convex problems. Math.
+Program. 112(1), 159–181 (2008)
+28. Nesterov,Yu.:Gradientmethodsforminimizingcompositefunctions.Math.Program.140(1),125–161
+(2013)
+29. Nesterov, Yu.: Universal gradient methods for convex optimization problems. Math. Program. 152,
+381–404 (2015)
+30. Nesterov, Yu., Nemirovskii, A.: Interior Point Polynomial Methods in Convex Programming: Theory
+and Applications. SIAM, Philadelphia (1994)
+31. Nesterov, Yu., Polyak, B.: Cubic regularization of Newton’s method and its global performance. Math.
+Program. 108(1), 177–205 (2006)
+32. Schnabel, R.B., Chow, T.T.: Tensor methods for unconstrained optimization using second derivatives.
+SIAM J. Optim. 1(3), 293–315 (1991)
+Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps
+and institutional affiliations.
+123

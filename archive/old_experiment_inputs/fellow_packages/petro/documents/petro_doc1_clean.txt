@@ -1,0 +1,323 @@
+Received: 14 May 2025
+Accepted: 23 May 2025
+Published: 25 May 2025
+Citation: Li, X.; Li, J.; Zhao, P.;
+Feng, G.; Zhao, L. Overview of the
+Progress in Practice and Experimental
+Research in Petroleum and Natural
+Gas Engineering. Energies 2025, 18,
+2738. https://doi.org/10.3390/
+en18112738
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Editorial
+Overview of the Progress in Practice and Experimental Research
+in Petroleum and Natural Gas Engineering
+Xiaobin Li 1, Jiaxue Li 2, Pengfei Zhao 3, Gan Feng 1,4,* and Lei Zhao 5
+1 State Key Laboratory of Water Resource Protection and Utilization in Coal Mining, National Institute of Low
+Carbon and Clean Energy, Beijing 102209, China; lxb162197@126.com
+2 Engineering Institute, China University of Petroleum (Beijing), Karamay 834000, China;
+20192146@cupk.edu.cn
+3 School of Geoscience and Technology, Southwest Petroleum University, Chengdu 610500, China;
+202199010067@swpu.edu.cn
+4 State Key Laboratory of Hydraulics and Mountain River Engineering, College of Water Resource & Hydropower,
+Sichuan University, Chengdu 610065, China
+5 Shanxi Coal Transportation and Sales Group Yechuan Coal Industry Co., Ltd., Jingcheng 048000, China;
+zhaolei_7@126.com
+* Correspondence: fenggan@whu.edu.cn
+1. Introduction
+The global energy system is undergoing unprecedented changes. Despite the urgent
+need for the development of existing renewable energy systems, the promotion of carbon
+neutrality goals, and enhanced energy security, oil and natural gas—traditional fossil
+fuels—continue to provide most of humanity’s primary energy needs [1–3]. Our reserves
+of oil are substantial; however, complex geological and geographical environments, which
+are the result of different mechanisms behind the formation of oil in terrestrial and marine
+settings, pose significant challenges to their efficient extraction. Simultaneously, there
+are considerable shale gas reserves within the ground [4–6], and other natural gases,
+such as tight sandstone gas and coalbed methane, are not only abundant but also widely
+distributed. The geological conditions under which these resources are found are similarly
+complex [7–10], characterized by high ground stress, fault structures, low porosity, and
+fractures in gas reservoirs. These factors complicate the efficient extraction of natural
+gas. However, the efficient extraction of oil and natural gas is crucial to minimizing resource
+waste. For instance, in regions where extraction is challenging, abandonment can lead to
+the permanent loss of unexploited resources due to geological disturbances, complicating
+future extraction efforts. On the other hand, efficient mining introduces new challenges
+related to mining equipment, processes, and technological advancements, necessitating the
+development of advanced methodologies and predictive techniques.
+Efficient oil and gas recovery methods, enhanced oil recovery, fracture propagation
+prediction, and reservoir management continue to pose significant challenges in the
+field of oil and gas extraction. The development of unconventional resources, such as
+shale oil and gas, tight gas, and natural gas hydrates, is reshaping the global energy
+supply landscape. Meanwhile, the advancement of conventional oil and gas resources is
+undergoing profound transformation through the integration of digital technology. The
+real-time data analysis of intelligent drilling systems, completion systems, and nanoscale
+fracturing fluid technology exemplifies this change [11–13]. Intelligent drilling systems
+enhance drilling efficiency and mitigate the risks associated with mountain springs during
+construction by enabling real-time data analysis. The use of nanoparticle fracturing fluid
+technology in unconventional oil and gas development increases the efficiency of shale
+Energies 2025, 18, 2738 https://doi.org/10.3390/en18112738Energies 2025, 18, 2738 2 of 7
+gas recovery. The integration of new composite-material pipelines into smart pipeline
+monitoring systems, which utilize IoT technology, significantly advances the storage,
+transportation, and extraction of oil and gas. Methane capture technology effectively
+reduces carbon emissions. Photothermal-driven geological storage systems facilitate
+negative carbon cycling in the CO2-enhanced oil recovery (EOR) process. Hybrid power
+supply systems that combine offshore wind power, photovoltaic power generation, and
+oil and gas platforms play a crucial role in reducing carbon emissions. Digital models of
+deep-sea oil fields substantially improve the accuracy of development plans. Artificial
+intelligence algorithms are vital for predicting oil and gas reservoirs, enhancing prediction
+accuracy. Moreover, the wear resistance of graphene-reinforced drill bits has been
+significantly improved. Some of the innovations in oil and gas storage and transportation
+technologies are also noteworthy. In response to carbon neutrality targets, the oil and
+gas industry is establishing a new environmental technology framework. Digital twin
+technology is redefining the oil and gas development model, while the application of
+artificial intelligence, big data, and Internet of Things (IoT) technology is accelerating the
+digital transformation of the industry. Over the next decade, several changes are expected,
+including the upgrade of carbon management technology from auxiliary processes to
+core business units, the promotion of intelligent transitions across the entire industry
+chain through digital twin systems, and the collaborative design of engineering systems
+that include wind, solar, and hydrogen technologies. These changes not only extend the
+economic lifecycle of fossil fuels but also strive to create a strategic buffer period during
+which new energy systems can mature.
+This Special Issue aims to highlight recent developments and innovations in oil and
+gas engineering, with a particular emphasis on hydraulic fracturing and enhanced oil
+recovery (EOR) technologies, as well as the application of advanced artificial intelligence
+in oil and gas extraction practices and experimental research. These methods are
+essential to optimizing extraction processes and enhancing production efficiency. We
+also seek to address advancements in drilling technology, which play a critical role
+in the exploration and extraction of oil and gas resources. Research topics of interest
+included innovations in hydraulic fracturing fluids and proppants, the modeling and
+simulation of fracture propagation, environmental impacts and mitigation strategies related
+to hydraulic fracturing, real-time monitoring and adaptive fracturing techniques, chemical
+and thermal EOR methods, successful case studies of EOR implementations, the integration
+of EOR with reservoir management, advances in drilling technology and equipment,
+intelligent construction in oil and gas extraction, drilling optimization and cost reduction
+strategies, wellbore stability and control, and new materials and technologies for drilling in
+challenging environments. This collective effort aims to further our understanding of oil
+and gas engineering. A total of 11 high-quality papers have been published in this Special
+Issue, all of which have undergone rigorous review and screening.
+2. Recent Developments in Petroleum and Natural Gas Engineering
+Scholars have conducted extensive research on topics related to petroleum and natural
+gas engineering. The papers published in our Special Issue cover key aspects of this
+engineering, and we have elaborated on them below.
+Li et al. utilized artificial intelligence and GRN-VSN neural networks to predict oilfield
+indicators. First, they input highly relevant parameters into that serve as predictors of
+the key indicators driven by artificial intelligence into their model. Subsequently, the
+Shapley Additive Explanation (SHAP) was employed to interpret the artificial model
+and evaluate its predicted results. Additionally, its performance was compared to that
+of the ResNet-50 neural network, long short-term memory (LSTM) neural network, andEnergies 2025, 18, 2738 3 of 7
+backpropagation (BP) neural network in terms of oil extraction efficiency. Among these
+networks, LSTM excels in continuous sequence prediction and demonstrates a superior
+performance. Artificial intelligence algorithms have significantly enhanced the prediction
+accuracy of key production indicators in offshore oil fields, achieving an accuracy rate of at
+least 92%.
+Aiming at improving the extraction efficiency of petroleum and natural gas, Chen
+et al. investigated the characteristics of a reservoir within a specific block of the Ordos Basin,
+analyzing the flow lines and horizontal principal stresses present to identify the conditions
+necessary for the formation of waterflood-induced fractures (WIFs). Subsequently, they
+constructed a permeability evolution equation for the fractured reservoir and cap
+rock areas between oil wells. Finally, numerical simulation methods were employed
+to examine the characteristics of WIFs in horizontal and vertical well networks by
+applying different injection modes. Notably, the study revealed that WIFs formed at
+locations where the maximum principal stress and flow were aligned, influencing the
+distribution of permeability. To effectively adjust the extension range of WIFs, the authors
+recommended controlling the injection rate of the vertical well along the flow line and at the
+maximum principal stress point, thereby cyclically optimizing oil production. Additionally,
+Wei et al. provided a comprehensive introduction to the principles of and technology
+behind oxygen-reducing agent-assisted gravity drainage (OAGD). They conducted a
+detailed analysis of the factors affecting oil displacement, which primarily include the
+reservoir dip angle, layer characteristics, injection rate, and low-temperature oxidation
+reactions. Low-temperature oxidation significantly enhances oil recovery (EOR) due to
+the dynamic balance between fuel deposition and light hydrocarbon volatilization, as
+well as the synergistic optimization of the concentration, temperature, and pressure of
+oxygen. To expand the sweeping volume and delay gas breakthroughs, the injection rate
+can be appropriately controlled to stabilize the oil–gas interface. The enhanced gravity
+separation effect results in highly efficient oil displacement in steeply dipping reservoirs.
+The following studies focus on fracture networks in petroleum and natural gas
+reservoirs. Shale oil reservoirs are characterized by low permeability and porosity,
+necessitating the use of horizontal wells with multiple fractures for their extraction.
+Multiphase flow characteristics complicate fluid movement during shale oil extraction. Liu
+et al. propose a productivity model for multi-fractured horizontal wells in shale oil
+reservoirs, which they establish using the principles of pressure superposition, conformal
+transformation, and fractal theory, which are solved simultaneously. The effectiveness of
+this model has been validated using on-site experimental data. Another group of authors
+conducted an analysis of various complex factors affecting the productivity of shale oil
+wells. Their research findings indicate that phase transition behavior significantly reduces
+oil production, while fluid desorption markedly increases production. Gu et al. employed
+a Pearson correlation analysis to investigate the relationships between natural fractures,
+mineral composition and content, horizontal stress differences, and yield parameters,
+aiming to evaluate the impact of fracture network complexity on yield. Furthermore,
+they proposed the fracture network index (FNI) model, which is based on the support
+vector machine (SVM) algorithm and an improved particle swarm optimization (IPSO)
+algorithm, to assess the complexity of fracture networks. Finally, the correlation between
+the fracture network index and gas produced from various hydraulic fracturing operations
+was analyzed and quantified. Their research findings indicate that the Pearson correlation
+coefficient is 0.39, revealing that natural fracture density has a dominant controlling effect
+on gas production, while other factors exert relatively minor effects. The coefficient of
+determination (R2) for the IPSO-SVM-FNI model, when deployed on the training set,
+was better than that of traditional models, demonstrating its superior data fitting. TheEnergies 2025, 18, 2738 4 of 7
+IPSO-SVM-FNI model also exhibits high prediction accuracy. The fracture network index
+(FNI) predominantly falls within the range of [0.2, 0.8]. For hydraulic fracturing operations
+with a high fracture network index (FNI), oil and gas production is comparatively
+high, indicating a positive correlation between reservoir fracture complexity and shale
+gas production.
+The following studies focus on oil and gas extraction. Chen et al. utilized a
+surfactant polymer (SP) system combined with a viscosity reducer to enhance oil recovery
+efficiency. The combination of OAB (a beta surfactant) and LPS-3 (an anionic surfactant)
+significantly reduced interfacial tension and enhanced lotion stability, with optimal results
+achieved when their ratio was 1:9. Their research indicates that the BRH-325 polymer
+possesses multiple desirable characteristics, including enhanced viscosity, resistance to high
+temperatures, andlong-termstability.Theviscosityreducercontainsgraphenenanowedges,
+which can decrease the viscosity of heavy oil by approximately 97%. Indoor core flooding
+simulation experiments were conducted to verify the effectiveness of this method, resulting
+in an increase in the recovery rate of about 33%. Microbial-enhanced oil recovery
+remains a compelling area of research. Zhao et al. collected outcrop rock samples and
+conducted simulation experiments on microbial-enhanced oil recovery. Concurrently, they
+studied the changes in biochemical parameters, including Bacillus subtilis concentration,
+nutrient concentration, displacement pressure, and surface tension, seen throughout the
+process. Their research findings indicate that after injecting microorganisms into reservoirs,
+cells and nutrients tend to be distributed along the primary pathways of the injection wells
+and fluid flow. Bacteria exhibit adsorption and retention abilities which are greater than
+those of nutrients. The combined effects of microbial reproduction and metabolic products
+increase the pressure within the model. However, from the injection well to the production
+well, pressure gradually decreases, with high-pressure areas primarily concentrated near
+the injection well. The fermentation mixture of Bacillus subtilis can enhance oil recovery
+by 6.5%.
+Regarding other research areas, two-dimensional nuclear magnetic resonance (NMR)
+provides rapid measurements in petroleum and natural gas engineering. Zhang et al.
+conducted research on high-porosity and high-permeability heavy-oil loose-sandstone
+reservoirs using two-dimensional NMR testing technology. They obtained the distribution
+patterns of crude oils with varying viscosities from the NMR spectra. Additionally, a model
+relating NMR parameters to oil viscosity was established using T1 and T2 spectra, thereby
+creating a novel method for estimating oil viscosity. This technology has been applied in
+practical engineering, and results indicate that the error between the actual viscosity and the
+theoretically calculated viscosity of the oil is 15%. The reliability of the method was further
+validated by analyzing the consistency between the oil discrimination chart and the oil
+type. This research meets the accuracy requirements of well logging interpretation. Zhang
+et al. employed the pressure transient analysis (PTA) method to examine the shut-in
+pressure data of shale gas wells following fracturing. The results indicated that the pressure
+derivative gradually dispersed after one day of shut-in. Two wells exhibited zero-slope
+pressure derivatives over one week of fluid immersion, suggesting that the duration of
+fluid immersion was appropriate. In contrast, the other four wells demonstrated an increase
+in their pressure derivative after one week of fluid immersion, indicating that a longer
+immersion period is necessary to fully achieve the desired effect. Xu et al. established a heat
+transfer model for a composite insulation structure featuring multi-layer insulation and
+liquid nitrogen screen (LNCS) insulation, as well as a numerical model. They investigated
+the changes in the natural convection characteristics, thermal stratification, pressure
+distribution, and self-pressurization characteristics of LHe-4 storage tanks. Additionally, a
+self-pressurization thermodynamic model for LHe-4 storage tanks was developed. TheirEnergies 2025, 18, 2738 5 of 7
+research findings indicate that the mLee model significantly improves the prediction of
+self-enhancement characteristics compared to the Lee model. An increase in operational
+time is associated with a rise in the thermal stratification degree (TSD) of the storage
+tank, and gradual increases in operational duration increase the self-pressurization of the
+tank. The graph of the interface mass transfer rate reveals a pattern of low values in the
+middle and high values at both ends, which is attributed to the strong evaporation point on
+the wall in contact with the phase interface. Yang et al. investigated the fixed tooth strength
+of roller drill bits, testing the maximum fastening force of the fixed teeth under various
+conditions and analyzing the change in this force. Their research findings indicate that
+high temperatures can weaken the strength of the fixed teeth. The maximum fastening
+force decreases with increasing temperature, becoming approximately 49–65% lower than
+that in a normal-temperature environment. Under consistent temperature conditions,
+the maximum fastening force occurs at a perforation distance of 10 mm. An increase
+in tooth diameter is associated with a rise in the maximum fastening force, indicating an
+improvement in the fixing effect. The relationship between maximum fastening force and
+interferencefitisnon-linear, withthemaximumtighteningforceoccurringataninterference
+fit of 0.095 mm.
+Despite the significant achievements of this Special Issue, oil and gas engineering
+continues to face numerous challenges. For instance, technological bottlenecks in deepwater
+oil and gas development and ultra-deep resource exploration urgently need to be
+addressed. Cross-disciplinary technologies, such as hydrogen energy coupling and carbon
+capture, utilization, and storage (CCUS), require enhanced system integration. Additionally,
+the use of artificial intelligence in oil and gas extraction engineering needs to be
+further developed, and innovations in high-temperature drill bit design and production
+processes for deep oil and gas extraction are required. The advancement of efficiency and
+environmentaladaptabilityinoilandgasextractionwillinevitablyleadtotheestablishment
+of a diversified, intelligent, and sustainable new energy system.
+3. Closing Remarks
+The papers published in this Special Issue addresses various aspects of oil and gas
+extraction, including improvements in extraction methods, reservoir modifications, and
+fracture network prediction. Although petroleum and natural gas engineering is a broad
+field, the findings presented in this Special Issue will stimulate and enhance research in
+the industry. Understanding these topics is crucial for recognizing the latest advancements
+in oil and gas engineering. We would like to express our gratitude to all the authors
+who contributed to this Special Issue. Given the broad scope of oil and gas engineering,
+we will continue to explore new research directions with these scholars and engage in
+in-depth investigations.
+Author Contributions: All authors contributed in similar ways to all sections of this paper. All
+authors have read and agreed to the published version of the manuscript.
+Funding: This research was funded by the open fund of State Key Laboratory of Water Resource
+Protection and Utilization in Coal Mining (Grant No. GJNY-21-41-01), the National Natural Science
+Foundation of China (Grant Nos. 52374099; 52404109), and the Natural Science Foundation of Sichuan
+Province, China (Grant No. 2025YFHZ0323).
+Conflicts of Interest: Author Lei Zhao was employed by the company Shanxi Coal Transportation
+and Sales Group Yechuan Coal Industry Co., Ltd. The authors declare no conflicts of interest.Energies 2025, 18, 2738 6 of 7
+List of Contributions
+1. Li, K.; Wang, K.; Tang, C.; Pan, Y.; He, Y.; Cai, S.; Chen, S.; Zhou, Y. Prediction of Key
+Development Indicators for Offshore Oilfields Based on Artificial Intelligence. Energies 2024, 17,
+4594. https://doi.org/10.3390/en17184594
+2. Chen, J.; Cai, D.; Zhang, T.; Yu, L.; Zhou, D.; Cheng, S. Asynchronous Injection–Production
+Method in the High Water Cut Stage of Tight Oil Reservoirs. Energies 2024, 17, 4838. https:
+//doi.org/10.3390/en17194838
+3. Wei, J.; Yu, H.; Gao, M.; Yan, P.; Tan, K.; Yan, Y.; Wei, K.; Sun, M.; Yu, X.; Chen, Z.;
+et al. Research and Application of Oxygen-ReducedAir-Assisted Gravity Drainage for Enhanced
+Oil Recovery. Energies 2025, 18, 557. https://doi.org/10.3390/en18030557
+4. Liu, X.; Guo, P.; Ren, J.; Wang, Z.; Tu, H. Productivity Model for Multi-Fractured Horizontal
+Wells with Complex Fracture Networks in Shale Oil Reservoirs Considering Fluid Desorption
+and Two-Phase Behavior. Energies 2024, 17, 6012. https://doi.org/10.3390/en17236012
+5. Gu, Z.; Liu, B.; Liu, W.; Liu, L.; Wei, H.; Yu, B.; Dong, L.; Zhong, P.; Lin, H.AnalysisonCorrelation
+Model Between Fracture Network Complexity and Gas-Well Production: A Case in the Y214
+Block of Changning, China. Energies 2024, 17, 6026. https://doi.org/10.3390/en17236026
+6. Chen, X.; Hou, Q.; Liu, Y.; Liu, G.; Zhang, H.; Sun, H.; Zhu, Z.; Liu, W. Experimental
+Study on Surfactant–Polymer Flooding After Viscosity Reduction for Heavy Oil in Matured
+Reservoir. Energies 2025, 18, 756. https://doi.org/10.3390/en18030756
+7. Zhao, Y.; Xiu, J.; Huang, L.; Yi, L.; Ma, Y. Two-Dimensional Physical Simulation of the Seepage
+Law of Microbial Flooding. Energies 2025, 18, 1246. https://doi.org/10.3390/en18051246
+8. Zhang, W.; Li, S.; Wang, S.; Sun, J.; Cai, W.; Yu, W.; Dai, H.; Yang, W. Application of
+Two-Dimensional NMR for Quantitative Analysis of Viscosity in Medium–High-Porosityand-
+Permeability Sandstones in North China Oilfields. Energies 2024, 17, 5257. https://doi.org/10.3
+390/en17215257
+9. Zhang, J.; Guo, B.; Hussain, M. Use of Pressure Transient Analysis Method to Assess Fluid
+Soaking in Multi-Fractured Shale Gas Wells. Energies 2025, 18, 549. https://doi.org/10.3390/
+en18030549
+10. Xu, J.; Liu, F.; Zhang, J.; Li, C.; Liu, Q.; Li, C.; Jia, W.; Fu, S.; Li, L. Numerical Study on
+Heat Leakage, Thermal Stratification, and Self-Pressurization Characteristics in Liquid Helium
+Storage Tanks. Energies 2024, 17, 6254. https://doi.org/10.3390/en17246254
+11. Yang, Y.; Song, D.; Chen, L.; Yang, Y.; Ren, H.; Qiu, S.; Huang, Z. Research on the Fixation
+Strength of High-Temperature Geothermal Drilling Cone Bit Teeth. Energies 2025, 18, 2469. https:
+//doi.org/10.3390/en18102469
+References
+1. Alabido, Z.; Alabido, D. Purifying Seawater from Petroleum Derivatives Resulting from Oil Tankers using Autonomous Robot:
+Seaswarm Robot. Transp. Res. Procedia 2025, 84, 43–50. [CrossRef]
+2. Alhammadi, A.; Soar, J.; Yusaf, T.; Ali, B.M.; Kadirgama, K. Redefining procurement paradigms: A critical review of buyer-supplier
+dynamics in the global petroleum and natural gas industry. Extr. Ind. Soc. 2023, 16, 101351. [CrossRef]
+3. Karim, M.A.; Abdullah, M.Z.; Deifalla, A.F.; Azab, M.; Waqar, A. An assessment of the processing parameters and application of
+fibre-reinforced polymers (FRPs) in the petroleum and natural gas industries: A review. Results Eng. 2023, 18, 101091. [CrossRef]
+4. Feng, G.; Kang, Y.; Wang, X.C.; Hu, Y.Q.; Li, X.H. Investigation on the failure characteristics and fracture classification of shale
+under Brazilian test conditions. Rock Mech. Rock Eng. 2020, 53, 3325–3340. [CrossRef]
+5. Xie, H.Q.; Feng, G.; Liu, H.Z.; He, Q.; Xiao, M.L.; Pei, J.L.; Reza, T. Study on the characteristics of crack initiation in deep dense
+shale containing circular hole under varying stress conditions. J. Cent. South Univ. 2025, 32, 244–261. [CrossRef]
+6. Feng, G.; Kang, Y.; Sun, Z.D.; Wang, X.C.; Hu, Y.Q. Effects of Supercritical CO2 adsorption on the mechanical characteristics and
+failure mechanisms of shale. Energy 2019, 173, 870–882. [CrossRef]
+7. Wang, E.; Zhu, H.; Yi, X.; Li, Q.; Zhao, P.; Micheal, M.; Tan, H.; Zhang, Z. Numerical simulation of fracture propagation in
+high-energy gas fracturing of shale reservoir. Geoenergy Sci. Eng. 2025, 252, 213915. [CrossRef]
+8. Shui, H.; Wang, Y.; Li, Q.; Fan, C.; Li, Y.; Zeng, Y.; Guo, W. Analysis of heat transfer performance and system energy efficiency of
+catalytic combustion heaters for low calorific value waste gas application to oil shale in-situ conversion. Energy 2024, 294, 130690.
+[CrossRef]Energies 2025, 18, 2738 7 of 7
+9. Gao, S.; Ye, L.; Liu, H.; Zhang, J.; Zhu, W.; An, W. Research on the basic theory and application of enhanced recovery in tight
+sandstone gas reservoirs. Heliyon 2025, 11, e41306. [CrossRef]
+10. Jiu, H.; Li, D.; Zhang, Y.; Xin, G.; Ren, S. Microscopic adsorption study from coal rank comparison on the feasibility of CO2-rich
+industrial waste gas injection enhanced coal bed methane recovery. J. Mol. Liq. 2024, 415 Pt 1, 126337. [CrossRef]
+11. Xia, W.; Tang, Y.; Li, G.; Yue, C.; Han, Y.; Wu, X.; Fan, S. Wellbore stability prediction method based on intelligent analysis model
+of drilling cuttings logging images. Geoenergy Sci. Eng. 2025, 252, 213961. [CrossRef]
+12. Eren, T.; Polat, C. Numerical investigation of the application of intelligent horizontal well completion. J. Nat. Gas Sci. Eng. 2020,
+83, 103599. [CrossRef]
+13. Pan, J.; Mou, P.; Ju, Y.; Wang, K.; Zhu, Q.; Ge, T.; Yu, K. Micro-nano-scale pore stimulation of coalbed methane reservoirs caused
+by hydraulic fracturing experiments. J. Pet. Sci. Eng. 2022, 214, 110512. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

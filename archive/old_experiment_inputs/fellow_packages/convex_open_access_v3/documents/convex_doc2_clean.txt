@@ -1,0 +1,1264 @@
+Citation: Khan, M.A.; Adnan; Saeed,
+T.; Nwaeze, E.R. A New Advanced
+Class of Convex Functions with
+Related Results. Axioms 2023, 12, 195.
+https://doi.org/10.3390/
+axioms12020195
+Academic Editor: Silvestru Sever
+Dragomir
+Received: 17 January 2023
+Revised: 7 February 2023
+Accepted: 10 February 2023
+Published: 13 February 2023
+Copyright: © 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+axioms
+Article
+A New Advanced Class of Convex Functions with
+Related Results
+Muhammad Adil Khan 1 , Adnan 1, Tareq Saeed 2 and Eze R. Nwaeze 3,*
+1 Department of Mathematics, University of Peshawar, Peshawar 25000, Pakistan
+2 Financial Mathematics and Actuarial Science (FMAS)-Research Group, Department of Mathematics,
+Faculty of Science, King Abdulaziz University, P.O. Box 80203, Jeddah 21589, Saudi Arabia
+3 Department of Mathematics and Computer Science, Alabama State University, Montgomery, AL 36101, USA
+* Correspondence: enwaeze@alasu.edu
+Abstract: It is the purpose of this paper to propose a novel class of convex functions associated with
+strong η-convexity. A relationship between the newly defined function and an earlier generalized
+class of convex functions is hereby established. To point out the importance of the new class of
+functions, some examples are presented. Additionally, the famous Hermite–Hadamard inequality is
+derived for this generalized family of convex functions. Furthermore, some inequalities and results
+for strong η-convex function are also derived. We anticipate that this new class of convex functions
+will open the research door to more investigations in this direction.
+Keywords: strongly convex function; strongly η-convex function; η-convex function
+MSC: 26A51; 26D15
+1. Introduction
+There is no doubt that the convex sets and convex functions are widely used in numer-
+ous areas of science, such as control theory, operations research, optimization, geometry,
+information theory, and functional analysis. Roughly speaking, convex functions are exten-
+sively used in applied and theoretical mathematics because of thei two basic features: any
+local minima of the convex function is the global one and the convex function achieves its
+upper bound at the boundary point. Furthermore, there is at most one minimum of the
+strictly convex functions [1–3]. The popular book of Littlewood, Hardy, and Pólya played a
+dominant role in the popularization of convexity [4]. Mathematically, convex function is
+defined as follows [5]:
+A function Ψ : [p,q] → R is convex if the inequality
+Ψ(ηx1 + (1 − η)x2) ≤ ηΨ(x1) + (1 − η)Ψ(x2)
+holds for all η ∈ [0,1] and x1,x2 ∈ [p,q]. There are several fruitful and interesting properties
+of convex functions which attract several mathematicians to this class of functions. In what
+follows, we present some important and basic properties of convex functions.
+If the function Ψ : (p,q) → R is convex, then Ψ must be continuous and the left and
+right derivative of Ψ will exist. Moreover, Ψ will be differentiable almost everywhere on
+(p,q). The right and left derivative of a convex function is increasing and for each point in
+the domain of the convex function, and there must be at least one support line. The epi-
+graph of a convex function is always a convex set. Due to those useful properties, several
+mathematicians generalized and extended the convex function and gave numerous results
+for the generalized convex functions. Many results associated to Hermite–Hadamard
+inequality for the n-polynomial P-convexity can be found in [6]. In the following part
+of this section, we focus on some of the generalized families of convex functions. In [7],
+Axioms 2023, 12, 195. https://doi.org/10.3390/axioms12020195 https://www.mdpi.com/journal/axiomsAxioms 2023, 12, 195 2 of 14
+Dragomir introduced the idea of convexity of the functions on the coordinate and in-
+troduced the following family of generalized convexity of the functions defined on the
+rectangular domain.
+Let Ψ : [p,q] × [r,s] → R be a function and the functions Ψy : [p,q] → R,Ψx : [r,s] →
+R be the partial functions defined as: Ψy(u) = Ψ(u,y) and Ψx(v) = Ψ(x,v) for all x ∈ [p,q]
+and y ∈ [r,s]. Then Ψ is called coordinate convex on [p,q] × [r,s], if Ψy and Ψx both are
+convex on [p,q] and [r,s] respectively. The important feature this class of functions is that
+a function which is convex must be coordinate convex and with the help of the example
+the author explained that every coordinate convex function may not be convex. The
+Hermite–Hadamard (H-H) and Jensen’s type inequalities are presented for this family of
+functions [7,8].
+Gordji et al. [9] gave the idea of η-convexity. This generalized convex function is given
+below (also see [10]): a function Ψ : [p,q] → R is known as η-convex with respect to the
+function η : R×R → R if
+Ψ((1 − t)y + tx) ≤ Ψ(y) + tη(Ψ(x),Ψ(y))
+holds for all t ∈ [0,1] and x,y ∈ [p,q].
+It is obvious that if Ψ is η-convex associated to the η defined by η(x1,x2) = x1 − x2,
+then Ψ will be convex. The authors elaborated with the help of examples that there are
+nonconvex functions which are η-convex functions. Various related results to convexity
+are also presented for this class of functions, such as boundedness, support line inequality,
+Hermite–Hadamard, determinantal, and Jensen’s type inequalities. Using the idea of
+coordinate convex function, Zaheer Ullah et al. further generalized the family of η-convex
+functions and gave the idea of coordinate (η1,η2)-convex functions as follows ([11]):
+A function Ψ : [p,q] × [r,s] → R is coordinate (η1,η2)-convex if the functions
+Ψy : [p,q] → Rdefined by Ψy(w) = Ψ(w,y) and Ψx : [r,s] → Rdefined by Ψx(z) = Ψ(x,z)
+are η1-convex and η2-convex for each x ∈ [p,q] and y ∈ [r,s], respectively. Particularly, if
+η2 = η1 = η, then Ψ is said to be coordinate η-convex function.
+The authors proved that if Ψ is η-convex function defined on a rectangular domain,
+then Ψ will be coordinate η-convex but the converse is not valid in general. Some interesting
+examples are presented and Hermite–Hadamard inequality is proved for this class of
+functions. One of the most widely applicable and dominant families of functions is the
+family of strong convexity. This family of functions was originally introduced and studied
+by Polyak in 1966 [12]. The strongly convex function is defined as follows:
+If Ψ : [p,q] → R is a function such that the inequality
+Ψ(γx1 + (1 − γ)x2) ≤ γΨ(x1) + (1 − γ)Ψ(x2) − cγ(1 − γ)(x1 − x2)2
+is valid for all γ ∈ [0,1] and x1,x2 ∈ [p,q] and for some c > 0, then Ψ is called a strong
+convex function.
+The simple and easy criteria for checking the strong convexity of a function are:
+A differentiable function Ψ is a strongly convex function if and only if
+Ψ(x1) − Ψ(x2) ≥ Ψ
+0
+(x1)(x1 − x2) + c(x1 − x2)2
+.
+Moreover, if a function Ψ is twice differentiable, then Ψ is strongly convex associated
+to c if and only if
+Ψ00
+≥ 2c
+Itisremarkabletonotethateachstronglyconvexfunctionisconvexwhileitisnotvalid
+in general that every convex function will be strongly convex. Actually, the idea of strong
+convexity provides a strengthened form of the classical convexity. There are numerous
+applications of strong convexity in optimization theory. As Dragomir generalized the
+concept of convex function to the concept of coordinate convex function, in a similar fashionAxioms 2023, 12, 195 3 of 14
+Adil Khan et al. presented a novel class of coordinate strongly convex functions ([13]),
+which is stated below.
+A function Ψ : [p,q] × [r,s] → R is coordinate strongly convex if Ψy : [p,q] → R and
+Ψx : [r,s] → R are strongly convex for each x ∈ [p,q] and y ∈ [r,s], where Ψy and Ψx are
+defined as above.
+In [13] the authors noted that strong convexity implies coordinate strong convexity
+while the converse is not generally true. For more related interesting results we recom-
+mend [13]. Before finishing this part, we recall the strong η-convexity definition which has
+been presented in [14].
+A function Ψ : [p,q] → R is strongly η-convex associated to η : R × R → R and
+c > 0, if
+Ψ(γx + (1 − γ)y) ≤ Ψ(y) + γη(Ψ(x),Ψ(y)) − cγ(1 − γ)(x − y)2
+holds for all γ ∈ [0,1] and x,y ∈ [p,q]. The Hermite–Hadamard inequality for this class of
+functions is given as follows:
+Ψ
+
+p + q
+2
+
+−
+Γη
+2
++
+c
+12
+(q − p)2
+≤
+1
+q − p
+Z q
+p
+Ψ(t)dt
+≤
+Ψ(p) + Ψ(q)
+2
++
+η(Ψ(p),Ψ(q)) + η(Ψ(q),Ψ(p))
+4
+−
+c
+6
+(q − p)2
+≤
+Ψ(p) + Ψ(q)
+2
+−
+Γη
+2
+−
+c
+6
+(q − p)2
+.
+(1)
+In a similar fashion, a strongly η-convex function defined on a rectangular domain is
+given below: Let η : R×R → R and c > 0. Then the function Ψ : [p,q] × [r,s] → R is said
+to be strongly η-convex with respect to c, if
+Ψ(γa1 + (1 − γ)a2,γa3 + (1 − γ)a4)
+≤ Ψ(a2,a4) + γη(Ψ(a1,a3),Ψ(a2,a4)) − cγ(1 − γ)k(a1,a3) − (a2,a4)k2
+(2)
+holds for all γ ∈ [0,1] and (a2,a4),(a1,a3) ∈ [p,q] × [r,s].
+In [14], the authors investigated Fejér as well as as Hermite–Hadamard type inequali-
+ties for n-times differentiable strongly η-convex functions. The strong η-convexity of the
+nth derivative of certain functions has been utilized and has derived some interesting
+inequalities [15]. Moreover, further generalization of this class of functions has been pre-
+sented in [16], which is known as a strongly (η,ω)-convex function. Some useful examples
+of strongly (η,ω)-convex functions have been constructed. Furthermore, they presented
+Hermite-Hadamard type inequalities for this class of generalized convex functions.
+2. Coordinated Strongly (η1,η2)-Convex Functions
+This section is devoted to proposing a novel important class of functions which is
+named coordinated strongly (η1,η2)-convex function.
+Definition 1. Let [d1,d2],[d3,d4] ⊆ R be two intervals and Υ : [d1,d2] × [d3,d4] → R, η1,η2 :
+R × R → R be three functions, and the functions Υy : [d1,d2] → R and Υx : [d3,d4] → R be
+defined by
+Υy(u) = Υ(u,y) , Υx(v) = Υ(x,v).
+Then Υ is known as the coordinated strongly (η1,η2)-convex on [d1,d2] × [d3,d4] if Υy and
+Υx are strongly η1-convex and strongly η2-convex, respectively. In particular, if η2 = η1 = η, then
+Υ is said to be a coordinated strongly η-convex function.
+Example 1. Let Υ : R+ ∪ {0} ×R+ ∪ {0} → R be defined by Υ(x,y) = x2 + y2 and η(x,y) =
+y +2x. Then Υ is a coordinated strongly η-convex on [0,∞)2.Axioms 2023, 12, 195 4 of 14
+Proof. Consider the function Υy : R+ ∪ {0} → R defined by Υy(u) = Υ(u,y) and Υx :
+R+ ∪ {0} → R defined by Υx(v) = Υ(x,v). Then for any χ1,χ2 ∈ R+ ∪ {0} and 0 ≤ ν ≤ 1,
+we have
+Υy(νχ1 + (1 − ν)χ2) = Υ(νχ1 + (1 − ν)χ2,y)
+= (νχ1 + (1 − ν)χ2)2
++ y2
+= χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 −2νχ2
+2 + ν2
+χ2
+2 + y2
+≤ χ2
+2 + y2
++ ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 + νχ2
+1 + ν2
+χ2
+2
+= χ2
+2 + y2
++ ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 +2νχ2
+1 − νχ2
+1 + ν2
+χ2
+2
+= χ2
+2 + y2
++2νχ2
+1 + νχ2
+2 − νχ2
+1 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 − νχ2
+2 + ν2
+χ2
+2
+= Υy(χ2) + ν(2χ2
+1 + χ2
+2) − ν(1 − ν)(χ2
+1 −2χ1χ2 + χ2
+2)
+≤ Υy(χ2) + ν
+n
+2(χ2
+1 + y2
+) + (χ2
+2 + y2
+)
+o
+− ν(1 − ν)(χ1 − χ2)2
+= Υy(χ2) + ν(2Υy(χ1) + Υy(χ2)) − ν(1 − ν)(χ1 − χ2)2
+= Υy(χ2) + νη(Υy(χ1),Υy(χ2)) − ν(1 − ν)(χ1 − χ2)2
+.
+This represents that Υy is strongly η-convex on [0,∞). In a similar fashion, we can
+show that Υx is strongly η-convex on [0,∞).
+Therefore, Υ is coordinated strongly η-convex on [0,∞) × [0,∞).
+Example 2. Let Υ : [1,2] × [1,2] → R be defined by Υ(x,y) = y3 + x2, η2(x,y) = 10x + 9y
+and η1(x,y) = 2x + y. Then Υ is coordinated strongly (η1,η2)-convex.
+Proof. The function Υy : [1,2] → R defined by Υy(u) = y3 +u2 and Υx : [1,2] → R defined
+by Υx(v) = v3 + x2. Then, by the technique as given in the solution of Example 1, we can
+derive that Υy is strongly η1-convex.
+Now, we prove that Υx is strongly η2-convex. For this
+Υx(νχ1 + (1 − ν)χ2) = Υ(x,νχ1 + (1 − ν)χ2)
+= x2
++ (νχ1 + (1 − ν)χ2)3
+= x2
++ (νχ1 + (1 − ν)χ2)(νχ1 + (1 − ν)χ2)2
+= x2
++ (νχ1 + (1 − ν)χ2)
+(χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 −2νχ2
+2 + ν2
+χ2
+2)
+≤ x2
++ (νχ1 + (1 − ν)χ2)
+(χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 + νχ2
+1 + ν2
+χ2
+2)
+= x2
++ (νχ1 + (1 − ν)χ2)
+(χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 +2νχ2
+1 − νχ2
+1 + ν2
+χ2
+2)
+= x2
++ (νχ1 + (1 − ν)χ2)
+(χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 +2νχ2
+1 − νχ2
+1 + νχ2
+2 − νχ2
+2 + ν2
+χ2
+2)
+= x2
++ (νχ1 + (1 − ν)χ2)
+(χ2
+2 +2νχ2
+1 + νχ2
+2 − νχ2
+1 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 − νχ2
+2 + ν2
+χ2
+2)
+= x2
++ (νχ1 + (1 − ν)χ2)
+(χ2
+2 + ν(2χ2
+1 + χ2
+2) − (ν − ν2
+)χ2
+1 +2ν(1 − ν)χ1χ2 − (ν − ν2
+)χ2
+2)Axioms 2023, 12, 195 5 of 14
+= x2
++ (νχ1 + (1 − ν)χ2)(χ2
+2 + ν(2χ2
+1 + χ2
+2) − ν(1 − ν)(χ1 − χ2)2
+)
+≤ x2
++ (νχ1 + χ2)(χ2
+2 + ν(2χ2
+1 + χ2
+2) − ν(1 − ν)(χ1 − χ2)2
+)
+= x2
++ νχ1χ2
+2 + ν2
+(2χ3
+1 + χ1χ2
+2) + χ3
+2 + ν(2χ2
+1χ2 + χ3
+2)
+− ν(1 − ν)(χ1 − χ2)2
+(νχ1 + χ2).
+Noting that χ2
+2 ≤ 4χ2
+1 , χ2
+1 ≤ 4χ2
+2 and νχ1 + χ2 ≥ 1, we have
+Υx(νχ1 + (1 − ν)χ2) ≤ x2
++4νχ3
+1 + ν2
+(2χ3
+1 +4χ3
+1) + χ3
+2 + ν(8χ3
+2 + χ3
+2)
+− ν(1 − ν)(χ1 − χ2)2
+≤ x2
++4νχ3
+1 + ν(6χ3
+1) + χ3
+2 + ν(9χ3
+2) − ν(1 − ν)(χ1 − χ2)2
+= x2
++ χ3
+2 + ν(10χ3
+1 +9χ3
+2) − ν(1 − ν)(χ1 − χ2)2
+≤ x2
++ χ3
+2 + ν(10(x2
++ χ3
+1) +9(x2
++ χ3
+2)) − ν(1 − ν)(χ1 − χ2)2
+= Υx(χ2) + νη(Υx(χ1),Υx(χ2)) − ν(1 − ν)(χ1 − χ2)2
+,
+which shows that Υx is strongly η2-convex on [1,2]. Consequently, Υ is coordinated strongly
+(η1,η2)-convex.
+The next result gives an important relation among the coordinated strongly η-convex
+and strongly η-convex functions.
+Lemma 1. Every strongly η-convex function defined on rectangular domain is coordinated strongly
+η-convex, while the converse is not generally true.
+Proof. Let Υ be strongly η-convex on [d1,d2] × [d3,d4] and consider the partial mappings
+Υy : [d1,d2] → R defined by Υy(u) = Υ(u,y) and Υx : [d3,d4] → R defined by Υx(v) =
+Υ(x,v). For any χ1,χ2 ∈ [d1,d2] and ν ∈ [0,1], we have
+Υy(νχ1 + (1 − ν)χ2) = Υ(νχ1 + (1 − ν)χ2,y)
+= Υ(νχ1 + (1 − ν)χ2,νy + (1 − ν)y))
+≤ Υ(χ2,y) + νη(Υ(χ1,y),Υ(χ2,y)) − cν(1 − ν)(χ1 − χ2)2
+= Υy(χ2) + νη(Υy(χ1),Υy(χ2)) − cν(1 − ν)(χ1 − χ2)2
+.
+The above inequality holds by using (2).
+This concludes that Υy is a strongly η-convex function. Similarly, we can show that Υx
+is strongly η-convex. Hence, Υ is a coordinated strongly η-convex function.
+For the converse ofthe aboveresult, wedescribe thefollowing examplefor anillustration.
+Example 3. Let Υ : [1,5] × [1,5] → R be defined by Υ(x,y) = x2y2 and η(x,y) = 2x + y.
+Then, Υ is a coordinated strongly η-convex but not strongly η-convex function.
+Proof. Consider Υy : [1,5] → R is defined by Υy(u) = Υ(u,y) and Υx : [1,5] → R is
+defined by Υx(v) = Υ(x,v) be partial mapping of Υ. For any χ1,χ2 ∈ [1,5] and ν ∈ [0,1]
+we getAxioms 2023, 12, 195 6 of 14
+Υy(νχ1 + (1 − ν)χ2) = Υ(νχ1 + (1 − ν)χ2,y)
+= (νχ1 + (1 − ν)χ2)2
+y2
+= (χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 −2νχ2
+2 + ν2
+χ2
+2)y2
+≤ (χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 + νχ2
+1 + ν2
+χ2
+2)y2
+= (χ2
+2 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 +2νχ2
+1 − νχ2
+1 + ν2
+χ2
+2)y2
+= (χ2
+2 +2νχ2
+1 + νχ2
+2 − νχ2
+1 + ν2
+χ2
+1 +2ν(1 − ν)χ1χ2 − νχ2
+2 + ν2
+χ2
+2)y2
+= (χ2
+2 + ν(2χ2
+1 + χ2
+2) − ν(1 − ν)(χ1 − χ2)2
+)y2
+= χ2
+2y2
++ ν(2χ2
+1y2
++ χ2
+2y2
+) − ν(1 − ν)(χ1 − χ2)2
+y2
+≤ Υy(χ2) + νη(Υy(χ1),Υy(χ2)) − ν(1 − ν)(χ1 − χ2)2
+.
+This shows that Υy is strongly η-convex with modulus 1. In a similar fashion, we
+may prove that Υx is strongly η-convex on [1, 5] with modulus 1. Hence, Υ is coordinated
+strongly η-convex on [1,5] × [1,5].
+Next, suppose that Υ is a strongly η-convex function. Then by (2), we have
+Υ(ν(χ1,χ2) + (1 − ν)(χ3,χ4))
+≤ Υ(χ3,χ4) + νη(Υ(χ1,χ2),Υ(χ3,χ4)) − cν(1 − ν)k(χ1,χ2) − (χ3,χ4)k2
+≤ Υ(χ3,χ4) + ν(2Υ(χ1,χ2) + Υ(χ3,χ4)) − cν(1 − ν)k(χ1,χ2) − (χ3,χ4)k2
+≤ Υ(χ3,χ4) +2νΥ(χ1,χ2) + νΥ(χ3,χ4) − cν(1 − ν)k(χ1,χ2) − (χ3,χ4)k2
+.
+Substituting (χ1,χ2) = (5,1), (χ3,χ4) = (1,5) and ν = 1
+2, we deduce
+Υ
+
+5
+2
+,
+1
+2
+
++
+
+1
+2
+,
+5
+2
+
+≤ Υ(1,5) +
+1
+2
+×2 ×25 +
+1
+2
+×25 −
+c
+4
+k(5,1) − (1,5)k2
+=⇒ Υ
+
+5
+2
++
+1
+2
+,
+1
+2
++
+5
+2
+
+≤ 25 +25 +12.5 −
+c
+4
+k(4,−4)k2
+=⇒ 81 ≤ 62.5 −
+c
+4
+k(4,−4)k2
+=⇒ 324 ≤ 250 − ck(4,−4)k2
+,
+which is not true for all c > 0. Thus, the condition of strongly η-convexity fails and hence
+Υ is not a strongly η-convex function.
+The H-H type inequality for coordinated strongly (η1,η2)-convex function is given in
+the following theorem.
+Theorem 1. Let Υ : [d1,d2] × [d3,d4] → R be coordinated strongly (η1,η2)-convex with respect
+to e1 and e2 such that
+η1(x,y) ≤ Γη1
+, η2(x,y) ≤ Γη2
+for x,y ∈ R,
+where Γη1
+and Γη2
+are two positive real numbers. ThenAxioms 2023, 12, 195 7 of 14
+Υ
+
+d1 + d2
+2
+,
+d3 + d4
+2
+
+−
+Γη1
++ Γη2
+2
++
+e1
+12
+(d2 − d1)2
++
+e2
+12
+(d4 − d3)2
+≤
+1
+2
+
+1
+d2 − d1
+Z d2
+d1
+Υ
+
+x,
+d3 + d4
+2
+
+dx +
+1
+d4 − d3
+Z d4
+d3
+Υ
+
+d1 + d2
+2
+,y
+
+dy
+
+−
+Γη1
++ Γη2
+4
++
+e1
+24
+(d2 − d1)2
++
+e2
+24
+(d4 − d3)2
+≤
+1
+(d4 − d3)(d2 − d1)
+Z d2
+d1
+Z d4
+d3
+Υ(x,y)dxdy
+≤
+1
+4
+
+1
+d2 − d1
+Z d2
+d1
+[Υ(x,d3) + Υ(x,d4)]dx +
+1
+d4 − d3
+Z d4
+d3
+[Υ(d1,y) + Υ(d2,y)]dy
+
++
+Γη1
++ Γη2
+4
+−
+e1
+12
+(d2 − d1)2
+−
+e2
+12
+(d4 − d3)2
+≤
+1
+4
+{Υ(d1,d3) + Υ(d2,d3) + Υ(d1,d4) + Υ(d2,d4)} +
+Γη1
++ Γη2
+2
+−
+e1
+6
+(d2 − d1)2
+−
+e2
+6
+(d4 − d3)2
+.
+(3)
+Proof. If Υx and Υy are two partial mappings of Υ, then by H-H inequality for the class of
+strongly η-convex functions given in (1), we may write
+Υ
+
+x,
+d3 + d4
+2
+
+−
+Γη2
+2
++
+e2
+12
+(d4 − d3)2
+≤
+1
+d4 − d3
+Z d4
+d3
+Υ(x,y)dy
+≤
+Υ(x,d3) + Υ(x,d4)
+2
++
+Γη2
+2
+−
+e2
+6
+(d4 − d3)2
+.
+(4)
+Integrating (4) with respect to x on [d1,d2], we get
+1
+d2 − d1
+Z d2
+d1
+Υ
+
+x,
+d3 + d4
+2
+
+dx −
+Γη2
+2
++
+e2
+12
+(d4 − d3)2
+≤
+1
+(d2 − d1)(d4 − d3)
+Z d2
+d1
+Z d4
+d3
+Υ(x,y)dxdy
+≤
+1
+2
+
+1
+d2 − d1
+Z d2
+d1
+Υ(x,d3)dx +
+1
+d2 − d1
+Z d2
+d1
+Υ(x,d4)dx
+
++
+Γη2
+2
+−
+e2
+6
+(d4 − d3)2
+.
+(5)
+Similarly, for the partial mapping Υy we deduce
+1
+d4 − d3
+Z d4
+d3
+Υ
+
+d1 + d2
+2
+,y
+
+dy −
+Γη1
+2
++
+e1
+12
+(d2 − d3)2
+≤
+1
+(d2 − d1)(d4 − d3)
+Z d2
+d1
+Z d4
+d3
+Υ(x,y)dxdy
+≤
+1
+2
+
+1
+d4 − d3
+Z d4
+d3
+Υ(d1,y)dy +
+1
+d4 − d3
+Z d4
+d3
+Υ(d2,y)dy
+
++
+Γη1
+2
+−
+e1
+6
+(d2 − d1)2
+.
+(6)
+Adding (5) and (6), we achieve the second and the third inequalities in (3).
+Now, again by Hadamard inequality, we get
+Υ
+
+d1 + d2
+2
+,
+d3 + d4
+2
+
+−
+Γη1
+2
++
+e1
+12
+(d2 − d1)2
+≤
+1
+d2 − d1
+Z d2
+d1
+Υ
+
+x,
+d3 + d4
+2
+
+dx; (7)
+Υ
+
+d1 + d2
+2
+,
+d3 + d4
+2
+
+−
+Γη2
+2
++
+e2
+12
+(d4 − d3)2
+≤
+1
+d4 − d3
+Z d4
+d3
+Υ
+
+d1 + d2
+2
+,y
+
+dy. (8)
+Adding −
+Γη2
+2
++
+e2
+12
+(d4 − d3)2 and −
+Γη1
+2
++
+e1
+12
+(d2 − d1)2 to both sides of (7) and (8),
+respectively, and then summing the obtained inequalities, we derive the first inequality
+of (3).Axioms 2023, 12, 195 8 of 14
+Next, by using Hadamard inequality again, we get
+1
+d2 − d1
+Z d2
+d1
+Υ(x,d3)dx ≤
+Υ(d1,d3) + Υ(d2,d3)
+2
++
+Γη1
+2
+−
+e1
+6
+(d2 − d1)2
+;
+1
+d2 − d1
+Z d2
+d1
+Υ(x,d4)dx ≤
+Υ(d1,d4) + Υ(d2,d4)
+2
++
+Γη1
+2
+−
+e1
+6
+(d2 − d1)2
+;
+1
+d4 − d3
+Z d4
+d3
+Υ(d1,y)dy ≤
+Υ(d −1,d3) + Υ(d1,d4)
+2
++
+Γη2
+2
+−
+e2
+6
+(d4 − d3)2
+;
+1
+d4 − d3
+Z d4
+d3
+Υ(d2,y)dy ≤
+Υ(d2,d3) + Υ(d2,d4)
+2
++
+Γη2
+2
+−
+e2
+6
+(d4 − d3)2
+.
+Summing all the above inequalities and then adding Γη1
+−
+e1
+3
+(d2 − d3)2 and Γη2
+−
+e2
+3
+(s4 − d3)2 to the both hand sides, we achieve the last required inequality.
+3. Results Arround Strongly η-Convex Functions
+In the below mentioned lemma, it is presented that the convex combination of strongly
+η-convex functions is a strongly η-convex function.
+Lemma 2. Let ζj : [d1,d2] → R be strongly η-convex functions with modulus c > 0 and η be
+non-negative homogeneous functions. If ξi0s ∈ R+ ∪ {0} such that ∑n
+j=1 ξj = 1, then the function
+Υ = ∑n
+j=1 ξjζj is also a strongly η-convex function.
+Proof. Let
+Υ(κ) =
+n
+∑
+j=1
+ξjζj(κ).
+Set κ = νχ1 + (1 − ν)χ2 with χ1,χ2 ∈ [d1,d2]. Then, we have:
+Υ(νχ1 + (1 − ν)χ2) =
+n
+∑
+j=1
+ξjζj(νχ1 + (1 − ν)χ2)
+≤
+n
+∑
+j=1
+ξj
+n
+ζj(χ2) + νη(ζj(χ1),ζj(χ2)) − cν(1 − ν)(χ1 − χ2)2
+o
+=
+n
+∑
+j=1
+ξjζj(χ2) + ν
+n
+∑
+j=1
+ξjη(ζj(χ1),ζj(χ2))
+− cν(1 − ν)(χ1 − χ2)2
+=
+n
+∑
+j=1
+ξjζj(χ2) + νη
+n
+∑
+j=1
+ξjζj(χ1),
+n
+∑
+j=1
+ξjζj(χ2)
+!
+− cν(1 − ν)(χ1 − χ2)2
+= Υ(χ2) + νη(Υ(χ1),Υ(χ2)) − cν(1 − ν)(χ1 − χ2)2
+.
+It is clear from this that Υ is a strongly η-convex function.
+Lemma 3. Let Υ = T1 + T2, where T1 is a strongly η-convex function and T2 is η-convex function
+such that η is additive. Then, prove that Υ is a strongly η-convex function.Axioms 2023, 12, 195 9 of 14
+Proof. Consider
+Υ(νχ1 + (1 − ν)χ2) = T1(νχ1 + (1 − ν)χ2) + T2(νχ1 + (1 − ν)χ2)
+≤ T1(χ2) + νη(T1(χ1),T1(χ2)) − cν(1 − ν)(χ1 − χ2)2
++ T2(χ2)
++ νη(T2(χ1),T2(χ2))
+= T1(χ2) + T2(χ2) + νη(T1(χ1) + T2(χ1),T1(χ2) + T2(χ2))
+− cν(1 − ν)(χ1 − χ2)2
+= (T1 + T2)(χ2) + νη((T1 + T2)(χ1),(T1 + T2)(χ2))
+− cν(1 − ν)(χ1 − χ2)2
+= Υ(χ2) + νη(Υ(χ1),Υ(χ2)) − cν(1 − ν)(χ1 − χ2)2
+.
+This gives the strong η-convexity of Υ.
+Lemma 4. Let Υ be a strongly η-convex function and η(χ1,χ2) = −η(χ2,χ1). Then
+Υ(y1 + y2 − χ) ≤ Υ(y1) + Υ(y2) − Ψ(χ); for all χ ∈ [y1,y2]
+with χ = νy1 + (1 − ν)y2 and ν ∈ [0,1].
+Proof. Consider Υ is a strongly η-convex function, then
+Υ(y1 + y2 − χ) = Υ(y1 + y2 − (νy1 + (1 − ν)y2))
+= Υ(νy2 + (1 − ν)y1))
+≤ Υ(y1) + νη(Υ(y2),Υ(y1)) − cν(1 − ν)(y2 − y1)2
+≤ Υ(y1) + νη(Υ(y2),Υ(y1)) + cν(1 − ν)(y2 − y1)2
+= Υ(y1) − νη(Υ(y1),Υ(y2)) + cν(1 − ν)(y1 − y2)2
+= Υ(y1) + Υ(y2) − Υ(y2) − νη(Υ(y1),Υ(y2))
++ cν(1 − ν)(y1 − y2)2
+= Υ(y1) + Υ(y2)
+− {Υ(y2) + νη(Υ(y1),Υ(y2)) − cν(1 − ν)(y1 − y2)2
+}
+≤ Υ(y1) + Υ(y2) − Υ(χ).
+This proves the required inequality.
+Theorem 2. Consider the nonempty set
+
+ζj : [d1,d2] → R, j ∈ J of strongly η-convex functions
+such that
+(a). There exist ω1 ∈ [0,∞] and ω2 ∈ [−1,∞] with η(χ1,χ2) = ω1χ1 + ω2χ2 for all χ1,χ2 ∈
+[d1,d2].
+(b). For each χ ∈ [d1,d2], sup
+j∈J
+ζj(χ) exists in R.
+Then, the function Υ : [d1,d2] → R defined by Υ(χ) = sup
+j∈J
+ζj(χ) for each χ ∈ [d1,d2], is a
+strongly η-convex function.
+Proof. For any χ1,χ2 ∈ [d1,d2] and ν ∈ [0,1], we haveAxioms 2023, 12, 195 10 of 14
+Υ(νχ1 + (1 − ν)χ2) = sup
+j∈J
+ζj(νχ1 + (1 − ν)χ2)
+≤ sup
+j∈J
+n
+ζj(χ2) + νη(ζj(χ1),ζj(χ2)) − cν(1 − ν)(χ1 − χ2)2
+o
+≤ sup
+j∈J
+
+ζj(χ2) + νη(ζj(χ1),ζj(χ2)) − cν(1 − ν)(χ1 − χ2)2
+= sup
+j∈J
+
+ζj(χ2) + ν(ω1ζj(χ1) + ω2ζj(χ2)) − cν(1 − ν)(χ1 − χ2)2
+= sup
+j∈J
+
+(1 + ω2ν)ζj(χ2) + νω1ζj(χ1) − cν(1 − ν)(χ1 − χ2)2
+≤ (1 + νω2)sup
+j∈J
+ζj(χ2) + νω1 sup
+j∈J
+ζj(χ1) − cν(1 − ν)(χ1 − χ2)2
+= (1 + νω2)Υ(χ2) + νω1Υ(χ1) − cν(1 − ν)(χ1 − χ2)2
+= Υ(χ2) + ν(ω1Υ(χ1) + ω2Υ(χ2)) − cν(1 − ν)(χ1 − χ2)2
+= Υ(χ2) + νη(Υ(χ1),Υ(χ2)) − cν(1 − ν)(χ1 − χ2)2
+.
+This gives that Υ is a strongly η-convex function.
+Theorem 3. (Schur-type inequality). Suppose that Υ : [d1,d2] → R is a strongly η-convex
+function. Then for κ1,κ2,κ3 ∈ [d1,d2] such that κ1 < κ2 < κ3 and κ3 − κ1,κ3 − κ2,κ2 − κ1 ∈
+[d1,d2], we have
+(κ3 − κ1)Υ(κ2)
+≤ (κ3 − κ1)Υ(κ3) + (κ3 − κ2)η(Υ(κ1),Υ(κ2)) − c(κ3 − κ2)(κ2 − κ1)(κ3 − κ1)
+(9)
+if and only if Υ is a strongly η-convex function.
+Proof. With the help of strong η-convexity, we may write that
+Υ(νχ1 + (1 − ν)χ2) ≤ Υ(χ2) + νη(Υ(χ1),Υ(χ2)) − cν(1 − ν)(χ1 − χ2)2
+. (10)
+By setting ν = κ2−κ3
+κ1−κ3
+, χ1 = κ1 and χ2 = κ3 in (10), we have
+Υ
+
+κ2 − κ3
+κ1 − κ3
+
+κ1 +
+
+1 −
+κ3 − κ2
+κ3 − κ1
+
+κ3
+
+≤ Υ(κ3) +
+
+κ2 − κ3
+κ1 − κ3
+
+η(Υ(κ1),Υ(κ3)) − c
+
+v3 − κ2
+κ3 − κ1
+
+1 −
+κ3 − κ2
+κ3 − κ1
+
+(κ1 − κ3)2
+= Υ(κ3) +
+
+κ3 − κ2
+κ3 − κ1
+
+η(Υ(κ1),Υ(κ3)) − c
+(κ3 − κ2)(κ2 − κ1)
+(κ3 − κ1)2
+(κ3 − κ1)2
+.
+This implies that
+(κ3 − κ1)Υ(κ2)
+≤ (κ3 − κ1)Υ(κ3) + (κ3 − κ2)η(Υ(κ1),Υ(κ3)) − c(κ3 − κ2)(κ2 − κ1)(κ3 − κ1).Axioms 2023, 12, 195 11 of 14
+Conversely, let (9) hold, and then by setting κ1 = χ1, κ2 = νχ1 +(1−ν)χ2 and κ3 = χ2
+in (9) we deduce
+(χ2 − χ1)Υ(νχ1 + (1 − ν)χ2)
+≤ (χ2 − χ1)Υ(χ2) + (χ2 − νχ1 − (1 − ν)χ2)η(Υ(χ1),Υ(χ2))
+− cν(χ2 − νχ1 − (1 − ν)χ2)(νχ1 + (1 − ν)χ2 − χ1)(χ2 − χ1)
+= (χ2 − χ1)Υ(χ2) + ν(χ2 − χ1)η(Υ(χ1),Υ(χ2)) − cν(χ2 − χ1)(−(1 − ν)χ1
++ (1 − ν)χ2)(χ2 − χ1)
+= (χ2 − χ1)Υ(y) + ν(χ2 − χ1)η(Υ(χ1),Υ(χ2)) − cν(χ2 − χ1)(1 − ν)(χ2 − χ1)(χ2 − χ1),
+which implies that
+Υ(νχ1 + (1 − ν)χ2) ≤ Υ(χ2) + νη(Υ(χ1),Υ(χ2)) − cν(1 − ν)(χ2 − χ1)2
+.
+This is the required result.
+In the upcoming result, an important relation among the strong η-convexity and
+η-convexity has been presented.
+Lemma 5. Prove that a strongly η-convex function is η-convex, while the converse is not gener-
+ally true.
+Proof. Let Υ be a strongly η-convex function, then by definition
+Υ(νχ1 + (1 − ν)χ2) ≤ Υ(χ2) + νη(Υ(χ1),Υ(χ2)) − cν(1 − ν)(χ1 − χ2)2
+≤ Υ(χ2) + νη(Υ(χ1),Υ(χ2)).
+Implies that
+Υ(νχ1 + (1 − ν)χ2) ≤ Υ(χ2) + νη(Υ(χ1),Υ(χ2))
+which shows that Υ is η-convex,
+For the converse of the above result, we demonstrate examples.
+Example 4. Let Υ : R → R be a function defined as Υ(ϑ) = −|ϑ|,ϑ ∈ R and η : R+ ∪ {0} ×
+R+ ∪ {0} → R be defined as η(ϑ1,ϑ2) = −2ϑ1 − ϑ2. Then Υ is η-convex but not a strongly
+η-convex function.
+Proof. For ϑ1,ϑ2 ∈ R and ν ∈ [0,1], we have
+Υ(νϑ1 + (1 − ν)ϑ2) = −|νϑ1 + (1 − ν)ϑ2|
+= −| − (−νϑ1) + (1 − ν)ϑ2|
+= −|(1 − ν)ϑ2 − (−νϑ1)|
+≤ ν|ϑ1| − (1 − ν)|ϑ2|
+= ν|ϑ1| − |ϑ2| + ν|ϑ2|
+= −|ϑ2| + ν(|ϑ1| + |ϑ2|)
+≤ −|ϑ2| + ν(2|ϑ1| + |ϑ2|)
+= −|ϑ2| + ν(−2(−|ϑ1|) − (−|ϑ2|))
+= Υ(ϑ2) + ν(−2Υ(ϑ1) − Υ(ϑ2))
+= Υ(ϑ2) + νη(Υ(ϑ1),Υ(ϑ2)).
+Hence Υ is an η-convex function.Axioms 2023, 12, 195 12 of 14
+Next, If Υ is a strongly η-convex function, then by definition
+Υ(νϑ1 + (1 − ν)ϑ2) ≤ Υ(ϑ2) + νη(Υ(ϑ1),Υ(ϑ2)) − cν(1 − ν)(ϑ1 − ϑ2)2
+which implies that
+−|νϑ1 + (1 − ν)ϑ2| ≤ −|ϑ2| + ν(2|ϑ1| + |ϑ2|) − cν(1 − ν)(ϑ1 − ϑ2)2
+.
+Substitute ϑ1 = 0, we deduce
+−|(1 − ν)|ϑ2| ≤ −|ϑ2| + ν|ϑ2| − cν(1 − ν)ϑ2
+2
+that is − |ϑ2| + ν|ϑ2| ≤ −|ϑ2| + ν|ϑ2| − cν(1 − ν)ϑ2
+2.
+which is not true for all ν ∈ (0,1), ϑ2 ∈ R \ {0} and c > 0. Thus, Υ is not a strongly
+η-convex function on R.
+Example 5. Let Υ : R → R be a function defined as Υ(ϑ) = |ϑ| + ϑ and η : R+ ∪ {0} ×R+ ∪
+{0} → R be defined as η(ϑ1,ϑ2) = ϑ1 + 2ϑ2. Then Υ is an η-convex but not strongly convex
+function.
+Proof. For any ϑ1,ϑ2 ∈ R and ν ∈ [0,1], we have
+Υ(νϑ1 + (1 − ν)ϑ2) = |νϑ1 + (1 − ν)ϑ2| + νϑ1 + (1 − ν)ϑ2
+≤ ν|ϑ1| + (1 − ν)|ϑ2| + νϑ1 + ϑ2 − νϑ2
+= ν|ϑ1| + |ϑ2| − ν|ϑ2| + νϑ1 + ϑ2 − νϑ2
+= |ϑ2| + ϑ2 + ν(|ϑ1| + ϑ1 − (|ϑ2| + ϑ2))
+≤ |2| + ϑ2 + ν(|ϑ1| + ϑ1 +2(|ϑ2| + ϑ2))
+= Υ(ϑ2) + ν(Υ(ϑ1) +2Υ(ϑ2))
+= Υ(ϑ2) + νη(Υ(ϑ1),Υ(ϑ2))
+This yields the η-convexity of Υ on R.
+Now, suppose that Υ is a strongly η-convex function. Then
+Υ(νϑ1 + (1 − ν)ϑ2) ≤ Υ(ϑ2) + νη(Υ(ϑ1),Υ(ϑ2)) − cν(1 − ν)(ϑ1 − ϑ2)2
+,
+which implies that
+|νϑ1 + (1 − ν)ϑ2| + νϑ1 + (1 − ν)ϑ2 ≤ |ϑ2| + ϑ2 + ν(|ϑ1| + ϑ1 +2(|ϑ2| + ϑ2))
+− cν(1 − ν)(ϑ1 − ϑ2)2
+|νϑ1 + (1 − ν)ϑ2| + νϑ1 + (1 − ν)ϑ2 ≤ |ϑ2| + ϑ2 + ν|ϑ1| + νϑ1 +2ν|ϑ2| +2νϑ2
+− cν(1 − ν)(ϑ1 − ϑ2)2
+.
+Substitute ϑ2 = 0, we get
+|νϑ1| + νϑ1 ≤ ν|ϑ1| + νϑ1 − cν(1 − ν)ϑ2
+1
+ν|ϑ1| + νϑ1 ≤ ν|ϑ1| + νϑ1 − cν(1 − ν)ϑ2
+1.
+which is a contradiction for all ν ∈ (0,1), ϑ1 ∈ R\ {0} and c > 0. Thus, Υ is not a strongly
+η-convex function on R.
+4. Brief History and Conclusions
+One cannot ignore the great importance and scope of the class of convex functions in
+almost every branch of mathematics due to several features of convex functions [17–19].
+The convex function has been refined, extended, and generalized in numerous angles, suchAxioms 2023, 12, 195 13 of 14
+as p-convex, h-convex, α-convex, and Godunova–Levin functions [20–24]. We give a brief
+history of some generalizations of convex functions. In 2001, Dragomir gave the idea of
+convexity on the co-ordinates and proved that every convex function implies convex on
+the co-ordinates and they found some examples that there are functions which have the
+property of convex on the co-ordinate but are not convex [7]. In 2016, Gordji et al. extended
+further the family of convex functions to the family of η-convex functions [9]. Gordji’s
+interesting work on η-convexity was devoted to pointing out the certain features and results
+for η-convex function. In 2019, Zaheer Ullah et al. further extended an η-convex function to
+(η1,η2)-convex on the co-ordinate [11]. They also presented some results and inequalities
+for this class of functions and elaborated this with the help of some interesting examples.
+There is another strengthened version of convex function which was introduced by Polyak
+in 1966 and which is known as strong convex function [12]. There is a rich body of literature
+devoted to strong convexity and numerous applications are devoted to strong convexity. In
+particular, it has a great role in the theory of optimization. As Dragomir gave the concept
+of convexity on the co-ordinate, in a similar fashion in 2019, Adil Khan et al. presented
+the idea of strong convexity on the co-ordinate and derived several important results and
+inequalities which clearly show the role of strong convexity on the co-ordinate [13]. In
+2017, Awan et al. introduced an interesting generalized family of convex functions which is
+named strong η-convex function [14]. They also obtained several important results for this
+class of functions. Looking to the aforementioned history of different generalizations and
+extensions, in this article we presented a more advanced generalized (η1,η2)-convexity on
+the co-ordinate. Some examples and results are presented for this class of functions which
+show the relations and importance of this class of functions with earlier generalized convex
+functions. The article also presents some properties, examples, and results for the strong
+η-convex functions.
+Author Contributions: Conceptualization, M.A.K. and A.; writing—original draft preparation,
+M.A.K. and A.; writing—review and editing, M.A.K., A., T.S. and E.R.N.; supervision, M.A.K.
+and E.R.N. All authors have read and agreed to the published version of the manuscript.
+Funding: The Deanship of Scientific Research (DR) at King Abdulaziz University (KAU), Jeddah,
+Saudi Arabia has funded this project, under grant no. (RG-7-130-43).
+Institutional Review Board Statement: Not applicable.
+Informed Consent Statement: Not applicable.
+Data Availability Statement: Not applicable.
+Conflicts of Interest: The authors declare no conflict of interest.
+References
+1. Niculescu, C.P.; Persson, L.E. Convex Functions and Their Applications. A Contemporary Approach, 2nd ed.; CMS Books in Mathemat-
+ics; Springer: New York, NY, USA, 2018; Volume 23.
+2. Zhao, T.-H.; Shi, L.; Chu, Y.-M. Convexity and concavity of the modified Bessel functions of the first kind with respect to Hölder
+means. Rev. R. Acad. Cienc. Exactas Fís. Nat. Ser. A Mat. 2020, 114, 96. [CrossRef]
+3. Chu, Y.-M.; Zhao, T.-H. Concavity of the error function with respect to Hölder means. Math. Inequal. Appl. 2016, 19, 589–595.
+[CrossRef]
+4. Hardy, G.H.; Littlewood, J.E.; Pólya, G. Inequalities, 2nd ed.; Cambridge Mathematical Library: Cambridge, UK, 1952.
+5. Pecarić, J.; Proschan, F.; Tong, Y.L. Convex Functions, Partial Orderings, and Statistical Applications; Academic Press: New York, NY,
+USA, 1992.
+6. Chen, S.-B.; Rashid, S.; Noor, M.A.; Hammouch, Z.; Chu, Y.-M. New fractional approaches for n-polynomial P-convexity with
+applications in special function theory. Adv. Differ. Equ. 2020, 2020, 543. [CrossRef]
+7. Dragomir, S.S. On the Hadamard’s inequality for convex functions on the co-ordinates in a rectangle from the plane. Taiwan J.
+Math. 2001, 5, 775–778. [CrossRef]
+8. Bakula, M.K.; Pecarić, J. On the Jensen’s inequality for convex functions on the co-ordinates in a rectangle from the plane. Taiwan
+J. Math. 2006, 10, 1271–1292. [CrossRef]
+9. Gordji, M.E.; Delavar, M.R.; Sen, M.D.L. On φ-convex functions. J. Math. Inequal. 2016, 10, 173–183. [CrossRef]
+10. Gordji, M.E.; Dragomir, S.S. On η-convexity. Math. Inequal. Appl. 2017, 20, 203–216.Axioms 2023, 12, 195 14 of 14
+11. Ullah, S.Z.; Khan, M.A.; Chu, Y.-M. A note on generalized convex functions. J. Inequal. Appl. 2019, 2019, 10.
+12. Polyak, B.T. Existence theorems and convergence of minimizing sequences in extremum problems with restrictions. Sov. Math.
+Dokl. 1966, 7, 72–75.
+13. Khan, M.A.; Ullah, S.Z.; Chu, Y.-M. The concept of coordinate strongly convex functions and related inequalities. Rev. R. Acad.
+Cienc. Exactas Fís. Nat. Ser. A Mat. 2019, 113, 2235-2251. [CrossRef]
+14. Awan, M.U.; Noor, M.A.; Noor, K.I.; Safdar, F. On strongly generalized convex functions. Filomat 2017, 31, 5783–5790. [CrossRef]
+15. Kermausuor, S.; Nwaeze, E.R. A note on some new Hermite–Hadamard type inequalities for functions whose nth derivatives are
+strongly η-convex. Int. J. Nonlinear Anal. Appl. 2021, 12, 179–187.
+16. Tameru, A.M.; Nwaeze, E.R.; Kermausuor, S. Strongly (η,ω)-convex functions with nonnegative modulus. J. Inequalities Appl.
+2020, 2020, 165. [CrossRef]
+17. Zhao, T.-H.; He, Z.-Y.; Chu, Y.-M. Sharp bounds for the weighted Hölder mean of the zero-balanced generalized complete elliptic
+integrals. Comput. Methods Funct. Theory 2021, 21, 413–426. [CrossRef]
+18. Zhao, T.-H.; Wang, M.-K.; Chu, Y.-M. Monotonicity and convexity involving generalized elliptic integral of the first kind. Rev. R.
+Acad. Cienc. Exactas Fís. Nat. Ser. A Mat. 2021, 115, 46. [CrossRef]
+19. Kashuri, A.; Nwaeze, E.R. Some different types of parameterized inequalities pertaining to generalized (m,h1,h2)-preinvex
+functions via generalized fractional integral operators and their applications. J. Interdiscip. Math. 2021, 24, 821–852. [CrossRef]
+20. Dragomir, S.S. Inequalities of Hermite-Hadamard type for λ-convex functions on linear spaces. Preprint RGMIA Res. Rep. Coll.
+2014, 18, 13. Available online: http://rgmia.org/papers/v17/v17a13.pdf (accessed on 10 January 2022). [CrossRef]
+21. Dragomir, S.S.; Fitzpatrick, S. The Jensen inequality for s-breckner convex functions in linear spaces. Demonstr. Math. 2000,
+XXXIII, 8. [CrossRef]
+22. Zhao, T.-H.; Yang, Z.-H.; Chu, Y.-M. Monotonicity properties of a function involving the psi function with applications. J. Inequal.
+Appl. 2015, 2015, 193. [CrossRef]
+23. Varošanec, S. On h-convexity. J. Math. Anal. Appl. 2007, 326, 303–311. [CrossRef]
+24. Roberts, A.W.; Varberg, D.E. Convex Functions; Academic Press: New York, NY, USA, 1973.
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

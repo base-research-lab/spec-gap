@@ -1,0 +1,1065 @@
+Academic Editor: Angela Roman
+Received: 13 June 2025
+Revised: 7 August 2025
+Accepted: 10 August 2025
+Published: 16 August 2025
+Citation: Panait, N. G., & Radoi,M.A.
+(2025). Economic Evolution in
+Euro-Adopting States vs. Future
+Adopters: A Comparative Analysis.
+Economies,13(8),239. https://doi.org/
+10.3390/economies13080239
+Copyright: © 2025 by the authors.
+LicenseeMDPI, Basel, Switzerland.
+Thisarticle is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Article
+Economic Evolution in Euro-Adopting States vs. Future
+Adopters: A Comparative Analysis
+Nicoleta Georgeta Panait * and Madalina Antoaneta Radoi
+Department of Economics, Faculty of Economics and Business Administration, Nicolae Titulescu University,
+040051 Bucharest, Romania; radoimadalina@univnt.ro
+* Correspondence: npanait@univnt.ro
+Abstract
+This paper analyzes the macroeconomic evolution of the European Union member states
+that have adopted the Euro, compared to those that continue to use national currencies,
+with a specific focus on the Central and Eastern European countries during the period
+2018–2024. Using a quantitative and exploratory approach and data provided by Euro-
+stat, the European Central Bank, and the International Monetary Fund, we examined a
+series of key indicators: interest rates, inflation, GDP per capita, public debt, and foreign
+direct investment. The results highlight several macroeconomic advantages for Eurozone
+countries, including lower interest rate volatility and a quicker recovery from inflation,
+largely due to access to monetary tools such as PEPP and TPI. Non-Euro countries have
+experienced more severe inflationary episodes and higher financing costs, which have
+negatively impacted FDI inflows. Although some of these countries, such as Romania and
+Poland, have recorded solid GDP growth, they remain exposed to structural vulnerabilities
+and political and economic uncertainties. Correlation analyses confirm significant negative
+relationships between interest rates, inflation, and FDI levels.
+Keywords: non-Euro countries; interest rates; inflation; GDP; FDI; convergence; monetary
+policy
+1. Introduction
+For countries considering future accession to the Euro area, the experiences of member
+states that have already completed this transition offer important policy lessons. Ensuring
+successful accession requires comprehensive preparation, including the attainment of both
+nominal and real convergence criteria, alongside the implementation of necessary structural
+reforms (Darvas & Wolff, 2023). Such measures are critical to safeguarding macroeconomic
+stability and maximizing the long-term advantages of Euro area membership (Campos &
+Coricelli, 2015).
+The starting hypothesis for this analysis was that Euro area membership provides
+a stabilizing framework for managing macroeconomic shocks, particularly during times
+of crisis, while non-Euro countries—although maintaining monetary sovereignty—face
+greater volatility in key economic indicators. The analysis tracked the evolution of eco-
+nomic indicators such as GDP, inflation, interest rates, and public debt between 2018 and
+2024 across several EU member states, with a focus on both Euro area countries (Slovenia,
+Slovakia, Lithuania, Latvia, Croatia) and non-Euro countries (Romania, Hungary, Poland,
+Bulgaria). The Czech Republic was excluded from the primary analysis due to data dis-
+continuities and the lack of consistent post-2020 macroeconomic series across all indicators
+Economies 2025, 13, 239 https://doi.org/10.3390/economies13080239Economies 2025, 13, 239 2 of 25
+used. Future work could revisit the inclusion of the Czech economy, given its importance
+in the Central European context.
+Using data from Eurostat, the European Central Bank (ECB), the International Mon-
+etary Fund (IMF), and national statistical institutes, the analysis follows each country’s
+economic trajectory in response to major events, particularly the COVID-19 pandemic and
+the inflation shocks of 2022–2023. The results validate the central hypothesis: countries that
+adopted the Euro benefited from greater interest rate stability and lower inflation volatility,
+thanks to the credibility of ECB policies and access to coordinated monetary tools such as
+the Pandemic Emergency Purchase Program (PEPP), etc.
+The study is structured into five sections as follows: Section 2 reviews the relevant
+literature; Section 3 presents the data and the methodology used; Section 4 includes the
+empirical analysis and discussion; and Section 5 outlines the main conclusions of the study.
+2. Literature Review
+Comparative macroeconomic research between Euro area members and non-members
+has relied extensively on mixed-methods approaches to capture both quantitative indicators
+and qualitative policy contexts (De Grauwe & Ji, 2020; Lane, 2023). De Grauwe and Ji
+(2020) highlight that Euro membership offers protection against speculative attacks and
+interest rate volatility through ECB backstopping instruments. Similarly, Alcidi et al. (2021)
+argue that during crises, ECB measures such as PEPP and TPI were critical in maintaining
+sovereign debt stability. Yet, critics like Eichengreen and Panizza (2020) note that these
+benefits depend heavily on domestic fiscal institutions and reform readiness.
+More recent studies (Lane, 2023) confirm that tools such as the Pandemic Emergency
+Purchase Program (PEPP) and the Transmission Protection Instrument (TPI) have acted
+as significant buffers against market fragmentation and volatility. Italy and Greece have
+benefited massively from PEPPs to reduce the spread of government bonds vis-à-vis
+Germany. These interventions reduced market volatility and preserved access to funding
+for peripheral countries (Lane, 2023).
+Quantitative metrics such as long-term interest rates, inflation (HICP), GDP per capita,
+and FDI flows are routinely used to assess convergence and macroeconomic stability
+(Baltagi et al., 2007; Égert, 2012; European Commission, 2022). The use of panel data,
+group averaging, and Pearson correlation coefficients is supported by recent studies),
+which demonstrate that statistical rigor combined with contextual policy analysis (e.g.,
+central bank interventions) improves the explanatory power of economic assessments in
+dynamic environments.
+According to Égert (2012), long-term interest rates in non-Euro countries reflect higher
+sovereign risk premia, driven by currency volatility, political uncertainty, and less mature
+financial markets. These structural disadvantages often lead to procyclical monetary
+tightening, which exacerbates economic downturns and amplifies borrowing costs, as seen
+in the inflation crisis of 2022–2023 (IMF, 2023). Long-term interest rates and inflation are
+key indicators of nominal convergence, as defined by the Maastricht criteria. Égert (2012)
+show that non-Euro countries often bear higher sovereign risk premiums due to exchange
+rate volatility and institutional fragility. Neaime et al. (2018) reinforce these findings using
+structural VAR models.
+Laubach (2009) further demonstrates that in periods of elevated inflation, fiscal risk
+becomes more salient in determining sovereign yields. European Commission (2022)
+and ECB Bulletins (ECB, 2020b, 2020c; Lane, 2023) confirm that policy credibility and
+access to ECB instruments (e.g., PEPP, TPI) mitigate these risks for Euro area countries.
+Inflation differentials in the Euro area and among non-Euro countries have been extensivelyEconomies 2025, 13, 239 3 of 25
+studied. Angeloni and Ehrmann (2021) and Zdarek and Aldasoro (2009) show that common
+monetary policy does not eliminate inflation divergence entirely.
+Foundational studies by De Grauwe and Ji (2020) and Campos and Coricelli (2015)
+underscore that Euro adoption can enhance fiscal discipline, reduce transaction costs, and
+stabilize inflation expectations. These benefits are contingent upon meeting convergence
+criteria and sustaining credible institutions.
+The recent literature highlights the importance of institutional quality and monetary
+credibility in shaping the outcomes of monetary integration. Angeloni and Ehrmann (2021)
+emphasize how inflation differentials persist across Euro area countries, influenced by
+labor market rigidity, productivity gaps, and sectoral structures.
+Moreover, Alcidi et al. (2021) and Eichengreen and Panizza (2020) argue that Eurozone
+resilience during crises depends on the interplay between national fiscal capacity and ECB
+monetary interventions, such as PEPP and TPI.
+Empirical studies using causal inference techniques have gained prominence. For
+instance, Klein and Weigand (2021) use cross-country panel regressions to demonstrate
+that monetary sovereignty in non-Euro EU countries correlates with increased volatility in
+bond spreads.
+Huber et al. (2022) apply survey-based identification to assess inflation anchoring.
+Poncela et al. (2016) and Elhorst (2014) model macroeconomic spillovers using spatial
+econometric frameworks. Their findings confirm that regional policies, monetary shocks,
+and investor behavior transmit across borders, shaping country-specific outcomes through
+systemic channels.
+This literature review supports the central hypothesis of the study: Euro adop-
+tion provides a stabilizing framework that mitigates macroeconomic volatility and
+supports convergence.
+3. Methodology
+The study employs a comparative analysis based on a quantitative and exploratory
+approach to evaluate, over the 2018–2024 period, the macroeconomic evolution of countries
+thatadoptedtheEuro, comparedtoEUmemberstatesfromCentralandEasternEuropethat
+havenotadoptedtheEuro. Theprimarymethodologicalapproachisquantitative, involving
+the collection and comparative assessment of macroeconomic indicators such as long-term
+interest rates, inflation (HICP), GDP per capita (as a percentage of the EU average), public
+debt, and foreign direct investment (FDI). Data were sourced from institutional databases,
+including Eurostat, the European Central Bank (ECB), and the International Monetary
+Fund (IMF).
+The selection of countries is based on comparability in terms of economic size, institu-
+tional maturity, and EU membership duration. Slovenia, Slovakia, and Lithuania represent
+Eurozone members with post-2004 accession, while Romania, Hungary, and Poland are
+comparable non-Euro CEE peers.
+To facilitate group-level comparison, countries were classified as either Euro area
+members or non-Euro states, and average values for each group were calculated and
+visualized over time using Python-based data frames and comparative line charts. This
+approach enabled the identification of consistent trends and structural divergences.
+In addition, Pearson correlation coefficients were used to quantify the relationships
+between key variables (e.g., public debt and interest rates, inflation and FDI), highlighting
+the extent to which macroeconomic volatility influences investor behaviour and debt
+sustainability. This econometric component added depth to the analysis and an additional
+layer of statistical rigor.Economies 2025, 13, 239 4 of 25
+This paper aims to present the differences in macroeconomic performance between
+Central and Eastern European (CEE) countries that adopted the Euro and those that did not,
+during the 2018–2024 period. In the context of multiple economic challenges—health crises,
+accelerated inflation, and financial instability—the key research question arises: “To what
+extent did Euro area membership protect CEE countries from macroeconomic volatility
+compared to their non-Euro counterparts?”
+Based on this research question, a series of questions is formulated, derived from the
+existing literature and grounded in a comparative evaluation of relevant macroeconomic
+indicators (long-term interest rates, HICP inflation, GDP per capita as a percentage of the
+EU average, public debt, and foreign direct investment—FDI):
+Is Euro area membership associated with lower levels and reduced volatility of long-
+term interest rates compared to non-Euro countries?
+Do Euro area countries experience more stable HICP inflation rates, closer to the ECB’s
+target, reflecting better-anchored inflation expectations?
+During the 2018–2024 period, did the Euro provide a competitive advantage through
+a positive impact on GDP per capita dynamics, FDI inflows, and public debt control,
+compared to non-Euro countries?
+These observations are explored through a combination of descriptive analysis, corre-
+lation methods, and event studies, aiming to highlight systemic differences between the
+two country groups and to offer public policy implications relevant to future decisions on
+Euro adoption (Romer, 2012).
+The quantitative results were complemented by a contextual qualitative assessment
+of relevant policy interventions—such as the ECB’s Pandemic Emergency Purchase Pro-
+gramme (PEPP) and the Transmission Protection Instrument (TPI)—as well as macroeco-
+nomic shocks such as the COVID-19 pandemic and the inflation surge during 2022–2023.
+An analysis of the evolution of government bond yields between the Euro area and
+non-Euro countries reveals a significant divergence following the announcement of the
+PEPP program. After this announcement, average yields in Euro area countries recorded
+a notable decline (from an average of 1.03% to 0.90%), while in the case of non-Euro
+countries, the change was negligible (from 1.48% to 1.50%). This difference indicates a
+specific stabilizing effect offered by Euro area membership through direct access to ECB
+instruments. Thus, participation in the Euro area provides tangible benefits during periods
+of financial stress. A major methodological challenge in the comparative assessment of
+macroeconomic performance between Central and Eastern European (CEE) countries that
+have adopted the Euro and those that have not is the risk of selection bias, stemming from
+pre-existing structural differences between the two groups (Puzzello & Gomis-Porqueras,
+2018). Countries such as Romania, Hungary, and Poland, which remain outside the Euro
+area, experienced increased macroeconomic volatility during the 2018–2024 period, as evi-
+denced by higher inflation rates, elevated long-term government bond yields, and greater
+exposure to external shocks. However, these characteristics may partly reflect their failure
+to meet the nominal and real convergence criteria set out in the Maastricht Treaty, as well
+as deficiencies in institutional capacity and economic governance required for sustainable
+participation in the Economic and Monetary Union (EMU). In this context, the more un-
+stable economic performance of these countries might not be a direct consequence of their
+non-membership in the Euro area, but rather an expression of insufficient preparedness for
+monetary integration (OECD, 2019).
+The comparative analysis relies on a set of core macroeconomic variables, monitored
+annually for each country included in the study. Specifically, we selected the following:
+Gross Domestic Product (GDP) per capita (at purchasing power parity) as an indicator of
+the level of economic development; annual inflation rate to assess price stability; long-termEconomies 2025, 13, 239 5 of 25
+interest rate (government bond yields) as a proxy for financing costs and perceived risk;
+and public debt (as a percentage of GDP) to capture fiscal sustainability.
+These variables are analyzed comparatively between the Euro area and non-Euro
+countries in order to identify systematic differences and to assess the potential role of the
+common currency in stabilizing macroeconomic performance.
+3.1. The State of Nominal and Real Convergence in Non-Euro Area Countries
+According to the Maastricht convergence criteria, the long-term interest rate should
+not exceed the average of the three best-performing Member States in terms of price stability
+by more than 2 percentage points (European Commission, 2022, Convergence Report, p.
+45). In the reference period June 2023–May 2024, these countries were Denmark: 2.6%,
+Netherlands: 2.8%, and Belgium: 3.1% (the reference value is 4.8%). The convergence
+criteria, represent essential conditions that European Union member states must meet in
+order to adopt the Euro. These include the following: maintaining the inflation rate at
+a low and stable level, without significantly exceeding the reference value established
+based on the best-performing economies in the EU; ensuring that public debt does not
+exceed 60% of GDP and that the budget deficit remains below 3% of GDP; the national
+currency must participate in the ERM II (Exchange Rate Mechanism) for at least two years,
+without significant deviations and without devaluation against the Euro; the long-term
+interest rate must reflect economic stability and confidence in the country’s monetary policy,
+not exceeding a certain reference threshold calculated at the EU level. These criteria are
+designed to ensure a solid and sustainable monetary integration, avoiding macroeconomic
+imbalances within the Euro area. Maniatis (2013) also presents the idea that, in many
+cases—especially in Central and Eastern Europe—countries have met the nominal criteria,
+but have failed to close the real economic gaps with the older member states. This supports
+the view that nominal convergence does not guarantee real convergence.
+3.1.1. Long-Term Interest Rates
+The inflation peak of 2023 marked a turning point in European monetary policy.
+Non-Euro countries continued to raise interest rates aggressively to combat inflation ex-
+pectations, while the ECB began transitioning from tightening to stabilization (Lane, 2023,
+ECB). In 2024, inflation declined across all analyzed states, signaling the beginning of a
+normalization phase. Long-term interest rates started to fall—Romania (5.7%), Hungary
+(6.1%), and Poland (4.9%)—indicating increased investor confidence and a stabilization of
+macroeconomic outlooks (Table 1).
+Table 1. Long-term interest rate.
+COUNTRY 2018 2019 2020 2021 2022 2023 2024
+Romania 4.73 4.35 3.89 3.63 7.49 6.63 5.79
+Bulgaria 0.89 0.43 0.25 0.19 1.53 3.34 2.94
+Poland 3.2 2.35 1.5 1.95 6.05 5.74 4.97
+Hungary 3.06 2.47 2.23 3.06 7.57 7.27 6.1
+Lithuania 0.31 0.31 0.22 0.16 0.61 3.68 3.23
+Latvia 0.9 0.34 −0.06 0 2.27 3.13 2.7
+Croatia 2.17 1.29 0.83 0.45 2.7 3.55 3.02
+Slovenia 0.84 0.43 0.01 0.02 1.77 3.34 2.97
+Slovakia 0.96 0.46 0.01 0.01 1.71 3.34 2.98
+Source: (Eurostat, 2021).
+A significant structural disparity between Euro area and non-Euro area countries was
+already evident in 2018. Among the countries, Romania had one of the highest long-termEconomies 2025, 13, 239 6 of 25
+interest rates of about 4.7%. Bulgaria had a rate of about 0.89%; Hungary and Poland
+had interest rates of roughly 3.1%. This disparity reflects greater perceived risks for the
+developing nations, but it also results from higher inflation in these nations, which drives
+nominal interest rates up. By comparison, Euro-area nations profiting from a consistent
+single monetary framework had far lower interest rates: below 1% in Lithuania, Latvia,
+Slovakia, Slovenia, and Croatia (Figure 1). This is a result of the European Central Bank
+(ECB) ultra-loose monetary policy, which has maintained interest rates near zero and
+carried out quantitative easing initiatives.
+−1
+0
+1
+2
+3
+4
+5
+6
+7
+8
+2018 2019 2020 2021 2022 2023 2024
+Long-term interest rates
+ROMANIA BULGARIA POLAND HUNGARY LITHUANIA
+LATVIA CROATIA SLOVENIA SLOVAKIA
+Figure 1. Long-term interest rate evolution (2018–2024).
+For the year 2019, there was a widespread decline in most nations, and long-term
+interest rates kept declining in keeping with the slowdown in world economic development
+and the continuation of lax monetary policy. While Poland and Hungary hit roughly 2.4%,
+Romania’s interest rates dropped somewhat to about 4.4%. Bulgaria slumped to roughly
+1.3%. With long-term interest rates ranging from 0.3% to 0.9%, Euro-area nations kept
+profiting from good financing conditions, which helped to lower public debt levels. Still,
+this modest convergence across groups was insufficient to eradicate structural variations in
+risk assessments.
+The COVID-19 pandemic precipitated a sharp economic contraction across Europe.
+TheEurozone’sGDPcontractedby6.3%, whilenon-Eurocountriesfacedsimilardownturns.
+The ECB implemented expansive monetary policies, including the Pandemic Emergency
+Purchase Program (PEPP), to stabilize financial markets (ECB, 2020a).
+Most countries experienced a broad-based decline in long-term interest rates, reflecting
+the global economic slowdown and the persistence of accommodative monetary policies
+(Barigozzi et al., 2024). This trend was particularly evident in Central and Eastern European
+economies, where interest rates continued to fall amid diminishing external demand,
+weaker industrial output, and subdued inflationary pressures.
+Long-term interest rates dropped in most countries. While Poland hit 1.5% and
+Hungary almost 2.3%, the interest rate in Romania dropped to almost 3.9%. Bulgaria fell
+somewhat noticeably, to about 0.7%. In rare circumstances, Eurozone nations have either
+modest or even negative interest rates. Lithuania, for instance, had a somewhat negative
+rate, but Latvia and Slovakia had rates almost equal to zero. These levels capture not just
+ECB actions but also the sense of security connected with the Euro during crises.Economies 2025, 13, 239 7 of 25
+The global economy entered a gradual recovery phase in 2021, yet the legacy of the
+COVID-19 pandemic continued to weigh on public finances, labour markets, and inflation
+dynamics. As vaccine rollouts expanded and lockdowns eased, most countries saw a
+partial rebound in domestic demand, industrial output, and services. The recovery was
+uneven, and inflationary pressures began to re-emerge—initially driven by supply chain
+disruptions, surging energy prices, and base effects.
+In this evolving context, long-term interest rates in non-Euro countries began to adjust.
+While still historically low, rates started to reflect early signs of monetary tightening in
+anticipation of persistent inflation. In Romania, long-term rates edged down slightly to
+around 3.7%, sustained by a cautious monetary stance from the National Bank of Romania.
+Hungary’s rate rose modestly to approximately 3%, in line with its central bank’s proactive
+response to early inflation signals. Poland maintained a relatively low level at around
+2%, reflecting a delayed monetary tightening cycle despite rising price indices. Bulgaria
+remained stable at approximately 0.5%, consistent with the discipline imposed by its
+Euro peg.
+The year 2022 marked a turning point in global economic trends, as inflation surged
+to levels not seen in decades, prompting an abrupt reversal in the monetary stance of
+central banks around the world. The combination of post-pandemic demand recovery,
+persistent supply bottlenecks, and geopolitical tensions—especially Russia’s invasion of
+Ukraine—created a perfect storm for price instability. The global energy crisis, amplified
+by sanctions and disrupted trade routes, pushed consumer price indices upward across
+both developed and emerging economies.
+In Central and Eastern Europe, inflationary pressures became particularly acute. Non-
+Euro countries such as Romania, Hungary, and Poland were among the most affected, with
+inflation reaching double-digit levels by mid-year. Romania recorded a long-term interest
+rate of approximately 7.4%, while Hungary’s rate climbed to a staggering 7.5%, the highest
+in the region. Poland followed closely with a rate of 6%. That reflected both rising inflation
+expectations and the proactive stance of monetary authorities attempting to regain control
+over price stability.
+In response, national central banks initiated aggressive tightening cycles. The National
+Bank of Romania, for example, raised its policy rate multiple times during the year, aiming
+to curb inflation expectations and stabilize the currency. The structural vulnerabilities of
+non-Euro economies—such as reliance on energy imports, relatively high fiscal deficits, and
+weakerinstitutionalframeworks—limitedtheimmediateeffectivenessofsuchinterventions
+(Svensson, 1997). Moreover, the local currencies faced depreciation, adding fuel to inflation
+via imported goods and energy costs.
+Bulgaria, although still outside the Euro area, benefited from its currency board
+arrangement, which maintains a fixed exchange rate with the Euro. As a result, long-term
+interest rates rose only modestly to around 1.6%, reflecting the perceived lower monetary
+risk premium.
+Euro area countries experienced a more moderate rise in long-term interest rates,
+largely due to the ECB’s credibility and policy lag. Countries such as Lithuania and Latvia
+saw their rates increase to around 0.6%, while Croatia, which was preparing to adopt the
+Euro in 2023, experienced a sharper rise to 2.7%. Slovakia and Slovenia also saw their
+yields climb to between 2% and 2.3%. Although the consequences of the ECB have begun
+to show themselves, the single framework has nonetheless given more overall stability.
+The year 2023 marked the apex of the inflationary cycle for many European economies,
+accompanied by the highest long-term interest rates of the post-pandemic period. Central
+banks across Europe had, by now, fully embraced monetary tightening, with cumulativeEconomies 2025, 13, 239 8 of 25
+rate hikes and restrictive policy stances intended to curb inflation expectations, restore
+price stability, and stabilize volatile financial markets.
+Romania’s long-term interest rate moderated slightly to approximately 6.6%, a de-
+crease from 7.4% the previous year, suggesting that inflation may have reached its peak.
+Nonetheless, this level remained historically high and signalled persistent price pressures
+and cautious investor sentiment. Hungary, which faced one of the most severe inflationary
+episodes in the EU, continued to struggle with high borrowing costs, as interest rates stayed
+elevated at around 7.3%. Poland held relatively stable at 5.9%, balancing between growth
+concerns and the need to defend monetary credibility.
+Bulgaria, operating under its Euro-pegged currency board regime, saw its long-term
+rates rise further to approximately 3.4%. This increase, although lower than in floating-rate
+economies, indicated market concerns related to inflation spillovers, energy dependency,
+and geopolitical vulnerabilities.
+The European Central Bank (ECB) continued its rate hikes into the early part of
+the year, but its messaging began to shift toward “data-dependence” and stabilization,
+anticipating a possible end to the tightening cycle. Long-term rates in Croatia, Slovenia,
+and Slovakia rose to around 3.2–3.4%, while Lithuania and Latvia reached slightly higher
+levels, approximately 3.6–3.7%.
+Importantly, while interest rates increased across the board, market fragmentation was
+lessseverewithintheEuroarea, duetostrongECBsignallingandtheuseofitsTransmission
+Protection Instrument (TPI) to guard against unwarranted spikes in sovereign bond spreads.
+Countries such as Italy and Spain also benefited from these tools, demonstrating the ECB’s
+capacity to act as a backstop in times of volatility—something non-Euro countries lacked.
+Inflation began to decelerate, particularly in the second half of 2023, as consumer
+demand softened and global supply chains gradually normalized. Romania, Hungary,
+and Poland recorded declining month-on-month inflation, even though year-end figures
+remained above targets.
+Economic activity slowed significantly, especially in interest rate–sensitive sectors
+such as construction, real estate, and durable goods. Small and medium-sized enterprises
+(SMEs) reported tighter credit conditions, with higher financing costs reducing their invest-
+ment appetite.
+In macroeconomic terms, 2023 signalled the beginning of a disinflationary phase, yet
+one accompanied by new challenges: ensuring a soft landing, maintaining fiscal discipline
+amid rising debt service costs, and addressing long-term structural issues such as labour
+shortages, productivity stagnation, and demographic decline.
+For non-Euro countries, this environment reinforced the limitations of monetary
+autonomy in small, open economies vulnerable to external shocks. The volatility of local
+currencies and exposure to investor sentiment made them more reactive to global interest
+rate cycles and capital flow reversals. Meanwhile, Euro-adopting nations remained more
+anchored, thanks to deeper financial integration and the ECB’s stabilizing role.
+In 2024, inflation stabilized near the ECB’s target, allowing for cautious mone-
+tary easing. The Eurozone’s GDP growth moderated to 1.8%, reflecting a balanced
+economic environment.
+Prospective Euro adopters, such as Bulgaria and Croatia, made significant strides
+toward convergence, aligning their monetary policies with ECB frameworks. Beginning
+the phase of the downward correction, A little drop in interest rates in 2024 indicates a
+likely stabilization of inflation and a reduction in market expectations, therefore guiding
+behaviour. Romania comes down to 5.1%, Hungary to 6.1%, and Poland to 5%. Bulgaria
+dipped to 2.8%. The declining trend is clear in the Eurozone: Slovakia at 2.9%, Croatia
+and Slovenia around 3%, and Lithuania and Latvia had rates between 3.2 and 3.3%. ThisEconomies 2025, 13, 239 9 of 25
+correction shows a slow return to a post-crisis financial normalcy, even if values still exceed
+projections for 2018–2021.
+To further underline one of the advantages of joining the Euro area, we convert
+the long-term interest rates into data frame table as defined by the Pearson correlation
+coefficient, enter two columns for Euro and for non-Euro countries, and then add the data
+so that we obtain the average interest rates for both groups of countries. The following
+comparative graph is then obtained (Table 2).
+Table 2. Long-term interest rates index.
+Year Euro Non-Euro
+2018 2.97 1.036
+2019 2.4 0.566
+2020 1.9675 0.202
+2021 2.2075 0.128
+2022 5.66 1.812
+2023 5.745 3.408
+2024 4.95 0.98
+Source: Authors.
+Lower interest rates in the Eurozone show market confidence in the ECB’s collective
+stability and monetary policies. Candidate countries may profit from decreased borrowing
+costs following membership, assuming budgetary discipline is maintained. Rate volatility
+in non-Euro nations shows weaknesses associated with national currency trust and political
+risk (Figure 2).
+0
+5
+10
+2018 2019 2020 2021 2022 2023 2024
+Interest rates
+Year
+Long-term interest rates: Euro vs. Non-Euro (2018–2024)
+FALSE TRUE
+Figure 2. Long-term interest rate: Euro vs. non-Euro (2018–2024).
+3.1.2. Gross Domestic Product
+Compared to the European Union average (EU = 100, reference value), Figure 3 shows
+how Gross Domestic Product (GDP) at current prices has changed for numerous European
+economies—both inside and outside the Euro region. This is a popular approach to evaluate
+the degree of actual economic convergence, that is, the degree to which rising economies
+are catching up with developed EU economies. The index GDP expresses the level of
+economic convergence of each country to the EU average (which is standardized to 100).
+The countries under analysis in 2005 deviated greatly from the EU average (EU = 100).
+Reflecting low per capita income and economic activity, Romania and Bulgaria were at the
+lowest levels, with GDP at current values roughly 36–38% of the EU average. Hungary,
+Poland, and Slovakia fell in an intermediary development level between 50 and 60 percent
+of the EU average. Though still below 65% of the EU average, nations like Lithuania, Latvia,
+and Croatia have much better scores. Between 2005 and 2023, countries in Central andEconomies 2025, 13, 239 10 of 25
+Eastern Europe experienced a significant process of economic convergence relative to the
+European Union (EU) average, measured by GDP per capita at current prices (EU = 100).
+This indicator captures the extent to which emerging economies have managed to “catch
+up” with more developed member states in terms of economic output and living standards.
+0
+20
+40
+60
+80
+100
+120
+GDP at current market prices
+2005 2010 2015 2018 2019
+2020 2021 2022 2023
+Figure 3. GDP at current market prices.
+At the beginning of the reference period, several countries stood at considerable
+distances from the EU average. Romania and Bulgaria recorded the lowest GDP per capita
+levels, standing at just 36% and 38% of the EU average, respectively. Poland, Hungary, and
+Slovakia found themselves in the intermediate range, with values between 52% and 62%.
+Meanwhile, countries like Slovenia (82%) and Lithuania (54%) were better positioned for
+convergence, already benefiting from more advanced structural reforms and institutional
+readiness. Slovenia’s high value was especially notable, foreshadowing its swift alignment
+with Euro area standards (Figure 3).
+By 2010, the effects of EU accession became more evident. Romania made an impres-
+sive leap, rising from 36% to 53% in just five years. Bulgaria also improved, reaching 45%.
+Poland and Slovakia advanced to 63% and 72%, respectively, while Lithuania reached 61%.
+This period underscored the importance of EU integration mechanisms, such as access
+to structural funds, increased foreign direct investment, and institutional harmonization.
+Slovenia consolidated its strong position at 85%, maintaining its status as a front-runner
+among new EU members.
+The momentum of convergence persisted in 2015. Romania climbed to 57%, while Bul-
+garia reached 48%, slowly narrowing the gap. Notably, Poland (69%), Lithuania (75%), and
+Slovakia (76%) neared the 70–75% mark, indicating that many Eastern European economies
+were on a steady upward trajectory. Latvia and Croatia also crossed the 65% threshold,
+reflecting improving macroeconomic fundamentals. This convergence phase was strongly
+driven by private consumption, export growth, and substantial EU fund absorption.
+The years preceding the pandemic brought about accelerated growth for many of
+these economies. Romania rose to 70% in 2018 and 72% in 2019. Bulgaria followed with
+52% and 54%, respectively. Lithuania surged to 81% in 2018 and 83% in 2019, confirming its
+rapid post-accession development. Slovakia remained stable at around 73%, while Slovenia
+advanced to 88% by 2019. These gains reflected higher employment rates, increased pro-
+ductivity, and robust infrastructure investments, especially in digital and transport sectors.
+The COVID-19 pandemic in 2020 disrupted economies across the continent, yet in
+relative terms, convergence indicators remained largely intact. Romania held steady atEconomies 2025, 13, 239 11 of 25
+73%, while Bulgaria increased slightly to 55%. Poland advanced to 76%, and Lithuania
+reached an impressive 88%. Latvia and Slovakia also maintained their positions, demon-
+strating resilience rooted in stable macroeconomic frameworks and quick policy responses.
+Although real GDP experienced sharp contractions, nominal indicators remained stable as
+a result of inflation adjustments and support from the EU during the crisis.
+By 2022, Romania had reached 75% of the EU average, and by 2023, it had broken
+the symbolic 80% threshold—its best performance in the observed period. This placed it
+on equal footing with Poland and Slovakia, which also stood at 80%. Bulgaria continued
+to grow modestly, reaching 64%. Meanwhile, Lithuania and Slovenia achieved some of
+the highest convergence levels at 86% and 93%, respectively. Hungary rose to 78%, while
+Croatia reached 76%, supported by tourism recovery and EU investment programs.
+We proceeded in the same way by converting the data into a data frame table, and the
+following comparative graph was obtained (Table 3).
+Table 3. GDP per capita.
+Year FALSE Non-Euro
+2005 46.75 67.83333
+2010 56.5 72.16667
+2015 60.5 77
+2018 65 79.16667
+2019 66.5 80
+2020 69.5 81.66667
+2021 70.25 82.83333
+2022 73.5 84.33333
+2023 75.5 84.33333
+Source: Authors.
+The remarkable performance of certain non-Euro nations, such as Poland and Ro-
+mania, economic instability, and higher perceived risk position them marginally beneath
+Eurozone countries. The lack of the Euro may adversely affect investor confidence and
+financing conditions. Membership in the Euro area appears to promote enhanced economic
+convergence via increased integration and macroeconomic discipline.
+Non-Euro nations can attain comparable levels, albeit with increased work and height-
+ened susceptibility to external shocks.
+Differences fade over time, but the Euro area remains a strategic advantage for moving
+closer to the European average (Figure 4).
+Figure 4. Convergence index by Euro status (2005–2023).
+3.1.3. Public Debt
+Public debt remains one of the most closely monitored indicators of fiscal sustainability
+in the European Union. Typically expressed as a percentage of GDP, general governmentEconomies 2025, 13, 239 12 of 25
+gross debt reflects a country’s total financial obligations, including those of central and
+local governments and social security systems. According to the Maastricht convergence
+criteria, sustainable public debt should not exceed 60% of GDP.
+Extensive research (e.g., Buiter et al., 2010) argues that public debt must be assessed not
+only in terms of levels but also in terms of trajectory and resilience. Bulgaria’s consistent low
+debt reflects strong fiscal institutions, while rising debt in Romania and Hungary, as shown
+in your analysis, correlates with elevated borrowing costs and reduced investor confidence.
+In 2018, the EU’s average public debt stood at 79.8% of GDP, reflecting a relatively
+stable post-crisis environment. Among Central and Eastern European economies, Bulgaria
+maintained the lowest debt ratio at just 22.3%, showcasing its longstanding conservative
+fiscal stance. Romania reported a modest 35.3%, while Poland and Slovakia recorded 48.9%
+and 48.1%, respectively—both under the Maastricht threshold. Hungary, Slovenia, and
+Croatia had higher debt levels of 70.2%, 70.1%, and 73.3%, positioning them closer to the
+EU average (Figure 5).
+0
+200
+400
+600
+800
+2018 2019 2020 2021 2022 2023
+General government consolidated gross debt
+EU BULGARIA POLAND ROMANIA LITHUANIA
+LATVIA CROATIA HUNGARY SLOVENIA SLOVAKIA
+Figure 5. Evolution of public debt (2018–2023).
+The year 2019 did not witness dramatic changes. The EU-wide debt ratio dipped
+slightly to 77.6%. Bulgaria further reduced its debt to 20%, remaining well below the EU
+benchmark. Romania’s level remained steady at 35.2%, while Poland declined marginally
+to 45.7%. The stability in these figures reflected ongoing growth and relatively balanced
+fiscal policies across much of the region.
+A turning point came in 2020 as the COVID-19 crisis hit. To cushion the economic
+blow, governments expanded fiscal spending significantly. Consequently, the EU’s average
+public debt surged to 89.5%. Croatia and Slovenia saw their debt rise to 86.5% and 79.8%,
+respectively. In Hungary, the debt climbed to 80.1%, while Slovakia approached the
+Maastricht limit at 59.7%. Though affected, Romania’s increase was modest, reaching
+46.6%, and Poland’s debt rose to 56.6%. Even in this turbulent year, Bulgaria maintained
+fiscal discipline with a debt level of 24.4%, outperforming all other states in the region.
+As the pandemic’s immediate impact waned, 2021 marked a tentative return to fiscal
+normalcy. The EU’s debt average declined slightly to 86.7%. Romania saw its debt increase
+to 48.3%, driven by persistent deficits and pandemic recovery measures. Hungary and
+Slovenia remained elevated at 76.8% and 74.7%, respectively. Meanwhile, Poland showed
+signs of consolidation, reducing its debt to 53%. Bulgaria continued to outperform, with a
+level of 23.8%, underlining its reputation as one of Europe’s most fiscally prudent nations.
+In 2022, a broader fiscal consolidation effort began. The EU-wide debt ratio fell to
+82.5%. Croatia and Slovenia reduced their debt to 68.5% and 69.9%, respectively. Slovakia
+dropped to 57.8%, and Hungary decreased slightly to 73.5%. Romania experienced a minorEconomies 2025, 13, 239 13 of 25
+increase to 47.9%, signalling a lack of substantial adjustment. Poland reported a similar
+figure at 48.8%, while Bulgaria held firm at 22.5%. Lithuania and Latvia stayed below the
+45% threshold, with 38.1% and 44.4%, respectively.
+By 2023, debt levels appeared to stabilize across the region, albeit at higher-than-pre-
+crisis levels. The EU average settled at 80.8%. Romania’s public debt inched up to 48.9%,
+still below the EU average but showing a need for renewed fiscal discipline. Hungary and
+Slovenia remained elevated at 72.9% and 67.8%, while Croatia lowered its debt further to
+61.8%. Poland held at 49.7%, just under the Maastricht limit. Bulgaria, consistently the
+lowest-debt country in the EU, maintained a ratio of 22.9%, proving the long-term benefits
+of its conservative fiscal strategy (Table 4).
+Table 4. Average public debt by Euro status (2018–2023).
+Year Euro Non-Euro
+2018 44.175 57.03333
+2019 41.575 55.66667
+2020 51.925 67.56667
+2021 50.475 64.96667
+2022 48.175 60.2
+2023 48.6 58.16667
+Source: Authors.
+The price stability criterion requires that inflation should not exceed the average of
+the three best-performing Member States by more than 1.5 percentage points.” (European
+Commission, 2022, ECB Convergence Reports). In the reference period June 2023–May 2024,
+the reference value is 4.3%. The same methodology was applied by organizing the data
+into a Python version 3.11.4. data frame, which facilitated the visualization of comparative
+trends (Figure 6).
+Figure 6. Average debt by Euro status (2018–2023).
+Euro area countries have, on average, larger debts but also more coordinated fiscal
+policies. Non-Euro countries, although less indebted, may be more vulnerable in the
+absence of a common monetary policy.
+To draw eloquent conclusions about sustainability, we correlated the debt level with
+the long-term interest rate. In this regard, we took two datasets, each with values for the
+same 9 countries:
+x = level of government debt (% of GDP);
+y = long-term interest rate (%).Economies 2025, 13, 239 14 of 25
+We applied the Pearson correlation coefficient between these two series:
+r =
+cov(x,y)
+σx ∗ σy
+where
+cov(x,y) is the covariance between the two variables;
+σx ∗ σy are the standard deviations for debt and interest.
+This was performed with the function: df_interest[year].corr(df_debt_short[year]).
+This returns the value of r between the two columns (interest and debt) for that year
+(Table 5).
+Table 5. Correlation between public debt and long-term interest rate.
+Year Correlation
+2018 0.152136
+2019 0.062309
+2020 0.067646
+2021 0.147378
+2022 0.317871
+2023 0.351039
+Source: Authors.
+Between 2018 and 2021, it is an insignificant association. In the initial years, the
+correlation between debt and interest rates was minimal (r < 0.2). This indicates an interval
+of low interest rates and expansionary monetary policies, during which the debt level had
+minimal impact on risk perceptions (Figure 7). Beginning in 2022, the correlation markedly
+escalates to 0.35 in 2023 (Laubach, 2009). This indicates that, with elevated inflation and the
+tightening of monetary policy, markets increasingly penalize nations with substantial debt.
+Interest rates are once more susceptible to fiscal risk.
+Figure 7. Correlation between public debt and interest rates.
+From 2018 to 2021, the ECB and central banks in Central and Eastern Europe imple-
+mented an ultra-loose monetary policy that “decoupled” interest rates from fiscal risk,
+thereby alleviating the effect of debt on financing costs.
+After 2022, with escalating inflation and the normalization of monetary policy, the
+association re-emerges: nations with elevated debt levels typically incur higher interest
+rates. This reinforces the notion that fiscal sustainability is once more a critical element in
+evaluating sovereign risk and borrowing costs.Economies 2025, 13, 239 15 of 25
+3.1.4. HICP Inflation
+The next index analysed is HICP inflation and reveals the process by which the
+effective consumption of the population (AIC) is converted into a common currency (the
+primary currency of exchange) as well as the way these values are adjusted to consider the
+price differences that exist between countries (the primary index of price levels).
+Between 2018 and 2024, annual inflation rates across selected Central and Eastern
+European countries demonstrate significant volatility, driven by both global shocks and
+internal macroeconomic pressures (Table 6). This evolution, captured through HICP data,
+highlights key turning points and policy responses across the region.
+Table 6. HICP Inflation (annual average 2018–2024).
+COUNTRY 2018 2019 2020 2021 2022 2023 2024
+BULGARIA 2.6 2.5 1.2 2.8 13 8.7 5.2
+POLAND 1.2 2.1 3.7 5.2 13.2 10.9 6.1
+ROMANIA 4.1 3.9 2.3 4.1 12 9.7 7.6
+LITHUANIA 2.5 2.2 1.1 4.6 18.9 8.7 0.9
+LATVIA 2.6 2.7 0.1 3.2 17.2 9.1 1.3
+CROATIA 1.5 0.8 0.1 2.7 10.7 8.4 4
+HUNGARY 2.9 3.4 3.9 5.2 15.3 17 5.5
+Sources: (Eurostat, 2021).
+In 2018, inflation was relatively moderate and stable, with most countries registering
+values between 1% and 4%. Romania and Poland led the group with higher inflation at
+4.1% and 1.2%, respectively, while Latvia, Lithuania, and Croatia hovered between 2%
+and 3%. Hungary, slightly higher, recorded 2.9%. These rates aligned with a context of
+macroeconomic stability, low interest rates, and contained energy prices (Figure 8).
+0
+5
+10
+15
+20
+2018 2019 2020 2021 2022 2023 2024
+HICP inflation (annual average)
+BULGARIA POLAND ROMANIA LITHUANIA
+LATVIA CROATIA HUNGARY
+Figure 8. Annual inflation rates (2018–2024).
+By 2019, inflation remained under control, with Bulgaria decreasing to 2.5%, Poland in-
+creasing modestly to 2.1%, and Hungary climbing to 3.4%. Romania recorded 3.9%, contin-
+uing its relatively elevated trend. These movements suggested localized demand pressures
+and were accompanied by strong domestic growth and low external inflationary spillovers.
+The onset of the COVID-19 pandemic in 2020 disrupted this stability. Lockdowns and
+collapsing demand suppressed inflation in most countries. Latvia and Croatia posted near-
+zero inflation (0.1%), while Lithuania reached 1.1%. Romania and Hungary remained above
+2%, at 2.3% and 3.9%, respectively, due to higher supply-side rigidity and fiscal stimulus.Economies 2025, 13, 239 16 of 25
+In 2021, as global economies rebounded, inflation began to rise again. Romania hit
+4.1%, Hungary and Poland both reached 5.2%, and Lithuania surged to 4.6%. Rising com-
+modity prices, disrupted supply chains, and post-pandemic demand recovery drove this in-
+flationary trend. These signals also foreshadowed upcoming monetary policy adjustments.
+The situation dramatically escalated in 2022, marking a historic inflation shock across
+the region. Triggered by the energy crisis following Russia’s invasion of Ukraine, inflation
+hit double digits across all countries: Hungary recorded 15.3%, Lithuania 18.9%, Latvia
+17.2%, Romania 12%, and Poland 13.2%. Currency depreciation and second-round effects
+through wages and prices amplified these figures. These dynamics were followed by
+monetary tightening and increased long-term interest rates.
+In 2023, inflation began to subside, although it remained elevated. Hungary peaked at
+17%, while Lithuania and Latvia dropped to 8.7% and 9.1%, respectively. Romania saw a
+decline to 9.7%, and Bulgaria and Poland stabilized around 8.7% and 10.9%. This reduction
+reflects the lagged impact of tightened monetary policy, waning consumer demand, and
+partial normalization of supply chains. Yet, structural factors such as labour market
+rigidity and strong wage growth continued to delay full disinflation. As a result of high
+inflation, which is not compensated for by real wage growth, purchasing power is reduced.
+Additionally, high interest rates make it difficult for households and businesses to obtain
+financing, which maintains pressure on the cost of living.
+The outlook for 2024 shows more promising signs. Most countries report significantly
+lower inflation: Lithuania and Latvia project under 2% (0.9% and 1.3%, respectively),
+Hungary drops to 5.5%, Romania to 7.6%, and Bulgaria to 5.2%. These trends suggest a
+return to price stability, driven by the cumulative impact of tighter monetary conditions
+and reduced external shocks (Figure 9).
+Figure 9. Average inflation by Euro status (2018–2024).
+Countries outside the Eurozone had more unpredictable and higher rates of in-
+flation, signifying weaker monetary policy transmission and greater susceptibility to
+external shocks.
+Eurozone nations gained from ECB stability, resulting in a more rapid stabilization of
+inflation following the 2022 shock (Table 7). This study indicates that Euro membership
+may offer a partial safeguard against inflation, particularly in a post-crisis environment.Economies 2025, 13, 239 17 of 25
+Table 7. HICP index values by country (2018–2023).
+Year Euro Non-Euro
+2018 2.7 2.2
+2019 2.975 1.9
+2020 2.775 0.433333
+2021 4.325 3.5
+2022 13.375 15.6
+2023 11.575 8.733333
+2024 6.1 2.066667
+Source: Authors.
+3.1.5. Foreign Direct Investment
+Foreign Direct Investment (FDI) remains a critical barometer of a nation’s economic
+attractiveness, reflecting investor confidence in the country’s institutional quality, macroe-
+conomic stability, fiscal responsibility, and long-term growth potential (Weber & Beck,
+2005). For emerging European economies—both inside and outside the Euro area—FDI
+inflows have varied significantly over the past six years, influenced by domestic reforms,
+external shocks, and the broader monetary and fiscal context. The FDI index used in this
+study reflects normalized inward FDI stocks relative to GDP, allowing comparisons across
+countries and over time.
+The years preceding the pandemic were marked by relatively high and stable levels
+of FDI across most countries. Bulgaria led the region with FDI index values exceeding 76
+in both 2018 and 2019, underlining its reputation as a fiscally prudent and institutionally
+stable environment. Countries such as Latvia, Croatia, and Hungary also displayed strong
+investment appeal, with FDI values in the 58–61 range. Poland, Slovakia, and Slovenia
+attracted consistent inflows (50–55), underpinned by their EU membership, low labor costs,
+and integration into European supply chains.
+Although it recorded a strong macroeconomic performance and high GDP growth,
+Romania recorded relatively lower FDI scores (45 in 2018 and 46.1 in 2019). This gap
+highlighted underlying structural deficiencies: bureaucratic inefficiencies, underdevel-
+oped infrastructure, and regulatory unpredictability. These persistent weaknesses limited
+Romania’s ability to convert economic growth into sustained investor interest (Table 8).
+Table 8. FDI by country (2018–2023).
+COUNTRY 2018 2019 2020 2021 2022 2023
+BULGARIA 76.5 78 76.1 68.2 59.9 58.6
+POLAND 51.2 52.8 48.9 42.5 40 41.9
+ROMANIA 45 46.1 41.1 41.4 38.3 36.4
+LITHUANIA 49.5 50.6 50.1 50.7 49.2 48.2
+LATVIA 56.2 58.4 57.5 65.7 62.9 63.6
+CROATIA 59.8 60.5 54.4 53.6 63.6 50.1
+HUNGARY 57.3 59.6 56.3 54.7 51.6 49.8
+SLOVENIA 52.1 54 49.3 50.2 48.7 47.9
+Sources: (Eurostat, 2021).
+The COVID-19 crisis triggered a significant drop in FDI across all countries in the
+region. Widespread uncertainty, disrupted supply chains, and postponed investment
+decisions led to capital flight or stalled projects. Bulgaria, though still a regional leader, saw
+its FDI index fall to 76.1. Croatia and Slovenia also declined sharply, as did Hungary (56.3)
+and Poland (48.9) (Figure 10).Economies 2025, 13, 239 18 of 25
+0
+20
+40
+60
+80
+100
+Foreign direct investment
+2018 2019 2020 2021 2022 2023
+Figure 10. Foreign direct investment (2018–2023).
+Romania was particularly affected, with FDI falling to 41.1—confirming the vulnera-
+bility of its investment environment in the face of global shocks. Compounding this decline
+were rising levels of public debt and expanding fiscal deficits, which amplified investor
+concerns about the country’s economic governance and resilience.
+As post-pandemic recovery efforts began to bear fruit, some countries saw partial
+rebounds in FDI. Latvia and Croatia posted significant gains, reflecting renewed investor
+interest in relatively more agile and stable economies. In Romania and Poland, FDI re-
+mained low (41.4 and 42.5, respectively), even though their GDP levels had rebounded and
+public debt had stabilized.
+This disconnect suggests that quantitative macroeconomic recovery alone is insuf-
+ficient to restore investor confidence. Instead, qualitative factors—legal certainty, policy
+predictability, governance quality, and institutional capacity—played a decisive role. Coun-
+tries that failed to address structural barriers struggled to attract new investment, even in
+the context of favorable headline growth figures.
+The year 2022 introduced a new layer of complexity: an inflationary shock com-
+pounded by rising interest rates and heightened geopolitical risk following Russia’s in-
+vasion of Ukraine. These developments significantly altered the risk–return calculus
+for investors.
+Romania’s FDI index fell further to 38.3, marking one of the lowest points of the
+period. Meanwhile, Bulgaria, Latvia, and Croatia managed to maintain relatively high
+levels of investment (between 59.9 and 63.6), benefiting from better governance, sounder
+fiscal management, and clearer communication of economic policy.
+Across the board, high inflation and surging financing costs—visible in long-term inter-
+est rate increases—eroded capital profitability. Investors grew more risk-averse, diverting
+flows away from volatile economies with weak policy frameworks.
+Although inflation showed signs of easing in 2023, FDI continued to fall across many
+countries. Romania dropped to 36.4—the lowest among all peers—while Poland, Hungary,
+and Slovenia also saw their indices shrink. Notably, even Eurozone countries like Slovakia
+and Slovenia were not immune, suggesting that macroeconomic fundamentals matter more
+than currency regime alone.
+This downward trend in FDI reflects broader concerns: fiscal consolidation remains
+sluggish; interest rates remain elevated; inflation, although decelerating, is still well above
+central bank targets. Moreover, repeated policy changes, populist fiscal stimuli, and
+inconsistent regulation have weakened investor trust, particularly in non-Euro countries
+(Taylor, 1993).Economies 2025, 13, 239 19 of 25
+This last indicator was also the basis for our data conversion (Table 9).
+Table 9. FDI index values by country (2018–2023).
+Year Euro Non-Euro
+2018 57.5 52.92
+2019 59.125 54.32
+2020 55.6 51.26
+2021 51.7 53.26
+2022 47.45 53.74
+2023 46.675 50.6
+Sources: Autors.
+Euro area countries appear to be attracting more stable and sustained outward invest-
+ment, thanks to higher investor confidence, monetary stability provided by the Euro, and
+lower risk perception. Non-Euro countries have seen clear declines in investment from
+2020 to 2021, suggesting greater vulnerability to external shocks and possible problems of
+investment attractiveness (Figure 11).
+Figure 11. Foreign investment index Euro vs. Non-Euro (2018–2023).
+Finally, we calculated Pearson correlations between foreign direct investment (FDI)
+and the other macroeconomic indicators over the period 2018–2023 for all common coun-
+tries, obtaining the correlation matrix and heatmap graph (Diagonal = 1.00 shows that any
+indicator is perfectly correlated with itself) (Table 10).
+Table 10. Correlation matrix: FDI, debt, interest, GDP, inflation.
+FDI Debt Interest GDP Inflation
+FDI 1 −0.27323 −0.43474 −0.27323 −0.25093
+Debt −0.27323 1 0.105279 1 0.020266
+Interest −0.43474 0.105279 1 0.105279 0.5706
+GDP −0.27323 1 0.105279 1 0.020266
+Inflation −0.25093 0.020266 0.5706 0.020266 1
+Analysing the correlation results, we observe that the correlation between FDI and
+long-term interest rates is −0.43, which is the strongest negative association observed.
+Countries with higher interest rates tend to attract less international investment, most likely
+because of higher finance costs, increased perceived sovereign risk, and macroeconomic
+volatility (Figure 12).Economies 2025, 13, 239 20 of 25
+Figure 12. Correlation heatmap between FDI and macroeconomic variables (2018–2024)
+The correlation between FDI and public debt/GDP per capita (r = −0.27) is weak,
+but negative. More debt or lower GDP does not necessarily attract more foreign capital.
+Investors may choose budgetary sustainability over absolute development. The correlation
+between FDI and inflation (r = −0.25) highlights that high inflation might discourage
+investment due to pricing instability, profit erosion, and currency uncertainties. Negative
+correlations indicate that FDI is susceptible to economic risks such as interest rates, inflation,
+and debt. Policies that stabilize the macroeconomy (such as keeping inflation and interest
+rates low) can encourage foreign investment inflows.
+FDI is an excellent additional metric for assessing economic convergence and
+Eurozone readiness.
+4. Discussion
+The empirical results revealed consistent structural advantages for Euro-adopting
+countries, particularly in terms of interest rate stability, inflation control, and FDI resilience.
+While all countries were affected by the COVID-19 pandemic and the inflationary shock of
+2022–2023, Euro area members demonstrated greater macroeconomic stability and a faster
+return to pre-crisis trajectories. This chapter reflects on these findings by exploring their
+broader theoretical and practical implications, highlighting the study’s limitations, and
+suggesting directions for future research.
+4.1. Theoretical Implications
+The study contributes to the broader literature on monetary integration by confirming
+that Euro area membership enhances macroeconomic resilience during periods of external
+shocks. Consistent with the theory of Optimum Currency Areas (OCA), the results under-
+score how Euro adoption stabilizes inflation expectations, lowers sovereign risk premia,
+and reduces long-term interest rate volatility. These effects are primarily attributable to
+the credibility of the European Central Bank (ECB) and the availability of shared mone-
+tary instruments such as the Pandemic Emergency Purchase Programme (PEPP) and the
+Transmission Protection Instrument (TPI). The findings reinforce earlier works suggesting
+that Euro adoption can improve fiscal discipline, reduce transaction costs, and offer a
+macroeconomic anchor—conditional, however, on achieving nominal and real convergence.Economies 2025, 13, 239 21 of 25
+Furthermore, the observed divergence in inflation and interest rate volatility between Euro
+and non-Euro countries confirms that institutional quality and the credibility of monetary
+frameworks remain central to the success of monetary integration.
+4.2. Practical Implications
+From a policy standpoint, the study provides important lessons for Central and East-
+ern European (CEE) countries that are considering Euro adoption. Firstly, the evidence
+suggests that joining the Eurozone can lower borrowing costs and increase investor confi-
+dence, as seen in the consistently lower interest rates and more stable FDI inflows among
+Euro area members. Secondly, the comparative data highlights that nominal convergence
+alone is insufficient. Countries such as Romania and Hungary have at times met the Maas-
+tricht criteria in statistical terms, but institutional weaknesses—including limited central
+bank independence and fiscal volatility—continue to undermine macroeconomic stability
+(OECD, 2021).
+Bulgaria emerges as a positive outlier among non-Euro states, benefiting from its
+currency board arrangement and prudent fiscal policy. Its example suggests that Euro area
+readiness is less about de jure membership and more about sustained policy credibility.
+The country’s progress towards full integration offers a model pathway for other non-Euro
+states, including Romania and Poland.
+In practical terms, governments aiming for Euro adoption should focus on enhancing
+fiscal institutions (e.g., independent fiscal councils); aligning monetary policy frameworks
+with ECB standards; deepening integration into Euro area governance mechanisms (e.g.,
+ERM II, Banking Union); and using EU funds strategically to support real convergence.
+4.3. Research Limitations
+Despite offering a detailed comparative analysis, this study is subject to several
+limitations. First, there is a selection bias risk, as countries that adopted the Euro earlier
+may have been structurally stronger or more institutionally prepared than their non-Euro
+counterparts. Thus, some observed differences may stem from pre-existing conditions
+rather than from Euro adoption per se.
+Second, the descriptive and correlational nature of the methodology does not establish
+causality. While the study finds clear associations between Euro membership and macroe-
+conomic stability, these results could be influenced by unobserved variables such as trade
+structure, political stability, or administrative capacity.
+Finally, the paper relies on average group-level comparisons, which may mask sig-
+nificant intra-group variation (e.g., between Croatia and Slovakia, or between Romania
+and Hungary).
+4.4. Directions for Future Research
+Future studies should consider employing more advanced econometric methods, such
+as difference-in-differences (DiD), propensity score matching, or instrumental variable
+(IV) regressions, to better isolate the effects of Euro area membership from confounding
+structural characteristics (Gravetter & Wallnau, 2016).
+It would also be valuable to expand the analytical scope to include the following:
+institutional quality indicators (e.g., corruption perception, governance scores); trade
+openness and capital mobility metrics; and qualitative case studies of countries at various
+stages of the Euro accession path (Ostry et al., 2010). A particularly promising avenue
+is a longitudinal study of Bulgaria’s forthcoming transition into the Euro area, which
+would allow scholars to observe macroeconomic changes across the pre-accession and
+post-accession divide (Moore et al., 2017).Economies 2025, 13, 239 22 of 25
+Moreover, integrating social and distributional dimensions—such as income inequality,
+employment trends, and cost-of-living adjustments—could offer a more holistic assessment
+of Euro adoption.
+5. Conclusions
+It is worth noting that although similar macroeconomic recovery trends, structural
+and institutional differences continued to define the risk premium differentials between
+Euro and non-Euro countries. Eurozone members remained sheltered from currency
+depreciation and retained access to ECB liquidity facilities, while non-Euro nations had
+to rely more on domestic credibility, fiscal discipline, and foreign exchange reserves to
+maintain investor trust.
+Eurozone countries remained shielded from the volatility experienced by their non-
+Euro counterparts. Access to the ECB’s monetary toolkit, including the new Transmission
+Protection Instrument (TPI), helped prevent excessive fragmentation of financial markets
+and supported debt sustainability in the periphery (World Bank, 2024).
+From a macroeconomic standpoint, 2022 highlighted the stark divergence in economic
+resilience and market confidence between Euro-adopting countries and those yet to adopt
+the common currency. While Eurozone members faced inflation, their adjustment mecha-
+nisms were more stable and less costly, due to lower interest rate volatility and stronger
+policy anchors. Non-Euro nations, meanwhile, had to grapple with the dual challenge
+of taming inflation and defending their currencies, all while preserving fiscal space in an
+increasingly uncertain environment.
+An integrated analysis of FDI data (2018–2023) in relation to inflation, public debt,
+GDP dynamics, and long-term interest rates reveals several key patterns:
+• Interest rates and inflation exert a significant negative influence on FDI. When financ-
+ing costs rise and inflation erodes returns, foreign capital becomes more selective
+and cautious.
+• Strong GDP growth does not guarantee high FDI, as seen in Romania and Poland.
+Structural weaknesses such as policy unpredictability, corruption, and inadequate
+infrastructure deter investors, even when macroeconomic indicators are positive
+(Piatkowski & Rzoca, 2022).
+• Euro adoption is not a decisive factor for investment appeal. Bulgaria, a non-Euro
+country, consistently maintained high FDI through fiscal discipline and institutional
+credibility, outperforming many Euro-area peers.
+• Policy coordination matter, countries that combined sound monetary policy, fiscal
+prudence, and strategic investment in infrastructure (e.g., Latvia, Croatia) attracted
+more sustainable and stable investment flows.
+A special case is Bulgaria, which is currently in the final stages of the Euro adoption
+process. Already benefiting from a currency board that pegs the lev to the Euro, Bulgaria
+has maintained a prudent fiscal policy and relatively moderate inflation compared to other
+non-Euro economies. Its full integration into the Euro area is expected in the near future
+and may offer a valuable case study for evaluating the transition from rigid monetary
+regimes to participation in the monetary union. A detailed exploration of this process—
+including its implications for interest rates, price stability, and investment flows—could
+represent a promising avenue for future research and would enhance the practical relevance
+of the present article. Future research should explore causal mechanisms behind observed
+trends and incorporate control variables such as institutional quality and trade openness.
+Acknowledging the limitations of our descriptive design, we propose that further studies
+build on this foundation using more advanced econometric techniques and case studies,
+difference-in-differences, to enrich the explanatory power of Euro adoption analysis.Economies 2025, 13, 239 23 of 25
+Based on the observations, it is recommended that non-Euro countries reconsider the
+opportunity to join the Euro area. A series of public policy directions can be represented by
+the following:
+• Accelerating institutional reforms to strengthen economic governance—Romania, for
+instance, could enhance the independence of its fiscal institutions by strengthening
+the role of the Fiscal Council, similar to the model adopted by Slovenia after accession,
+which implemented a consolidated multiannual budgetary framework to increase
+transparency and fiscal sustainability.
+• Adopting sustainable and transparent fiscal policies—Bulgaria maintained a struc-
+tural budget surplus during its pre-accession period and a low level of public debt,
+demonstrating that fiscal discipline is a key element of macroeconomic credibility.
+Romania and Poland could adopt automatic fiscal rules to limit deficits during periods
+of economic expansion.
+• Stricteralignmentwithnominalandrealconvergencecriteria—Despiteachievinggood
+inflationperformanceincertainperiods, Hungaryfailedtoensureinstitutionalstability
+and central bank independence—both essential for meeting convergence criteria. Euro
+adoption requires not only meeting statistical thresholds but also sustaining them over
+time.
+• Active participation in Euro area supervision and financial stability mechanisms—
+Croatia joined the ERM II and the Banking Union in 2020, which allowed it to benefit
+from direct ECB supervision of its major banks. This contributed to increased investor
+confidence and lower risk premiums. Countries such as Romania and the Czech
+Republic could accelerate integration into these frameworks before adopting the Euro.
+• Strategic use of EU funds for real convergence, green transition, and digitalization:
+National Recovery and Resilience Plans (PNNR), such as those of Poland and Romania,
+provide opportunities to finance structural reforms and investments in green and
+digital infrastructure. These investments can support real convergence and enhance
+competitiveness prior to joining the monetary union.
+The implementation of these policies would not only help meet the formal criteria
+for Euro accession but also strengthen the economic and institutional resilience needed to
+ensure that monetary integration is sustainable and beneficial in the long term.
+Non-Euro nations are experiencing a confluence of elevated inflation, monetary in-
+stability, high interest rates, and inadequate investment, which constrains the rise of real
+buying power. The adoption of the Euro might establish a more stable macroeconomic
+environment, facilitating steady income growth and a genuine enhancement of the cost of
+living in the medium run.
+Author Contributions: Conceptualization, N.G.P. and M.A.R.; methodology, N.G.P. and M.A.R.;
+software, N.G.P. and M.A.R.; validation, N.G.P. and M.A.R.; formal analysis, N.G.P. and M.A.R.;
+investigation, N.G.P. and M.A.R.; resources, N.G.P. and M.A.R.; data curation, N.G.P. and M.A.R.;
+writing—original draft preparation, N.G.P. and M.A.R.; writing—review and editing, N.G.P. and
+M.A.R.; visualization, N.G.P. and M.A.R.; su-pervision, N.G.P.; project administration, N.G.P.; fund-
+ing acquisition, N.G.P. and M.A.R. All authors have read and agreed to the published version of
+the manuscript.
+Funding: This research received no external funding.
+Data Availability Statement: Data are available in a publicly accessible repository. The data presented
+in this study are openly available in Eurostat’s Database at https://ec.europa.eu, accessed on 25
+February 2025, in the International Monetary Fund’s World Economic Outlook Database at https://
+www.imf.org/, accessed on 25 February 2025, and OECD’s Database at https://data.oecd.org,
+accessed on 25 February 2025.Economies 2025, 13, 239 24 of 25
+Conflicts of Interest: The authors declare no conflicts of interest.
+References
+Alcidi, C., Gros, D., & Corti, F. (2021). EU fiscal policy and COVID-19: A critical assessment. In CEPS policy brief. CEPS.
+Angeloni, I., & Ehrmann, M. (2021). Euro area inflation differentials. In European central bank working paper series (No. 388). ECB.
+Baltagi, B. H., Egger, P., & Pfaffermayr, M. (2007). Estimating models of complex FDI: Are there third-country effects? Journal of
+Econometrics, 140(1), 260–281. [CrossRef]
+Barigozzi, M., Conti, A. M., & Luciani, M. (2024). Monetary policy transmission in the euro area: Evidence from high-frequency
+surprises. Journal of Monetary Economics. in press.
+Buiter, W., Rahbari, E., & Michels, J. (2010). Sovereign debt and fiscal sustainability. In CEPR policy paper. CEPR.
+Campos, N. F., & Coricelli, F. (2015). Why did some countries adopt the euro early? Economic Policy, 30(82), 107–155.
+Darvas, Z., & Wolff, G. B. (2023). Convergence and cohesion in the euro area. In Bruegel policy contribution. Bruegel.
+De Grauwe, P., & Ji, Y. (2020). Monetary integration and market discipline in the euro area. Oxford Economic Papers, 72(3), 603–624.
+Eichengreen, B., & Panizza, U. (2020). Structural challenges in the euro area. In VoxEU eBook. CEPR.
+Elhorst, J. P. (2014). Spatial econometrics: From cross-sectional data to spatial panels. Springer.
+European Central Bank [ECB]. (2020a). Pandemic emergency purchase programme (PEPP). ECB.
+European Central Bank [ECB]. (2020b). Tracking global economic uncertainty: Implications for global investment and trade. Economic
+Bulletin, (1), 21–22.
+European Central Bank [ECB]. (2020c). Update on economic and monetary developments External environment. Economic Bulletin,
+(7), 9.
+European Commission. (2022). 2022 convergence report. European Commission.
+Eurostat. (2021). GDP main aggregates and employment. Eurostat.
+Égert, B. (2012). The impact of debt on long-term interest rates: An empirical analysis. In OECD economics department working papers
+(No. 919). OECD.
+Gravetter, F. J., & Wallnau, L. B. (2016). Statistics for the behavioral sciences (10th ed.). Cengage Learning.
+Huber, K., Pfajfar, D., & Spitzer, M. (2022). Firms’ expectations and the ECB: Inflation anchoring in the euro area. European Economic
+Review, 145, 104104.
+International Monetary Fund (IMF). (2023). Regional economic outlook: Europe. International Monetary Fund.
+Klein, M., & Weigand, M. (2021). Risk spreads and monetary sovereignty in the EU. In IMF working paper series (WP/21/246). IMF.
+Lane, P. R. (2023). ECB Economic Bulletin, Issues 1–6. European Central Bank.
+Laubach, T. (2009). New evidence on the interest rate effects of budget deficits and debt. Journal of the European Economic Association,
+7(4), 858–885. [CrossRef]
+Maniatis, P. (2013). The place of the eurozone countries in the international economy: Comparison using discriminant analysis. Journal
+of Economic Studies, 40, 127–177. [CrossRef]
+Moore, D. S., McCabe, G. P., & Craig, B. A. (2017). Introduction to the practice of statistics (9th ed.). Macmillan.
+Neaime, S., Gaysset, I., & Badra, N. (2018). The eurozone debt crisis: A structural VAR approach. Research in International Business and
+Finance, 43, 22–33. [CrossRef]
+OECD. (2019). Economic outlook (Volume Issue 2). OECD Publishing.
+OECD. (2021). Economic outlook—Central and eastern Europe. OECD Publishing.
+Ostry, J. D., Ghosh, A. R., Habermeier, K., Chamon, M., Qureshi, M. S., & Reinhardt, D. B. (2010). Capital controls: When and why?
+IMF Economic Review, 58(1), 62–81. [CrossRef]
+Piatkowski, M., & Rzoca, A. (2022). Challenges to FDI in central Europe. In CEPR Discussion Papers (DP17748). CERP.
+Poncela, P., Pericoli, F., Manca, A. R., & Nardo, M. (2016). Risk sharing in Europe. In European economy—Discussion papers, Joint Research
+Center (JRC) (No. 034). Joint Researchr Centre.
+Puzzello, L., & Gomis-Porqueras, P. (2018). Winners and losers from the euro. European Economic Review, 108, 181–200. [CrossRef]
+Romer, D. (2012). Advanced macroeconomics (4th ed.). McGraw-Hill Education.
+Svensson, L. E. O. (1997). Inflation forecast targeting: Implementing and monitoring inflation targets. European Economic Review, 41(6),
+1111–1146. [CrossRef]
+Taylor, J. B. (1993). Discretion versus policy rules in practice. Carnegie–Rochester Conference Series on Public Policy, 39, 195–214. [CrossRef]
+Weber, A. A., & Beck, G. W. (2005). Price stability, inflation convergence and diversity in EMU: Does one size fit all? In Center for
+financial studies working paper (No. 30). Center for Financial Studies.Economies 2025, 13, 239 25 of 25
+World Bank. (2024). Global economic prospects: Europe and central Asia. World Bank Group.
+Zdarek, V., & Aldasoro, I. (2009). Inflation differentials in the euro area and their determinants—An empirical view. In William davidson
+institute working paper (No. 958). William Davidson Institute.
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

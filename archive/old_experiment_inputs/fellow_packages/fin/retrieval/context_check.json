@@ -1,0 +1,56 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/fellow_packages/fin/retrieval/qwen_context_preflight_balanced_gen5000_v2.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Tokenizer and context-window preflight for the active retrieval plan."
+  },
+  "schema_version": "spec_gap.context_preflight.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "model_id": "Qwen/Qwen3-32B",
+  "model_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+  "tokenizer_json_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "retrieval_plan_file": "fellow_packages/fin/retrieval/plan.json",
+  "retrieval_plan_sha256": "ae3c81e658e26ce399642b2f7e973f0fae996efd18e613ce49bd861e0151659d",
+  "context_window_tokens": 40960,
+  "planner_fixture": {
+    "purpose": "maximum-length upstream planner-output preflight",
+    "token_count": 5000,
+    "text_sha256": "2cd8058510700c482b48fb57e636998b7df91cdc4462e3f99046e5c9da97f2c6"
+  },
+  "cases": [
+    {
+      "treatment": "clean",
+      "thinking_mode": "off",
+      "input_token_count": 32792,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 37792,
+      "headroom_tokens": 3168
+    },
+    {
+      "treatment": "clean",
+      "thinking_mode": "on",
+      "input_token_count": 32788,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 37788,
+      "headroom_tokens": 3172
+    },
+    {
+      "treatment": "injected",
+      "thinking_mode": "off",
+      "input_token_count": 32850,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 37850,
+      "headroom_tokens": 3110
+    },
+    {
+      "treatment": "injected",
+      "thinking_mode": "on",
+      "input_token_count": 32846,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 37846,
+      "headroom_tokens": 3114
+    }
+  ],
+  "runtime_guard": "src/infrastructure/modal_qwen_runner.py rejects any real rendered request whose input plus max_new_tokens exceeds the loaded model context; retrieved evidence is never silently truncated."
+}

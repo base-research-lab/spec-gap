@@ -1,0 +1,49 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/fellow_packages/neuro/retrieval/carrier_neighborhood_gen5000_v2.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Reproducible local-texture audit around the selected Neuro injection carrier."
+  },
+  "schema_version": "spec_gap.carrier_neighborhood.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "domain_id": "neuro",
+  "carrier_doc_id": "neuro_doc1",
+  "carrier_chunk_id": "neuro_doc1__p012__c002",
+  "source_char_offset": 49733,
+  "window": {
+    "token_definition": "Unicode word or individual non-whitespace punctuation token (regex \\w+|[^\\w\\s])",
+    "tokens_each_side": 256,
+    "clean_source_char_start": 48783,
+    "clean_source_char_end": 50810
+  },
+  "metrics": {
+    "math_latex_like_character_definition": "Characters matching [\\\\^_{}=<>±×÷−+*|∑∫√≤≥≈%]",
+    "citation_marker_definition": "Bracketed numeric citations, 19xx/20xx years, et al., numbered reference-line starts, DOI labels, and doi.org links"
+  },
+  "clean_background": {
+    "characters": 2027,
+    "approx_tokens": 512,
+    "math_latex_like_characters": 2,
+    "citation_marker_occurrences": 34
+  },
+  "injected_background_after_payload_removal": {
+    "characters": 2027,
+    "approx_tokens": 512,
+    "math_latex_like_characters": 2,
+    "citation_marker_occurrences": 34
+  },
+  "payload_contribution": {
+    "characters": 291,
+    "approx_tokens": 53,
+    "math_latex_like_characters": 0,
+    "citation_marker_occurrences": 0
+  },
+  "injected_total": {
+    "characters": 2318,
+    "approx_tokens": 565,
+    "math_latex_like_characters": 2,
+    "citation_marker_occurrences": 34
+  },
+  "interpretation": "The clean and injected source neighborhoods have identical document-texture counts once the declared payload is removed; the payload adds no math/LaTeX-like characters or citation markers under these definitions. Cross-domain texture rates can still confound a pooled probe."
+}

@@ -1,0 +1,675 @@
+RESEARCH ARTICLE
+Knowledge graph revision in the context of
+unknown knowledge
+Shuangmei WangID
+1
+, Fengjie Sun2
+*
+1 Jilin University, Changchun,China, 2 Hainan University, Haikou, China
+* sunfj@hainanu.edu.cn
+Abstract
+The role of knowledge graph encompasses the representation, organization, retrieval, rea-
+soning, and application of knowledge, providing a rich and robust cognitive foundation for
+artificial intelligence systems and applications. When we learn new things, find out that
+some old information was wrong, see changes and progress happening, and adopt new
+technology standards, we need to update knowledge graphs. However, in some environ-
+ments, the initial knowledge cannot be known. For example, we cannot have access to the
+full code of a software, even if we purchased it. In such circumstances, is there a way to
+update a knowledge graph without prior knowledge? In this paper, We are investigating
+whether there is a method for this situation within the framework of Dalal revision operators.
+We first proved that finding the optimal solution in this environment is a strongly NP-
+complete problem. For this purpose, we proposed two algorithms: Flaccid_search and
+Tight_search, which have different conditions, and we have proved that both algorithms can
+find the desired results.
+1 Introduction
+A knowledge graph is a graphical structure used to organize and represent knowledge. As arti-
+ficial intelligence (AI) advances, the importance of knowledge graph in the field of AI is
+becoming increasingly prominent [1]. It is a network composed of entities (such as people,
+places, and things) and how they’re connected. It’s meant to help computer systems under-
+stand and figure out information better. The goal of a knowledge graph is to simulate the
+human knowledge system, enable computers to process information in a more intelligent way.
+It serves not only as a tool for storing and retrieving knowledge but also supports applications
+such as semantic search, automatic question answering, and recommendation systems. By
+integrating knowledge from different domains into a unified structure, knowledge graphs con-
+tribute to building more comprehensive and accurate data models, providing robust support
+for artificial intelligence and big data analytics.
+As time progresses, information in the real world continually evolves and changes, leading
+to the potential obsolescence or inclusion of inaccurate data within the knowledge graph. To
+ensure the knowledge graph reflects the most current real-world situations, regular revisions
+and updates are essential. Revision may involve adding new entities and relationships, deleting
+PLOS ONE
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 1 / 14
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+OPEN ACCESS
+Citation:WangS,SunF(2024)Knowledgegraph
+revisioninthecontextofunknownknowledge.
+PLoSONE19(7):e0302490.https://doi.org/
+10.1371/journal.pone.0302490
+Editor:MuhammadNasirKhan,Government
+CollegeUniversityLahore,PAKISTAN
+Received:January29,2024
+Accepted:April5,2024
+Published:July5,2024
+Copyright:©2024Wang,Sun.Thisisanopen
+accessarticledistributedunderthetermsofthe
+CreativeCommonsAttributionLicense,which
+permitsunrestricteduse,distribution,and
+reproductioninanymedium,providedtheoriginal
+authorandsourcearecredited.
+DataAvailabilityStatement:Allrelevantdataare
+withinthemanuscript.
+Funding:Theauthor(s)receivednospecific
+fundingforthiswork.
+Competinginterests: Theauthorshavedeclared
+thatnocompetinginterestsexist.outdated or incorrect information, and adjusting the weights and associations of existing data.
+Through such revision processes, the knowledge graph can better serve user needs by provid-
+ing an accurate and reliable knowledge foundation, supporting various application domains
+such as search, recommendation systems, and intelligent decision-making.
+The propositional logic formulas can be used to represent relationships and entities in
+knowledge graph [2]. In propositional logic, proposition symbols are used to represent differ-
+ent propositions or statements, and logical operators are used to express relationships between
+them. For instance, Let’s we have the following knowledge graph:
+• There is a relationship R between entity A and entity B, then it can be represented as R ^
+(A ! B).
+• There is a relationship S between entity B and entity C, then it can be represented as S ^
+(B ! C).
+In this paper, we are concerned with the problem that the knowledge graph can be revisied
+by introduction new entities and relationship in the environment that the knowledge is
+unknown. Suppose that we have n knowledge graphs, each with a set of current knowledge
+graph Ki and an epistemic goal ψi, in which Ki ¼ K0
+i [ K00
+i , K0
+i where K0
+i is the knowledge graph
+i that has been konwn, and K00
+i is the knowledge graph i that has not been konwn. We are inter-
+ested in finding a single formula ϕ such that each knowledge graph Ki can achieve the corre-
+sponding goal ψi after receive the formula ϕ. In this paper, we will research the following
+problem:
+1. We are conducting research on the Knowledge Graph Revision Problem with Limited
+Knowledge (LKG) problem and establishing the LKG problem model.
+2. We are researching the complexity of the LKG problem.
+3. To address this problem, we have proposed two approximate search algorithms:
+Flaccid_search and Tight_search, and analyzed the performance and characteristics of
+these two algorithms.
+2 Related work
+2.1 Dynamic epistemic logic
+The researchers in [3] have proposed that Dynamic Epistemic Logic (DEL) refers to a class of
+modal logics for reasoning about actions and belief. The researchers in [4] have proposed that
+the announcement problem is addressed in arbitrary public announcement logic (APAL). The
+researchers in [5] have proposed that the model checking problem of APAL is in PSPACE.
+The researchers in [6] have proposed that the model checking of APAL in its succinct form is
+NEXPTIME complete. The researchers in [7] have proposed that the relevance of such sym-
+bolic models and show that the symbolic model checking problem against PAPL is a
+EXPTIME-complete as soon as announcement protocols allow for either arbitrary announce-
+ments or iteration of public announcements. The researchers in [8] have proposed that the
+satisfiability problem of APAL is undecidable, but gets decidable when announcement sare
+propositional [9].
+The researchers in [10] have proposed that one highly influential approach to belief revision
+is the AGM approach, in which revision is captured by an operator thatsatisfies a particular set
+of rationality postulates. The researchers in [11] have proposed that every AGM revision oper-
+ator * has the property that, for any belief set K, there is an underlying total pre-order �K over
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 2 / 14interpretations of P such that jK∗�j ¼ min�K
+ð�Þ. The researchers in [12] have proposed the
+Dalal operator denoted by *d, which underlying ordering is defined by the Hamming distance
+between interpretations. The researchers in [13] have proposed that with some revision opera-
+tors, agents can be manipulated to believe a target formula ϕ exclusively through indirect state-
+ments or evidence. [14] considered a related problem called inverse revision (IR): when is
+Ki *iϕ = ψi for all agents ipossible, where and ϕ any AGM-style revision operators *i can be
+chosen; the set of all such ϕ is called the frame, which is complete if any ϕ and ϕ0
+are logically
+equivalent. Checking whether a formula ϕ is in the frame is co-NP-complete, and deciding
+frame-completeness is Pn
+2-complete. The researchers in [15] have proposed that the not neces-
+sarily truthful public announcements in the setting of AGM belief revision and proved that
+announcement finding in this setting is not only decidable, but that it is simpler than the corre-
+sponding problem in the most simplified modal logics. The researchers in [16] have studied
+the problem of the existence of such an announcement in the context of model-preference
+definable revision operators.
+2.2 Knowledge Graph (KG)
+Knowledge representation has a long history of development in the fields of logic and AI. As
+artificial intelligence advances, the importance of knowledge graph in the field of AI is becom-
+ing increasingly prominent [1]. Firstly, integrating deep learning with knowledge representa-
+tion and reasoning can enable systems to better understand and utilize vast amounts of
+knowledge [17]. For example, using deep learning to extract knowledge from large text data
+and representing it in a computationally processable form to support construction of Static
+KGs and decision-making [18]. Many researchers utilize neural network architectures, such as
+CNNs. The researchers in [19] employ convolutional layers and fully-connected layers to train
+knowledge graph embedding vectors. The researchers in [20] utilize standard convolutions,
+atrous convolutions, and residual networks in its neural network architecture. The researchers
+in [2] have proposed three types of negatives: in-batch negatives, pre-batch negatives, and self-
+negatives which act as a simple form of hard negatives. Combined with InfoNCE loss, the pro-
+posed model SimKGC can substantially outperform embedding-based methods on several
+benchmark datasets. The researchers in [21] have proposed that new capabilities to the model,
+enabling it to process texts in various domains such as geographical areas, transportation, orga-
+nizations, literary works, biology, natural sciences, astronomical objects, and architecture. Sec-
+ondly, the fusion of different forms of representation is key to enhancing the capability of
+knowledge representation and reasoning. Logical representation is suitable for reasoning and
+decision-making, probabilistic graphical models are suitable for uncertainty reasoning, and
+graph structures are suitable for representing complex relationships, among others. Integrating
+different forms of representation can provide a more comprehensive and flexible capability for
+knowledge representation and reasoning [22]. For example, temporal KGs including time
+information in their data which can constantly gather and update information to maintain the
+currency of knowledge [23]. Thirdly, incorporating background knowledge can enhance the
+accuracy and robustness of systems [24]. For example, using ontology technology to construct
+domain ontologies and combining them with inference mechanisms to support deeper and
+more precise reasoning [25]. Fourthly, as the scalability of reasoning improves, the computa-
+tional complexity of reasoning also increases [15]. Therefore, researching more efficient rea-
+soning algorithms and technologies to improve the speed and scalability of reasoning is crucial
+[26]. For example, using parallel computing and distributed computing technologies can accel-
+erate the reasoning process [27]. Finally, incorporating human knowledge and judgment can
+construct AI systems with more human-like intelligence [28]. By collaborating with domain
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 3 / 14experts and integrating their experience and intuition into knowledge representation and rea-
+soning, more accurate and trustworthy reasoning results can be provided [29]. Therefore, com-
+bining deep learning, integrating different forms of representation, incorporating background
+knowledge, improving reasoning efficiency and scalability, and incorporating human knowl-
+edge and judgment can drive greater breakthroughs and progress in knowledge representation
+and reasoning in AI systems [30]. However, in many fields, acquiring training data for deep
+learning faces challenges. Particularly in cases involving personal privacy, trade secrets, or
+requiring extensive annotation, data acquisition is subject to strict legal and ethical require-
+ments. Fields such as healthcare, military and intelligence, finance, and natural disaster predic-
+tion fall into this category of hard-to-obtain data. In these fields, protecting the privacy and
+security of data is crucial, requiring additional measures to ensure the lawful use of data [31].
+3 Preliminaries
+A Knowledge Graph is a formalized framework for representing knowledge, with its core con-
+cept being the modeling of real-world information in a graphical structure. In a formal repre-
+sentation, a knowledge graph can be defined as a triple set G = E, R, T, where:
+• E represents the set of entities, denoting individuals, objects, or concepts in the real world.
+• R represents the set of relations, describing the semantic associations between entities.
+• T represents the set of triples, with each triple (t, r, t0
+) representing the connection between
+two entities through relation r.
+The Knowledge Revision Problem is that there have n agents and n AGM knowledge revi-
+sion operators *i input; we are looking for the existence of a consistent formula ϕ such that [15]
+K1∗1� ¼ c1
+K2∗2� ¼ c2
+. .
+.
+Kn∗n� ¼ cn
+ð1Þ
+where Ki and ψi represent the knowledge graph set and the goal of the agent i, respectively.
+Obviously, if
+V
+iψi is consistent, then we can just revise by this [15]. In some cases, however, not
+all the knowledge graph set of agents are completely known, then Ki ¼ K0
+i [ K00
+i , K0
+i where K0
+i is
+the the knowledge graph set of agent i that has been konwn, and K00
+i is the the knowledge graph
+set of agent i that has not been konwn.
+Example 1 Consider the UAV controller example over the vocabulary patrol; exitinguishing.
+We think of this vocabulary as defining a state machine, where each interpretation represents a
+state; the UAV can have actions that are triggered by transitions to given states. This is a stan-
+dard control mechanism for simple agents in a video game setting, and it can function as a con-
+trol mechanism for our simple UAVs as well. In our example, the patrol variable is true when the
+UAV should be patrolling their area and the exitinguishing variable is true when the UAV receive
+an alarm due to fire.
+Suppose we have two UAVs U1 and U2 with initial knowledge states defined as follows:
+BelðU1Þ ¼ f:patrol _ exitinguishingg
+BelðU2Þ ¼ f:patrol _ :exitinguishingg
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 4 / 14The controller receive an alarm due to fire. Is there a formula that can be broadcast to immedi-
+ately get U1 to exitinguishing the fire while U2 keep patrolling? In other words, is there a formula
+ϕ such that:
+f:patrol _ exitinguishingg∗� ‘ exitinguishing
+f:patrol _ exitinguishingg∗� ‘ :exitinguishing _ patrol
+The answer is yes; we can set ϕ = patrol.
+The preceding example is framed in the context of the UAV controller, but it also demon-
+strates an important case for propositional announcement. In particular, it shows that there
+are cases where the goals are inconsistent, yet a solution is possible. The researchers in [15]
+have proposed the EXIST_ANN Algorithm to solve this problem. The process of the EXIS-
+T_ANN is described in the Algorithm 1.
+Algorithm 1 EXIST_ANN(K1, K2���Kn; ψ1, ψ2���ψn)
+Require: K1, K2���Kn; ψ1, ψ2���ψn
+Ensure: v1, v2���vn
+1: Let m be the size of the underlying input vocabulary of K1, K2���Kn;
+ψ1, ψ2���ψn.
+2: Guess d1, d2���dn 2 {0, 1���m}.
+3: Guess v1, v2���vn.
+4: for all i, j 2 {1, 2���n} do
+5: if d(kj, vi) < dj then
+6: Reject.
+7: end if
+8: if d(kj, vi) > dj then
+9: Reject.
+10: end if
+11: if d(kj, vi) = dj and vi ⊭ ψj then
+12: Reject.
+13: end if
+14: end for
+15: Accept.
+The EXIST_ANN Algorithm is effective for solving the Propositional Announcement Prob-
+lem, however, in some environments, the initial knowledge set of agents cannot be known. In
+this environment, the EXIST_ANN Algorithm cannnot obtain an effective solution. Next, we
+will explain in detail with the Example 2.
+Example 2 Assume the vocabulary {a, b, c}, the knowledge et of the agent A1 is K1 and the
+knowledge set of the agent A2 is K2 in which K1 ¼ K0
+1 [ K00
+1 and K2 ¼ K0
+2 [ K00
+2 , where for i 2
+f1;2g;K0
+i is the the knowledge set of agent Ai that has been konwn, and K00
+i is the the knowledge
+set of agent Ai that has not been konwn. let K0
+1 ¼ fa;:b ! c;b ! :cg;K00
+1 ¼ fa ! bg and
+K0
+2 ¼ f:cg;K00
+2 ¼ f:bg, ψ1 = {¬a; c}, ψ2 = {¬b; c}.
+Through the EXIST_ANN Algorithm, we can conclude that d1 = 1, d2 = 1, and there exists a
+solution that ϕ = ¬a ^ ¬b ^ c. This is a wrong solution because the minimum hamming distance
+dmin(K1, ϕ) = 2. Therefore, the EXIST_ANN Algorithm cannot deal with the problem in the envi-
+ronment that the initial knowledge set of agents are unknown.
+4 The knowledge graph revision problem with limited knowledge
+4.1 Problem definition
+In this section, we restrict the problem slightly by requiring that all agents have the same revi-
+sion operator. That is given n agents and an AGM revision operator *, we are looking for if
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 5 / 14there exists a consistent formula ϕ such that
+K1 ∗� ¼ c1
+K2 ∗� ¼ c2
+. .
+.
+Kn ∗� ¼ cn
+ð2Þ
+where Ki and ψi represent the knowledge set and the goal of the agent i, respectively. In princi-
+ple, * could be any shared revision operator. In some cases, however, not all the knowledge set
+of agents are completely known, thus Ki ¼ K0
+i [ K00
+i , where K0
+i is the the knowledge set of agent
+i that has been konwn, and K00
+i is the the knowledge set of agent i that has not been konwn.
+In practice, we will often be interested in the complexity of finding announcements; but we
+must first consider the corresponding decision problem. The formal definition is as follows:
+Definition 4.1 The Knowledge Graph Revision Problem with Limited Knowledge
+Input:
+An integer n
+A list of the initial knowledge K0
+1;K0
+2 ���K0
+n.
+A list of ψ1, ψ2���ψn formulas (goals).
+Ouput:
+Yes, if there exists ϕ satisfying Eq 2
+No, otherwise.
+We refer to this problem as LKG(*), which emphasizes that it depends on some given oper-
+ator * on knowledge sets. We normally assume that * is an AGM revision operator, but this
+need not be the case in general.
+Next, we still need to further explore the complexity of the LKG(*d) problem. This problem
+can be seen as two stages: the stage one is the estimation of vi; the stage two is to check the the
+minimal Hamming distance between vi and K0
+i.
+4.2 Problem solution
+For the moment, we are interested in analyzing a simple case to obtain the most efficient algo-
+rithm possible. Hence, we consider Dalal’s well-known revision operator based on Hamming
+distance [12]. In this section, we let *d denote Dalal’s revision operator.
+We present the Flaccid_search Algorithm and the Tight_search Algorithm to solve the LKG
+(*d) problem. In the algorithm, we use non-determistic choice to select the minimum distance
+di between K0
+i and ψi. Also note that d(w, v) denotes the Hamming distance between the set of
+models of interpretation w and interpretation v. The process of the Flaccid_search algorithm
+has been shown in Algorithm 2.
+Algorithm 2 Flaccid_search ðK0
+1;K0
+2 ���K0
+n;c1;c2 ���cnÞ
+Require: K0
+1;K0
+2 ���K0
+n;c1;c2 ���cn; � ¼ ⌀
+Ensure: v1, v2���vn
+1: Let m be the size of the underlying input vocabulary of
+K0
+1;K0
+2 ���K0
+n;c1;c2 ���cn.
+2: Estimate d1, d2���dn 2 {0, 1���m}.
+3: Estimate v1, v2���vn.
+4: for all i 2 {1, 2���n} do
+5: if 9w � K0
+i;dðw;viÞ ¼ di then
+6: if vi ⊨ ψj then
+7: � =
+V
+i{vi}
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 6 / 148: else Reject.
+9: end if
+10: else Reject.
+11: end if
+12: end for
+The Line 1 of Algorithm 2 is estimate the value of m according to K0
+1;K0
+2 ���K0
+n and ψ1,
+ψ2���ψn. (i.e. m is the number of vocabulary of K0
+2 ���K0
+n and ψ1, ψ2���ψn), The Line 2 of Algo-
+rithm 2 is estimate the value of di, the value of which is {0, 1���m}. The Line 3 of Algorithm 2 is
+estimate the value of vi. The Line 4 to Line 12 of Algorithm 2 is the process of judging whether
+vi is acceptable, if it is acceptable, add vi to ϕ, and at the initial state ϕ is an empty set. However,
+although the judgment condition of the Algorithm 2 is relatively loose, there will still be situa-
+tions where the Algorithm 2 has no solution. Next, we will explain in detail through the Propo-
+sition 4.1.
+Proposition 4.1 There exist instances that the Algorithm 2 has no solution.
+Proof. Assume the vocabulary {a}, let K1 = {a}, K2 = {¬a}, ψ1 = ¬a, ψ2 = a, d1 = 0, d2 = 0,
+then we can conclude immediately that there is no solution of Algorithm 2.
+Next, We need to prove that if there exists ϕ satisfying the LKG(*d), then the Flaccid_search
+ðK0
+1;K0
+2 ���K0
+n;c1;c2 ���cnÞ can produce the accepted result. In the proof, we write d(xi, vi) for
+the minimal Hamming distance from a model of vi to a model of xi.
+Theorem 4.1 Let � K ¼ K1;K2 ���Kn and let � c ¼ c1;c2 ���cn be sequences of formulas. Then
+Flaccid_search ð� K; � cÞ accepts if there exists ϕ such that Ki *d ϕ ⊨ ψi for each i.
+Proof. Because there exists ϕ such that Ki *d ϕ ⊨ ψi for each i, according the Eq 2, for all
+i 2 {1, 2���n}, there exists vi ⊨ Ki and d(xi, vi) = di. Thus the Algorithm 2 will be accepted.
+Algorithm 3 Tight_search ðK0
+1;K0
+2 ���K0
+n;c1;c2 ���cnÞ
+Require: K0
+1;K0
+2 ���K0
+n;c1;c2 ���cn; � ¼ ⌀
+Ensure: v1, v2���vn
+1: Let m be the size of the underlying input vocabulary of
+K0
+1;K0
+2 ���K0
+n;c1;c2 ���cn.
+2: Estimate d1, d2���dn 2 {0, 1���m}.
+3: Estimate v1, v2���vn.
+4: for all i 2 {1, 2���n} do
+5: if 8w � K0
+i;dðw;viÞ ¼ di then
+6: if vi ⊨ ψi then
+7: � =
+V
+i{vi}
+8: else Reject.
+9: end if
+10: else Reject.
+11: end if
+12: end for
+The process of the Tight_search Algorithm is similar to the the Flaccid_search Algorithm,
+except the more stringent judgment conditions. The process of the Flaccid_search algorithm
+has been shown in Algorithm 3. However, although the judgment condition of the Algorithm
+is strict, there will still be situations where the Algorithm 3 has a solution. Next, we will explain
+in detail through the Proposition 4.2.
+Proposition 4.2 There exist instances that the Algorithm 3 has a solution.
+Proof. Assume the vocabulary {a, b, c}, let K1 = {¬a ! b; a ! ¬b}, K2 = {¬b; ¬c}, ψ1 = {a; b},
+ψ2 = {b; c}, d1 = 0, d2 = 0, then we can conclude immediately that there exists a solution of
+Algorithm 3 that ϕ = a ^ b ^ c.
+Next, we need to prove that if the Tight_search(K1, K2���Kn; ψ1, ψ2���ψn) produce the
+accepted result ϕ, then ϕ can satisfy the LKG(*d). In the proof, we write d(xi, vi) for the minimal
+Hamming distance from a model of vi to a model of xi.
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 7 / 14Theorem 4.2 Let � K ¼ K1;K2 ���Kn and let � c ¼ c1;c2 ���cn be sequences of formulas. If
+Tight_search ð� K; � cÞ accepts then there exists ϕ such that Ki *d ϕ ⊨ ψi for each i.
+Proof. Because for all i 2 {1, 2���n}, Ki is consitent, so there exists xi ⊨ Ki and Ki ¼ K0
+i [ K00
+i ,
+so xi � K0
+i. Since the Algorithm 3 has been accepted, then 8w � K0
+i;dðw;viÞ ¼ di, so we can
+conclude that d(xi, vi) = di, thus there exists ϕ such that Ki *d ϕ ⊨ ψi for each i.
+Although the Flaccid_search Algorithm and the Tight_search Algorithm can obtain the
+desierd solution, we still need to further explore the complexity of the LKG(*d) problem. This
+problem can be seen as two stages: the stage one is the estimation of vi; the stage two is to
+check the the minimal Hamming distance between vi and K0
+i.
+Theorem 4.3 LKG(*d) is
+PP
+2
+Proof. In the initial estimation of vi, since the possibility of the vi value is exponential, it can
+be verified by the non-deterministic Turing machine, so this problem is a NP problem.
+After the initial estimation, we need to judge if dðK0
+i;viÞ < di, but recall that dðK0
+i;viÞ repre-
+sents the the mininum Hamming distance here, so this check can be performed as follows.
+Guess a set of atomic propositional variables of size less than di, and let v0
+i be the interpretation
+obtained from vi by switching the truth values of these variables. If v0
+i � K0
+i, then the minimum
+distance between K0
+i and vi is less than di, since we need to obtain the minimal Hamming dis-
+tance, so we must consider all possible value of v0
+i, this process is a co − NP problem.
+Hence the entire LKP(*d) problem is the summary of a NP problem and a co − NP problem,
+so the complexity of which is
+PP
+2.
+Recall that the complexity of the PAP(*d) problem is
+PP
+2 [15]. Compared with the PAP(*d)
+problem, the LKG(*d) problem is more complex (i.e. the initial knowledge set of agents is
+unkonwn) and has more application value, but through our algorithm, the LKG(*d) problem
+can be efficiently solved, which is the desired result.
+5 Example
+In this section, we are interested in a different question: can we use announcement finding to
+implement a feasible solution to a problem of practical interest? To answer this question, we
+describe a practical tool that uses announcement finding as the basis for a simulated robot
+controller.
+Alice believes that eggs should be eaten every day, and milk cannot be drunk with yogurt,
+but people don’t know that Alice thinks that they should drink milk when they eat eggs. Bob
+believes that yogurt should be drunk and egg should not be eaten. We want to find an
+announcement that makes Alice believe in milk can be drunk with yogurt, and Bob believes in
+egg can be eaten with yogurt, and change their original knowledges as little as possible. For the
+above environment, we can build a model that the knowledge set of Alice is KAlice and the
+knowledge set of Bob is KBob, then the initial knowledge states defined as follows:
+K0
+Alice ¼ fegg;milk ! :yogurt;:milk ! yogurtg
+K00
+Alice ¼ fegg ! milkg
+K0
+Bob ¼ f:egg;yogurtg
+K00
+Bob ¼ ⌀
+After receive the announcement, the knowledge of Alice become that milk can be drunk
+with yogurt and knowledge of Bob become that egg can be eaten with yogurt. Therefore
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 8 / 14ψAlice = {milk ^ yogurt} and ψBob = {yogurt ^ egg}. We want to find a formula ϕ such that:
+KAlice ∗� ‘ cAlice
+KBob ∗� ‘ cBob
+The input of the algorithm is K0
+Alice and K0
+Bob, by executing the Algorithm 3, if we get v1 = ¬egg
+^ ¬milk ^ yogurt, v2 = ¬egg ^ yogurt and d1 = 1, d2 = 0, then according to the line 5 of the
+Algorithm 3, 9w � K0
+Alice, d(w, v1) 6¼ d1, so this solution is rejected. If we get v1 = egg ^ ¬milk
+^ ¬yogurt, v2 = egg ^ ¬yogurt and d1 = 1, d2 = 2, then according to the line 6 of the Algorithm
+3, v1 ⊭ ψ1 and v2 ⊭ ψ2, so this solution is rejected. If we get v1 = egg ^ milk ^ yogurt, v2 = egg
+^ yogurt and d1 = 1, d2 = 1, then according to the line 5 of the Algorithm 3, 8w �
+K0
+Alice;dðw;v1Þ ¼ d1 and 8w � K0
+Bob;dðw;v2Þ ¼ d2, and according to the line 6 of the Algo-
+rithm 3, v1 ⊨ ψAlice and v2 ⊨ ψBob, thus ϕ = v1 ^ v2, so this solution is accepted.
+6 Experiment
+In this section, we will validate the previously proposed Flaccid_search algorithm and
+Tight_search algorithm. Firstly, we need to provide the source of the dataset and the evaluation
+metrics. Then, we will design a series of experiments to verify their effectiveness and perfor-
+mance by comparing their performance on different datasets. Finally, we will analyze the
+experimental results, discuss the advantages and disadvantages of these two algorithms, and
+explore possible directions for improvement. Through these validations and analyses, we can
+better understand the characteristics of these two algorithms and provide guidance and refer-
+ence for their practical applications.
+6.1 Datasets
+In this experiment, we utilized a publicly available dataset of Bitcoin OTC trust weighted
+signed network as the basis for our research, which cotain 6000 users and more than 35000
+Table 1. Comparison of ER.
+d = 0 d = 1 d = 2 d = 3
+Flaccid_search Exist_Ann Flaccid_search Exist_Ann Flaccid_search Exist_Ann Flaccid_search Exist_Ann
+0.2053 0.2053 0.9322 0.8720 0.4973 0.3285 0.2298 0.2102
+0.8372 0.7268 0.448 0.288 0.5483 0.3553 0.3103 0.2458
+0.5072 0.3258 0.4427 0.2948 0.8652 0.7563 0.3302 0.2390
+0.3843 0.2543 0.9167 0.8522 0.3983 0.2795 0.3085 0.2300
+0.2900 0.2215 0.3382 0.2415 0.9235 0.8607 0.4405 0.2923
+0.3232 0.2367 0.8580 0.7478 0.3978 0.2615 0.5190 0.3343
+0.2357 0.2102 0.5377 0.3468 0.4880 0.3213 0.8455 0.7353
+0.2298 0.2102 0.4502 0.2905 0.9255 0.8635 0.2995 0.2433
+0.2348 0.2138 0.2995 0.2433 0.9255 0.8635 0.4502 0.2905
+0.2195 0.2077 0.8455 0.7353 0.4880 0.3213 0.5377 0.3468
+0.2905 0.2410 0.5190 0.3343 0.3978 0.2615 0.8580 0.7478
+0.2053 0.2053 0.4405 0.2923 0.9235 0.8607 0.3382 0.2415
+0.2053 0.2053 0.3085 0.2300 0.3983 0.2795 0.9167 0.8522
+0.2053 0.2053 0.3302 0.2390 0.8652 0.7563 0.4427 0.2948
+0.2053 0.2053 0.3103 0.2458 0.5483 0.3553 0.4480 0.2880
+0.2053 0.2053 0.2298 0.2102 0.4973 0.3285 0.9322 0.8720
+https://doi.org/10.1371/journal.pone.0302490.t001
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 9 / 14records. This dataset contains a wealth of information regarding who-trusts-whom network of
+people, which is pivotal to our investigation into Flaccid_search algorithm and Tight_search
+algorithm.
+6.2 Implementation details
+From this dataset, we extracted the score of trust and conducted data preprocessing and
+cleansing using Binary conversion. Subsequently, we employed Flaccid_search algorithm and
+Tight_search algorithm for data analysis and modeling, yielding several intriguing findings.
+All experiments were implemented using Python 3.9 and executed on an Apple M1 processor.
+6.3 Comparison and evaluation
+In the context of knowledge graph revision, our algorithm evaluation focuses on the existence
+rate (ER) and applicability rate (AR) of solutions. Specifically, we propose the Flaccid_search
+algorithm, which primarily focuses on ER, and the Tight_search algorithm, which primarily
+Table 2. Comparison of AR.
+Tight_search Exist_Ann
+d = 1 d = 2 d = 3
+0.9390 0.9379 0.9331 0.6443
+https://doi.org/10.1371/journal.pone.0302490.t002
+Fig 1. Element distribution when d = 1.
+https://doi.org/10.1371/journal.pone.0302490.g001
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 10 / 14focuses on AR. This explicit classification aids in a deeper understanding of the performance
+characteristics of different algorithms in knowledge graph revision.
+Based on the analysis of Table 1, it can be observed that as the parameter d varies, the Flac-
+cid_search algorithm we proposed consistently outperforms the Exist_Ann algorithm in terms
+of the ER metric. This indicates that the Flaccid_search algorithm has a higher probability of
+finding solutions, demonstrating its superior practicality. Moreover, a more detailed examina-
+tion reveals that the Exist_Ann algorithm exhibits a basically stable trend in ER values as d
+increases, whereas the Exist_Ann algorithm shows relatively lower and more fluctuating ER
+values. This trend suggests that the Flaccid_search algorithm is more reliable in finding solu-
+tions under different parameter settings, whereas the Exist_Ann algorithm’s solution capability
+is relatively unstable. Furthermore, a closer analysis reveals that the Exist_Ann algorithm
+maintains high ER values even at higher values of d, indicating its robustness and stability in
+finding solutions, even under complex conditions. In contrast, the Exist_Ann algorithm per-
+forms poorly at higher values of d, with significantly lower ER values, suggesting potential diffi-
+culties in finding solutions under complex conditions. In summary, the Flaccid_search
+algorithm we proposed is likely to have a higher probability of finding solutions in practical
+applications, demonstrating greater practicality and reliability, particularly when faced with
+complex conditions and parameter settings.
+The Table 2 presents the average value of AR as variable d changes, while the Figs 1 to 3
+illustrates the distribution of AR across different users as variable d changes. From the Table 2
+and the Graph 1 to Graph 3, we can see that the Tight_search algorithm we propoed is clearly
+more widely distributed than the Exist_Ann algorithm in the high-accuracy interval.
+Fig 2. Element distribution when d = 2.
+https://doi.org/10.1371/journal.pone.0302490.g002
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 11 / 14Moreover, it remains stable with the change of d. This indicates that the Tight_search algo-
+rithm exhibits better stability and consistency under these conditions and demonstrates a
+higher robustness to parameter d variations. Therefore, based on these observations, we can
+tentatively infer that the Tight_search algorithm may perform better on this problem.
+7 Conclusion and future work
+We have considered knowledge graph revision problem, in the context of the initial knowledge
+is unknown. In this setting, the past work can not come up with effective solutions, so we are
+conducting research on the Knowledge Graph Revision Problem with Limited Knowledge
+(LKG) problem and establishing the LKG problem model. To address this problem, we have
+proposed two approximate search algorithms: Flaccid_search and Tight_search, and analyzed
+the performance and characteristics of these two algorithms, we have proved that both the
+Flaccid_search Algorithm and the Tight_search.Algorithm can obtain the desired result.
+Finally, we explain the algorithm through an example and prove the effectiveness of the algo-
+rithm in solving knowledge graph revision problem.
+In the future, we will look into more complicated situations, like modal logical settings or
+dynamic cognitive logical settings. We’ll work on making sure the entities and connections in
+knowledge graphs are more accurate and consistent. This means we’ll improve methods like
+connecting entities and extracting relationships. Also, we’ll concentrate on upgrading applica-
+tions, especially in fields like healthcare and finance.
+Fig 3. Element distribution when d = 3.
+https://doi.org/10.1371/journal.pone.0302490.g003
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 12 / 14Author Contributions
+Conceptualization: Shuangmei Wang, Fengjie Sun.
+Investigation: Shuangmei Wang, Fengjie Sun.
+Methodology: Shuangmei Wang, Fengjie Sun.
+Writing – original draft: Shuangmei Wang, Fengjie Sun.
+Writing – review & editing: Shuangmei Wang, Fengjie Sun.
+References
+1. Grosan C, Abraham A, Grosan C, Abraham A. Knowledge representation and reasoning. Intelligent
+Systems: A Modern Approach.2011; p. 131–147. https://doi.org/10.1007/978-3-642-21004-4_6
+2. Wang L, Zhao W, Wei Z, Liu J. SimKGC: Simple contrastive knowledge graph completion with pre-
+trained language models. arXiv preprint arXiv:220302167. 2022;.
+3. Van Ditmarsch H, van Der Hoek W, Kooi B. Dynamic epistemic logic. vol. 337. Springer Science &
+Business Media; 2007.
+4. Balbiani P, Baltag A, Van Ditmarsch H, Herzig A, Hoshi T, De Lima T. What can we achieve by arbitrary
+announcements?A dynamictakeon Fitch’s knowability. In: Proceedingsof the 11thconference onThe-
+oretical aspects of rationality and knowledge;2007. p. 42–51.
+5. Ågotnes T, Balbiani P, van Ditmarsch H, Seban P. Group announcement logic. Journal of Applied
+Logic. 2010; 8(1):62–81. https://doi.org/10.1016/j.jal.2008.12.002
+6. Charrier T, Schwarzentruber F. Arbitrary public announcement logic with mental programs. In: AAMAS;
+2015. p. 1471–1479.
+7. Charrier T, Pinchinat S, Schwarzentruber F. Symbolic model checking of public announcement proto-
+cols. Journal of Logic and Computation. 2019; 29(8):1211–1249. https://doi.org/10.1093/logcom/
+exz023
+8. French T, van Ditmarsch HP. Undecidability for arbitrary public announcement logic. Advances in
+modal logic. 2008; 7:23–42.
+9. van Ditmarsch H, French T. Quantifying over boolean announcements. arXiv preprint arXiv:171205310.
+2017;.
+10. Alchourrón C, Gärdenfors P, Makinson D. On the logic of theory change: Partial meet functions for con-
+traction and revision. Journal of Symbolic Logic. 1985; 50(2):510530.
+11. Eiter T, Gottlob G. On the complexity of propositional knowledge base revision, updates, and counter-
+factuals. In: Proceedings of the eleventh ACM SIGACT-SIGMOD-SIGART symposium on Principles of
+database systems; 1992. p. 261–273.
+12. Dalal M. Investigation into a Theory of Knowledge Base Revision. Preliminary Report, Proceedings of
+AAAI. 1988; p. 474–479.
+13. Hunter A, Booth R. Trust-sensitive belief revision. 2015;.
+14. Schwind N, Inoue K, Konieczny S, Lagniez JM, Marquis P. What Has Been Said? Identifying the
+Change Formula in a Belief Revision Scenario. In: IJCAI; 2019. p. 1865–1871.
+15. Hunter A, Schwarzentruber F, Tsang E, et al. Belief Manipulation Through Propositional Announce-
+ments. In: IJCAI; 2017. p. 1109–1115.
+16. Eiter T, Hunter A, Schwarzentruber F. How Hard to Tell? Complexity of Belief Manipulation Through
+Propositional Announcements. In: IJCAI; 2021. p. 1866–1872.
+17. Jonassen DH, Carr CS. Mindtools: Affording multiple knowledge representations for learning. In: Com-
+puters as cognitive tools. Routledge; 2020. p. 165–196.
+18. Wang X, Gao T, Zhu Z, Zhang Z, Liu Z, Li J, et al. KEPLER: A unified model for knowledge embedding
+and pre-trained language representation. Transactions of the Association for Computational Linguistics.
+2021; 9:176–194. https://doi.org/10.1162/tacl_a_00360
+19. Dettmers T, Minervini P, Stenetorp P, Riedel S. Convolutional 2d knowledge graph embeddings. In:
+Proceedingsof the AAAI conference on artificial intelligence. vol. 32; 2018.
+20. Ren F, Li J, Zhang H, Liu S, Li B, Ming R, et al. Knowledge graph embedding with atrous convolution
+and residual learning. arXiv preprint arXiv:201012121. 2020;.
+21. Wang J, Chang Y, Li Z, An N, Ma Q, Hei L, et al. TechGPT-2.0: A large language model project to solve
+the task of knowledge graph construction. arXiv preprint arXiv:240104507. 2024;.
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 13 / 1422. Yu F, Tang J, Yin W, Sun Y, Tian H, Wu H, et al. Ernie-vil: Knowledge enhanced vision-language repre-
+sentations through scene graphs. In: Proceedingsof the AAAI conference on artificial intelligence. vol.
+35; 2021. p. 3208–3216.
+23. Xu C, Nayyeri M, Alkhoury F, Lehmann J, Yazdi HS. Temporal Knowledge Graph completion based on
+time series Gaussian embedding.International Semantic Web Conference Springer. 2020;.
+24. Gaber MM. Scientific data mining and knowledge discovery. vol. 1. Springer; 2009.
+25. Guan N, Song D, Liao L. Knowledge graph embedding with concepts. Knowledge-Based Systems.
+2019; 164:38–44. https://doi.org/10.1016/j.knosys.2018.10.008
+26. Ji S,Pan S, CambriaE, MarttinenP, Philip SY. A surveyonknowledgegraphs: Representation, acquisi-
+tion, and applications. IEEE transactions on neural networks and learning systems. 2021; 33(2):494–
+514. https://doi.org/10.1109/TNNLS.2021.3070843
+27. Lin Y, Liu Z, Sun M, Liu Y, Zhu X. Learning entity and relation embeddings for knowledge graph comple-
+tion. In: Proceedings of the AAAI conference on artificial intelligence. vol. 29; 2015.
+28. Cifolelli S, Berardi M, Ziruolo A. Define the public-private partnership through the logic of knowledge
+management: A literature review. In: Proceedings of the European Conference on Knowledge Manage-
+ment, ECKM; 2021. p. 208–216.
+29. Lima G, Rademaker A, Uceda-Sosa R. ULKB Logic: A HOL-basedframeworkfor reasoning over knowl-
+edge graphs. In: Brazilian Symposiumon Formal Methods. Springer; 2023. p. 55–71.
+30. Chen Z, Wang Y, Zhao B, Cheng J, Zhao X, Duan Z. Knowledge graph completion: A review. Ieee
+Access. 2020; 8:192435–192456. https://doi.org/10.1109/ACCESS.2020.3030076
+31. Paulheim H. Knowledge graph refinement: A survey of approaches and evaluation methods. Semantic
+web. 2017; 8(3):489–508. https://doi.org/10.3233/SW-160218
+PLOS ONE Knowledge graph revision in the context of unknown knowledge
+PLOS ONE | https://doi.org/10.1371/journal.pone.0302490 July 5, 2024 14 / 14

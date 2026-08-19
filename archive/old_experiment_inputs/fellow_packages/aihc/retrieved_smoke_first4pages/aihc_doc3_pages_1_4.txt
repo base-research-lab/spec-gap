@@ -1,0 +1,468 @@
+RESEARCH METHODS AND REPORTING RESEARCH METHODS AND REPORTING
+For numbered affiliations see
+end of the article
+Correspondence to: G S Collins
+gary.collins@csm.ox.ac.uk
+(or @GSCollins onTwitter;
+ORCID 0000-0002-2772-2316)
+Additional material is published
+online only. To view please visit
+the journal online.
+Citethisas:BMJ2024;385:e078378
+http://dx.doi.org/10.1136/
+bmj-2023-078378
+Accepted: 17 January 2024
+TRIPOD+AI statement: updated guidance for reporting
+clinical prediction models that use regression or machine
+learning methods
+GaryS Collins,1
+Karel G M Moons,2
+Paula Dhiman,1
+Richard D Riley,3,4
+Andrew L Beam,5
+Ben Van Calster,6,7
+Marzyeh Ghassemi,8
+Xiaoxuan Liu,9,10
+Johannes B Reitsma,2
+Maarten van Smeden,2
+Anne-Laure Boulesteix,11
+Jennifer Catherine Camaradou,12,13
+Leo Anthony Celi,14,15,16
+Spiros Denaxas,17,18
+Alastair K Denniston,4,9
+Ben Glocker,19
+Robert M Golub,20
+Hugh Harvey,21
+Georg Heinze,22
+Michael M Hoffman,23,24,25,26
+André Pascal Kengne,27
+Emily Lam,12
+Naomi Lee,28
+Elizabeth W Loder,29,30
+Lena Maier-Hein,31
+Bilal A Mateen,17,32,33
+Melissa D McCradden,34,35
+Lauren Oakden-Rayner,36
+Johan Ordish,37
+Richard Parnell,12
+Sherri Rose,38
+Karandeep Singh,39
+Laure Wynants,40
+Patricia Logullo1
+TheTRIPOD (TransparentReporting ofa
+multivariable prediction modelfor
+IndividualPrognosisOr Diagnosis)
+statementwaspublishedin 2015 to
+provide the minimum reporting
+recommendationsfor studies
+developing or evaluating the
+performance ofa prediction model.
+Methodologicaladvancesin the fieldof
+prediction have since includedthe
+widespreaduse ofartificialintelligence
+(AI) poweredbymachine learning
+methodsto develop prediction models.
+An update to theTRIPOD statementis
+thusneeded.TRIPOD+AI provides
+harmonisedguidance for reporting
+prediction modelstudies, irrespective
+ofwhether regression modelling or
+machine learning methodshave been
+used.The new checklistsupersedesthe
+TRIPOD 2015 checklist, which should
+no longer be used.Thisarticle
+describesthe developmentof
+TRIPOD+AI andpresentsthe expanded
+27 item checklistwith more detailed
+explanation ofeach reporting
+recommendation, andtheTRIPOD+AI
+for Abstractschecklist.TRIPOD+AI aims
+to promote the complete, accurate, and
+transparentreporting ofstudiesthat
+develop a prediction modelor evaluate
+itsperformance. Complete reporting
+willfacilitate studyappraisal, model
+evaluation, andmodelimplementation.
+Prediction models are used across diﬀerent healthcare
+settings. They are used to estimate an outcome value
+or risk. Most models estimate the probability of the
+presence of a particular health condition (diagnostic)
+orwhetheraparticularoutcomewilloccurinthefuture
+(prognostic).1
+Their primary use is to support clinical
+decision making, such as whether to refer patients
+for further testing, monitor disease deterioration or
+treatment eﬀects, or initiate treatment or lifestyle
+changes. Examples of well known prediction models
+include EuroSCORE II (cardiac surgery),2
+the Gail
+model (breast cancer),3
+the Framingham risk score
+(cardiovascular disease),4
+IMPACT (traumatic brain
+injury),5
+and FRAX (osteoporotic and hip fractures).6
+Prediction models are abundant in the biomedical
+literature, with thousands of models published
+annually(andincreasing),andhavebeendevelopedfor
+many outcomes and health conditions.7 8
+At least 731
+diagnostic and prognostic prediction model studies on
+covid-19 were published during the first 12 months
+of the pandemic.9
+Despite this interest in developing
+prediction models, there have been longstanding
+SUMMARY POINTS
+There has been considerable interest and financial investment in developing
+prediction models by applying artificial intelligence (AI) methods, typically
+powered by advances in machine learning
+To ensure that a prediction model study is valuable to users, authors should
+prepare a transparent, complete, and accurate account of why the research was
+done, what they did, and what they found
+An update of the TRIPOD (Transparent Reporting of a multivariable prediction
+model for Individual Prognosis Or Diagnosis) statement aims to harmonise
+the landscape of prediction model studies using AI methods and to provide
+guidance regardless of whether regression models or machine learning methods
+have been used
+The TRIPOD+AI statement consists of a 27 item checklist, an expanded checklist
+that details reporting recommendations for each item, and a TRIPOD+AI for
+Abstracts checklist containing 13 items
+TRIPOD+AI aims to assist authors in the complete reporting of their study and
+help peer reviewers, editors, policymakers, end users, and patients understand
+the data, methods, findings and conclusions of AI driven research
+Adherence to the TRIPOD+AI reporting recommendations could encourage the
+improved use of research time, effort, and money
+thebmj|BMJ2024;385:e078378 | doi: 10.1136/bmj-2023-078378 1
+Protected by copyright, including for uses related to text and data mining, AI training, and similar technologies.
+. by guest on 23 July 2026 https://www.bmj.com/ Downloaded from 16 April 2024. 10.1136/bmj-2023-078378 on BMJ: first published asRESEARCH METHODS AND REPORTING RESEARCH METHODS AND REPORTING
+concerns about transparency and completeness of
+reporting in the field,10 11
+and the resulting usability.
+For readers (including peer reviewers, editors, health
+professionals, regulators, patients, and the general
+public), incomplete or inaccurate reporting impairs
+the ability to critically appraise the study design
+and methods, have confidence in the findings, and
+further evaluate or implement a prediction model.
+Poor reporting of a model might also mask flaws in the
+design, data collection, or conduct of a study that, if
+the model was implemented in the clinical pathway,
+could cause harm. Harm can be perceived to occur
+when insuﬃcient measures are in place to mitigate
+bias. Better reporting can create more trust and
+influence patient and public acceptability of the use
+of prediction models in healthcare. Authors have an
+ethicalandscientificobligationtohonestlyreporttheir
+research in a complete and transparent manner. As
+noted by the late Doug Altman and colleagues, “Good
+reporting is not an optional extra; it is an essential
+component of research”12
+—anything less is little more
+than avoidable research waste.13
+In response to concerns about incomplete
+reporting,10 11 14 15
+the TRIPOD (Transparent Reporting
+of a multivariable model for Individual Prognosis
+Or Diagnosis) statement was published in 2015
+(TRIPOD 2015) to provide minimum reporting
+recommendations.16 17
+TRIPOD 2015 comprises a
+checklist of 37 items, which includes 25 items to
+report in both development and validation studies,
+and an additional six items for model development
+studies and six items for validation studies.
+Accompanying the checklist is an explanation and
+elaboration document that provides the rationale
+behind each reporting item; published examples of
+good reporting; and a discussion of issues relating to
+the design, conduct, and analysis of prediction model
+studies.17
+TRIPOD 2015 mainly focused on models
+developed using regression modelling, which was the
+prevailing approach at the time. Additional guidance
+has since been created for reporting abstracts of
+prediction model studies (TRIPOD for Abstracts18
+),
+studies developing or validating prediction models
+using clustered data (TRIPOD-Cluster19 20
+), systematic
+reviews and meta-analyses of prediction model studies
+(TRIPOD-SRMA21
+), and guidance in preparation for
+study protocols (TRIPOD-P22
+). All available guidance,
+as well as template checklists for filling out separately,
+can also be found on the TRIPOD website (https://
+www.tripod-statement.org/).
+Since the publication of TRIPOD 2015, there
+have been numerous methodological advances
+in prediction modelling, including sample size
+guidance for developing models23-27
+and evaluating
+their performance,28-32
+and greater recognition of
+operationalising fairness,33
+reproducibility,34
+and
+adopting open science principles.35
+However, interest
+andfinancialinvestmentinapplyingmethodsascribed
+to artificial intelligence (AI), typically powered by
+advances in machine learning methods (eg, random
+forests, deep learning), is where we have seen the
+most progress and change. With increasing access to
+data and availability of oﬀ-the-shelf software to apply
+machine learning methods, developing a prediction
+model has become faster and easier. Vast numbers
+of prediction models are now entering the scientific
+literature for many clinical settings, and for a wide
+rangeofoutcomesandhealthconditions,withmultiple
+models often available for the same outcome, health
+condition, and target population.7 8 36
+The ability to
+critically evaluate the quality of prediction models and
+understand their ability to serve well in a particular
+setting or for a particular use case is therefore of even
+greater critical importance. This ability is predicated
+on complete and transparent reporting.
+However, systematic reviews evaluating studies of
+predictionmodelshaveshownthattheyareoftenpoorly
+conducted (including deficiencies in study design or
+data collection37 38
+); use poor methodology37 38
+; are
+incompletely reported with key details missing39-54
+;
+are consequently at high risk of bias41 49 55-57
+; rarely
+adhere to open science practices,58
+and are susceptible
+to overinterpretation or so-called spin.59 60
+These
+deficiencies cast considerable doubt on models’
+usefulness and safety, and raises concerns about their
+potentialtocreateorwidenhealthcaredisparities.61
+While
+TRIPOD2015islargelyagnostictothetypeofmodelling
+approach, and much of its reporting recommendations
+apply equally to non-regression approaches, additional
+reporting considerations are needed for the growing
+class of machine learning methods. For example, unlike
+regression based models, the flexibility and complexity
+underpinning other machine learning approaches
+typically means that the resulting prediction models do
+not result in a simple equation and sometimes even the
+predictors used remain unclear. Additional reporting
+considerationsarethereforeneededthatarenotcurrently
+covered in TRIPOD 2015. Alongside methodological
+advancements, considerations of fairness,62
+wider
+acceptance of open science practices,63
+and public and
+patient involvement in research and implementation of
+research,64 65
+an update to the TRIPOD 2015 statement
+is needed to capture these developments and the
+consequencesforreporting.
+The aim of this paper is to describe the development
+of the updated TRIPOD guidance, present the new
+TRIPOD+AI checklist, and discuss how to use it.
+TRIPOD+AI aims to harmonise the landscape of
+prediction model studies and provide guidance
+regardless of whether regression models or machine
+learning methods have been used.66
+The “+” in
+TRIPOD+AI indicates that it provides consolidated
+reporting recommendations for studies of prediction
+models developed using regression modelling or
+machine learning (ie, deep learning, random forests)
+approaches. We also use the additional term “AI” to
+be consistent with existing reporting guidelines for
+studies broadly labelled as involving AI. However,
+for readability, this article will refer to the methods
+underpinning them as machine learning (table 1). A
+glossary of terms (box 1) clarifies key concepts used
+within the TRIPOD+AI reporting guideline.
+2 doi: 10.1136/bmj-2023-078378|BMJ2024;385:e078378 | thebmj
+Protected by copyright, including for uses related to text and data mining, AI training, and similar technologies.
+. by guest on 23 July 2026 https://www.bmj.com/ Downloaded from 16 April 2024. 10.1136/bmj-2023-078378 on BMJ: first published asRESEARCH METHODS AND REPORTING RESEARCH METHODS AND REPORTING
+Development of TRIPOD+AI
+We describe the development of the TRIPOD+AI
+statement, a guideline to aid the reporting of studies
+developingpredictionmodelsfordiagnosisorprognosis
+using machine learning or regression methods or
+evaluating (validating) their performance. There is no
+such thing as a validated prediction model.76
+To avoid
+ambiguity and harmonise terminology, we refer to
+validationasevaluation74
+inthisarticle(box1).Existing
+reporting guidelines and those in development for
+reporting other types of biomedical studies involving
+a machine learning component are detailed in table 1.
+Literature reviews and consensus exercises were used
+to develop the TRIPOD+AI checklist as recommended
+by the EQUATOR Network.77
+A steering group was
+convened by GSC and KGMM to oversee the guideline
+development process, with members selected to cover
+a broad range of expertise and experience (comprising
+GSC, KGMM, RDR, ALB, JBR, BVC, XL, and PD).
+In April 2019, a commentary was published
+announcing the TRIPOD+AI initiative.78
+The guideline
+was registered as a reporting guideline under
+development with the EQUATOR Network on 7 May
+2019 (https://www.equator-network.org/). A study
+protocol was made available on 25 March 2021 on
+the Open Science Framework (https://osf.io/zyacb/),
+describingtheprocessandmethodsusedtodevelopthe
+TRIPOD+AI reporting guideline. The protocol, which
+alsodescribesthedevelopmentofaqualityassessment
+and risk-of-bias tool for prediction models developed
+using machine learning methods (PROBAST+AI), was
+published in 2021.79
+The reporting of the consensus
+basedmethodsusedinthedevelopmentofTRIPOD+AI
+followed the ACCORD (Accurate Consensus Reporting
+Document) recommendations.80
+Ethics
+This study was approved by the Central University
+research ethics committee, University of Oxford on
+10 December 2020 (R73034/RE001). Participant
+information was provided to the Delphi survey
+participants electronically before starting the survey
+andtotheconsensusparticipantsbeforetheconsensus
+meeting. Delphi survey participants provided
+electronic informed consent before completing the
+survey.
+Candidate item list generation
+An initial list of items was drafted by GSC and KGMM
+using TRIPOD 2015.16 17
+Additional items were
+identified from TRIPOD-Cluster,19 20
+TRIPOD for
+Abstracts,18
+CAIR,81
+MI-CLAIM,82
+CLAIM,68
+MINIMAR,83
+SPIRIT-AI,71
+and CONSORT-AI,72
+along with additional
+literature identified by the steering group.34 84-89
+The list
+ofitems was also informed by thefindings of systematic
+reviews evaluating the reporting, methods, and
+overinterpretation of prediction model studies using
+machine learning.37-39 48 51 54 59 60
+The steering group
+harmonised the initial list of items to form a final list of
+65 unique candidate items covering the title (one item);
+abstract(oneitem);introduction(threeitems);methods
+(37 items); results (15 items); discussion (five items),
+and other (three items). This list was used in a modified
+Delphi exercise as described below.
+Recruitment of Delphi panellists
+Delphi participants were identified by the steering
+committee, from authors of relevant publications
+via a call to participate on social media (eg, Twitter),
+and through personal recommendations. Including
+experts recommended by other Delphi participants.
+The steering group identified participants to achieve
+geographical and disciplinary diversity and include
+key stakeholder groups, for example, researchers
+(statisticians/data scientists, epidemiologists,
+machine learning researchers/scientists, clinicians,
+radiologists, and ethicists), healthcare professionals,
+journal editors, funders, policymakers, healthcare
+regulators, patients, and the general public as end
+users of prediction models from a range of settings
+(eg, universities, hospitals, primary care, biomedical
+journals, non-profit organisations, and for-profit
+organisations).
+No minimum sample size was placed on the number
+of Delphi participants. A steering group member
+checked the expertise or experience of each identified
+person. Individuals were then invited to participate
+via email and were sent an information pack with the
+study description, aims, and contact details. Once
+participants accepted, they were added to the Delphi
+panel and received the link to the survey. Delphi
+panellists did not receive any financial incentive or gift
+to participate.
+Table 1 | Reporting guidelines for healthcare studies using machine learning
+Reporting guideline Scope
+STARD-AI Studies evaluating the diagnostic accuracy of an artificial intelligence based test (in preparation)67
+TRIPOD+AI Studies developing or evaluating the performance of a prediction model, using artificial intelligence, including machine learning methods
+CLAIM Medical imaging studies using artificial intelligence68
+DECIDE-AI Early stage clinical evaluation (including safety, human factors evaluation) of decision support systems driven by artificial intelligence69
+CHEERS-AI Studies describing health economic evaluations to estimate the value for money (cost effectiveness) of artificial intelligence interventions70
+SPIRIT-AI Protocols for clinical trials evaluating an intervention with an artificial intelligence component71
+CONSORT-AI Clinical trial reports evaluating an intervention with an artificial intelligence component72
+PRISMA-AI Systematic reviews and meta-analyses of artificial intelligence interventions (in preparation)73
+STARD=Standards for Reporting of Diagnostic Accuracy; TRIPOD=Transparent Reporting of a multivariable prediction model for Individual Prognosis Or Diagnosis; AI=artificial intelligence;
+CLAIM=Checklist for Artificial Intelligence in Medical Imaging; DECIDE=Decisions in health Care to Introduce or Diffuse innovations using Evidence; CHEERS=Consolidated Health Economic
+Evaluation Reporting Standards; SPIRIT=Standard Protocol Items: Recommendations for Interventional Trials; CONSORT=Consolidated Standards of Reporting Trials; PRISMA=Preferred Reporting
+Items for Systematic Reviews and Meta-Analyses.
+thebmj|BMJ2024;385:e078378 | doi: 10.1136/bmj-2023-078378 3
+Protected by copyright, including for uses related to text and data mining, AI training, and similar technologies.
+. by guest on 23 July 2026 https://www.bmj.com/ Downloaded from 16 April 2024. 10.1136/bmj-2023-078378 on BMJ: first published asRESEARCH METHODS AND REPORTING RESEARCH METHODS AND REPORTING
+Delphi process
+The Delphi surveys were designed and delivered
+electronically using the Welphi online platform (www.
+welphi.com) to be responded to individually, online,
+and in English. The platform ensures responses are
+anonymousbysendingadiﬀerentlinktoeachparticipant
+and applying codes to respondents. The panellists
+received a package of information clarifying the study’s
+Box 1: Glossary of terms used in TRIPOD+AI
+ThedefinitionsanddescriptionsgivenbelowrelatetothespecificcontextoftheTRIPOD+AI*guideline;theydonotnecessarilyapplytootherareas
+ofresearch.
+Artificialintelligence
+Fieldofcomputersciencethatfocusesondevelopingmodelsandalgorithmscapableofperformingtasksthattypicallyrequirehumanintelligence.
+Calibration
+Agreementbetweenobservedoutcomesandestimatedvaluesfromthemodel.Calibrationisbestassessedgraphicallywithaplotoftheestimated
+valuesonthexaxisandobservedvaluesontheyaxis,withasmoothedflexiblecalibrationcurveintheindividualdata.
+Carepathway
+Structuredandcoordinatedplanofcareformanagingaspecifichealthconditionordealingwithapatient’shealthcareneedsthroughouttheir
+healthcarejourney.
+Classimbalance
+Whenthefrequencyofindividualswithandwithouttheoutcomeeventisunequal.
+Discrimination
+Howwellthepredictionsfromthemodeldifferentiatebetweenindividualswithandwithouttheoutcome.Discriminationistypicallyquantifiedbythe
+cstatistic(sometimesreferredtoastheareaunderthecurve(AUC)orareaunderthereceiveroperatingcharacteristics(AUROC))forbinaryoutcomes,
+andthecindexfortime-to-eventoutcomes.
+Evaluationortestdata
+Datausedtoestimatetheperformanceofapredictionmodel,sometimesreferredtoastestdataorvalidationdata.†Evaluationdatashouldbe
+distinctfromthedatausedtotrainthemodel,tunehyperparameters,ordomodelselection,suchthatthereisnooverlapinparticipantsbetweenthe
+trainingandevaluationdata.Evaluationdatashouldberepresentativeofthepopulationinwhomthemodelistobeused.
+Fairness
+Propertyofpredictionmodelsthatdonotdiscriminateagainstindividualsorgroupsofindividualsbasedonattributessuchasage,race/ethnicity,
+sex/gender,orsocioeconomicstatus.
+Hyperparameters
+Valuesthatcontrolthemodeldevelopmentorlearningprocess.
+Hyperparametertuning
+Findingthebest(hyper)parametersettingsforaparticularmodelbuildingstrategy.
+Internalvalidation
+Evaluatingtheperformanceofapredictionmodelonthesamepopulationonwhichthemodelwasdeveloped(eg,traintestsplit,crossvalidation,or
+bootstrapping).
+Machinelearning
+Asubfieldofartificialintelligencethatfocusesondevelopingmodelscapableoflearningandmakingpredictionsordecisionsfromdata,without
+beingexplicitlyprogrammed.
+Modelevaluation
+Evaluatingpredictiveaccuracyofamodelbyestimatingmodeldiscrimination(eg,cstatistic),modelcalibration(eg,calibrationplot,calibration
+slope),andclinicalutility(eg,decisioncurveanalysis).Thisprocessisreferredtoasevaluatingapredictionmodel.7475
+Outcome
+Diagnosticorprognosticeventthatisbeingpredicted.Inmachinelearning,thiseventisoftenreferredtoasthetargetvalue,responsevariable,orlabel.
+Predictor
+Characteristicthatcanbemeasuredorattributedatanindividuallevel(eg,age,systolicbloodpressure,sex,diseasestage,radiomicsfeatures)or
+grouplevel(eg,country).Itisalsooftenreferredtoasaninput,feature,independentvariable,orcovariate.
+Trainingordevelopmentdata
+Datausedtotrainordevelopapredictionmodel.Thetrainingdataareideallyrepresentativeofthepopulationinwhomthemodelistobeused.
+*TRIPOD=TransparentReportingofamultivariablepredictionmodelforIndividualPrognosisOrDiagnosis;AI=artificialintelligence.
+†Validationdataoftenhasdifferentmeanings.Forexample,inmachinelearningstudies,validationdatacanrefertodatausedforparametertuningordatausedto
+evaluatemodelperformance(oftenreferredtoasexternalvalidation).Toavoidanyambiguity,werefertodatausedtoevaluatemodelperformanceasevaluationdata.
+4 doi: 10.1136/bmj-2023-078378|BMJ2024;385:e078378 | thebmj
+Protected by copyright, including for uses related to text and data mining, AI training, and similar technologies.
+. by guest on 23 July 2026 https://www.bmj.com/ Downloaded from 16 April 2024. 10.1136/bmj-2023-078378 on BMJ: first published as

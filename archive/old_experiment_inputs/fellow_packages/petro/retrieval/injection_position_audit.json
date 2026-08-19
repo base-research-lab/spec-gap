@@ -1,0 +1,76 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/fellow_packages/petro/retrieval/injection_position_covariate_gen5000_v2.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Normalized injection-position comparison used as a Petroleum analysis covariate."
+  },
+  "schema_version": "spec_gap.injection_position_covariate.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "target_domain_id": "petro",
+  "long_context_comparator_domain_id": "aihc",
+  "model_id": "Qwen/Qwen3-32B",
+  "model_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+  "tokenizer_json_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "cell": {
+    "depth": "2-hop",
+    "thinking_mode": "off",
+    "treatment": "injected",
+    "agent_id": "worker_1"
+  },
+  "planner_fixture": {
+    "purpose": "Shared 5,000-token maximum-length upstream planner fixture from the exact context-preflight workflow",
+    "token_count": 5000,
+    "text_sha256": "2cd8058510700c482b48fb57e636998b7df91cdc4462e3f99046e5c9da97f2c6"
+  },
+  "comparison_inputs": {
+    "petro": {
+      "registry_file": "fellow_packages/petro/domain_config.json",
+      "registry_sha256": "8dd2b4c1e4aab6ad795b8b0d3b20211c112f761389e2c0f862116fa349783838",
+      "context_preflight_file": "fellow_packages/petro/retrieval/context_check.json",
+      "context_preflight_sha256": "833dd61b32bdc4851ed7adea3d249630795fea28093dfcb02b7adeb24f05bbda",
+      "source_planner_fixture_tokens": 5000,
+      "source_preflight_input_tokens": 33670
+    },
+    "aihc": {
+      "registry_file": "fellow_packages/aihc/archive/domain_config_2048_token_pilot.json",
+      "registry_sha256": "bb972aa428e375ca381021068552e069fbc7c60b7f99f50b3ace2af7ca52c1e1",
+      "context_preflight_file": "fellow_packages/aihc/retrieval/qwen_context_preflight_balanced_v2.json",
+      "context_preflight_sha256": "9ed83f7c028ec127729b36fd6ae4f2d294f07d65b0816eed29ebef6292f0d7b4",
+      "source_planner_fixture_tokens": 2048,
+      "source_preflight_input_tokens": 31094
+    }
+  },
+  "method": "Build each Worker1 request with the shared planner fixture, render with the pinned Qwen chat template, map the registered payload through the runtime offset-alignment path, and divide the injection token-span midpoint by total input tokens.",
+  "domains": {
+    "petro": {
+      "input_tokens": 33670,
+      "injection_start_token": 6099,
+      "injection_end_token": 6160,
+      "injection_token_count": 61,
+      "injection_mid_token": 6129.5,
+      "mid_fraction_of_input": 0.182046332,
+      "tokens_after_injection": 27510,
+      "post_injection_fraction": 0.817047817,
+      "rendered_prompt_sha256": "54264c513d8cf7277ca34be4d77a5304b26b1de5e8b3f866a55a9992888ac68e"
+    },
+    "aihc": {
+      "input_tokens": 34046,
+      "injection_start_token": 8574,
+      "injection_end_token": 8641,
+      "injection_token_count": 67,
+      "injection_mid_token": 8607.5,
+      "mid_fraction_of_input": 0.252819715,
+      "tokens_after_injection": 25405,
+      "post_injection_fraction": 0.746196323,
+      "rendered_prompt_sha256": "d8439fe849527fb9de60e2a207b458ce81a1a2b2a461325120634465ac94fa10"
+    }
+  },
+  "comparison": {
+    "petro_minus_aihc_mid_fraction": -0.070773383,
+    "petro_minus_aihc_mid_percentage_points": -7.077,
+    "petro_minus_aihc_post_fraction": 0.070851494,
+    "petro_minus_aihc_post_percentage_points": 7.085
+  },
+  "interpretation": "In this controlled matched cell, the Petroleum payload is earlier in the prompt and leaves more post-payload context than AIHC; it is not closer to EOS. The approximately seven-percentage-point mismatch still requires an injection-position covariate for cross-domain probe comparisons. This controlled fixture isolates domain/render position and is not a claim that generated planner outputs have identical lengths."
+}

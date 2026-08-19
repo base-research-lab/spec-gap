@@ -1,0 +1,1884 @@
+RESEARCH ARTICLE
+Beyond convexity—Contraction and global
+convergence of gradient descent
+Patrick M. WensingID
+1
+*, Jean-Jacques Slotine2
+1 Departmentof Aerospace and Mechanical Engineering, University of Notre Dame, Notre Dame, IN, United
+States of America, 2 Department of Mechanical Engineering, Department of Brain and Cognitive Sciences,
+and Nonlinear Systems Laboratory, Massachusetts Institute of Technology, Cambridge, MA, United States of
+America
+* pwensing@nd.edu
+Abstract
+This paper considers the analysis of continuous time gradient-based optimization algorithms
+through the lens of nonlinear contraction theory. It demonstrates that in the case of a time-
+invariant objective, most elementary results on gradient descent based on convexity can be
+replaced by much more general results based on contraction. In particular, gradient descent
+converges to a unique equilibrium if its dynamics are contracting in any metric, with convex-
+ity of the cost corresponding to the special case of contraction in the identity metric. More
+broadly, contraction analysis provides new insights for the case of geodesically-convex opti-
+mization, wherein non-convex problems in Euclidean space can be transformed to convex
+ones posed over a Riemannian manifold. In this case, natural gradient descent converges
+to a unique equilibrium if it is contracting in any metric, with geodesic convexity of the cost
+corresponding to contraction in the natural metric. New results using semi-contraction pro-
+vide additional insights into the topology of the set of optimizers in the case when multiple
+optima exist. Furthermore, they show how semi-contraction may be combined with specific
+additional information to reach broad conclusions about a dynamical system. The contrac-
+tion perspective also easily extends to time-varying optimization settings and allows one to
+recursively build large optimization structures out of simpler elements. Extensions to natural
+primal-dual optimization and game-theoretic contexts further illustrate the potential reach of
+these new perspectives.
+1 Introduction
+This paper considers the analysis of continuous-time gradient-based optimization through the
+lens of nonlinear contraction theory. It is motivated, in part, by recent observations in machine
+learning that arise in the application of gradient descent (or its stochastic counterpart) for the
+training of over-parameterized networks [1]. Modern networks often possess many more
+parameters than training examples and can fit the labels perfectly, resulting in submanifold
+valleys of the parameter space with equal cost [2–4]. Moreover, recent results suggest that
+highly-redundant networks experience few to no local optima that are not global optima
+PLOS ONE
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 1 / 29
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+a1111111111
+OPEN ACCESS
+Citation:WensingPM,SlotineJ-J(2020)Beyond
+convexity—Contractionandglobalconvergenceof
+gradientdescent.PLoSONE15(8):e0236661.
+https://doi.org/10.1371/journal.pone.0236661
+Editor:FeiChen,NortheasternUniversity,China,
+CHINA
+Received:March21,2020
+Accepted:July9,2020
+Published:August4,2020
+Copyright:©2020Wensing,Slotine.Thisisan
+openaccessarticledistributedunderthetermsof
+theCreativeCommonsAttributionLicense,which
+permitsunrestricteduse,distribution,and
+reproductioninanymedium,providedtheoriginal
+authorandsourcearecredited.
+DataAvailabilityStatement:Allresultsall
+theoreticalinnatureanddonotrelyondata.
+Numericalexamplessupportthemostimportant
+findingsofthestudy.
+Funding:ThisworkwassupportedbytheNational
+ScienceFoundationDivisionofElectrical,
+CommunicationsandCyberSystems,grant
+1809314.Thefundershadnoroleinstudydesign,
+datacollectionandanalysis,decisiontopublish,or
+preparationofthemanuscript.
+Competinginterests: Theauthorshavedeclared
+thatnocompetinginterestsexist.[5–7]. These observations may be surprising in light of the fact that the loss landscapes for
+these problems are rarely convex.
+Although convex problems admit provable globally optimal solutions, other broader classes
+of functions share this same property. For example, Invex functions [8] guarantee that any
+local optimum is a global optimum, although the utility of invexity conditions remains a point
+of contention [9]. Functions satisfying the Polyak-Lojasiewicz (PL) inequality [1, 3, 10, 11]
+give rise to exponentially convergent gradient descent to a provably optimal solution. While
+the PL condition is, in general, difficult to verify without an a-priori known globally optimal
+solution, the existence of zero-loss solutions in over-parameterized learning [3, 6, 7] makes it
+tractable in important special cases. Geodesic convexity [12, 13] generalizes convexity to a Rie-
+mannian setting, with applicability to optimization on manifolds [14], as well as to conven-
+tional Euclidean settings where Rn
+is endowed with a manifold structure through the
+definition of a metric. Here, we consider another class of conditions for the convergence of
+gradient and natural gradient descent to a globally optimal point. We do so through adopting
+the perspective of nonlinear contraction theory and analyzing gradient descent in continuous
+time.
+Contraction theory [15] allows the stability of nonlinear non-autonomous systems to be
+characterized through linear time-varying dynamics describing the propagation of infinitesi-
+mally small displacements along the systems’ flow. The existence of a Riemannian metric that
+contracts these virtual displacements (i.e., elements in the tangent space) is necessary and suffi-
+cient for exponential convergence of any pair of trajectories. Contraction naturally yields
+methods for constructing stable systems of systems, including synchronization phenomena
+[16] and consensus [17, 18] as well as other key building blocks that allow the construction of
+large contracting systems out of simpler elements [19]. These properties provide opportunities
+to construct larger optimization structures from simpler elements (e.g., in distributed or com-
+petitive optimization settings).
+The contribution of this paper is to apply these contraction tools for the analysis of gradient
+and natural gradient optimization. We consider optimization problems posed over Rn
+wherein no explicit manifold structure necessarily exists a-priori. Instead, we consider the
+analysis of optimization following endowing these problems with additional structure (a Rie-
+mannian metric), analyzing their convergence, and considering the use of contraction tools to
+build larger optimization structures out of smaller ones. Analysis proceeds in continuous time.
+While this approach is limited, in part, by the fact that computational optimization algorithms
+require a discrete implementation, a continuous perspective has yielded insight on important
+phenomena such as in the analysis [20], discrete implementations [21], and extensions [22, 23]
+of Nesterov’s accelerated gradient descent method [24]. It has also enabled analysis of primal-
+dual algorithms [25], where an absolute time reference is obtained by introducing additional
+fast dynamics or delays using a singular perturbation framework. Recent results [26] provide
+principled tools to derive discrete-time implementations that preserve specific continuous-
+time convergence rates.
+The paper is organized as follows. Section 2 provides our main results, detailing the applica-
+bility of contraction theory to analyze gradient descent in continuous time. We show that con-
+vex functions represent the special case of contraction in the identity metric. The flexibility
+afforded by state-dependent contraction metrics, however, enables significant extra freedom
+for guaranteeing that all local optima are globally optimal. We then consider the extensions of
+these results to natural gradient descent, where geodesic convexity of a function corresponds
+to contraction of its natural gradient system in the natural metric. In both cases, results high-
+light the topology of the set of optimizers in the case of semi-contraction, which would have
+most direct applicability to over-parameterized networks. New results also show how semi-
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 2 / 29contraction may be combined with specific additional information to reach broad conclusions
+about a dynamical system. Section 3 details extensions of these results to the case of primal-
+dual type dynamics that appear in mixed convex/concave saddle systems, and shows how a
+broad class of natural adaptive control laws can be interpreted as a primal-dual system. Section
+4 discusses the special case of g-convex functions and associated combination properties for
+interfacing with other models. Section 5 provides an outlook on potential future advances that
+may stem from these connections.
+2 Contraction analysis of gradient systems
+We first recall basic definitions and facts on convex optimization and show how a contraction
+analysis of gradient-based optimization considerably generalizes the class of functions that
+admit a unique global optimum. Following this presentation, results are generalized to the case
+of geodesically-convex optimization, which is particularly suited to analysis via contraction
+tools. Throughout this analysis, given a differentiable function h : Rn
+! Rm
+, we denote the
+Jacobian of h(x) by
+@h
+@x
+¼
+@h
+@x1
+���
+@h
+@xn
+� �
+2 Rm�n
+In the special case of a scalar-valued function f : Rn
+! R we denote the gradient of f(x) by
+rfðxÞ ¼
+@f
+@x
+� �>
+2 Rn
+and its Hessian by r2
+f(x). Unless otherwise stated, we assume all functions are sufficiently
+smooth such that derivatives of the necessary order exist and are continuous.
+Before we embark on this discussion, let us note that of course, as illustrated, e.g., in [20]
+and in the following example, continuous-time analysis tools in general may be used to con-
+ceptually illuminate the mechanisms involved in discrete-time algorithms. As this paper will
+show, contraction tools give particularly simple insights into important classes of optimization
+problems, such as, e.g., geodesically-convex optimization.
+Example 1. The Polyak-Lojasiewicz (PL) inequality is one of the most general sufficient condi-
+tions for discrete-time gradient descent to exhibit linear convergence rates without strong convex-
+ity of the cost [10, 11]. A function is said to satisfy the PL inequality if it has a (typically
+unknown) global minimum value f�
+and there exists a constant μ > 0 such that
+8x; krfðxÞk
+2
+� mðfðxÞ f�
+Þ
+Consider gradient descent on the cost function f(x) from a continuous-time point of view,
+_ x ¼ rfðxÞ
+Using V = f(x) − f�
+as a Lyapunov-like function, and then requiring that V converges exponen-
+tially with rate μ, yields
+_ V ¼ krfðxÞk
+2
+� mV
+The inequality above is exactly the PL condition. Thus, we see that the PL condition is nothing
+but the condition for exponential convergence of the residual cost V = f(x) − f�
+.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 3 / 29Similarly, imposing _ V � m
+ffiffiffiffi
+V
+p
+, corresponding to finite-time convergence (in time less than
+2
+ffiffiffiffiffiffiffiffiffiffi
+Vð0Þ
+p
+=m [27]), would require a modified PL-like condition
+8x; krfðxÞk
+2
+� m
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+fðxÞ f�
+p
+while imposing _ V � mV2
+would require
+8x; krfðxÞk �
+ffiffiffi
+m
+p
+ðfðxÞ f�
+Þ
+By comparison, the results pursued via contraction analysis in this paper will ensure expo-
+nential convergence of any pair of trajectories for gradient descent, but likewise will ensure
+convergence of those solutions to a global optimum.
+2.1 Relationships between convexity and contraction
+Definition 1 (Strong Convexity). A twice differentiable function f : Rn
+! R is α-strongly con-
+vex with α > 0 if its Hessian matrix r2
+f(x) satisfies the matrix inequality
+r2
+fðxÞ≽aI 8x 2 Rn
+As its name suggests, a function that is strongly convex is convex in the usual sense, while
+the converse is not always true. From a dynamic systems perspective, strong convexity pro-
+vides exponential convergence of gradient flows:
+Proposition 1 (Exponential Convergence of Gradient Systems for Strongly Convex Func-
+tions). If a twice differentiable function f : Rn
+! R is α-strongly convex, then its gradient system
+_ x ¼ rfðxÞ ð1Þ
+converges to the unique global minimum of f exponentially with rate α.
+Toward proving this proposition, we will consider stability analysis through the application
+of nonlinear contraction theory.
+Definition 2 (Contraction Metric [15]). A system _ x ¼ hðx;tÞ is said to be contracting at rate
+α > 0 with respect to a symmetric positive definite metric M : Rn
+! Rn�n
+, if for all t 2 R and all
+x 2 Rn
+,
+_ M þ A>
+M þ MA≼ 2aM ð2Þ
+where Aðx;tÞ ¼ @h
+@x
+is the system Jacobian and _ M ¼
+P
+ið@M=@xiÞhiðx;tÞ. The system is said to
+be semi-contracting with respect to M when (2) holds with α = 0.
+Given an α-contracting system and an arbitrary pair of initial conditions x1(0) and x2(0),
+the solutions x1(t) and x2(t) converge to one another exponentially
+dMðx1ðtÞ;x2ðtÞÞ � e at
+dMðx1ð0Þ;x2ð0ÞÞ ð3Þ
+where dMð�;�Þ denotes the geodesic distance on the Riemannian manifold M ¼ ðRn
+;MÞ. This
+property can be shown by considering the evolution of differential displacements δx, which
+describe the evolution of nearby trajectories and coincide with the notion of virtual displace-
+ments in Lagrangian mechanics. More precisely, letting x(t;x0, t0) denote the solution of
+_ x ¼ hðx;tÞ from initial condition x(t0) = x0, differential displacements evolve according to
+dxðtÞ ¼
+@xðt;x0;t0Þ
+@x0
+dxðt0Þ
+Property (3) follows from the evolution of the squared length of these differential
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 4 / 29displacements [15], which verifies
+d
+dt
+ðdx>
+MdxÞ � 2aðdx>
+MdxÞ ð4Þ
+Furthermore, if a system is α-contracting in a metric M that satisfies M(x) ≽ β I uniformly for
+some constant β > 0, then any two solutions verify
+kx1ðtÞ x2ðtÞk �
+1
+ffiffiffi
+b
+p e at
+dMðx1ð0Þ;x2ð0ÞÞ
+Example 2. Consider an α-strongly convex function f and its associated gradient descent sys-
+tem (1). Since f is strongly convex, it has a unique global minimum x�
+, which is a equilibrium
+point of (1). It can be verified that the gradient descent dynamics of f are contracting in the iden-
+tity metric M = I with rate α. Since geodesic distances are just Euclidean distances in this metric,
+(3) immediately implies that
+8t � 0; kxðtÞ x�
+k � e at
+kxð0Þ x�
+k
+thus proving Proposition 1.
+From this example, it is clear that strongly convex functions are a special case of ones whose
+gradient systems are contracting. The following proposition shows that one does not lose the
+convergence properties to a global optimum on this more general class of functions.
+Proposition 2 (Exponential Convergence of Contracting Gradient Systems). Consider
+again gradient descent as in Eq (1). The system converges exponentially to a unique global mini-
+mum if it is contracting in some metric.
+Proof. Because (1) is autonomous and contracting, it converges exponentially to a unique
+equilibrium x�
+[15]. Furthermore, this equilibrium must be a global minimum since f can only
+decrease along trajectories, with _ f ¼ rfðxÞ
+T
+MðxÞ
+1
+rfðxÞ < 0 for x 6¼ x�
+.
+The above result, which emphasizes contraction rather than convexity as a sufficient condi-
+tion to converge to a global minimum, can be extended to the semi-contracting case as
+follows.
+Proposition 3 (Asymptotic Convergence of Semi-Contracting Gradient Systems). Consider
+a twice differentiable function f : Rn
+! R, a symmetric positive definite metric M : Rn
+! Rn�n
+,
+and the associated gradient system
+_ x ¼ rfðxÞ ð5Þ
+Assume that dynamics (5) is semi-contracting in some metric, and furthermore that one trajec-
+tory of the system is known to be bounded. Then, (a) f has at least one stationary point, (b) any
+local minimum of f is a global minimum, (c) all global minima of f are path-connected, and (d)
+all trajectories asymptotically converge to a global minimum of f.
+Proof. (a) By assumption, there exists some initial condition x0 such that x(t; x0) remains
+bounded. This, in turn, implies that the ω-limit set ω[x(t; x0)] is non-empty, compact, forward
+invariant, and that
+dðxðt;x0Þ;o½xðt;x0Þ�Þ ! 0 as t ! þ1
+Let x�
+denote an element of ω[x(t; x0)]. Since (5) is a gradient system, Theorem 15.0.3 of [28]
+guarantees that x�
+must be an equilibrium point of (5). This proves that f has at least one sta-
+tionary point.
+Let us now show that ω[x(t; x0)] consists only of the single point x�
+, by contradiction. Let x�
+1
+and x�
+2 be distinct elements in ω[x(t; x0)]. Further let � ¼ dMðx�
+1;x�
+2Þ the geodesic distance
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 5 / 29between x�
+1 and x�
+2. Then, the geodesic balls B1≔BM x�
+1;�
+3
+�
+and BM x�
+2; �
+3
+�
+are disjoint. Further,
+since the system is semi-contracting these geodesic balls are forward invariant. Yet, since x�
+1 a
+limit point, x(t;x0) arrives within B1 at some point, and never leaves. Likewise, since x�
+2 is a
+limit point, x(t;x0) arrives within B2 at some point, and never leaves. Thus, we have a contra-
+diction, and the limit set must consist of a single point.
+(b) and (c): Consider now two equilibrium points of (5), x�
+1 and x�
+2, and a smooth path γ(s)
+such that gð0Þ ¼ x�
+1 and gð1Þ ¼ x�
+2. Since the gradient dynamics are semi-contracting, for each
+s the solution x(t;γ(s)) remains bounded. Thus, by the same reasoning as above, each x(t;γ(s))
+converges to some equilibrium x�
+(s) as t ! + 1. Since rf(x�
+(s)) = 0 for each s, and x�
+(s)
+smoothly connects x�
+1 and x�
+2, it follows that fðx�
+1Þ ¼ fðx�
+2Þ. That is, all solutions converge to the
+same value for f.
+(d): That all solutions of (1) asymptotically converge to a global minimum of f follows from
+that fact that f decreases along all solutions, and all solutions converge to the same value for f.
+Remark 1. In the case that a contraction metric needs to be found numerically, note that the
+conditions (2) for certifying contraction or semi-contraction are convex criteria. Thus, in many
+instances, the process of finding a metric numerically to verify contraction may be accomplished
+via convex optimization approaches, such as those based on sums-of-squares programming [29].
+2.2 Relationship between geodesic convexity and contraction
+Geodesic convexity [12] generalizes conventional notions of convexity to the case where the
+domain of a function is equipped with a Riemannian metric. A special case occurs in geomet-
+ric programming (GP) [30]. In GP, a non-convex problem over positive variables fxig
+N
+i¼1 can
+be transformed into a convex problem by a change of variables yi ¼ logðxiÞ. Alternately GP
+can be formulated over the positive reals viewed as a Riemannian manifold by measuring dif-
+ferential length elements ds in a relative sense
+ds2
+¼
+X N
+i¼1
+dxi
+xi
+� �2
+¼
+X N
+i¼1
+dy2
+i ð6Þ
+Geodesically-convex optimization generalizes this transformation strategy to a broader class of
+problems [13]. However, beyond special cases (see, e.g., [31]), generative procedures remain
+lacking to formulate g-convex optimization problems or recognize g-convexity.
+To introduce g-convexity more formally, consider a function f : Rn
+! R and a positive
+definite metric M : Rn
+! Rn�n
+. We note that geodesic convexity of f is not an intrinsic prop-
+erty of the function itself, but rather is a property of f defined on the Riemannian manifold
+ðRn
+;MÞ.
+Definition 3 (g-Strong Convexity [32]). A twice differentiable function f : Rn
+! R is said
+to be geodesically α-strongly convex (with α > 0) in a symmetric positive definite metric M if
+its Riemannian Hessian matrix H(x) satisfies:
+HðxÞ≽aMðxÞ 8x 2 Rn
+ð7Þ
+The elements of the Riemannian Hessian are given as [32]
+Hij ¼ @ij f Gk
+ij @k f ð8Þ
+where @ij f ¼ @2f
+@xi@xj
+provide the elements of the conventional (Euclidean) Hessian and Gk
+ij denotes
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 6 / 29the Christoffel symbols of the second kind
+Gm
+ij ¼
+1
+2
+X n
+k¼1
+Mmk
+@jMik þ @iMjk @kMij
+� � h i
+with Mij
+(x) = (M(x)−1
+)ij. The function f is g-convex when (7) holds with α = 0.
+The Riemannian Hessian generalizes the notion of the Hessian from a Euclidean context
+and captures the curvature of f along geodesics. Likewise, the natural gradient generalizes the
+notion of a Euclidean gradient to the Riemannian context in the following sense.
+Definition 4 (Natural Gradient [33]). Consider Rn
+equipped with a Riemannian metric M.
+The natural gradient of a differentiable function f : Rn
+! R is the direction of steepest ascent on
+the manifold and is given in coordinates by M(x)−1
+rf(x).
+Remark 2. When M(x) is the Hessian of some twice differentiable strictly convex scalar func-
+tion ψ(x), natural gradient descent coincides with the continuous-time limit of mirror descent
+[34, Sec. 2.3] with potential ψ(x).
+Remark 3. From a differential geometric viewpoint, the first covariant derivative of f is a cov-
+ector field given in coordinates by rf(x), while the natural gradient is a vector field given in coor-
+dinates by M(x)−1
+rf(x) [33]. In a Euclidean context, where M(x) is identity, this distinction
+between covariant (covector) and contravariant (vector) representations of the gradient is
+immaterial.
+Similarly, the Riemannian Hessian H represents in coordinates the second covariant deriva-
+tive of f.
+When M is the identity metric, geodesic α-strong convexity naturally coincides with the
+definition of α-strong convexity in Definition 1. The natural gradient can be used to directly
+mirror Proposition 1 within the Riemannian context.
+Theorem 1 (Equivalence between g-Strong Convexity and Contraction of Natural Gradi-
+ent). Consider a twice differentiable function f : Rn
+� R ! R, a symmetric positive definite met-
+ric M : Rn
+! Rn�n
+, and the natural gradient system [33]
+_ x ¼ hðx;tÞ ¼ MðxÞ
+1
+rx fðx;tÞ ð9Þ
+Then, f is α-strongly g-convex in the metric M for each t if and only if (9) is contracting with rate
+α in the metric M. More specifically, the Riemannian Hessian verifies
+H ¼
+1
+2
+MA þ A>
+M þ _ M
+�
+ð10Þ
+where A ¼ @h
+@x
+.
+Appendix 1 provides a self-contained proof using conventional tensor analysis methods
+[35], whose relationship with contraction conditions have been noted previously [36, 37]. The
+same relationships drive coordinate-free versions of the result in [38].
+Remark 4. Theorem 1 can also be viewed as a special case of contraction analysis for complex
+Hamilton-Jacobi dynamics [37]. A reorganization of (9) as
+MðxÞ _ x ¼ rx fðx;tÞ
+may be recognized as the generalized momentum being the negative covariant gradient within a
+Hamiltonian mechanics context.
+Remark 5. While Theorem 1 applies to α-strong convexity, the link between the Riemannian
+Hessian and the contraction condition (2) also provides immediate equivalence between g-con-
+vexity of a function and semi-contraction of its natural gradient dynamics.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 7 / 29Remark 6. Eq (10) provides an alternate way to compute the geodesic Hessian H, and, as
+expected, leaves it invariant when the metric M is scaled by a strictly positive constant. Because
+of the structure of the natural gradient dynamics, scaling M is akin to scaling time and implies
+inversely scaling the contraction rate α, consistently with (7).
+By contrast, note that given a fixed dynamics H, the contraction metric analyzing it can
+always be arbitrarily scaled while leaving the contraction rate unchanged.
+Similar to in Section 2.1 where convexity corresponded to contraction of gradient in the
+identity metric, we likewise see that Thm. 1 imposes g-convexity via a particular choice of con-
+traction metric for the natural gradient dynamics. Mirroring Prop. 2, removing this restriction
+on the contraction metric leads to significant additional flexibility for guaranteeing conver-
+gence to a globally optimal point.
+Proposition 4 (Exponential Convergence of Contracting Natural Gradient Systems). Con-
+sider again natural gradient descent as in Eq (9). The system converges exponentially to a unique
+global minimum if it is contracting in some metric.
+Proof. The proof follows immediately from the same logic as the proof of Proposition 2.
+Remark 7. Note that contraction also provides robustness. Consider perturbed dynamics
+_ x ¼ hðx;tÞ þ dðtÞ with
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+dðtÞ
+>
+MðxÞdðtÞ
+q
+< R uniformly. If the dynamics are contracting with
+rate λ, then all trajectories contract to a geodesic ball of radius R/λ [15]. This observation implies
+favorable properties for algorithms where an exact gradient may be difficult or intractable to
+compute, with approximation methods used in their place.
+Theorem 2 (Semi-Contraction for Natural Gradient). Consider a twice differentiable func-
+tion f : Rn
+! R, a symmetric positive definite metric M : Rn
+! Rn�n
+, and the associated natu-
+ral gradient system
+_ x ¼ MðxÞ
+1
+rfðxÞ ð11Þ
+Assume that dynamics (11) is semi-contracting in some metric, and furthermore that one trajec-
+tory of the system is known to be bounded. Then, (a) f has at least one stationary point, (b) any
+local minimum of f is a global minimum, (c) all global minima of f are path-connected, and (d)
+all trajectories asymptotically converge to a global minimum of f.
+Proof. The proof follows the exact same line of logic as the proof to Prop. 3. The result of
+Theorem 15.0.3 of [28], which guarantees that any ω-limit point of gradient descent (5) is an
+equilibrium point, generalizes immediately to the case of natural gradient descent (11).
+Remark 8. The topology of global optimizers satisfying this semi-contraction condition is the
+same as those observed when training over-parameterized networks [2, 3]. However, empirical
+loss functions in these networks often also experience multiple saddle points [39, 40]. The
+attractor sets associated with strict saddles have measure zero [41, 42] under discrete gradient
+descent with sufficiently small stepsize (i.e., with adequately close approximation to the continu-
+ous time case), while the dimensionality of the attractor sets can be further reduced via smoothed
+versions of the gradient [43].
+While the presence of strict saddles precludes the ability of a gradient system to be globally
+semi-contracting, any of the results given here can be generalized to forward invariant contrac-
+tion or semi-contraction regions [15]. In principle, saddles could then be treated by excluding
+their measure zero attractor sets from suitably chosen contraction or semi-contraction regions.
+The topology of equilibria in semi-contracting gradient systems immediately implies the
+following result.
+Corollary 1. Consider an autonomous, semi-contracting natural gradient system. If the line-
+arization at some equilibrium point is strictly stable, then all system trajectories tend to this
+global minimizer.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 8 / 29More generally, if some equilibrium is locally asymptotically stable, all trajectories tend to this
+global minimizer.
+Proof. We prove the second part, the first then follows directly from Lyapunov’s lineariza-
+tion method. Existence of an equilibrium implies existence of a bounded trajectory. Further-
+more, by definition, there exists a ball around the equilibrium point x�
+such that all trajectories
+initiated in that ball tend to x�
+. If there was another equilibrium, the path connecting it to x�
+would intersect that ball, which is a contradiction since the path is itself composed of equilibria
+via Thm. 2.
+Remark 9. Strict stability of a natural gradient system at an equilibrium point can of course
+be established simply by ensuring that all eigenvalues of its Jacobian at this point are strictly in
+the left-half complex plane. This condition is equivalent to requiring that the Hessian of the
+objective function is positive definite at x�
+.
+Indeed, given the natural gradient dynamics (11) with h(x) = −M(x)−1
+rf(x), the Jacobian at
+any equilibrium x�
+is
+@h
+@x
+�
+�
+�
+�
+x?
+¼
+@½M 1
+�
+@x
+�
+�
+�
+�
+x?
+� rfðx?
+Þ Mðx?
+Þ
+1
+r2
+fðx?
+Þ
+¼ Mðx?
+Þ
+1
+r2
+fðx?
+Þ
+Applying a similarity transformation with the symmetric square root of M(x�
+) yields
+M
+1
+2ðx?
+Þ
+@h
+@x
+�
+�
+�
+�
+x?
+M
+1
+2ðx?
+Þ
+¼ Mðx?
+Þ
+1
+2
+r2
+fðx?
+Þ ½ �Mðx?
+Þ
+1
+2
+All eigenvalues of the symmetric matrix above are real, and they are all strictly negative if and
+only if the Hessian r2
+f(x�
+) is positive definite.
+Note that this condition is equivalent to the geodesic Hessian at x�
+being positive definite in
+any metric, as the Euclidean Hessian is numerically equal to the geodesic Hessian in any metric
+in this case, due to all terms multiplying the Christoffel symbols in (8) being zero.
+Corollary 2. Consider an autonomous semi-contracting natural gradient system, and
+assume that the system has more than one equilibrium. Then, at any equilibrium, both the
+Jacobian matrix of the dynamics and the Hessian of the objective have at least one zero
+eigenvalue.
+Proof. Consider an equilibrium x�
+, and an equilibrium path connecting it to some other
+equilibrium. The unit tangent vector at x�
+along this path is an eigenvector of the Jacobian
+with eigenvalue zero. Given the algebraic relation between the Jacobian and the objective Hes-
+sian pointed out in Remark 9, this shows in turn that the objective Hessian has a zero
+eigenvalue.
+2.3 Examples
+Let us illustrate Theorem 1 using the classical nonconvex Rosenbrock function:
+fðxÞ ¼ 100ðx2
+1 x2Þ
+2
+þ ðx1 1Þ
+2
+ð12Þ
+This function has a unique global optimum at x�
+= [1, 1]>
+, which is located along a long, shal-
+low, parabolic-shaped valley.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 9 / 29Example 3 Consider the Rosenbrock function (12) and the metric [32]
+MðxÞ ¼
+400x2
+1 þ 1 200x1
+200x1 100
+" #
+The metric M(x) satisfies trðMðxÞÞ ¼ 400x2
+1 þ 101 > 0 and detðMðxÞÞ ¼ 100 > 0, and thus M
+(x) � 0. Note that M(x) is not the Hessian of f(x). The natural gradient dynamics follows
+_ x ¼ hðxÞ ¼ MðxÞ
+1
+rfðxÞ ¼ 2
+x1 1
+x2
+1 2x1 þ x2
+" #
+It can be verified algebraically that
+M
+@h
+@x
+� �
+þ
+@h
+@x
+� �>
+M þ _ M ¼ 4M
+which shows that natural gradient descent is contracting with rate α = 2. This implies that the
+natural gradient dynamics satisfy
+dMðxðtÞ;x�
+Þ � e 2t
+dMðxð0Þ;x�
+Þ
+where x�
+= [1, 1]>
+. Equivalently, the Rosenbrock function is geodesically α-strongly convex with
+α = 2.
+The Rosenbrock metric M(x) can be viewed as following from a differential change of vari-
+ables
+dz ¼ YðxÞdx ¼
+20x1 10
+1 0
+" #
+dx
+where M = Θ>
+Θ yields δ x>
+M δ x = δ z>
+δ z. This differential change of variables is integrable,
+so that g-convexity of the Rosenbrock can be shown using the explicit nonlinear coordinate
+change z1 ¼ 10x2
+1 10x2 and z2 = x1 − 1 that provides f ¼ z2
+1 þ z2
+2.
+Example 4. Mirror descent provides another example of a metric corresponding to an explicit
+state transformation, with Newton’s method as a special case.
+Consider a twice differentiable scalar objective function f(x), and a smooth strictly convex sca-
+lar function ψ(x). Denoting by Hf(x) = r2
+f(x) and Hψ = r2
+ψ the Hessians of these functions,
+continuous-time mirror descent of f(x) under potential ψ(x) corresponds to natural gradient in
+the Hessian metric Hψ [34, Sec. 2.3]
+_ x ¼ H 1
+c rfðxÞ ð13Þ
+Consider the explicit change of variables z = rψ(x), which can be written in differential form as
+δ z = Hψ δ x. The dynamics (13) can be viewed in the mirror space as
+_ z ¼ Hc _ x ¼ rfðxÞ
+and therefore
+d
+dt
+dz ¼ Hf dx
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 10 / 29Letting MðxÞ ¼ H2
+c, this yields
+d
+dt
+dxT
+MðxÞdx ½ � ¼
+d
+dt
+dzT
+dz ½ � ¼ 2 dz>
+Hf dx ¼ dx>
+½Hf Hc þ HcHf �dx>
+Thus, continuous mirror descent (13) is contracting with rate λ > 0 in the metric MðxÞ ¼ H2
+c if
+Hf Hc þ HcHf ≽2lH2
+c ð14Þ
+In the particular case when f is α-strongly convex and the potential function is chosen as
+ψ(x) = f(x), Eq (13) simply corresponds to Newton’s method, and (14) verifies that Newton’s
+method is contracting with rate 1 in the squared Hessian metric MðxÞ ¼ H2
+f ðxÞ [44].
+Note that the well-known result that the transformation z = rϕ(x) is one-to-one (given the
+strict convexity of ψ) can also be shown by constructing, for a given z, the system
+_ x þ rcðxÞ ¼ z ð15Þ
+which is autonomous and contracting in the identity metric and thus must reach a unique equi-
+librium point.
+The following proposition provides further insight into the case when the contraction met-
+ric is related to an explicit change of variables more generally.
+Proposition 5 (Relationship between gradient and natural gradient under a diffeomorphic
+change of variables). Consider a diffeomorphic change of variables z = g(x), and the associated
+metric M(x) = Θ(x)>
+Θ(x), with YðxÞ ¼ @g
+@x
+. For any twice differentiable function f : Rn
+! R,
+natural gradient descent in x
+_ x ¼ MðxÞ
+1
+rfðxÞ
+is equivalent to gradient descent in z
+_ z ¼ r f � g 1
+½ �ðzÞ
+Proof. In the z coordinates we have
+_ z ¼
+@g
+@x
+_ x ¼ Y M 1
+rfðxÞ ¼
+@f
+@x
+Y 1
+� �>
+¼
+@f � g 1
+@z
+� �>
+¼ r f � g 1
+½ �ðzÞ
+Proposition 6. Consider a metric M(x) and suppose there exists a diffeomorphic change of
+variables z = g(x) such that M(x) = Θ(x)>
+Θ(x), with YðxÞ ¼ @g
+@x
+. Then, the associated Riemann-
+ian curvature tensor with components Rikℓm must be identically zero.
+Proof. Note that since δz = Θ(x)δx, it follows that δz>
+δz = δx>
+M(x)δx and thus the Rie-
+mannian metric tensor expressed in the z coordinates is the identity. Since the components of
+the Riemannian metric tensor are constant in these transformed coordinates, it follows that
+the components of the Riemannian curvature tensor are identically zero [32]. Transformation
+laws for tensors ensure that the components of the curvature tensor remain zero under arbi-
+trary coordinate change, thus Rikℓm = 0.
+The general freedom to consider differential changes of coordinates δz = Θ(x)δx where Θ is
+non-integrable provides additional flexibility and generality to both contraction analysis and
+g-convexity, as illustrated by the following examples.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 11 / 29Example 5. Consider the non-convex function
+fðxÞ ¼ x2
+1 þ x2
+2 þ x2
+1x2
+2
+which has a global minimum at x = 0. Contours of the function are shown in Fig 1. Gradient
+descent
+_ x ¼ rfðxÞ ¼ 2
+x1ð1 þ x2
+2Þ
+x2ð1 þ x2
+1Þ
+" #
+can be shown to be contracting at rate λ = 2 in the metric
+MðxÞ ¼
+2 þ x2
+1 x1x2
+x1x2 2 þ x2
+2
+" #
+Fig 1 shows two solutions and plots their geodesic distance. The decay is, as expected, at a rate
+faster than the exponentially decreasing upper bound as derived from (3). The curvature tensor
+for this metric has some non-zero components, such as
+R1221 ¼
+2
+2 þ x2
+1 þ x2
+2
+From Proposition 6, this shows that this metric cannot be derived from an explicit change of
+coordinates.
+Example 6. Consider the function
+fðzÞ ¼ z8
+1 z6
+1 2z5
+1z2 z4
+1 þ z2
+1z2
+2 þ z2
+1 þ 2z1z2 þ z2
+2
+Fig 1. Contracting gradient descent corresponding to Example 5.
+https://doi.org/10.1371/journal.pone.0236661.g001
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 12 / 29and natural gradient descent with a given natural metric Θ(z)>
+Θ(z), where
+YðzÞ ¼
+1 0
+1 3z2
+1 1
+" #
+This natural gradient dynamics is verified semi-contracting in the metric
+MðzÞ ¼ YðzÞ
+>
+1 þ z2
+2 2z3
+1z2 þ z6
+1 0
+0 1 þ z2
+1
+" #
+YðzÞ
+Similar to Example 5, this metric has non-zero Riemannian curvature, and thus cannot be
+derived from a change of coordinates. Fig 2 shows the contours of f and two solutions of natural
+gradient descent. Fig 3 shows that the the geodesic distance between these two solutions is non-
+increasing. Since the system is only semi-contracting, the distance between solutions does not
+tend toward zero. It can be verified that f is a sum of squares and thus f(z) � 0, and that f(z) = 0
+when z2 ¼ z3
+1 z1. Both initial conditions asymptotically lead to this path connected set of global
+optima.
+Example 7. Geodesically-convex optimization can also be used to carry out manifold-con-
+strained optimization in an unconstrained fashion via recasting problems over a Riemannian
+manifold directly [14, 31]. Taking an intrinsic view of the manifold, coordinate free results are
+available [38], however, for the purposes of computation, we assume a global coordinate chart
+here. Consider for instance optimization over the set Sn
+þ of n × n positive definite matrices, and
+specifically the problem of finding the Karcher mean of m matrices Ai 2 Sn
+þ [13], which
+Fig 2. Semi-contracting natural gradient descent for Example6.
+https://doi.org/10.1371/journal.pone.0236661.g002
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 13 / 29minimizes the objective function
+fðXÞ ¼
+1
+2
+X m
+i¼1
+klogðA 1
+i XÞk
+2
+F
+where kAkF ¼
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+trðA>
+AÞ
+p
+denotes the Frobenius norm of a matrix A. The function f(X) is m-
+strongly convex [13] on Sn
+þ in the metric that measures symmetric differential displacements as
+ds2
+¼ trððdX X 1
+Þ
+2
+Þ ð16Þ
+Naturally, the requirement that δX be symmetric makes it an element of the tangent space to the
+manifold of symmetric positive definite matrices.
+This metric generalizes the GP case (6), and coincides with the second-order terms in the Tay-
+lor series of the log barrier −logdet(X) [45]. The gradient of f(x) can be written
+rfðXÞ ¼
+X m
+i¼1
+logðA 1
+i XÞX 1
+and accordingly the natural gradient can be shown to satisfy
+X m
+i¼1
+XlogðA 1
+i XÞ ¼ XrfðXÞX
+From Theorem 1, any trajectory with arbitrary initial condition Xð0Þ 2 Sn
+þ will remain within
+Fig 3. Semi-contracting natural gradient descent for Example6.
+https://doi.org/10.1371/journal.pone.0236661.g003
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 14 / 29Sn
+þ under the natural gradient descent dynamics
+_ X ¼
+X m
+i¼1
+XlogðA 1
+i XÞ
+since (intuitively) the Riemannian metric (16) makes any element on the boundary of the positive
+definite cone an infinite distance away from any one in the interior, and contraction of the natu-
+ral gradient dynamics ensures that geodesic distances decrease exponentially.
+Example 8. An approximation to the Riemannian distance of two positive definite (PD)
+matrices on the PD cone is given by the Bregman LogDet divergence on Sn
+þ
+dðAkXÞ ¼ logdetðA 1
+XÞ þ trðX 1
+AÞ n ð17Þ
+The metric is convex in its first argument, and can be shown to be geodesically convex in the sec-
+ond. We illustrate the connection with contraction to show this property. Note that
+rdðAkXÞX ¼ X 1
+X 1
+AX 1
+so that the natural gradient descent dynamics are simply
+_ X ¼ X rdðAkXÞX ½ �X ¼ X þ A
+with differential dynamics
+d _ X ¼ dX
+where the differential displacement δ X must be symmetric. Considering the rate of change in
+length of these differential displacements
+d
+dt
+tr ðX 1
+dXÞ
+2
+Þ
+�
+¼ 2trðX 1
+AðX 1
+dX 1
+Þ
+2
+Þ
+and defining the differential change of variables dZ ¼ X
+1
+2 dXX
+1
+2, one has trðdZ2
+Þ ¼
+trððX 1
+dXÞ
+2
+Þ and
+d
+dt
+trðdZ2
+Þ ¼ 2tr dZX
+1
+2AX
+1
+2 dZ
+� �
+¼ 2kA
+1
+2X
+1
+2 dZk
+2
+F < 0 ð18Þ
+for all δ Z 6¼ 0. Hence, considering only the second argument to LogDet divergence, its Riemann-
+ian Hessian is positive definite, thus proving g-convexity via Thm. 1.
+2.4 Non-autonomous systems and virtual systems
+In our optimization context, the fact that contraction analysis is directly applicable to non-
+autonomous systems can be exploited in a variety of ways. As we shall detail later, a key aspect
+is that it allows feedback combinations or hierarchies of contracting modules to be exploited
+to address more elaborate optimization problems or architectures. Also, it makes the construc-
+tion of virtual systems [46] possible to potentially extend results beyond natural-gradient
+descent.
+Remark 10. The natural gradient M−1
+(x)rx f(x, t) represents the direction of steepest
+ascent on the manifold at any given time. With this in mind, Remark 7 on robustness enables
+convergence analysis for natural gradient descent within time-varying optimization contexts
+[25]. Let x�
+(t) denote the optimum of a time-varying α-strongly g-convex function. If
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 15 / 29ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+_ x�ðtÞ
+>
+MðxÞ_ x�ðtÞ
+q
+< R, then the natural gradient will track _ x�
+ðtÞ with accuracy R/α after expo-
+nential transient.
+Remark 11. Consider a contracting natural gradient system of the form (9). In the autono-
+mous case, equations governing the differential displacement follow
+d
+dt
+dx ¼
+@h
+@x
+dx ð19Þ
+which has a similar structure to the time evolution of h(x)
+d
+dt
+hðxÞ ¼ rh x ð Þ ð Þ hðxÞ ð20Þ
+Thus, for natural gradient descent of an α-strong g-convex function f(x), the same algebra leading
+to (4) also gives
+d
+dt
+ðh>
+MhÞ ¼ 2h>
+Hh � 2aðh>
+MhÞ
+so that the Krasovskii-like function
+VðxÞ ¼ hðxÞ
+>
+MðxÞhðxÞ ¼ rfðxÞ
+>
+MðxÞ
+1
+rfðxÞ
+can be viewed as an exponentially converging Lyapunov function, with global minimum V = 0 at
+the unique minimum of f(x). Of course, (19) remains valid for non-autonomous systems as well,
+while (20) does not.
+The use of virtual contracting systems [46–48] allows guaranteed exponential convergence
+to a unique minimum to be extended to classes of dynamics which are not pure natural gradi-
+ent. For instance, it is common in optimization to adjust the learning rate as the descent pro-
+gresses. Consider a natural gradient descent with the function f(x) α-strongly g-convex in
+metric M(x), and define the new system
+_ x ¼ pðx;tÞMðxÞ
+1
+rfðxÞ ð21Þ
+where the smooth scalar function p(x, t) modulates the learning rate [33] and is uniformly pos-
+itive definite,
+9 pmin > 0; 8t � 0; 8x; pðx;tÞ � pmin
+Let us show that this system tends exponentially to the minimum x�
+of f(x).
+Consider the auxiliary, virtual system,
+_ y ¼ MðyÞ
+1
+ryð pðx;tÞfðyÞ Þ ð22Þ
+For this system, p(x(t), t) is an external, uniformly positive definite function of time, and thus
+ryð pðx;tÞfðyÞ Þy ¼ pðx;tÞ rfðyÞ
+so that the contraction of (9) with rate α implies the contraction of (22) with rate αpmin. Since
+both x(t) and x�
+are particular solutions of (22), this implies in turn that x(t) tends to x�
+with
+rate αpmin.
+Note that since we only assumed that p(x, t) is uniformly positive definite, in general the
+actual system (21) is not contracting with respect to the metric M(x).
+Remark 12. The learning rate may also be selected to improve the numerical properties of the
+algorithm in a discrete time implementation. For example, p(x, t) could vary as the inverse of the
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 16 / 29condition number of r2
+f(x) to improve numeric conditioning without impact on stability
+guarantees.
+2.5 Contraction +
+Corollary 1 above points to a more general class of results where contraction or semi-contrac-
+tion properties are combined with other information, such as a stable local linearization or a
+decreasing cost, to provide global results.
+2.5.1 Contraction is attractive. As we now show, Corollary 1 extends more generally to
+autonomous semi-contracting systems. An instance of this result in the case of an identity met-
+ric was derived in [49].
+Proposition 7. Consider an autonomous system
+_ x ¼ hðxÞ ð23Þ
+semi-contracting in a bounded metric M(x),
+0 � b2
+0I≼MðxÞ≼b2
+1I 8x
+If a system equilibrium is locally asymptotically stable, then it is globally asymptotically stable. In
+particular, if the system linearization at some equilibrium point is strictly stable, then all system
+trajectories tend to this equilibrium.
+Proof. The result is a particular case of Theorem 3, to be discussed next.
+Theorem 3. Consider a non-autonomous system, semi-contracting in a bounded metric
+M(x),
+0 � b2
+0I≼MðxÞ≼b2
+1I 8x ð24Þ
+Assume that a specific trajectory x�
+(t) is locally attractive. Then all trajectories tend asymptoti-
+cally to x�
+(t).
+In particular, if contraction holds (possibly in a different bounded metric) along a specific tra-
+jectory x�
+(t), and within a tube of constant size around it, then all trajectories tend asymptoti-
+cally to x�
+(t).
+Proof. The first part generalizes the equilibrium argument from [49] to arbitrary trajectories
+and arbitrary metrics. Assume that x�
+(t) is locally attractive, by which we mean there exists
+some � > 0 such that, for any initial time t0 and initial condition x0 2 BIðx�
+ðt0Þ;�Þ, one has
+x(t0 + T;x0, t0) ! x�
+(t0 + t) as T ! +1. Without loss of generality, we assume t0 = 0.
+Consider some generic initial condition x0 with dI(x0, x�
+(0)) > �. We will argue that there is
+always a finite time window over which the geodesic distance from x(t; x0) to x�
+(t) decreases
+by a fixed finite increment.
+Consider a geodesic connecting x0 and x�
+(0) and denote by x the unique point on this geo-
+desic that is a geodesic distance β0 � away from x�
+(0). Due to the uniform positive definiteness
+of M, this condition implies that x 2 BIðx�
+ð0Þ;�Þ.
+Because of the local attractivity of x�
+(t), there exists a time t1 > 0 such that
+dIðxðt1;xÞ;x�
+ðt1ÞÞ �
+�b0
+2b1
+which further implies that
+dMðxðt1;xÞ;x�
+ðt1ÞÞ � b0
+�
+2
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 17 / 29In addition, since the system is semi-contracting, we have
+dMðxðt1;xÞ;xðt1;x0ÞÞ � dMðx;x0Þ
+and so by the triangle inequality
+dMðx�
+ðt1Þ;xðt1;x0ÞÞ � dMðx;x0Þ þ b0
+�
+2
+¼ dMðx;x0Þ þ dMðx�
+ð0Þ;xÞ
+dMðx�
+ð0Þ;xÞ þ b0
+�
+2
+¼ dMðx�
+ð0Þ;x0Þ b0
+�
+2
+This implies that so long as dI(x0, x�
+(0)) > �, the trajectory from x0 will eventually decrease its
+geodesic distance by a fixed finite increment. Since this process can be repeated, it follows that
+there must exist some time T such that xðT;x0Þ 2 BIðx�
+ðTÞ;�Þ.
+To complete the second part of the proof we proceed to show that if contraction (2) holds
+within a tube of constant size around trajectory x�
+(t), for some bounded metric
+ðb?
+0Þ
+2
+I≼;M?
+ðxÞ≼ðb?
+1Þ
+2
+I and some rate α�
+> 0, then that trajectory is locally attractive. By con-
+dition (2) holding within a tube we mean that there exists some � > 0 such that (2) holds for
+any time t and any x 2 BIðx�
+ðtÞ;�Þ. From boundedness of the metric, we have
+b?
+0 dIðx�
+ðtÞ;xÞ � dM? ðx�
+ðtÞ;xÞ
+so that any initial condition x0 satisfying
+dM� ðx�
+ð0Þ;x0Þ � �b�
+0
+necessarily starts within this tube. Further, since (2) holds within the tube, it follows that the
+geodesic ball of radius �b?
+0 around x�
+(t) is forward invariant. Since this ball is contained within
+a contraction region, this implies that for any x0 2 BMðx?
+ð0Þ;b?
+0�Þ
+dM� ðx�
+ðtÞ;xðt;x0ÞÞ � e a?t
+dM� ðx�
+ð0Þ;x0Þ
+which proves local asymptotic stability of x�
+(t).
+Remark 13. The condition regarding contraction within a tube of fixed size is included to
+avoid pathological cases where the region of contraction shrinks to zero as t ! +1. For example,
+the system _ x ¼ x þ tx3
+is contracting with rate 1 at the origin for all time, yet the origin is not
+locally asymptotically stable.
+Remark 14. Intuitively, the result can be understood by analogy with a shrinking rope. Con-
+sider a path of initial conditions connecting x�
+(0) to any x0. As this path flows forward in time, at
+t = 0, only a portion of this path of states is within the basin of attraction for x�
+(t). Viewing this
+path as a rope, the semi-contraction property ensures that no part of the rope can increase in
+length as it flows forward through the dynamics. Yet, due to local attractivity at one end of the
+rope, a portion of it is guaranteed to have shrinking length, pulling the rest of the rope toward the
+the region of attraction.
+Remark 15. Numerical tools for determining contraction metrics [29] are based on the fact
+that contraction conditions (2) are convex in the metric for a fixed contraction rate. In practice,
+these methods often involve an outer search procedure for the contraction rate (e.g., via a
+binary search). In this sense, the use of semi-contraction is desirable as it does not require this
+additional search.
+Remark 16. These results have analogs in the context of controller design using control con-
+traction metrics (CCMs) [48, 50]. In this setting, one can impose a semi-contracting closed-loop
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 18 / 29metric everywhere, except in a tube along a desired trajectory where a strict contraction condition
+would be required, possibly in a different metric. Since the existence of an exponential (resp.
+semi) CCM implies that the closed-loop plant can be rendered contracting (resp. semi-contract-
+ing), Theorem 3 would then imply asymptotic stabilizability of the desired trajectory.
+This extension likewise has analogs for manifold convergence results [48] and convergence to
+a limit cycle by transverse contraction [51], both of which are special cases of CCM results applied
+to suitably constructed virtual control systems [48]. In either case, a semi-contracting CCM
+everywhere can be combined with a contracting CCM condition on the manifold (or limit cycle)
+and within a neighborhood of it to assert asymptotic stability of the manifold (or limit cycle). In
+the limit cycle case for autonomous systems, the contracting CCM condition needs only be
+enforced on the limit cycle itself, as its satisfaction within some neighborhood is then guaranteed
+by compactness. Likewise, for convergence to a compact manifold (e.g., an eggshell) in an autono-
+mous system, the contracting CCM condition needs only be considered on the manifold itself.
+2.5.2 Contraction as minimization. Similarly, Proposition 2 may be viewed as a particu-
+lar instance of the following results, which use contraction properties to minimize a cost or
+Lyapunov-like function.
+Proposition 8 (Exponential Cost Minimization). Consider an autonomous contracting sys-
+tem (23), and a scalar cost function V(x) such that _ VðxÞ � 0 for all x. Then all trajectories tend
+exponentially to a global minimum of V.
+Proof. Because the system is contracting and autonomous, it tends exponentially to a unique
+equilibrium x�
+[15]. Consider now an arbitrary x, and the system trajectory initialized at x.
+Since the cost V can only decrease along the trajectory, this implies that V(x�
+) � V(x), for all x.
+Proposition 9. Consider an autonomous semi-contracting system (23) in a bounded metric
+M(x), and a scalar cost function V(x) such that _ VðxÞ � 0 for all x. Assume that one system equi-
+librium x�
+is locally attractive (e.g., that linearization at x�
+is strictly stable). Then this equilib-
+rium is unique, it is a global minimum of V, and all trajectories converge to it asymptotically.
+Proof. Applying Proposition 7 shows that all trajectories asymptotically tend to x�
+, which
+also implies that the equilibrium is unique. By the same reasoning as in Proposition 8, since V
+can only decrease, V(x�
+) must be a global minimum.
+Remark 17. These results extend readily to the case where a system is semi-contracting within
+some forward invariant region, as opposed to globally. These generalizations may have applica-
+bility e.g., to the continuous-time limit of trained neural networks [52–54], wherein semi-con-
+traction regions represent basins of attraction that are free of saddles. Metrics may become
+singular as they approach the boundary of these open sets [15], allowing the semi-contraction
+region to cover the entire basin.
+Proposition 9 can be stated more generally as follows.
+Theorem 4 (Asymptotic Cost Minimization). Consider an autonomous semi-contracting
+system in a bounded metric M(x), and a scalar cost function V(x) such that _ VðxÞ � 0 for all x.
+Assume that one trajectory is known to be bounded. Let I be a forward invariant set where
+_ V ¼ 0, and assume that the contraction condition (2) holds on I for some (possibly different)
+metric.
+Then I is path connected, all system trajectories converge to a unique equilibrium x�
+2 I and
+V is globally minimized at x�
+.
+Proof. Let us first show that I is path connected, by contradiction. Assume I is not path
+connected, then it can be decomposed into two disjoints subsets, I1 and I2. Because I is invari-
+ant and the subsets are disjoint, each of the subsets must be invariant. Strict contraction on I1
+and I2 then implies that each subset contains at least one locally stable equilibrium point (note
+that each of the subsets may themselves be disconnected and thus may contain more than one
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 19 / 29stable equilibrium point). The existence of two equilibrium points contradicts Proposition 9,
+and thus I is path connected.
+Next, on the connected invariant set I, contraction implies that the geodesic distance
+between any two points shrinks exponentially. By the same reasoning as in Proposition 8, this
+in turn implies convergence to a global minimum of V.
+Remark 18. Note that for a system where a scalar cost V satisfies _ V � 0, radial unbounded-
+ness of V is a sufficient condition for all trajectories to be bounded, ensuring the existence of a
+bounded trajectory as necessary in Thm. 4.
+Remark 19. In the case of mechanical systems, V may often be chosen as the total energy of
+the system, so that Proposition 8 implies exponential convergence of the total energy, and, in
+turn, that potential energy is exponentially minimized. Similarly, Theorem 4 implies that poten-
+tial energy is asymptotically minimized.
+Remark 20. Contraction criteria can also be expressed in non-Euclidean norms and their
+associated matrix measures ([15], section 3.7.ii). The results above extend immediately to these
+representations.
+3 Primal-dual optimization
+Primal-Dual algorithms are widely used in optimization to determine saddle points and also
+appear naturally in constrained optimization [45], where Lagrange parameters play the role of
+dual variables. When a function is strictly convex in a subset of its variables, and strictly con-
+cave in the remaining, gradient descent/ascent dynamics converge to a unique saddle equilib-
+rium [55, 56]. Within the context of constrained optimization, these dynamics are known as
+the primal-dual dynamics. Such dynamics play an important role e.g., in machine learning, for
+instance in adversarial training [57], in the information theory [58] of deep networks, in rein-
+forcement learning [59] and actor-critic methods, and in support vector machine representa-
+tions [60]. More generally, they are central to a large class of practical min-max problems, such
+as problems in physics involving free energy, or, e.g., nonlinear electrical networks modeled in
+terms of Brayton-Moser mixed potentials [25, 61, 62].
+Consider a scalar function L(x, λ, t), possibly time-dependent, and metrics Mx(x) and
+Mλ(λ). Consider the natural primal-dual dynamics, which we define as
+MxðxÞ _ x ¼ rxLðx;λ;tÞ ð25aÞ
+MλðλÞ _ λ ¼ rλLðx;λ;tÞ ð25bÞ
+In contrast to Remark 8, wherein spurious saddle equilibrium points presented an obstacle to
+global contraction, here the target equilibrium points of these dynamics are, by construction,
+chosen to be the saddle points of the function L. Using the metrics Mx(x) and Mλ(λ) extends
+the standard case [25], where they would be replaced by constant, symmetric positive definite
+matrices. The practical relevance of this extension is illustrated by the following example in the
+case of natural adaptive control.
+3.1 Primal dual dynamics in natural adaptive control
+This section illustrates the presence of natural primal-dual dynamics embedded in the applica-
+tion of natural adaptive control laws. Consider a system given by
+Jðx;...;xðn 2Þ
+;aÞxðnÞ
+þ Yðx;...;xðn 1Þ
+Þa ¼ u ð26Þ
+with configuration x 2 RN
+, control u 2 RN
+, and unknown parameters a 2 A � Rp
+. The
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 20 / 29regressor Y 2 RN�p
+and symmetric matrix J 2 RN�N
+may depend nonlinearly on the state and
+its derivatives. We assume that the matrix J remains positive definite for all a 2 A and that it is
+linear in a. As a result, there exists a regressor function W such that
+Wðx;...;xðn 1Þ
+;xðnÞ
+Þa ¼ Jðx;...;xðn 2Þ
+;aÞxðnÞ
+ð27Þ
+þYðx;...;xðn 1Þ
+Þa ð28Þ
+and a regressor function Q such that for any s 2 RN
+1
+2
+_ Js ¼ Qðx;...;xðn 1Þ
+;sÞa
+Consider a desired trajectory xd(t) and the associated sliding variable [27, 63]
+s ¼
+d
+dt
+þ λ
+� �n 1
+~ x ¼ xðn 1Þ
+xðn 1Þ
+r
+ð29Þ
+where ~ x ¼ x xd. With this sliding variable, we define a reference xðn 1Þ
+r for the order n − 1
+derivative of the state.
+Choosing the control law
+u ¼ Ks þ^ JxðnÞ
+r þ Yðx;...;xðn 1Þ
+Þ^ a
+1
+2
+^ _ J s
+where xðnÞ
+r ¼ d
+dt
+xðn 1Þ
+r provides the closed-loop dynamics
+J_ s þ Ks ¼ W~ a þ Q^ a ð30Þ
+Inspired by the elegant modification of the Slotine and Li adaptive robot controller intro-
+duced by Lee et al. [64, 65], we consider the Lyapunov-like function
+V ¼
+1
+2
+s>
+Js þ df ðak^ aÞ
+where df ðak^ aÞ denotes the Bregman divergence of a function f assumed convex on A and
+given by
+df ðak^ aÞ ¼ fðaÞ fð^ aÞ < rfð^ aÞ;a ^ a >
+Note that the LogDet divergence from (17) follows this form for f(X) = −logdet(X). Here, we
+consider the case when A is open and f is chosen as a convex barrier function on A, such that
+the Hessian metric H = r2
+f(x) endows A with a barrier Hessian manifold structure [65, 66].
+Note that if f is a second-order function 1
+2
+aT
+Pa, the Bregman divergence is simply 1
+2
+~ a>
+P~ a, with
+H−1
+equal to the constant matrix P−1
+similar to the standard adaptive algorithm [63].
+A quick calculation shows that the derivative of the Bregman divergence is simply _ ^ a>
+H~ a, so
+that the adaptation law
+_ ^ a ¼ H 1
+ðW þ QÞ
+>
+s ð31Þ
+yields
+_ V ¼ s>
+Ks þ s>
+ðW þ QÞ~ a þ _ ^ a> H ~ a ¼ s>
+Ks � 0
+Considering a virtual system with W and Q as externally provided functions of time, the
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 21 / 29dynamics (30) and (31) are equivalent to natural primal-dual over the function
+L ¼
+1
+2
+s>
+Ks s>
+W~ a s>
+Q ^ a
+in the decoupled metric Ms = J and M^ a ¼ Hð^ aÞ. Overall, this construction enables the results
+in natural adaptive robot control [64, 65] to be extended to the broader class (26).
+Remark 21. Note that a similar construction could be applied to provide natural adaptation
+within recent applications of nonlinear adaptive control [67, Thm. 2] based on control contrac-
+tion metrics [48, 50].
+3.2 Natural primal dual
+Continuous-time convex primal-dual optimization is analyzed from a nonlinear contraction
+perspective in [25], building on a earlier result of [19]. As we now show, Theorem 1 yields a
+natural extension to geodesic primal-dual optimization, where convexity in terms of primal
+and dual variables is replaced by g-convexity, thus broadening the above results to state-depen-
+dent metrics.
+Theorem 5. Consider a scalar function L(x, λ, t), with L g-strongly convex over x and g-
+strongly concave over λ in metrics Mx(x) and Mλ(λ) respectively. Then, the geodesic primal-dual
+dynamics (25) is globally contracting, in metric
+Mðx;λÞ ¼
+MxðxÞ 0
+0 MλðλÞ
+" #
+ð32Þ
+Proof. Letting z = [x>
+, λ>
+]>
+and _ z ¼ fðz;tÞ denote the overall system dynamics, the sys-
+tem’s Jacobian can be written
+Aðx;λ;tÞ ¼
+@f
+@z
+¼
+@
+@x
+ðM 1
+x rxLÞ Mx
+1
+rxλL
+Mλ
+1
+rλxL
+@
+@λ
+ðM 1
+λ rλLÞ
+2
+6
+6
+6
+4
+3
+7
+7
+7
+5
+ð33Þ
+so that, using Theorem 1,
+MA þ A>
+M þ _ M ¼ 2
+Hx 0
+0 Hλ
+" #
+< 0
+Proposition 10. Consider the primal dual dynamics (25) for a scalar cost function L(x, λ),
+with L g-strongly convex over x and g-concave (not necessarily strongly so) over λ in metrics
+Mx(x) and Mλ(λ) respectively. Suppose also that one solution of (25) is known to be bounded.
+Then, for any initial condition, the geodesic primal-dual dynamics (25) converge to an equilib-
+rium x�
+, λ�
+. Moreover, x�
+is independent of initial conditions.
+Proof. The proof is given as a corollary to Theorem 6 in the next section.
+Remark 22. The above proposition highlights that contraction of the PD dynamics (e.g., as
+developed in [25]) is not necessary to guarantee convergence to a unique primal solution. Note
+however, that the above results only guarantee asymptotic convergence toward the unique primal
+equilibrium, as opposed to exponential convergence [25] when contraction can be shown for the
+PD dynamics as a whole.
+This observation is reminiscent of results in adaptive control wherein the error dynamics of
+a certainty-equivalent controller may be asymptotically stable despite the fact that an
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 22 / 29associated adaptation law may not converge to the actual unknown parameters [63, 68], with
+adaptation occurring on a “need-to-know” basis in that sense. Conceptually, this principle can
+apply to more general contexts involving concurrent control and learning, when effective con-
+trol is the main goal (e.g., in reinforcement learning).
+4 Applying contraction tools to g-convex optimization
+Theorem 1 immediately implies that existing combination properties [15, 19] from contrac-
+tion analysis can be directly applied in the context of g-convex optimization. While these prop-
+erties derive from simple matrix algebra and in principle could be proven directly from the
+definition of geodesic convexity, as we will see most rely for their practical relevance on the
+flexibility afforded by the contraction analysis point of view.
+4.1 Sum of g-convex
+If two functions f1(x, t) and f2(x, t) are g-convex in the same metric for each t, then their sum
+f1(x, t) + f2(x, t) is g-convex in the same metric.
+Example 9. Consider a function f1(x1, y1, t) g-convex for each t in a block diagonal metric
+BlkDiagðMx1
+ðx1Þ;Myðy1ÞÞ and a function f2(x2, y2, t) g-convex for each t in a block diagonal
+metric BlkDiagðMx2
+ðx2Þ;Myðy2ÞÞ. Then, the function:
+fðx1;x2;y;tÞ ¼ f1ðx1;y;tÞ þ f2ðx2;y;tÞ
+is g-convex in metric BlkDiagðMx1
+;Mx2
+;MyÞ for each t.
+4.2 Skew-symmetric feedback coupling
+Assume that a scalar function f1(x1, x2) is α1-strongly g-convex in x1 in a metric M1(x1) for
+each fixed x2, and similarly that a scalar function f2(x1, x2) is α2-strongly g-convex in a metric
+M2(x2) for each fixed x1. If f1 and f2 satisfy the scaled skew-symmetry property
+rx1x2
+f1 ¼ k rx1x2
+f2 ð34Þ
+where k is some strictly positive constant, then the natural gradient dynamics
+_ x1 ¼ M1ðx1Þ
+1
+rx1
+f1ðx1;x2Þ
+_ x2 ¼ M2ðx2Þ
+1
+rx2
+f2ðx1;x2Þ
+ð35Þ
+is contracting with rate min(α1, α2) in metric M(x1, x2) = BlkDiag(M1(x1), k M2(x2)). Since the
+overall system is both contracting and autonomous, it tends to a unique equilibrium
+[15]ðx�
+1;x�
+2Þ which satisfies the Nash-like conditions
+x�
+1 ¼ argminx1
+f1ðx1;x�
+2Þ
+x�
+2 ¼ argminx2
+f2ðx�
+1;x2Þ
+Note that the result can be broadened to cases where the scaled skew-symmetry property is
+not exactly satisfied, by using the small-gain extension in [19]. Taking again the machine learn-
+ing context as a potential example, such two-player game dynamics can occur in certain types
+of adversarial training.
+The result extends to a game with an arbitrary number of players. Consider n functions
+ffiðx1;...;xnÞg
+n
+i¼1 such that each fi is αi-strongly g-convex over xi in a metric Mi(xi). If the
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 23 / 29functions satisfy the skew-symmetry conditions
+rxixj
+fi ¼ kjrxixj
+fj
+for each j > i, then the suitable generalizations of (35) result in a coupled system that is con-
+tracting with rate min(α1, ..., αn) in the metric
+M ¼ BlkDiagðM1;k2M2;...;knMnÞ:
+The overall system converges to a unique Nash-like equilibrium satisfying
+x�
+1 ¼ argminx1
+f1ðx1;x�
+2;...;x�
+nÞ
+and a similar relation for each other player.
+Likewise, the result can be extended to the case when the natural gradient dynamics for
+each individual player may only be semi-contracting.
+Theorem 6. Consider the two player case (35), wherein (a) f1 is α1-strongly g-convex with α1
+> 0 in a uniformly positive definite metric M1(x1) for each x2 (b) the Riemannian Hessian
+H2(x1, x2) of f2(x1, x2) in x2 is only positive semi-definite for each x1 in a uniformly positive defi-
+nite metric M2(x2) and (c) the skew-symmetry property (34) holds. Assume that one trajectory of
+(35) is known to be bounded. Then, every trajectory of (35) converges to a Nash equilibrium x�
+1,
+x�
+2. Moreover, x�
+1 does not depend on initial conditions (i.e., every Nash has the same strategy for
+player 1).
+Proof. It can be shown that virtual displacements evolve such that
+d
+dt
+ðdx>
+1 M1ðx1Þdx1 þ kdx>
+2 M2ðx2Þdx2Þ
+� 2 a1dx>
+1 M1ðx1Þdx1 2 k dx>
+2 H2ðx1;x2Þdx2
+which implies, by Barbalat’s lemma,
+dx1 ! 0 and H2ðx1;x2Þdx2 ! 0
+Via the same argument as follows from (20), it follows that rx1
+x1(x1(t), x2(t)) ! 0 as t ! 1.
+So, for each initial condition, x1(t) must converge to some equilibrium x�
+1 of the x1 dynamics.
+Furthermore, since any δx1 ! 0, x�
+1 must be unique and independent of initial conditions. Let
+us now turn to the behavior of the x2 dynamics. Given an arbitrary initial condition (x1,0, x2,0)
+for (35), let L+
+denote its ω-limit set. Any point in (x1, x2) 2 L+
+must satisfy x1 ¼ x�
+1. Since the
+dynamics are autonomous, L+
+is composed of trajectories of the system
+_ x1 ¼ 0 ð36Þ
+_ x2 ¼ M2ðx2Þ
+1
+rx2
+f2ðx�
+1;x2Þ ð37Þ
+Moreover, L+
+must be closed and bounded. Since (37) is a natural gradient system of a g-con-
+vex function, Thm. 2 ensures that any trajectory of (37) must converge to an equilibrium point
+that is a global minimizer for f2ðx�
+1;x2Þ. Considering any initial condition of (37) that begins in
+L+
+, we denote ðx�
+1;x�
+2Þ 2 Lþ
+as the resulting equilibrium point. However, since (35) is semi-
+contracting, any geodesic ball around ðx�
+1;x�
+2Þ is forward invariant for (35), which implies that
+Lþ
+¼ fðx�
+1;x�
+2Þg. Thus, x2ðtÞ ! x�
+2 as t ! 1. Note again that, while x�
+2 depends on initial con-
+ditions, x�
+1 does not.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 24 / 29Corollary 3. Consider any two equilibrium points ðx�
+1;x�
+21Þ and ðx�
+1;x�
+22Þ for a system that sat-
+isfies the condition of Theorem 6. Then, the geodesic between these points is comprised of extre-
+mal Nash equilibrium points, all of which have the same cost.
+Further, if one equilibrium of (37) is locally asymptotically stable, then it is necessarily globally
+attractive, and thus all trajectories of (37) converge to this unique equilibrium ðx�
+1;x�
+2Þ regardless
+of initial conditions.
+Proof. Proof of the first part follows immediately from applying Corollary 3.1 of [12] to the
+function f2ðx�
+1;x2Þ. Proof of the second part follows immediately from the application of Corol-
+lary 1 herein.
+Corollary 4. Proposition 10 is true.
+Proof. Consider Thm. 6 with f1 ¼ Lðx;λÞ and f2 ¼ Lðx;λÞ.
+4.3 Hierarchical natural gradient
+Consider a function f1(x1) α1-strongly g-convex in a metric M1(x1), and a function f2(x1, x2)
+α2-strongly g-convex in a metric M2(x2) for each given x1. Then, the hierarchical natural gradi-
+ent dynamics
+_ x1 ¼ M1ðx1Þ
+1
+rx1
+f1ðx1Þ
+_ x2 ¼ M2ðx2Þ
+1
+rx2
+f2ðx1;x2Þ
+is contracting with rate min(α1, α2) in metric M(x1, x2) = BlkDiag(M1(x1), M2(x2)), under the
+mild assumption that the coupling Jacobian is bounded [15]. Since the overall system is both
+contracting and autonomous, it tends to a unique equilibrium [15] at rate min(α1, α2), and
+thus to the unique solution of
+rx1
+f1ðx1Þ ¼ 0
+rx2
+f2ðx1;x2Þ ¼ 0
+By recursion, this structure can be chained an arbitrary number of times, or applied to any
+cascade or directed acyclic graph of natural gradient dynamics. Such hierarchical optimization
+may play a role, for instance, in backpropagation of natural gradients in machine learning,
+with all descents occurring concurrently rather than in sequence.
+Remark 23. In large-scale optimization settings such as those appearing commonly in machine
+learning, natural gradient with a fully-dense metric can become intractable. In specific cases, such
+as natural gradient descent based on Fisher information [33], computationally effective approxi-
+mations have been derived [69, 70]. In addition, the combination of simple (e.g., diagonal) metrics
+through hierarchical structures lends an opportunity to recover significant complexity at broad
+scale − see, e.g., the hierarchical combination of scalar metrics to learn hierarchical representations
+of symbolic data in [71, 72]. Such simpler metrics are also well motivated in the context of positive
+or monotone systems [73, 74]. In special cases of a dense Hessian metric M(x) = r2
+ψ(x) from a
+potentialψ(x),notethatcontinuousmirror descent(seealsoProposition 5andExample4)provides
+an alternate method to compute continuous natural gradient. These methods can avoid the need
+to invert the metric in cases where there is an explicit inverse exists for the change of variables z =
+rψ(x), or when (15) can be run at a fast time scale to invert the gradient map through dynamics.
+5 Conclusions
+Overall, this paper has demonstrated that nonlinear contraction analysis provides a general
+perspective for analyzing and certifying the global convergence properties of gradient-based
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 25 / 29optimization algorithms. The common case of strong convexity corresponds to the special
+case of contracting gradient descent in the identity metric, while our analysis admits global
+convergence results in the significantly broader case of state-dependent metrics. This result
+has clear links to the case of geodesically-convex optimization wherein natural gradient
+descent converges to a unique equilibrium if it is contracting in any metric, broadening from
+the special case of g-convexity corresponding to contraction in the natural metric. Our analysis
+of semi-contraction of gradient systems, and the resulting smoothly connected sets of global
+optima may shed additional light on applications in learning with over parameterized net-
+works [2] where the set of optimizers is recognized to take the form of a low-dimensional man-
+ifold. Results on natural primal dual and the convergence to Nash equilibria showcase the
+broad reach of these fundamental results, where they may serve as the basis for the generation
+of larger scale distributed optimization algorithms in future work. A framework we call Con-
+traction + shows how contraction or semi-contraction properties can be combined with spe-
+cific but coarse information on a system, such as the local stability of a particular equilibrium
+or the weak decreasing of a cost or a Lyapunov-like function, to conclude on global conver-
+gence or minimization.
+A natural next step for the application of contraction in optimization is to design geodesic
+quorum sensing [16, 75] algorithms for synchronization [76], as well as other consensus mech-
+anisms considering time-delays [17, 18], which may serve as the basis for distributed and
+large-scale optimization techniques on Riemannian manifolds. Other future applications will
+consider stochastic gradient descent in the Riemannian setting [77] with quorum sensing
+extensions (as, e.g., in [78, 79]). Such advances could have direct applications, e.g., in the con-
+text of machine learning, among others.
+Supporting information
+S1 File.
+(PDF)
+Acknowledgments
+We thank Nicholas Boffi for stimulating discussions. This research was supported in part by
+grant 1809314 from the National Science Foundation.
+Author Contributions
+Conceptualization: Patrick M. Wensing, Jean-Jacques Slotine.
+Formal analysis: Patrick M. Wensing, Jean-Jacques Slotine.
+Methodology: Patrick M. Wensing, Jean-Jacques Slotine.
+Writing – original draft: Patrick M. Wensing, Jean-Jacques Slotine.
+Writing – review & editing: Patrick M. Wensing, Jean-Jacques Slotine.
+References
+1. Bassily R, Belkin M, Ma S. On exponential convergence of sgd in non-convex over-parametrized learn-
+ing. arXiv preprint arXiv:181102564. 2018.
+2. Cooper Y. The loss landscape of overparameterized neural networks. arXiv preprint arXiv:1804.10200.
+2018.
+3. Liu C, Zhu L, Belkin M. Toward a theory of optimization for over-parameterized systems of non-linear
+equations: the lessons of deep learning. arXiv preprint arXiv:2003.00307. 2020.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 26 / 294. Brea J, Simsek B, Illing B, Gerstner W. Weight-space symmetry in deep networks gives rise to permuta-
+tion saddles, connected by equal-loss valleys across the loss landscape. arXiv preprint
+arXiv:190702911. 2019.
+5. Sagun L, Evci U, Guney VU, Dauphin Y, Bottou L. Empirical analysis of the hessian of over-parame-
+trized neural networks. arXiv preprint arXiv:170604454. 2017.
+6. Allen-Zhu Z, Li Y, Song Z. A convergence theory for deep learning via over-parameterization. arXiv pre-
+print arXiv:181103962. 2018.
+7. Du SS, Zhai X, PoczosB, Singh A. Gradientdescent provably optimizesover-parameterized neuralnet-
+works. arXiv preprint arXiv:181002054. 2018.
+8. Hanson MA. On sufficiency of the Kuhn-Tucker conditions. Journal of Mathematical Analysis and Appli-
+cations. 1981; 80(2):545–550.
+9. Zalinescu C. A critical view on invexity. Journal of Optimization Theory and Applications. 2014; 162
+(3):695–704.
+10. Polyak BT. Gradient methods for minimizing functionals. Zhurnal Vychislitel’noi Matematiki i Matemati-
+cheskoi Fiziki. 1963; 3(4):643–653.
+11. Karimi H, Nutini J, Schmidt M. Linear convergence of gradient and proximal-gradient methodsunder
+the polyak-łojasiewicz condition. In: Joint European Conference on Machine Learning and Knowledge
+Discovery in Databases. Springer; 2016. p. 795–811.
+12. Rapcsak T. Geodesic Convexity in Nonlinear Optimization. Journal of Optimization Theory and Applica-
+tions. 1991; 69(1):169–183.
+13. Zhang H, Sra S. First-order methods for geodesically convex optimization. In: Conference on Learning
+Theory; 2016. p. 1617–1638.
+14. Absil PA, Mahony R, Sepulchre R. Optimization Algorithms on Matrix Manifolds. Princeton University
+Press; 2008.
+15. Lohmiller W, Slotine JJE. On Contraction Analysis for Non-linear Systems. Automatica. 1998; 34
+(6):683–696.
+16. Tabareau N, Slotine JJ, Pham QC. How synchronization protects from noise. PLoS computational biol-
+ogy. 2010; 6(1):e1000637. https://doi.org/10.1371/journal.pcbi.1000637 PMID: 20090826
+17. Wang W, Slotine JJE. Contraction analysis of time-delayed communications and group cooperation.
+IEEE Transactions on Automatic Control. 2006; 51(4):712–717.
+18. Wensing PM, Slotine JJE. Cooperative Adaptive Control for Cloud-Based Robotics. Proceedings of the
+IEEE International Conference on Robotics and Automation. 2018.
+19. Slotine JJE. Modular stability tools for distributed computation and control. International Journal of
+Adaptive Control and Signal Processing. 2003; 17(6):397–416.
+20. Su W, Boyd S, Candes E. A differential equation for modeling Nesterov’s accelerated gradientmethod:
+Theory and insights. In: Advances in Neural Information Processing Systems; 2014. p. 2510–2518.
+21. Zhang J, Mokhtari A, Sra S, Jadbabaie A. Direct Runge-Kutta Discretization Achieves Acceleration.
+ArXiv e-prints. 2018.
+22. Wibisono A, Wilson AC, Jordan MI. A variational perspective on accelerated methodsin optimization.
+Proceedingsof the National Academy of Sciences. 2016; 113(47):E7351–E7358. https://doi.org/10.
+1073/pnas.1614734113 PMID: 27834219
+23. Krichene W, Bayen A, Bartlett PL. Accelerated mirror descent in continuous and discrete time. In:
+Advances in neural information processing systems; 2015. p. 2845–2853.
+24. Nesterov Y. Introductory lectures on convex programming—A Basic course. Springer; 1998.
+25. Nguyen HD, Vu TL, Turitsyn K, Slotine JJ. Contraction and Robustness of Continuous Time Primal-
+Dual Dynamics. IEEE Control Systems Letters. 2018; 2(4).
+26. França G, Jordan MI, Vidal R. On Dissipative Symplectic Integration with Applications to Gradient-
+Based Optimization. arXiv preprint arXiv:2004.06840. 2020.
+27. Slotine JJE, Li W. Applied nonlinear control. Prentice hall Englewood Cliffs, NJ; 1991.
+28. Wiggins S. Gradient Vector Fields. In: Introduction to Applied Nonlinear Dynamical Systems and
+Chaos. New York, NY: Springer New York; 2003. p. 231–233.
+29. Aylward EM, Parrilo PA, Slotine JJE. Stability and robustness analysisof nonlinear systemsvia contrac-
+tion metrics and SOS programming. Automatica. 2008; 44(8):2163–2170.
+30. Boyd S, Kim SJ, Vandenberghe L, Hassibi A. A tutorial on geometric programming. Optimization and
+Engineering. 2007; 8(1):67.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 27 / 2931. Sra S, Hosseini R. Conic Geometric Optimization on the Manifold of Positive Definite Matrices. SIAM
+Journal on Optimization. 2015; 25(1):713–739.
+32. Udriste C. Convex functions and optimization methodson Riemannian manifolds. vol. 297. Springer
+Science & Business Media; 1994.
+33. Amari SI. Natural Gradient Works Efficiently in Learning. Neural Comput. 1998; 10(2):251–276.
+34. Gunasekar S, Lee J, Soudry D, Srebro N. Characterizing implicit bias in terms of optimization geometry.
+arXiv preprint arXiv:180208246. 2018.
+35. Lovelock D, Rund H. Tensors, differential forms, and variational principles. Courier Corporation; 1989.
+36. Lohmiller W, Slotine JJ. Exact decomposition and contraction analysis of nonlinear hamiltonian sys-
+tems. In: AIAA Guidance, Navigation, and Control (GNC) Conference; 2013. p. 4931.
+37. Lohmiller W, Slotine JJE. Exact Modal Decomposition of Nonlinear Hamiltonian Systems. In: AIAA
+Guidance, Navigation, and Control Conference; 2009. p. 5792:1–18.
+38. Simpson-Porco JW, Bullo F. Contraction theory on Riemannian manifolds. Systems & Control Letters.
+2014; 65:74–80.
+39. Dauphin YN, Pascanu R, Gulcehre C, Cho K, Ganguli S, Bengio Y. Identifying and attacking the saddle
+point problem in high-dimensional non-convexoptimization. In: Advancesin neural information process-
+ing systems; 2014. p. 2933–2941.
+40. Jin C, Ge R, Netrapalli P, Kakade SM, Jordan MI. How to escape saddle points efficiently.In: Proceed-
+ings of the 34th International Conference on Machine Learning-Volume 70. JMLR. org; 2017. p. 1724–
+1732.
+41. Lee JD, Simchowitz M, Jordan MI, Recht B. Gradient Descent Convergesto Minimizers; 2016.
+42. Lee JD, PanageasI, PiliourasG, Simchowitz M, Jordan MI, Recht B. First-order methodsalmost always
+avoid saddle points. arXiv preprint arXiv:171007406. 2017.
+43. Kreusser LM, Osher SJ, Wang B. A Deterministic Approach to Avoid Saddle Points. arXiv preprint
+arXiv:1901.06827. 2019.
+44. Lohmiller W, Slotine JJ. Exact Modal Decomposition of Nonlinear Hamiltonian Systems. In: AIAA Guid-
+ance, Navigation, and Control Conference; 2009. p. 5792.
+45. Boyd S, Vandenberghe L. Convex Optimization. Cambridge, U.K.: Cambridge Univ. Press; 2004.
+46. Wang W, Slotine JJE. On partial contraction analysisfor coupled nonlinear oscillators. Biological cyber-
+netics. 2005; 92(1):38–53. PMID: 15650898
+47. JouffroyJ, Slotine JJE. Methodological remarks on contractiontheory.In: IEEE Conference on Decision
+and Control. vol. 3; 2004. p. 2537–2543 Vol.3.
+48. Manchester IR, Slotine JJE. Control Contraction Metrics: Convex and Intrinsic Criteria for Nonlinear
+Feedback Design. IEEE Transactions on Automatic Control. 2017; 62(6):3046–3053.
+49. Cisneros-Velarde P, Jafarpour S, Bullo F. Distributed and time-varying primal-dual dynamics via con-
+traction analysis. arXiv preprint arXiv:2003.12665. 2020.
+50. Singh S, Majumdar A, Slotine JJ, Pavone M. Robust online motion planning via contraction theory and
+convex optimization. In: 2017 IEEE International Conference on Robotics and Automation (ICRA).
+IEEE; 2017. p. 5883–5890.
+51. Manchester IR, Slotine JJE. Transverse contraction criteria for existence, stability, and robustness of a
+limit cycle. Systems & Control Letters. 2014; 63:32–38.
+52. He K, Zhang X, Ren S, Sun J. Deep residual learning for image recognition. In: Proceedings of the IEEE
+conference on computer vision and pattern recognition; 2016. p. 770–778.
+53. Chen TQ, Rubanova Y, Bettencourt J, Duvenaud DK. Neural ordinary differential equations. In:
+Advances in neural information processing systems; 2018. p. 6571–6583.
+54. Dupont E, Doucet A, Teh YW. Augmented neural odes. In: Advancesin Neural Information Processing
+Systems; 2019. p. 3134–3144.
+55. Arrow KJ, Hurwicz L, and UzawaH. Studies in Linearand Non-linear Programming. StanfordUniversity
+Press, Stanford, CA; 1958.
+56. Feijer D, Paganini F. Stability of primal–dual gradient dynamics and applications to network optimiza-
+tion. Automatica. 2010; 46(12):1974–1981.
+57. Madry A, Makelov A, Schmidt L, Tsipras D, Vladu A. Towards deep learning models resistant to adver-
+sarial attacks. arXiv preprint arXiv:170606083. 2017.
+58. Tishby N, Zaslavsky N. Deep learning and the information bottleneck principle. In: 2015 IEEE Informa-
+tion Theory Workshop (ITW). IEEE; 2015. p. 1–5.
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 28 / 2959. Cho WS, Wang M. Deep Primal-Dual Reinforcement Learning: Accelerating Actor-Critic using Bellman
+Duality. CoRR. 2017;abs/1712.02467.
+60. KosarajuKC, Mohan S, Pasumarthy R. On the primal-dual dynamics of SupportVector Machines.Inter-
+national Symposiumon Mathematical Theory of Networks and Systems. 2018; p. 468–474.
+61. Ortega R, Jeltsema D, Scherpen JM. Power shaping: A new paradigmfor stabilization of nonlinear RLC
+circuits. IEEE Transactions on AutomaticControl. 2003; 48(10):1762–1767.
+62. Cavanagh K, Belk JA, Turitsyn K. Transient stability guarantees for ad hoc DC microgrids. IEEE Control
+Systems Letters. 2018; 2(1):139–144.
+63. Slotine JJE, Li W. On the adaptive control of robot manipulators. The international journal of robotics
+research. 1987; 6(3):49–59.
+64. Lee T, Kwon J, Park FC. A Natural Adaptive Control Law for Robot Manipulators. In: 2018 IEEE/RSJ
+International Conference on Intelligent Robots and Systems (IROS); 2018. p. 1–9.
+65. Lee T. Geometric Methods for Dynamic Model-Based Identification and Control of Multibody Systems.
+Seoul National University; 2019.
+66. NesterovYE, Todd MJ, et al. On the Riemanniangeometry defined by self-concordant barriersand inte-
+rior-point methods. Foundations of Computational Mathematics. 2002; 2(4):333–361.
+67. Lopez BT, Slotine JJE. Contraction Metrics in Adaptive Nonlinear Control. arXiv e-prints. 2019; p.
+arXiv:1912.13138.
+68. Lee T, Kwon J, Park FC. A Natural Adaptive Control Law for Robot Manipulators. In: 2018 IEEE/RSJ
+International Conference on Intelligent Robots and Systems (IROS); 2018. p. 1–9.
+69. Martens J, Grosse R. Optimizing Neural Networks with Kronecker-factored Approximate Curvature. In:
+Proceedingsof the 32nd International Conference on International Conference on Machine Learning;
+2015. p. 2408–2417.
+70. Amari Si, Karakida R, Oizumi M. Information geometry connecting Wasserstein distance and Kullback–
+Leibler divergence via the entropy-relaxed transportation problem. Information Geometry. 2018; 1
+(1):13–37. PMID: 30883281
+71. Nickel M, Kiela D. Poincaré Embeddings for Learning Hierarchical Representations. CoRR. 2017;abs/
+1705.08039.
+72. Nickel M, Kiela D. Learning Continuous Hierarchies in the Lorentz Model of Hyperbolic Geometry. ArXiv
+e-prints. 2018.
+73. Rantzer A. Scalable control of positive systems. European Journal of Control. 2015; 24:72–80.
+74. Manchester IR, Slotine JJE. On Existence of Separable Contraction Metrics for Monotone Nonlinear
+Systems. IFAC-PapersOnLine. 2017; 50(1):8226–8231.
+75. Russo G, Slotine JJE. Global convergence of quorum-sensing networks. Physical Review E. 2010; 82-
+(4):041919. PMID: 21230325
+76. Bouvrie J, Slotine JJ. Synchronization Can Control Regularization in Neural Systems via Correlated
+Noise Processes. In: Proceedings of the 25th International Conference on Neural Information Process-
+ing Systems. USA; 2012. p. 854–862.
+77. Bonnabel S. Stochastic Gradient Descent on Riemannian Manifolds. IEEE Transactions on Automatic
+Control. 2013; 58(9):2217–2229.
+78. Zhang S, Choromanska A, LeCun Y. Deep Learning with Elastic Averaging SGD. In: Proceedingsof the
+28th International Conference on Neural Information Processing Systems. Cambridge, MA, USA: MIT
+Press; 2015. p. 685–693.
+79. Boffi NM, Slotine JJE. A Continuous-Time Analysis of Distributed Stochastic Gradient. Neural Compu-
+tation. 2020; 32(1):36–96. PMID: 31703177
+PLOS ONE Beyond convexity—Contraction and global convergence of gradient descent
+PLOS ONE | https://doi.org/10.1371/journal.pone.0236661 August 4, 2020 29 / 29

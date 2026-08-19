@@ -1,0 +1,348 @@
+Citation: Wang, X.; Feng, G.; Hu, Y.;
+Huang, L.; Xie, H.; Zhao, Y.; Jin, P.;
+Liang, C. Recent Advancements in
+Petroleum and Gas Engineering.
+Energies 2024, 17, 4664. https://
+doi.org/10.3390/en17184664
+Received: 4 September 2024
+Accepted: 14 September 2024
+Published: 19 September 2024
+Copyright: © 2024 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+energies
+Editorial
+Recent Advancements in Petroleum and Gas Engineering
+Xiaochuan Wang 1 , Gan Feng 2,3,* , Yaoqing Hu 4, Liuke Huang 5 , Hongqiang Xie 2, Yu Zhao 3, Peihua Jin 4
+and Chao Liang 2
+1 Hubei Key Laboratory of Waterjet Theory and New Technology, Wuhan University, Wuhan 430072, China;
+xcw001@whu.edu.cn
+2 State Key Laboratory of Hydraulics and Mountain River Engineering, College of Water Resource
+& Hydropower, Sichuan University, Chengdu 610065, China; alex_xhq@scu.edu.cn (H.X.);
+liangchao97@126.com (C.L.)
+3 College of Civil Engineering, Guizhou University, Guiyang 550025, China; zytyut1@126.com
+4 Mining Technology Institute, Taiyuan University of Technology, Taiyuan 030024, China;
+huyaoqing@tyut.edu.cn (Y.H.); jinpeihua@tyut.edu.cn (P.J.)
+5 School of Civil Engineering and Geomatics, Southwest Petroleum University, Chengdu 610500, China;
+swpuhlk@126.com
+* Correspondence: fenggan@whu.edu.cn
+1. Introduction
+Oil and natural gas resources are crucial energy sources formed during the geological
+and biological evolution of the Earth. Due to its lengthy formation period and harsh
+conditions, oil is generally considered a non-renewable energy source. The global natural
+gas industry is exhibiting a large-scale upward trend, and an increasing number of scholars
+have conducted research on engineering and fundamental scientific issues related to natural
+gas development [1–4]. Although coal remains a widely used traditional energy source
+globally, and ongoing research in the academic community focuses on various coal mining-
+related issues [5–8], coal, like oil, belongs to the category of fossil fuels and is also a
+non-renewable resource with limited reserves. Traditional combustion power generation
+is accompanied by environmental pollution problems, which are difficult to avoid. Due
+to the substantial reserves of oil and natural gas, they directly or indirectly meet the
+development needs of countries worldwide in multiple fields [9,10]. Petroleum and natural
+gas engineering involves the application of scientific theories, methods, and technologies to
+extract oil and gas resources from subsurface reservoirs using advanced equipment, as well
+as to process these resources to meet the demand for petroleum and natural gas products.
+Following the outbreak of global public health emergencies, the proportion of oil
+and gas consumption and extraction has decreased. However, the global economy is
+now showing a gradual recovery, which is likely to prompt countries to increase their
+efforts in oil and gas extraction. Due to the depletion of shallow resources, oil and gas
+extraction is gradually moving deeper into the Earth. The deep subsurface environment
+is characterized by complex geological structures, high temperatures, and high stress
+conditions [11–14], and has been a subject of great concern in the scientific research and
+engineering communities. The complex oil and gas storage environment has a significant
+impact on the construction of oil and gas wells, reservoir transformation, oil and gas
+production, and pipeline transportation. Therefore, there is an urgent need for in-depth
+research and scientific evaluation of key aspects of oil and gas engineering, such as logging,
+reservoir properties, drilling and cementing, and pipeline safety.
+ThepurposeofthisSpecialIssueistosolicitresearchonlogginganddrillingcementing
+techniques, reservoir physical and mechanical properties, pipeline safety assessment, and
+high-efficiency oil and gas extraction technologies related to oil and gas engineering. Since
+the launch of this Special Issue, over 100 renowned scholars have submitted their research.
+After rigorous review and evaluation by the editorial department and peer experts, high-
+quality research results were ultimately selected and published in 29 high-level papers in
+Energies 2024, 17, 4664. https://doi.org/10.3390/en17184664 https://www.mdpi.com/journal/energiesEnergies 2024, 17, 4664 2 of 7
+journals such as Applied Sciences, Energies, Fractal and Fractional, Polymers, and Resources,
+resulting in a very high acceptance rate.
+2. Recent Content on Petroleum and Gas Engineering
+Scholars have conducted extensive research on important topics related to oil and gas
+engineering. The high-quality papers published on this subject cover the following key
+aspects, which will be reviewed in detail.
+(1) The physical and mechanical characteristics of oil and gas reservoirs. Han et al. [15]
+employed low-field nuclear magnetic resonance (NMR) to investigate the saturation be-
+havior of rock samples during the water invasion of gas reservoirs. Their findings indicate
+that imbibition predominantly occurs in medium to large pores, and that rock permeability,
+contact surface area, and initial gas saturation are the primary factors governing residual
+gas saturation. Purnomo et al. [16] employed an enhanced extended elastic impedance
+inversion method, based on seismic and well log data, to predict the physical characteristics
+of oil and gas reservoirs. They subsequently verified the accuracy of their results. Yang
+et al. [17] performed uniaxial compression and Brazilian splitting experiments on rock
+samples to investigate changes in their mechanical properties and the relationships between
+various mechanical parameters. Their findings indicate that the mechanical parameters of
+gneiss samples cored horizontally were greater than those of samples cored vertically. Xie
+et al. [18] investigated the fractal characteristics of pore size distribution in tight sandstone
+samples using nuclear magnetic resonance (NMR) techniques. They also determined the
+relationship between water saturation, pore structure, and NMR fractal dimension. Li
+et al. [19] proposed a novel hydraulic fracturing technique designed to connect a greater
+number of fractures and pores, thereby enhancing crude oil production through the frac-
+ture network and improving overall operational efficiency. Bai et al. [20] investigated the
+effect of high ionic strength water (HISW) on improving shale oil and gas recovery, as
+well as the influence of HISW on shale permeability. They observed a decrease in shale
+permeability and the formation of cracks under different concentrations of sodium chloride
+and calcium dichloride.
+(2) Logging techniques for oil and gas engineering. Liu et al. [21] employed data
+oversampling and undersampling algorithms to synthesize a sufficiently comprehensive
+logging dataset. Subsequently, they trained support vector machine (SVM), random forest
+(RF), and gradient boosting decision tree (GBDT) models using cross-validation and grid
+search methods, and evaluated and compared the performance of these models. Based
+on this analysis, they conducted identification and result interpretation for 18 distinct
+rock types. Ultimately, they concluded that the aforementioned process can enhance the
+discrimination of fine-scale lithological intervals within reservoirs across diverse geological
+settings. Silva et al. [22] investigated the metrological performance of Coriolis meters,
+ultrasonic flow meters, and positive displacement flow meters under varying conditions
+of fluid flow rate, temperature, and moisture content. The research findings indicate
+that the contribution of different parameters to the measurement performance of the
+system varies depending on the specific measurement technique used. Furthermore, the
+results reveal that fluid temperature is a significant parameter for all of the evaluated flow
+measurement approaches.
+(3) Extraction techniques for low-permeability oil reservoirs. Li et al. [23] proposed
+a novel method for determining layered water injection and injection allocation strate-
+gies for high-angle wells in low-permeability reservoirs. This method incorporates sand
+body morphology recognition, seepage unit recognition, and single sand body boundary
+recognition, while considering factors such as sand body connectivity, reservoir physical
+properties, and well displacement distance. These factors are relatively straightforward to
+obtain in engineering practice, thereby enhancing the practicality of the proposed approach.
+Liu et al. [24] developed submicron cross-linked polymer coils (SCPCs) to enhance the
+deep penetration ability of profile control agents. They then observed and studied the
+microstructure of SCPCs using scanning electron microscopy (SEM) and Fourier-transformEnergies 2024, 17, 4664 3 of 7
+infrared spectroscopy. Furthermore, the sealing effect of SCPCs was analyzed based on
+the observation results, revealing that the effective particle size of SCPCs is 500–800 nm.
+Finally, the authors concluded that SCPCs exhibit good injectability, sealing performance,
+and deep penetration ability.
+(4) Geological characteristics relevant to oil and gas engineering. Hu et al. [25] con-
+ducted a detailed study of a large body of literature and physical simulation experiments
+on fault lateral sealing. They concluded that when evaluating fault lateral sealing, the clay
+mineral content and the degree of diagenesis of the fault rocks must be considered as the
+primary factors. Hu et al. established a correlational relationship between the clay content
+of fault rocks and burial depth (SGR&H), and proposed a threshold evaluation method
+for assessing the lateral sealing performance of faults. The researchers then applied the
+above findings to evaluate the lateral sealing performance of faults in the northwestern,
+Beier, Urson, and Surnohr areas of the Hailar Basin in China. Sun et al. [26] conducted
+a comparative analysis of shale gas extraction in the Sichuan Basin and North America.
+Concurrently, they collected core samples from 32 drilling wells and outcrops, and ana-
+lyzed the characteristics confronting shale gas extraction in the Sichuan Basin. This review
+emphasizes that the extraction of diverse shale gas resources not only requires ongoing
+technological advancements, but also must consider commercial feasibility. Ultimately, this
+approach can foster the sustained growth of the oil and gas engineering industry.
+(5) Safety assessment of oil and gas pipeline infrastructure. Zhong et al. [27] con-
+ducted a detailed analysis of the pressure and flow rate changes at each node within the
+pipeline network, considering the specific characteristics encountered during shale gas
+transport. They subsequently developed models to describe both the leakage and non-
+leakage processes occurring in the pipeline network. The primary innovation of this work
+lies in the proposed method for identifying pipeline leaks through the analysis of internal
+pressure data. The authors further validated the reliability of this method by comparing
+it against engineering experimental findings. Zhang et al. [28] undertook a thorough and
+comprehensive investigation into the concept of vulnerability within the security status of
+horizontal pipeline networks. The researchers highlighted the significance of quantitative
+analysis on security indicators and their classification-based evaluation. Furthermore,
+they emphasized the necessity of establishing and enhancing a security evaluation model
+grounded in pipeline vulnerability indicators for future applications.
+(6) Advancements in technologies aimed at enhancing the quality of crude oil. Hua
+et al. [29] conducted a comprehensive investigation into the viscosity reduction mechanism
+of carbon nanotube demulsifiers with varying molecular structures at the oil–water inter-
+face. Firstly, the researchers selected carbon nanotubes with different functional groups
+(NH2-CNT, OH-CNT, and COOH-CNT) and prepared nanofluids. The microstructure of
+the materials was then observed using a scanning electron microscope (SEM), and the
+reasons for the observed decrease in viscosity were analyzed. The findings revealed that as
+the carbon chain length increases, the conductivity and interfacial tension decrease, while
+the viscosity reduction rate and dispersion and stability ability increase. Furthermore, the
+molecular dynamics simulation studies concluded that the diffusion coefficient gradually
+decreases with increasing carbon chain length, leading to enhanced adsorption at the
+oil–water interface. This research holds significant implications for the field of heavy oil
+viscosity reduction and recovery efficiency improvement.
+3. Current Trends, Prospective Developments, and Concluding Remarks
+By analyzing the current state of research in oil and gas engineering, we can identify
+the latest advancements and future research priorities. The physical and mechanical prop-
+erties of reservoirs, as well as the stability of oil and gas extraction in deep and deep-sea
+environments, are crucial considerations. It is necessary to investigate the evolution of
+rock fractures in the extreme conditions of deep and deep-sea environments, including
+the initiation, propagation, and penetration of cracks under the influence of multi-field
+coupling, tectonic movements, and mining disturbances. This encompasses the study ofEnergies 2024, 17, 4664 4 of 7
+rock damage and fracture mechanics [30–39], as well as the mechanical behavior of rocks
+under various conditions, such as static/dynamic failure, creep failure, stress–seepage cou-
+pling, and expansion deformation [40–50]. While previous scholars have researched rock
+damage, fracture, and failure mechanics across various engineering fields [51–57], certain
+factors considered in these studies can be referenced and applied in the context of rock
+mechanics and engineering. This can be more conducive to predicting and understanding
+the mechanical behavior of rocks relevant to deep-sea oil and gas extraction. Therefore,
+it is necessary to consider the inherent characteristics of oil and gas engineering in order
+to conduct in-depth research on oil and gas operations in deep-sea environments. It is
+important to note that research is also required on the environmental impacts arising from
+the development of oil and gas engineering. Additionally, it is necessary to develop drilling,
+cementing, and extraction equipment that is suitable for the extreme geological conditions
+found in deep-sea and deep-Earth environments in order to improve the efficiency of oil
+and gas recovery in these settings. Furthermore, with the advancements in computer tech-
+nology, electronic information technology, and data acquisition and processing capabilities,
+the research and development of equipment should focus on intelligence and automation.
+The overall development of oil and gas extraction engineering should prioritize intelligence,
+automation, high precision, high efficiency, and coordinated operations.
+The guest editors and scholars provided concise summaries of the key highlights
+from these works, and emphasized their significance in advancing the field of oil and gas
+engineering. The papers published in this topic cover the latest cutting-edge fields of oil
+and gas engineering, including oil and gas reservoirs, reservoir logging, low-permeability
+oil and gas reservoirs, reservoir geological characteristics, pipeline safety, and crude oil
+upgrading and refining. These research results and valuable insights shared by the authors
+can drive progress and inform the future research direction in the field of oil and gas
+engineering. Therefore, this topic is of great importance and relevance for the advancement
+of oil and gas engineering.
+In summary, the guest editors and authors are deeply grateful for the valuable con-
+tributions of all the colleagues and reviewers who have supported this publication. We
+hope that, in the future, scholars will continue to conduct research in the cutting-edge
+fields related to oil and gas engineering, and we encourage them to submit their results
+to this topic. These related research directions include, but are not limited to, oil and gas
+field development planning and production technology; oil and gas well fluid mechanics,
+rock mechanics, and oilfield chemistry technology; theory and methods of reservoir char-
+acterization and geological modeling for development; percolation theory and reservoir
+numerical simulation; theories and methods of oil and gas field development; theories and
+technologies of enhanced oil recovery; multiphase pipeline flow, oil and gas field gathering
+and transportation, and oil and gas treatment technology; theoretical and technical aspects
+of reservoir damage and fracture failure mechanics in deep-sea environments; the applica-
+tion and development of intelligent and automated technologies in oil and gas engineering;
+and the advanced research and development of equipment and technologies for oil and
+gas engineering.
+Author Contributions: All authors contributed in similar ways to all sections of the paper. All authors
+have read and agreed to the published version of the manuscript.
+Funding: The above study was supported by the National Natural Science Foundation of China
+(Grant Nos. 52104143, 52374099, and 42372337).
+Conflicts of Interest: The authors declare no conflicts of interest.
+References
+1. Almara, L.M.; Wang, G.X.; Prasad, V. Conditions and thermophysical properties for transport of hydrocarbons and natural gas at
+high pressures: Dense phase and anomalous supercritical state. Gas Sci. Eng. 2023, 117, 205072. [CrossRef]
+2. Ma, T.; Liu, J.; Fu, J.; Wu, B. Drilling and completion technologies of coalbed methane exploitation: An overview. Int. J. Coal Sci.
+Technol. 2022, 9, 68. [CrossRef]Energies 2024, 17, 4664 5 of 7
+3. Zhao, W.; Jia, C.; Song, Y.; Li, X.; Hou, L.; Jiang, L. Dynamic mechanisms of tight gas accumulation and numerical simulation
+methods: Narrowing the gap between theory and field application. Adv. Geo-Energy Res. 2023, 8, 146–158. [CrossRef]
+4. Cai, L.; Xiao, G.; Lu, S.; Wang, J.; Wu, Z. Spatial-temporal coupling between high-quality source rocks and reservoirs for tight
+sandstone oil and gas accumulations in the Songliao Basin, China. Int. J. Min. Sci. Technol. 2019, 29, 387–397. [CrossRef]
+5. Fabiańska, M.J.; Ciesielczuk, J.; Szczerba, M.; Misz-Kennan, M.; Wi˛ ecław, D.; Szram, E.; Nádudvari, Á.; Ciesielska, Z. Weathering
+alterations of coal mining wastes geochemistry, petrography, and mineralogy, a case study from the Janina and Marcel Coal
+Mines, Upper Silesian Coal Basin (Poland). Int. J. Coal Geol. 2024, 281, 104407. [CrossRef]
+6. Yan, H.; Li, G.C.; Li, Y.Q.; Zhang, Q.C.; Zhu, C.Q. Stress evolution characteristics of the intensively mining-induced surrounding
+roadways within an extra-thick coal seam: A case study from the Tashan coal mine, China. J. Cent. South Univ. 2023, 30, 3840–3854.
+[CrossRef]
+7. Tan, Y.; Ma, Q.; Liu, X.; Liu, X.; Elsworth, D.; Qian, R.; Shang, J. Study on the disaster caused by the linkage failure of the residual
+coal pillar and rock stratum during multiple coal seam mining: Mechanism of progressive and dynamic failure. Int. J. Coal Sci.
+Technol. 2023, 10, 45. [CrossRef]
+8. Wang, J.; Li, M.; Wang, Z.; Li, Z.; Zhang, H.; Song, S. The influence of inter-band rock on rib spalling in longwall panel with large
+mining height. Int. J. Min. Sci. Technol. 2024, 34, 427–442. [CrossRef]
+9. Almatrafi, E.; Siddiqui, M.A. Thermodynamic investigation of a hydrogen enriched natural gas fueled HCCI engine for the
+efficient production of power, heating, and cooling. Int. J. Hydrogen Energy 2024, 82, 111–122. [CrossRef]
+10. Hu, T.; Pang, X.; Jiang, F. Whole petroleum system theory and new directions for petroleum geology development. Adv. Geo-Energy
+Res. 2024, 11, 1–5. [CrossRef]
+11. Zhao, Y.X.; Zhou, J.L.; Zhang, C.; Liu, B.; Ling, C.W.; Liu, W.C.; Han, C.J. Failure mechanism of gob-side roadway in deep
+coal mining in the Xinjie mining area: Theoretical analysis and numerical simulation. J. Cent. South Univ. 2023, 30, 1631–1648.
+[CrossRef]
+12. Feng, G.; Kang, Y.; Chen, F.; Liu, Y.W.; Wang, X.C. The influence of temperature on mixed-mode (I+II) and mode-II fracture
+toughness of sandstone. Eng. Fract. Mech. 2018, 189, 51–63. [CrossRef]
+13. Hu, J.J.; Xie, H.P.; Li, C.B.; Liu, G.K. Evolution mechanism of permeability of hot dry rock under coupled effect of thermal fatigue
+and seawater interaction during coastal geothermal development. Renew. Sustain. Energy Rev. 2024, 89 Pt B, 114061. [CrossRef]
+14. Alhuyi-Nazari, M.; Ravinder, K.; Mukhtar, A.; Yasir, A.S.H.M.; Ahmadi, M.H.; Al-Bahrani, M. Geothermal energy for preheating
+applications: A comprehensive review. J. Cent. South Univ. 2023, 30, 3519–3537. [CrossRef]
+15. Han, D.; Xiong, W.; Jiang, T.; Gao, S.; Liu, H.; Ye, L.; Zhu, W.; An, W. Investigation of the Water-Invasion Gas Efficiency in the
+Kela-2 Gas Field Using Multiple Experiments. Energies 2023, 16, 7216. [CrossRef]
+16. Purnomo, E.W.; Abdul Latiff, A.H.; Elsaadany, M.M.A.A. Predicting Reservoir Petrophysical Geobodies from Seismic Data Using
+Enhanced Extended Elastic Impedance Inversion. Appl. Sci. 2023, 13, 4755. [CrossRef]
+17. Yang, L.; Niu, T.; He, F.; Song, Z. Study on the Compressive and Tensile Properties of Gneiss Outcrop of Bozhong 196 Gas Field in
+China. Energies 2023, 16, 3919. [CrossRef]
+18. Xie, W.; Yin, Q.; Zeng, J.; Wang, G.; Feng, C.; Zhang, P. Fractal-Based Approaches to Pore Structure Investigation and Water
+Saturation Prediction from NMR Measurements: A Case Study of the Gas-Bearing Tight Sandstone Reservoir in Nanpu Sag.
+Fractal Fract. 2023, 7, 273. [CrossRef]
+19. Li, J.; Lu, W.; Sun, J. Hydraulic Expansion Techniques for Fracture-Cavity Carbonate Rock with Field Applications. Appl. Sci.
+2024, 14, 5851. [CrossRef]
+20. Bai, T.; Hashemi, S.; Melkoumian, N.; Badalyan, A.; Zeinijahromi, A. Permeability Evolution of Shale during High-Ionic-Strength
+Water Sequential Imbibition. Energies 2024, 17, 3598. [CrossRef]
+21. Liu, J.; Tian, F.; Zhao, A.; Zheng, W.; Cao, W. Logging Lithology Discrimination with Enhanced Sampling Methods for Imbalance
+Sample Conditions. Appl. Sci. 2024, 14, 6534. [CrossRef]
+22. Silva, A.P.D.; Oliveira, E.C.D. Evaluation of the Influence of Water Content in Oil on the Metrological Performance of Oil Flow
+Measurement Systems. Energies 2024, 17, 2355. [CrossRef]
+23. Li, M.; Qu, Z.; Ji, S.; Bai, L.; Yang, S. A New Methodology for Determination of Layered Injection Allocation in Highly Deviated
+Wells Drilled in Low-Permeability Reservoirs. Energies 2023, 16, 7764. [CrossRef]
+24. Liu, J.; Peng, B. Preparation of Preformed Submicron Crosslinked Polymer Coils for Conformance Control in Low-Permeability
+Reservoirs. Polymers 2024, 16, 39. [CrossRef] [PubMed]
+25. Hu, X.; Lv, Y.; Liu, Y.; Liu, J. Quantitative Study of the Lateral Sealing Ability of Faults Considering the Diagenesis Degree of the
+Fault Rock: An Example from the Nantun Formation in the Wuerxun-Beier Sag in the Hailar Basin, China. Resources 2023, 12, 98.
+[CrossRef]
+26. Sun, S.; Huang, S.; Cheng, F.; Bai, W.; Shao, Z. Geological Characteristics and Challenges of Marine Shale Gas in the Southern
+Sichuan Basin. Energies 2023, 16, 5796. [CrossRef]
+27. Zhong, X.; Dai, Z.; Zhang, W.; Wang, Q.; He, G. Fast Detection of the Single Point Leakage in Branched Shale Gas Gathering and
+Transportation Pipeline Network with Condensate Water. Energies 2024, 17, 2464. [CrossRef]
+28. Zhang, H.; Feng, Q.; Yan, B.; Zheng, X.; Yang, Y.; Chen, J.; Zhang, H.; Liu, X. State of the Art of Oil and Gas Pipeline Vulnerability
+Assessments. Energies 2023, 16, 3439. [CrossRef]Energies 2024, 17, 4664 6 of 7
+29. Hua, Z.; Zhang, J.; Zhu, Y.; Huang, B.; Chen, Q.; Pu, W. Viscosity Reduction Behavior of Carbon Nanotube Viscosity Reducers
+with Different Molecular Structures at the Oil–Water Interface: Experimental Study and Molecular Dynamics Simulation. Energies
+2024, 17, 2564. [CrossRef]
+30. Lyu, K.; Jiang, N.; Yin, D.W.; Meng, S.Y.; Gao, Z.Y.; Lyu, T. Deterioration of compressive properties of coal rocks under water and
+gas coupling. J. Cent. South Univ. 2024, 31, 477–495. [CrossRef]
+31. Feng, G.; Wang, X.C.; Kang, Y.; Zhang, Z.T. Effect of thermal cycling-dependent cracks on physical and mechanical properties of
+granite for enhanced geothermal system. Int. J. Rock Mech. Min. Sci. 2020, 134, 104476. [CrossRef]
+32. Liang, X.; Feng, G.; Meng, T.; Zhao, G.; Wang, Z.; Liu, P.; Taherdangkoo, R. Non-constant evolution of mixed mode fracture
+process zone in heat-treated salt rock during the whole loading. Theor. Appl. Fract. Mech. 2024, 130, 104337. [CrossRef]
+33. Tan, P.; Chen, Z.; Huang, L.; Zhao, Q.; Shao, S. Evaluation of the combined influence of geological layer property and in-situ
+stresses on fracture height growth for layered formations. Petrol. Sci. 2024. [CrossRef]
+34. Fu, H.; Huang, L.; Hou, B.; Weng, D.; Guan, B.; Zhong, T.; Zhao, Y. Experimental and Numerical Investigation on Interaction
+Mechanism Between Hydraulic Fracture and Natural Fracture. J. Rock Mech. Rock Eng. 2024. [CrossRef]
+35. Huang, L.; He, R.; Yang, Z.; Tan, P.; Chen, W.; Li, X.; Cao, A. Exploring hydraulic fracture behavior in glutenite formation with
+strong heterogeneity and variable lithology based on DEM simulation. Eng. Fract. Mech. 2023, 278, 109020. [CrossRef]
+36. Zhang, F.; Huang, L.; Yang, L.; Dontsov, E.; Weng, D.; Liang, H.; Yin, Z.; Tang, J. Numerical investigation on the effect of
+depletion-induced stress reorientation on infill well hydraulic fracture propagation. Petrol. Sci. 2022, 19, 296–308. [CrossRef]
+37. Huang, L.; Dontsov, E.; Fu, H.; Lei, Y.; Weng, D.; Zhang, F. Hydraulic fracture height growth in layered rocks: Perspective from
+DEM simulation of different propagation regimes. Int. J. Solids Struct. 2022, 238, 111395. [CrossRef]
+38. Tan, P.; Fu, S.; Huang, L.; Chen, Z.; Cao, J. Effects of orthogonal cleat structures on hydraulic fracture evolution behavior. Geoenergy
+Sci. Eng. 2024, 241, 213119. [CrossRef]
+39. Xiao, M.L.; Xie, H.Q.; Feng, G.; He, Q.; Liu, H.Z.; Zhuo, L. Investigation on the fracture mechanics characteristics and crack
+initiation of deep dense shale. Eng. Fract. Mech. 2024, 301, 110039. [CrossRef]
+40. Feng, G.; Zhu, C.; Wang, X.C.; Tang, S.B. Thermal effects on prediction accuracy of dense granite mechanical behaviors using
+modified maximum tangential stress criterion. J. Rock Mech. Geotech. Eng. 2023, 15, 1734–1748. [CrossRef]
+41. Zheng, Y.; He, R.; Huang, L.; Bai, Y.; Wang, C.; Chen, W.; Wang, W. Exploring the effect of engineering parameters on the
+penetration of hydraulic fractures through bedding planes in different propagation regimes. Comput. Geotech. 2022, 146, 104736.
+[CrossRef]
+42. Luo, H.; Xie, J.; Huang, L.; Wu, J.; Shi, X.; Bai, Y.; Fu, H.; Pan, B. Multiscale sensitivity analysis of hydraulic fracturing parameters
+based on dimensionless analysis method. J. Lithosphere 2022, 2022, 9708300. [CrossRef]
+43. Huang, L.; Liu, J.; Zhang, F.; Fu, H.; Zhu, H.; Damjanac, B. 3D lattice modeling of hydraulic fracture initiation and near-wellbore
+propagation for different perforation models. J. Petrol. Sci. Eng. 2020, 191, 107169. [CrossRef]
+44. Liang, S.S.; Zhang, D.S.; Fan, G.W.; Kovalsky, E.; Fan, Z.L.; Zhang, L.; Han, X.S. Mechanical structure and seepage stability of
+confined floor response to longwall mining of inclined coal seam. J. Cent. South Univ. 2023, 30, 2948–2965. [CrossRef]
+45. Huang, L.; Liu, J.; Zhang, F.; Dontsov, E.; Damjanac, B. Exploring the influence of rock inherent heterogeneity and grain size on
+hydraulic fracturing using discrete element modeling. Int. J. Solids Struct. 2019, 176, 207–220. [CrossRef]
+46. Li, Z.; Ren, T.; Black, D.; Qiao, M.; Abedin, I.; Juric, J.; Wang, M. In-situ gas contents of a multi-section coal seam in Sydney basin
+for coal and gas outburst management. Int. J. Coal Sci. Technol. 2023, 10, 62. [CrossRef]
+47. He, R.; Yang, J.; Li, L.; Yang, Z.; Chen, W.; Zeng, J.; Liao, X.; Huang, L. Investigating the simultaneous fracture propagation from
+multiple perforation clusters in horizontal wells using 3D block discrete element method. Front. Earth Sci. 2023, 11, 1115054.
+[CrossRef]
+48. Zhu, D.F.; Yu, B.B.; Wang, D.Y.; Zhang, Y.J. Fusion of finite element and machine learning methods to predict rock shear strength
+parameters. J. Geophys. Eng. 2024, 1, gxae064. [CrossRef]
+49. Huang, L.; Liao, X.; Fan, M.; Wu, S.; Tan, P.; Yang, L. 2024 Experimental and numerical simulation technique for hydraulic
+fracturing of shale formations. Adv. Geo-Energy Res. 2024, 13, 83–88. [CrossRef]
+50. Fan, C.; Xu, L.; Elsworth, D.; Luo, M.; Liu, T.; Li, S.; Zhou, L.; Su, W. Spatial-Temporal Evolution and Countermeasures for Coal
+and Gas Outbursts Represented as a Dynamic System. Rock Mech. Rock Eng. 2023, 56, 6855–6877. [CrossRef]
+51. Guo, P.; Li, X.; Li, S.D.; He, J.M.; Mao, T.Q.; Zheng, B. Combined effect of rock fabric, in-situ stress, and fluid viscosity on hydraulic
+fracture propagation in Chang 73 lacustrine shale from the Ordos Basin. J. Cent. South Univ. 2024, 31, 1646–1658. [CrossRef]
+52. Men, Y.; Song, Z.; Sun, Y.; Li, K.; Qing, X.; Sun, H.; Zhou, M. Novel concepts of mechanical technology for gas recovery from
+marine hydrate reservoir. Int. J. Coal Sci. Technol. 2023, 10, 38. [CrossRef]
+53. Zhang, S.; Zhang, D.; Feng, G.; Chi, M. Modelling method of heterogeneous rock mass and DEM investigation of seepage
+characteristics. Geomech. Geophys. Geo-Energ. Geo-Resour. 2024, 10, 46. [CrossRef]
+54. Ji, Y.; Wang, J.; Huang, L. Analysis on inflowing of the injecting water in faulted formation. Adv. Mech. Eng. 2015, 7,
+1687814015590294. [CrossRef]
+55. Zhu, H.Z.; Wen, Z.J.; Xu, L.; He, F.L. Key technology of gob-side entry retained by roof cutting without coal pillar for hard main
+roof: A typical case study. J. Cent. South Univ. 2023, 30, 4097–4121. [CrossRef]Energies 2024, 17, 4664 7 of 7
+56. Huang, L.; Tan, J.; Fu, H.; Liu, J.; Chen, X.; Liao, X.; Wang, X.; Wang, C. The non-plane initiation and propagation mechanism of
+multiple hydraulic fractures in tight reservoirs considering stress shadow effects. Eng. Fract. Mech. 2023, 292, 109570. [CrossRef]
+57. Yaghoubi, A.; Samaroo, M.; Dusseault, M. Anisotropic behavior and mechanical characteristics of the Montney Formation. Int. J.
+Rock Mech. Min. 2024, 180, 105831. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

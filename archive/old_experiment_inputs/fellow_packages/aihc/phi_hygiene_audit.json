@@ -1,0 +1,44 @@
+{
+  "_file_info": {
+    "renamed_from": "experiments/scenario1/inputs/fellow_packages/aihc/phi_hygiene_audit_gen5000_v2.json",
+    "original_date": null,
+    "renamed_on": "2026-08-10",
+    "purpose": "Machine-readable privacy-pattern audit over both materialized AIHC conditions."
+  },
+  "schema_version": "spec_gap.phi_hygiene.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "domain_id": "aihc",
+  "reviewed_at": "2026-08-09",
+  "scope": {
+    "retrieval_plan": "fellow_packages/aihc/retrieval/plan.json",
+    "selected_chunk_count": 37,
+    "treatments": [
+      "clean",
+      "injected"
+    ],
+    "treatment_parity": "Both arms use the same clean-ranked source spans in the same order; the injected carrier differs only by the declared controlled insertion."
+  },
+  "method": {
+    "automated_scan": [
+      "patient, subject, or participant identifier labels",
+      "medical-record-number, date-of-birth, Social-Security-number, and SSN labels",
+      "US Social Security number patterns",
+      "clinical-study and accession-like alphanumeric tokens"
+    ],
+    "manual_classification": "Every accession-like match in the selected spans was reviewed against its surrounding publication text."
+  },
+  "result": {
+    "patient_identifier_matches": 0,
+    "accession_like_matches_requiring_classification": 1,
+    "status": "passed"
+  },
+  "public_non_patient_identifiers": [
+    {
+      "value": "NCT02963441",
+      "classification": "public ClinicalTrials.gov study registration",
+      "document_id": "aihc_doc1",
+      "patient_identifier": false,
+      "disposition": "retained_as_public_study_provenance"
+    }
+  ]
+}
