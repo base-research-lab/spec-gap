@@ -55,8 +55,8 @@ AGENT_SEQUENCE = {
     ],
     "3-hop": [
         ("planner", "planner_1", 0, False),
-        ("worker_relay", "worker_1", 1, False),
-        ("worker_retriever", "worker_2", 2, True),
+        ("worker_retriever", "worker_1", 1, True),
+        ("worker_relay", "worker_2", 2, False),
         ("executor", "executor_1", 3, False),
     ],
 }
