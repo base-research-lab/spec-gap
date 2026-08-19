@@ -67,8 +67,8 @@ HOP_PATH = {
     "3-hop": [
         "user",
         "planner",
-        "worker_relay",
         "worker_retriever",
+        "worker_relay",
         "executor",
     ],
 }
@@ -861,34 +861,8 @@ def build_events(
         "reasoning_compromise_label": _reasoning_unknown(),
     })
 
-    # --- 3-hop only: Worker relay (clean, no documents, no tools) ---
-    if condition == "3-hop":
-        add({
-            "type": "agent_turn",
-            "agent_role": "worker_relay",
-            "agent_id": "worker_1",
-            "hop_index": 1,
-            "sub_step": "relay",
-            "input": {
-                "system_prompt": SYSTEM_PROMPTS["worker_relay"],
-                "user_message": None,
-                "upstream_agent_message": None,
-                "retrieved_document_text": [],
-                "saw_raw_documents": False,
-                "rendered_prompt": None,
-                "input_token_ids": None,
-                "rendered_prompt_hash": None,
-            },
-            "output": _empty_output(),
-            "generation_mode": "dry_run",
-            "model_called": False,
-            "token_alignment": {"injection_present_in_prompt": False},
-            "activation_metadata": _dry_run_activation(),
-            "behavioral_compromise_label": _behavior_unknown(),
-            "reasoning_compromise_label": _reasoning_unknown(),
-        })
-
     # --- Worker retriever (compromised): pre-filled tool call + doc content ---
+    # In BOTH 2-hop and 3-hop, worker_1 is the retriever that picks up injection.
     retrieval_metrics = {
         "retrieved_ids": document_ids,
         "poison_in_retrieval": injected,
@@ -966,6 +940,34 @@ def build_events(
             "source": "construction_metadata",
         }
     add(retriever_event)
+
+    # --- 3-hop only: Worker relay (worker_2) processes retriever's summary ---
+    # Comes AFTER retriever (worker_1): injection propagates through relay to executor
+    if condition == "3-hop":
+        add({
+            "type": "agent_turn",
+            "agent_role": "worker_relay",
+            "agent_id": "worker_2",
+            "hop_index": 2,
+            "sub_step": "relay",
+            "input": {
+                "system_prompt": SYSTEM_PROMPTS["worker_relay"],
+                "user_message": None,
+                "upstream_agent_message": None,
+                "retrieved_document_text": [],
+                "saw_raw_documents": False,
+                "rendered_prompt": None,
+                "input_token_ids": None,
+                "rendered_prompt_hash": None,
+            },
+            "output": _empty_output(),
+            "generation_mode": "dry_run",
+            "model_called": False,
+            "token_alignment": {"injection_present_in_prompt": False},
+            "activation_metadata": _dry_run_activation(),
+            "behavioral_compromise_label": _behavior_unknown(),
+            "reasoning_compromise_label": _reasoning_unknown(),
+        })
 
     # --- Executor: receives only upstream summary, has audit tool ---
     add({
