@@ -1,0 +1,361 @@
+Research & Policy Briefs
+From the World Bank Malaysia Hub
+No. 62 May 25, 2023
+How do rising US interest rates affect developing East Asian economies?
+Daisuke Fukuzawa, Ergys Islamaj, and Franz Ulrich Ruch
+This Brief examines the impact of US interest rate hikes on developing East Asian economies. The effect will depend on the underlying
+factors driving the changes in US interest rates. US interest rates can be decomposed as stemming from three drivers: (1) developments
+in activity in the real economy; (2) inflation developments; and (3) reaction shocks, prompted by investors’ assessments that the Federal
+Reserve has shifted toward a more hawkish or dovish stance. While rises in US interest rates driven by real activity developments have
+relatively benign effects on developing East Asian economies, those driven by inflation developments and reaction shocks adversely
+impact developing East Asian economies. The Brief can help policy makers in East Asian economies better understand the risks associated
+with the rises in US interest rates.
+Introduction Drivers of US interest rates
+Increases in US interest rates in response to rising inflation can To decompose the shocks underlying changes in US interest
+negatively affect financial markets across the world and, rates, this study utilizes a sign-restricted Bayesian vector
+subsequently, economic activity in developing economies, autoregressive (VAR) model with stochastic volatility, as in
+including in East Asia. Arteta, Kamin, and Ruch (2022). The model utilizes monthly
+data spanning from January 1982 to December 2022 and
+This Brief emphasizes the importance of comprehending includes four key variables: 2-year bond yields; 10-year bond
+the dynamic characteristics of the factors that influence shifts yields; the S&P 500 index; and 5-year-ahead inflation
+in US interest rates. With a more comprehensive understanding expectations. The 10-year yield is included in addition to the
+of the underlying drivers behind these changes, policy makers 2-year yield to account for the persistent portion of inflation
+can make more informed decisions to face external expectations and future monetary policy decisions.
+disturbances.
+Increases in US interest rates can be attributed to several
+The Brief follows Arteta, Kamin and Ruch (2022) and
+key drivers, including real activity developments (real shocks),
+categorizes US interest rate changes as stemming from three
+inflation developments (inflation shocks), and the monetary
+drivers: (1) real activity developments (real shocks), which
+policy reaction function (reaction shocks). Real shocks refer to
+reflect changes in US interest rates that are prompted by
+changes in interest rates caused by fluctuations in US economic
+changing prospects for US economic activity; (2) inflation
+activity. When an interest rate increase is due to real shocks, it
+developments (inflation shocks), which reflect changes in US
+is accompanied by an increase in US yields, equity prices, and
+inflation expectations; and (3) the monetary policy reaction
+inflation expectations. Inflation shocks reflect changes in
+function (reaction shocks), which reflect investors’ assessment
+interest rates driven by shifts in inflation prospects. When an
+that the Federal Reserve's reaction function has changed
+interest rate increase is due to inflation shocks, it results in an
+(become more hawkish or dovish).
+increase in US yields and an increase in inflation expectations,
+but a decrease in equity prices. Finally, reaction shocks are
+The findings suggest that US interest rate hikes due to real
+changes in interest rates driven by market perceptions of the
+activity developments have relatively benign effects on East
+Federal Reserve's reaction function. When an interest rate
+Asian economies. Real shocks are associated with higher
+increase is due to reaction shocks, it results in an increase in US
+external demand and better equity and sovereign risk
+yields and a decrease in equity prices, similar to inflation
+outcomes, despite higher borrowing costs. However, US
+shocks. However, unlike inflation shocks, reaction shocks are
+interest rate hikes due to inflation developments and shocks to
+assumed to lower inflation expectations.
+the monetary policy reaction function adversely affect
+developing East Asian economies. These shocks lead to tighter
+Real activity contributed positively to the US 2-year yield
+financial conditions, which can reduce economic activity.
+during 2021 (figure 1, panel a). Indeed, real shocks were the
+primary factor pushing the yield higher for most of 2021. As
+The results highlight the vulnerability of East Asian
+COVID-19 vaccination efforts gained momentum throughout
+economies to the recent US interest rates hiking cycles that has
+the year, businesses reopened, and consumers resumed
+been driven by a more hawkish Fed and higher inflation
+spending, economic activity picked up. These factors, coupled
+expectations. These findings underscores the need for policy
+with ongoing fiscal support and the Fed's commitment to
+makers in the region to monitor risks carefully and take
+appropriate measures to mitigate any negative effects on their providing supportive monetary policy (including the
+economies. announcement in mid-2020 of a change in its policy framework
+Affiliations: Daisuke Fukuzawa and Ergys Islamaj are with the East Asia and Pacific Chief Economist Office, World Bank. Franz Ulrich Ruch is with the Prospects Group, World Bank.
+Acknowledgements: Aaditya Mattoo provided valuable comments, insights, and suggestions. Nancy Morrison provided editorial assistance.
+Objective and disclaimer: Research & Policy Briefs synthetize existing research and data to shed light on a useful and interesting question for policy debate. Research & Policy Briefs
+carry the names of the authors and should be cited accordingly. The findings, interpretations, and conclusions are entirely those of the authors. They do not necessarily represent
+the views of the World Bank Group, its Executive Directors, or the governments they represent.
+dezirohtuA
+erusolcsiD
+cilbuP
+dezirohtuA
+erusolcsiD
+cilbuP
+dezirohtuA
+erusolcsiD
+cilbuP
+dezirohtuA
+erusolcsiD
+cilbuP
+How do rising US interest rates affect developing
+East Asian economies?
+Figure 1. US interest rate developments
+a. Drivers of 2-year US interest rate yields, b. Comparing the trajectory of US policy rate
+March 2019–December 2022a increases in various periods since 1980b
+5
+4
+3
+2
+1
+0
+-1
+-2
+-3
+Source: Arteta, Kamin and Ruch (2022); Federal Reserve Bank of St Louis; Haver Analytics; World Bank staff estimates.
+Note:
+a. Shocks are estimated from a sign-restricted Bayesian vector auto-regression (VAR) model with stochastic volatility in the error structure, following Arteta, Kamin, and
+Ruch (2022). Stochastic volatility is modelled as in Jacquier, Polson, and Rossi (1994), and a generic version of what is suggested in Lenza and Primiceri (2022).The model
+is run using monthly data from January 1982 to December 2022 (but shown only for the period March 2019-December 2022 for clarity of exposition) and includes four
+variables: 2-year bond yields; 10-year bond yields; the S&P 500 index; and inflation expectations. Inflation shocks are prompted by rising expectations of US inflation.
+Real shocks are prompted by anticipation of improving US economic activity. Reaction shocks are prompted by investors’ assessments that the Federal Reserve has
+shifted toward a more hawkish stance.
+b. “t” shows the beginning month of each episode of US interest rate increase.
+to target average inflation over a specific period), contributed and sovereign risk spread are presented next and summarized
+to a surge in consumer demand. Shifts in monetary policy in figure 2.
+reaction helped push down the 2-year US yield during 2021,
+Increases in US interest rates driven by real activity
+reflecting a perceived dovish shift in the Fed, a hold on changes
+developments (real shocks) had a positive effect on equity
+in policy interest rates, and the uncertainty about the economic
+prices throughout 2022. Similarly, rises in US interest rates
+outlook and inflation developments (World Bank 2021).
+driven by real activity developments led to higher exports,
+reflecting the increase in demand, and lower sovereign risk
+In 2022, however, the factors influencing changes in the US
+spreads. They also appear to have had a negligible effect on
+2-year yield underwent a notable shift. Initially, real activity
+reserves (figure 2).
+developments were the primary driver of interest rate
+increases, but as the year progressed, inflation and monetary Increases in US interest rates driven by inflation
+policy reaction began to play a dominant role. The trend developments (inflation shocks), however, depressed equity
+reflected the Fed undertaking the fastest and steepest increase prices in developing East Asian economies. Increases in US
+in policy rates since the late-1980s (figure 1, panel b). interest rates driven by inflation developments are associated
+with lower growth of goods exports due to lower external
+Spillovers to developing East Asian economies demand and led to loss of foreign reserves in developing East
+Asia economies.
+Given the evolution of factors that explain US interest rates
+movements, the impact of US monetary tightening on financial Increases in US interest rates driven by monetary policy
+conditions and economic outcomes in developing East Asian reaction function (reaction shocks) led to a decrease in equity
+economies is likely to have also changed. To assess the impact prices, a decrease in real goods exports, loss of foreign
+of these US interest rate shocks on financial and economic currency reserves, and higher sovereign risk spreads. Overall,
+conditions in developing East Asia, local projection models over the course of 2022, the net effect on developing East Asian
+following Jordà (2005) are estimated for China, Indonesia, economies of the different factors driving US interest increases
+Malaysia, the Philippines, and Thailand. The approach identifies was negative. For example, a 25-basis point increase in the
+impulse response functions through consecutive regression 2-year US yields depressed equity prices by about 6 percent in
+models at different horizons. Results are estimated six months developing East Asia at the end of 2022 compared to the
+ahead on monthly data from as far back as May 1998 to previous year. While real activity developments in the United
+December 2022. Models include two lags and a dummy for the States helped boost equity prices in the region, these gains
+global financial crisis (January 2008–December 2009) and the were overshadowed by declines driven from inflation
+COVID-19 pandemic (January 2020–December 2022). The developments and the monetary policy reaction function in the
+findings for equity prices, exports, foreign exchange reserves, United States.
+2
+91-raM 91-nuJ 91-peS 91-ceD 02-raM 02-nuJ
+Percent Real activity developments
+Inflation developments
+Monetary policy reaction function
+2-year US bond yield
+02-peS 02-ceD 12-raM 12-nuJ 12-peS 12-ceD 22-raM 22-nuJ 22-peS 22-ceD
+12
+10
+8
+6
+4
+2
+0
+1+t 5+t 9+t 31+t 71+t 12+t 52+t 92+t 33+t 73+t 14+t 54+t 94+t 35+t
+Percentage points
+2022 2015 2004
+1994 1987 1980
+Research & Policy Brief No.62
+Figure 2. Impact of US interest rate yields on economic activity in developing East Asia
+a. Equity prices (peak response by country) b. Equity prices (evolution)
+10
+5
+0
+-5
+-10
+-15
+c. Real exports (peak response by country) d. Real exports (evolution)
+e. Foreign reserves (peak response by country) f. Foreign reserves (evolution)
+g. Sovereign spreads (peak response by country) h. Sovereign spreads (evolution)
+Source: Haver Analytics; World Bank staff estimates.
+Note: Based on local projection models, following Jordà (2005), which identifies impulse response functions through consecutive regression models at different horizons.
+The models are estimated six months ahead on monthly data from as far back as May 1998 to December 2022, depending on country availability. Models include, where
+available, short- and long-term interest rates, consumer inflation, equity prices, exchange rate to the US dollar, real exports in US dollars, foreign exchange reserves, and
+sovereign risk spreads. Models include two lags and dummies for the global financial crisis (January 2008–December 2009) and the COVID-19 pandemic (January
+2020–December 2022).
+a. Panels a, c, e, and g show the estimated peak response in six months in developing East Asian economies. Whiskers show 90 percent confidence interval.
+b. Panels b, d, f, and h show the predicted effect of each shock at peak response. Unweighted averages.
+3
+anihC aisenodnI aisyalaM senippilihP dnaliahT
+4
+2
+0
+-2
+-4
+-6
+-8
+-10
+stniop
+egatnecreP
+stniop
+egatnecreP
+stniop
+egatnecreP
+stniop
+egatnecreP
+stniop
+egatnecreP
+stniop
+egatnecreP
+stniop
+egatnecreP
+stniop
+egatnecreP
+22-naJ 22-beF 22-raM 22-rpA 22-yaM 22-nuJ 22-luJ 22-guA 22-peS 22-tcO 22-voN 22-ceD
+Real activity developments Real activity developments
+Monetary policy reaction function Monetary policy reaction function
+Inflation developments Inflation developments
+15
+10
+5
+0
+-5
+-10
+-15
+anihC aisenodnI aisyalaM senippilihP dnaliahT
+Real activity developments Real activity developments
+Monetary policy reaction function Monetary policy reaction function
+4
+Inflation developments Inflation developments
+2
+0
+-2
+-4
+-6
+-8
+-10
+22-naJ 22-beF 22-raM 22-rpA 22-yaM 22-nuJ 22-luJ 22-guA 22-peS 22-tcO 22-voN 22-ceD
+Real activity developments Real activity developments
+Monetary policy reaction function Monetary policy reaction function
+3 Inflation developments Inflation developments
+2
+1
+0
+-1
+-2
+-3
+-4
+-5
+anihC aisenodnI aisyalaM senippilihP dnaliahT
+0.5
+0
+-0.5
+-1
+-1.5
+-2
+-2.5
+-3
+-3.5
+22-naJ 22-beF 22-raM 22-rpA 22-yaM 22-nuJ 22-luJ 22-guA 22-peS 22-tcO 22-voN 22-ceD
+Real activity developments Real activity developments
+Monetary policy reaction function Monetary policy reaction function
+60 Inflation developments Inflation developments
+40
+20
+0
+-20
+-40
+-60
+anihC aisenodnI aisyalaM senippilihP
+40
+30
+20
+10
+0
+-10
+-20
+22-naJ 22-beF 22-raM 22-rpA 22-yaM 22-nuJ 22-luJ 22-guA 22-peS 22-tcO 22-voN 22-ceD
+How do rising US interest rates affect developing
+East Asian economies?
+Figure 3. Impact of US interest rate yields to GDP in developing East Asian economies
+a. GDP growth (peak response by country) b. GDP growth (evolution)
+3
+2
+1
+0
+-1
+-2
+-3
+-4
+-5
+Source: Haver Analytics; World Bank staff estimates.
+Note: Based on local projection models, following Jordà (2005), which identifies impulse response functions through consecutive regression models at different horizons.
+The models are estimated six quarters ahead on quarterly data from as far back as 1996:Q2 to 2022:Q4, depending on country availability. Models include, where
+available, short- and long-term interest rates, consumer inflation, equity prices, exchange rate to the US dollar, real GDP, foreign exchange reserves, and sovereign risk
+spread. Models include two lags and dummies for the global financial crisis (January 2008–December 2009) and the COVID-19 pandemic (January 2020–December 2022).
+a. Panel a shows the estimated peak response in six months in developing East Asian economies. Whiskers show the 90 percent confidence interval.
+b. Panel b shows the quarter-on-quarter predicted effect of each shock assuming peak response. Unweighted averages.
+Increases in US interest rates during 2022 also hurt GDP Asian economies and significantly tighten financing conditions.
+growth in developing East Asian economies. While real shocks These adverse effects are more likely when inflation
+are associated with higher GDP growth, especially in Malaysia developments and monetary policy reaction are driving the
+and the Philippines, inflation shocks and especially monetary increase in interest rates.
+policy reaction shocks depressed GDP growth. Increases in
+interest rates due to monetary policy reaction shocks are
+It is essential for policy makers to take appropriate
+associated with a significant decline in emerging market
+measures to mitigate any negative effects of interest rate hikes
+investment and private consumption (Arteta, Kamin, and Ruch
+on the East Asian economies. They need to remain proactive in
+2022). In contrast, real shocks lead to higher real exports. The
+identifying and managing the risks associated with such shocks.
+rise in US interest rates in 2022 depressed quarter-on quarter
+Additionally, policy makers must develop and implement
+GDP growth by 0.2 percentage points, on average (figure 3).
+policies that are robust enough to withstand the impact of
+interest rate hikes. This can include measures such as
+Policy relevance
+increasing foreign exchange reserves, implementing flexible
+The findings of this study demonstrate that developing East exchange rate regimes, and introducing policies to enhance
+Asian economies are susceptible to the impact of US interest financial stability.
+rate hikes. While policy makers in the region should remain
+vigilant and closely monitor financial tightening in advanced
+In conclusion, the vulnerability of East Asian economies to
+economies, the response should be cautious and based on
+US interest rate hikes driven by factors other than improving
+rigorous analysis. When increases in US interest rates are
+demand is a cause for concern. Policy makers in the region
+driven by improving demand, then nations in the region could
+must remain vigilant and take proactive measures to mitigate
+see some positive effects on their economic activity.
+any adverse effects on their economies. By doing so, they can
+But interest rate hikes in the United States can lead to a help safeguard the long-term economic growth and stability of
+reduction in investment, consumption, and exports in East the region.
+References
+Arteta, C., S. B. Kamin, and F. U. Ruch. 2022. “How Do Rising US Interest Rates Affect Emerging and Lenza, M., and G. E. Primiceri 2022. “How to Estimate a Vector Autoregression after March 2020.” Journal
+Developing Economies? It Depends.” Policy Research Working Paper 10258. World Bank, Washington, DC. of Applied Econometrics 37 (4): 688–99.
+Jacquier, E., N. Polson, and P. Rossi. 1994. “Bayesian Analysis of Stochastic Volatility Models.” Journal of World Bank. 2021. Global Economic Prospects, June 2021. Global Economic Prospects. Washington, DC:
+Business and Economic Statistics 12 (4): 371–89. World Bank.
+Jordà, Ò. 2005. “Estimation and Inference of Impulse Responses by Local Projections.” American Economic
+Review 95 (1): 161–82.
+4
+anihC aisenodnI aisyalaM senippilihP dnaliahT
+Real activity developments Real activity developments
+Monetary policy reaction function Monetary policy reaction function
+Inflation developments 0.3 Inflation developments
+0.2
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+stniop
+egatnecreP
+stniop
+egatnecreP
+1Q1202 2Q1202 3Q1202 4Q1202 1Q2202 2Q2202 3Q2202 4Q2202
