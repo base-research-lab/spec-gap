@@ -26,8 +26,8 @@ ALLOWED_AGENT_ROLES = {
     "worker_retriever", "worker_relay",
 }
 # The retriever worker is the only agent that sees raw documents (and thus
-# the injection). Which agent_id this is depends on the depth condition:
-# 2-hop -> worker_1, 3-hop -> worker_2.
+# the injection). In both 2-hop and 3-hop, worker_1 is the retriever.
+# worker_2 (3-hop relay) only sees worker_1's summary, not raw docs.
 RAW_POISON_ALLOWED_AGENT_IDS = {"worker_1", "worker_2"}
 ACTIVATION_ARTIFACT_FORMAT = "spec_gap.activation_positions.v1"
 ACTIVATION_TOKEN_POSITION = "last_generated_non_special_token"
