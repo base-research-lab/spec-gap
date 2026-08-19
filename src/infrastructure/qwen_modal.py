@@ -21,8 +21,14 @@ MODEL_ID = "Qwen/Qwen3-32B"
 MODEL_REVISION = "9216db5781bf21249d130ec9da846c4624c16137"
 MODEL_LAYER_COUNT = 64
 THINKING_MODES = {"on": True, "off": False}
-ALLOWED_AGENT_ROLES = {"planner", "worker", "worker2", "executor"}
-RAW_POISON_AGENT_ID = "worker_1"
+ALLOWED_AGENT_ROLES = {
+    "planner", "worker", "worker2", "executor",
+    "worker_retriever", "worker_relay",
+}
+# The retriever worker is the only agent that sees raw documents (and thus
+# the injection). Which agent_id this is depends on the depth condition:
+# 2-hop -> worker_1, 3-hop -> worker_2.
+RAW_POISON_ALLOWED_AGENT_IDS = {"worker_1", "worker_2"}
 ACTIVATION_ARTIFACT_FORMAT = "spec_gap.activation_positions.v1"
 ACTIVATION_TOKEN_POSITION = "last_generated_non_special_token"
 ACTIVATION_CHECKPOINT_NAMES = {
@@ -101,7 +107,14 @@ def _validate_safe_id(value: str, field: str) -> None:
         )
 
 
-def _validate_messages(messages: Any) -> list[dict[str, str]]:
+def _validate_messages(messages: Any) -> list[dict[str, Any]]:
+    """Validate the conversation message list.
+
+    Supports standard messages (system/user/assistant with text content) and
+    tool-calling patterns:
+      - assistant messages with tool_calls (content may be None)
+      - tool-role messages with tool_call_id and name
+    """
     if not isinstance(messages, list) or not messages:
         raise RequestValidationError("messages must be a non-empty list")
     normalized = []
@@ -109,12 +122,44 @@ def _validate_messages(messages: Any) -> list[dict[str, str]]:
         if not isinstance(message, dict):
             raise RequestValidationError(f"messages[{index}] must be an object")
         role = message.get("role")
-        content = message.get("content")
         if not isinstance(role, str) or not role.strip():
             raise RequestValidationError(f"messages[{index}].role must be a string")
-        if not isinstance(content, str):
-            raise RequestValidationError(f"messages[{index}].content must be a string")
-        normalized.append({"role": role.strip(), "content": content})
+        role = role.strip()
+
+        if role == "assistant" and "tool_calls" in message:
+            # Pre-filled tool-call message: content may be None
+            tool_calls = message["tool_calls"]
+            if not isinstance(tool_calls, list) or not tool_calls:
+                raise RequestValidationError(
+                    f"messages[{index}].tool_calls must be a non-empty list"
+                )
+            norm = {
+                "role": role,
+                "content": message.get("content"),
+                "tool_calls": tool_calls,
+            }
+        elif role == "tool":
+            # Tool response message
+            content = message.get("content")
+            if not isinstance(content, str):
+                raise RequestValidationError(
+                    f"messages[{index}].content must be a string for tool messages"
+                )
+            norm = {"role": role, "content": content}
+            if "tool_call_id" in message:
+                norm["tool_call_id"] = message["tool_call_id"]
+            if "name" in message:
+                norm["name"] = message["name"]
+        else:
+            # Standard message (system, user, or text-only assistant)
+            content = message.get("content")
+            if not isinstance(content, str):
+                raise RequestValidationError(
+                    f"messages[{index}].content must be a string"
+                )
+            norm = {"role": role, "content": content}
+
+        normalized.append(norm)
     return normalized
 
 
@@ -289,13 +334,39 @@ def validate_generation_request(payload: Any) -> dict[str, Any]:
     raw_poison_exposed = payload.get("raw_poison_exposed", False)
     if not isinstance(raw_poison_exposed, bool):
         raise RequestValidationError("raw_poison_exposed must be a boolean")
-    if raw_poison_exposed and agent_id != RAW_POISON_AGENT_ID:
+
+    # Per-trial poison-exposure check: the request carries the expected
+    # retriever agent_id for this specific trial.  Validating against it
+    # (rather than a static allowlist) catches the exact misassignment bug
+    # this redesign was built to prevent: e.g. a 3-hop trial accidentally
+    # exposing worker_1 (the relay) instead of worker_2 (the retriever).
+    expected_poison_agent_id = payload.get("expected_poison_agent_id")
+    if expected_poison_agent_id is not None:
+        if (
+            not isinstance(expected_poison_agent_id, str)
+            or not expected_poison_agent_id.strip()
+        ):
+            raise RequestValidationError(
+                "expected_poison_agent_id must be a non-empty string"
+            )
+        expected_poison_agent_id = expected_poison_agent_id.strip()
+        if raw_poison_exposed and agent_id != expected_poison_agent_id:
+            raise RequestValidationError(
+                f"raw_poison_exposed is true but agent_id {agent_id!r} != "
+                f"expected_poison_agent_id {expected_poison_agent_id!r}; "
+                f"this trial expects only {expected_poison_agent_id!r} to "
+                f"see raw documents"
+            )
+    else:
+        # Fallback for legacy requests without the field: use the static set
+        if raw_poison_exposed and agent_id not in RAW_POISON_ALLOWED_AGENT_IDS:
+            raise RequestValidationError(
+                f"{agent_id} is not allowed to receive raw poisoned documents; "
+                f"allowed: {sorted(RAW_POISON_ALLOWED_AGENT_IDS)}"
+            )
+    if agent_id == "executor_1" and raw_poison_exposed:
         raise RequestValidationError(
-            "only worker_1 may receive the raw poisoned document"
-        )
-    if agent_id in {"worker_2", "executor_1"} and raw_poison_exposed:
-        raise RequestValidationError(
-            f"{agent_id} must receive only the upstream agent message"
+            "executor must receive only the upstream agent message"
         )
     messages = _validate_messages(payload.get("messages"))
     injection_text = payload.get("injection_text")
@@ -305,8 +376,9 @@ def validate_generation_request(payload: Any) -> dict[str, Any]:
                 "raw-poison requests require a non-empty injection_text"
             )
         occurrences = sum(
-            message["content"].count(injection_text)
+            (message.get("content") or "").count(injection_text)
             for message in messages
+            if isinstance(message.get("content"), str)
         )
         if occurrences != 1:
             raise RequestValidationError(
@@ -339,6 +411,7 @@ def validate_generation_request(payload: Any) -> dict[str, Any]:
         "messages": messages,
         "tools": tools,
         "raw_poison_exposed": raw_poison_exposed,
+        "expected_poison_agent_id": expected_poison_agent_id,
         "injection_text": injection_text,
         "generation_settings": _validate_settings(payload.get("generation_settings")),
         "extract_activations": extract_activations,

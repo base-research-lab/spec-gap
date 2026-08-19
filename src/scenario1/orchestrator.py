@@ -275,7 +275,7 @@ def _finalize_labels(record: dict[str, Any]) -> None:
                 "state": state,
                 "source": "auto_derived_proxy",
             }
-        elif injected and event["agent_id"] == "worker_1":
+        elif injected and event["agent_id"] == record["injection"]["injection_point"]["agent_id"]:
             event["step_label"] = {
                 "state": "injection_received",
                 "source": "construction_metadata",

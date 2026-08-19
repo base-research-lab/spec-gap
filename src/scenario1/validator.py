@@ -49,7 +49,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(_
 SCHEMA_PATH = os.path.join(
     PROJECT_ROOT, "schemas", "scenario1", "v2", "trajectory.schema.json"
 )
-HOP_PATH_LEN = {"2-hop": 5, "3-hop": 6}
+HOP_PATH_LEN = {"2-hop": 4, "3-hop": 5}
 EXPECTED_AGENTS = {
     "2-hop": {"planner_1", "worker_1", "executor_1"},
     "3-hop": {"planner_1", "worker_1", "worker_2", "executor_1"},

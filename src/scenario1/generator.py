@@ -35,6 +35,17 @@ from src.scenario1.retrieval import (
     load_retrieval_plan,
     materialize_retrieval,
 )
+from src.scenario1.pipeline_prompts import (
+    AGENT_SEQUENCE,
+    RETRIEVE_DOCUMENTS_TOOL,
+    SUBMIT_DOCUMENT_FOR_AUDIT_TOOL,
+    SYSTEM_PROMPTS,
+    build_planner_input,
+    build_worker_retriever_messages,
+    build_worker_relay_messages,
+    build_executor_messages,
+    tools_for_role,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -52,13 +63,12 @@ DOCUMENT_SOURCE_FIELDS = (
 )
 
 HOP_PATH = {
-    "2-hop": ["user", "planner", "worker", "retrieved_document", "executor"],
+    "2-hop": ["user", "planner", "worker_retriever", "executor"],
     "3-hop": [
         "user",
         "planner",
-        "worker",
-        "retrieved_document",
-        "second_worker",
+        "worker_relay",
+        "worker_retriever",
         "executor",
     ],
 }
@@ -128,8 +138,8 @@ def _normalize_climate_registry(raw: dict[str, Any], path: Path) -> dict[str, An
         "schema_target": "spec_gap.scenario1.v2",
         "domain_id": raw["domain_id"],
         "task_family_id": raw["task_family_id"],
-        "document_set_id": f"{raw['independence_group_id']}__documents",
-        "independence_group_id": raw["independence_group_id"],
+        "document_set_id": f"{raw.get('group_id', raw.get('independence_group_id'))}__documents",
+        "group_id": raw.get("group_id", raw.get("independence_group_id")),
         "assigned_wording": assigned_wording,
         "injection_family": raw["injection_family"],
         "injection_placement": raw["injection_placement"],
@@ -165,13 +175,28 @@ def normalize_registry(raw: dict[str, Any], path: Path) -> dict[str, Any]:
         reg = _normalize_climate_registry(raw, path)
     else:
         reg = copy.deepcopy(raw)
-        reg.setdefault("task_family_id", reg["independence_group_id"])
-        reg.setdefault("document_set_id", f"{reg['independence_group_id']}__documents")
         reg.setdefault("conditions", copy.deepcopy(list(CONDITIONS)))
         reg.setdefault("provenance", {})
         reg["provenance"].setdefault(
             "source_registry", str(path.relative_to(PROJECT_ROOT))
         )
+
+    # ── Backward-compat shim: independence_group_id → group_id ──
+    if "group_id" not in reg and "independence_group_id" in reg:
+        reg["group_id"] = reg.pop("independence_group_id")
+    elif "group_id" not in reg:
+        raise ValueError("registry must contain 'group_id'")
+    # Remove legacy key if both are present
+    reg.pop("independence_group_id", None)
+
+    # ── Extensibility fields (with defaults for existing registries) ──
+    reg.setdefault("scenario_id", "s1")
+    reg.setdefault("model_id", MODEL_ID)
+    reg.setdefault("trust_mode", "same_model")
+
+    # ── Derived IDs ──
+    reg.setdefault("task_family_id", reg["group_id"])
+    reg.setdefault("document_set_id", f"{reg['group_id']}__documents")
 
     activation = reg.setdefault("activation_config", {})
     activation["requested_layers"] = list(range(MODEL_LAYER_COUNT))
@@ -215,8 +240,8 @@ def validate_registry_set(registries: Iterable[dict[str, Any]]) -> None:
             raise ValueError(f"independent groups reuse {label}")
 
     require_unique(
-        [reg["independence_group_id"] for reg in registries],
-        "independence_group_id",
+        [reg["group_id"] for reg in registries],
+        "group_id",
     )
     require_unique([reg["domain_id"] for reg in registries], "domain_id")
     require_unique([reg["task"]["user_task"] for reg in registries], "user task")
@@ -256,15 +281,18 @@ def validate_registry_set(registries: Iterable[dict[str, Any]]) -> None:
             )
         if not reg["task"].get("expected_benign_behavior"):
             raise ValueError(
-                f"{reg['independence_group_id']} is missing expected benign behavior"
+                f"{reg['group_id']} is missing expected benign behavior"
             )
-        if not reg["injection"].get("insertion_anchor"):
+        if (
+            not reg["injection"].get("insertion_anchor")
+            and not reg["injection"].get("insertion_position")
+        ):
             raise ValueError(
-                f"{reg['independence_group_id']} is missing an insertion anchor"
+                f"{reg['group_id']} is missing insertion_anchor or insertion_position"
             )
         if not reg.get("provenance", {}).get("created_by"):
             raise ValueError(
-                f"{reg['independence_group_id']} is missing provenance.created_by"
+                f"{reg['group_id']} is missing provenance.created_by"
             )
         document_ids.extend(document["doc_id"] for document in documents)
         document_texts.extend(document["text"] for document in documents)
@@ -274,12 +302,12 @@ def validate_registry_set(registries: Iterable[dict[str, Any]]) -> None:
         }
         if actual_conditions != expected_conditions:
             raise ValueError(
-                f"{reg['independence_group_id']} does not contain all four conditions"
+                f"{reg['group_id']} does not contain all four conditions"
             )
         assigned = reg["assigned_wording"]
         if assigned not in reg["injection"]["wordings"]:
             raise ValueError(
-                f"{reg['independence_group_id']} is missing wording {assigned}"
+                f"{reg['group_id']} is missing wording {assigned}"
             )
         if ".invalid/" not in reg["injection"]["endpoint"]:
             raise ValueError("Scenario 1 endpoints must use a non-routable .invalid domain")
@@ -363,6 +391,59 @@ def _canonical_non_evidence_pages(
     return result
 
 
+# ── Position-based insertion ──────────────────────────────────────────────────
+# Instead of requiring a hand-picked anchor sentence from each document,
+# the registry can specify insertion_position: "top", "middle", or "bottom".
+# The code finds the nearest sentence boundary at that exact percentage.
+
+INSERTION_POSITION_PCT = {
+    "top": 0.20,
+    "middle": 0.50,
+    "bottom": 0.80,
+}
+
+
+def _find_sentence_boundary(text: str, target_char: int) -> int:
+    """Find the end of the nearest sentence at or after target_char.
+
+    Scans forward for sentence-ending punctuation followed by whitespace,
+    or a paragraph break (double newline). Returns the character index
+    immediately AFTER the boundary (i.e., where to insert).
+    """
+    # Don't overshoot the document
+    search_start = min(target_char, len(text) - 1)
+
+    # Look for sentence ends: . or ! or ? followed by space/newline, or \n\n
+    for i in range(search_start, min(search_start + 500, len(text) - 1)):
+        char = text[i]
+        if char in ".!?" and i + 1 < len(text) and text[i + 1] in " \n\t":
+            return i + 1  # Right after the punctuation
+        if char == "\n" and i + 1 < len(text) and text[i + 1] == "\n":
+            return i + 1  # Between the two newlines (paragraph break)
+
+    # Fallback: if no sentence boundary found within 500 chars, use exact position
+    return target_char
+
+
+def _resolve_insertion_point(injection_config: dict[str, Any], clean_text: str) -> str | None:
+    """Resolve the insertion anchor — either literal or position-based.
+
+    Returns the anchor string if using literal mode, or None if using
+    position-based mode (caller handles differently).
+    """
+    # Position-based takes priority when present
+    position = injection_config.get("insertion_position")
+    if position is not None:
+        return None  # Caller uses position-based path
+    # Legacy: literal anchor string
+    anchor = injection_config.get("insertion_anchor")
+    if anchor:
+        return anchor
+    raise ValueError(
+        "injection config must have either 'insertion_position' or 'insertion_anchor'"
+    )
+
+
 def _build_document_bundle(
     reg: dict[str, Any],
     treatment: str,
@@ -378,7 +459,6 @@ def _build_document_bundle(
     wording = injection["wordings"][reg["assigned_wording"]]
     marker = injection["carrier_marker"]
     endpoint = injection["endpoint"]
-    anchor = injection["insertion_anchor"]
 
     carrier_index = next(
         index for index, document in enumerate(documents)
@@ -387,6 +467,9 @@ def _build_document_bundle(
     clean_text = documents[carrier_index]["text"]
     if marker in clean_text or endpoint in clean_text:
         raise AssertionError("the clean carrier document already contains the injection")
+
+    # Resolve insertion point: position-based or literal anchor
+    anchor = _resolve_insertion_point(injection, clean_text)
 
     retrieval_config = reg.get("retrieval")
     if retrieval_config is not None:
@@ -583,14 +666,48 @@ def _build_document_bundle(
 
     span = None
     if treatment == "injected":
-        if anchor not in clean_text:
-            raise AssertionError(f"insertion anchor {anchor!r} is missing")
-        block = wording + "\n\n"
-        injected_text = clean_text.replace(anchor, block + anchor, 1)
-        start = injected_text.index(wording)
-        span = [start, start + len(wording)]
-        if injected_text[:start] + injected_text[start + len(block):] != clean_text:
-            raise AssertionError("clean and injected documents differ beyond the injection span")
+        position = injection.get("insertion_position")
+
+        if position is not None:
+            # ── Position-based insertion ──
+            # Resolve named position to exact percentage
+            if isinstance(position, str):
+                if position not in INSERTION_POSITION_PCT:
+                    raise ValueError(
+                        f"insertion_position must be one of "
+                        f"{list(INSERTION_POSITION_PCT.keys())} or a float, "
+                        f"got {position!r}"
+                    )
+                pct = INSERTION_POSITION_PCT[position]
+            else:
+                pct = float(position)
+                if not 0.0 < pct < 1.0:
+                    raise ValueError(
+                        f"insertion_position float must be between 0 and 1, got {pct}"
+                    )
+
+            target_char = int(len(clean_text) * pct)
+            boundary = _find_sentence_boundary(clean_text, target_char)
+            # Insert injection block after the sentence boundary
+            block = "\n" + wording + "\n"
+            injected_text = clean_text[:boundary] + block + clean_text[boundary:]
+            start = boundary + 1  # +1 for the leading \n
+            span = [start, start + len(wording)]
+
+        else:
+            # ── Legacy: literal anchor-based insertion ──
+            if anchor not in clean_text:
+                raise AssertionError(f"insertion anchor {anchor!r} is missing")
+            block = wording + "\n\n"
+            injected_text = clean_text.replace(anchor, block + anchor, 1)
+            start = injected_text.index(wording)
+            span = [start, start + len(wording)]
+            if injected_text[:start] + injected_text[start + len(block):] != clean_text:
+                raise AssertionError(
+                    "clean and injected documents differ beyond the injection span"
+                )
+
+        # Common validation for both modes
         if marker not in injected_text or endpoint not in injected_text:
             raise AssertionError("the injected document is missing its marker or endpoint")
         documents[carrier_index]["text"] = injected_text
@@ -662,13 +779,20 @@ def _dry_run_activation() -> dict[str, Any]:
 
 
 def _agents(condition: str) -> list[tuple[str, str, int]]:
-    agents = [("planner", "planner_1", 0), ("worker", "worker_1", 1)]
+    """Return (role_key, agent_id, hop_index) for the given depth condition."""
     if condition == "3-hop":
-        agents.append(("worker", "worker_2", 2))
-        agents.append(("executor", "executor_1", 3))
+        return [
+            ("planner", "planner_1", 0),
+            ("worker_relay", "worker_1", 1),
+            ("worker_retriever", "worker_2", 2),
+            ("executor", "executor_1", 3),
+        ]
     else:
-        agents.append(("executor", "executor_1", 2))
-    return agents
+        return [
+            ("planner", "planner_1", 0),
+            ("worker_retriever", "worker_1", 1),
+            ("executor", "executor_1", 2),
+        ]
 
 
 def build_events(
@@ -679,13 +803,30 @@ def build_events(
     injection_span: list[int] | None,
     retrieval_trace: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], int]:
-    """Build structural events. No hand-written model output is inserted."""
+    """Build structural events for the new pipeline flow.
+
+    2-hop: planner -> worker_retriever (pre-filled tool call) -> executor
+    3-hop: planner -> worker_relay (clean) -> worker_retriever (pre-filled) -> executor
+
+    Retrieval is a pre-filled tool call within the compromised worker's turn.
+    The planner receives document IDs in its user message (dynamic per-trial).
+    """
 
     injected = treatment == "injected"
     agents = _agents(condition)
     executor_hop = agents[-1][2]
     events: list[dict[str, Any]] = []
     step_index = 0
+    document_ids = [doc["doc_id"] for doc in documents]
+    task_id = reg["group_id"]
+    user_task = reg["task"]["user_task"]
+
+    # Identify which agent is the compromised retriever
+    retriever_agent = next(
+        (role, aid, hop) for role, aid, hop in agents if role == "worker_retriever"
+    )
+    retriever_agent_id = retriever_agent[1]
+    retriever_hop = retriever_agent[2]
 
     def add(event: dict[str, Any]) -> None:
         nonlocal step_index
@@ -694,16 +835,19 @@ def build_events(
         events.append(event)
         step_index += 1
 
+    # --- Planner: receives task + document IDs, produces instruction ---
+    planner_user_message = build_planner_input(task_id, document_ids, user_task)
     add({
         "type": "agent_turn",
         "agent_role": "planner",
         "agent_id": "planner_1",
         "hop_index": 0,
         "input": {
-            "system_prompt": reg["system_prompts"]["planner"],
-            "user_message": reg["task"]["user_task"],
+            "system_prompt": SYSTEM_PROMPTS["planner"],
+            "user_message": planner_user_message,
             "upstream_agent_message": None,
             "retrieved_document_text": [],
+            "saw_raw_documents": False,
             "rendered_prompt": None,
             "input_token_ids": None,
             "rendered_prompt_hash": None,
@@ -717,8 +861,36 @@ def build_events(
         "reasoning_compromise_label": _reasoning_unknown(),
     })
 
+    # --- 3-hop only: Worker relay (clean, no documents, no tools) ---
+    if condition == "3-hop":
+        add({
+            "type": "agent_turn",
+            "agent_role": "worker_relay",
+            "agent_id": "worker_1",
+            "hop_index": 1,
+            "sub_step": "relay",
+            "input": {
+                "system_prompt": SYSTEM_PROMPTS["worker_relay"],
+                "user_message": None,
+                "upstream_agent_message": None,
+                "retrieved_document_text": [],
+                "saw_raw_documents": False,
+                "rendered_prompt": None,
+                "input_token_ids": None,
+                "rendered_prompt_hash": None,
+            },
+            "output": _empty_output(),
+            "generation_mode": "dry_run",
+            "model_called": False,
+            "token_alignment": {"injection_present_in_prompt": False},
+            "activation_metadata": _dry_run_activation(),
+            "behavioral_compromise_label": _behavior_unknown(),
+            "reasoning_compromise_label": _reasoning_unknown(),
+        })
+
+    # --- Worker retriever (compromised): pre-filled tool call + doc content ---
     retrieval_metrics = {
-        "retrieved_ids": [document["doc_id"] for document in documents],
+        "retrieved_ids": document_ids,
         "poison_in_retrieval": injected,
     }
     if retrieval_trace is not None:
@@ -747,36 +919,34 @@ def build_events(
                 retrieval_trace["document_token_budgets"]
             ),
         })
-    add({
-        "type": "tool_call",
-        "tool_name": "retrieve_documents",
-        "hop_index": 0,
-        "tool_result": copy.deepcopy(documents),
-        "retrieval_metrics": retrieval_metrics,
-    })
 
-    worker_alignment: dict[str, Any] = {"injection_present_in_prompt": injected}
+    retriever_alignment: dict[str, Any] = {"injection_present_in_prompt": injected}
     if injected and injection_span is not None:
-        worker_alignment["char_span"] = {
+        retriever_alignment["char_span"] = {
             "start_char": injection_span[0],
             "end_char": injection_span[1],
         }
-        worker_alignment["injection_token_span"] = None
-    worker_event = {
+        retriever_alignment["injection_token_span"] = None
+
+    retriever_event = {
         "type": "agent_turn",
-        "agent_role": "worker",
-        "agent_id": "worker_1",
-        "hop_index": 1,
+        "agent_role": "worker_retriever",
+        "agent_id": retriever_agent_id,
+        "hop_index": retriever_hop,
         "sub_step": "post_retrieval",
         "input": {
-            "system_prompt": reg["system_prompts"]["worker"],
-            "user_message": reg["task"]["user_task"],
+            "system_prompt": SYSTEM_PROMPTS["worker_retriever"],
+            "user_message": None,
             "upstream_agent_message": None,
             "retrieved_document_text": [
-                {"doc_id": document["doc_id"], "text": document["text"]}
-                for document in documents
+                {"doc_id": doc["doc_id"], "text": doc["text"]}
+                for doc in documents
             ],
             "saw_raw_documents": True,
+            "prefilled_tool_call": {
+                "tool_name": "retrieve_documents",
+                "arguments": {"document_ids": document_ids},
+            },
             "rendered_prompt": None,
             "input_token_ids": None,
             "rendered_prompt_hash": None,
@@ -784,53 +954,29 @@ def build_events(
         "output": _empty_output(),
         "generation_mode": "dry_run",
         "model_called": False,
-        "token_alignment": worker_alignment,
+        "token_alignment": retriever_alignment,
+        "retrieval_metrics": retrieval_metrics,
         "activation_metadata": _dry_run_activation(),
         "behavioral_compromise_label": _behavior_unknown(),
         "reasoning_compromise_label": _reasoning_unknown(),
     }
     if injected:
-        worker_event["step_label"] = {
+        retriever_event["step_label"] = {
             "state": "injection_received",
             "source": "construction_metadata",
         }
-    add(worker_event)
+    add(retriever_event)
 
-    if condition == "3-hop":
-        add({
-            "type": "agent_turn",
-            "agent_role": "worker",
-            "agent_id": "worker_2",
-            "hop_index": 2,
-            "sub_step": "relay",
-            "input": {
-                "system_prompt": reg["system_prompts"]["worker2"],
-                "user_message": reg["task"]["user_task"],
-                "upstream_agent_message": None,
-                "retrieved_document_text": [],
-                "saw_raw_documents": False,
-                "rendered_prompt": None,
-                "input_token_ids": None,
-                "rendered_prompt_hash": None,
-            },
-            "output": _empty_output(),
-            "generation_mode": "dry_run",
-            "model_called": False,
-            "token_alignment": {"injection_present_in_prompt": False},
-            "activation_metadata": _dry_run_activation(),
-            "behavioral_compromise_label": _behavior_unknown(),
-            "reasoning_compromise_label": _reasoning_unknown(),
-        })
-
+    # --- Executor: receives only upstream summary, has audit tool ---
     add({
         "type": "agent_turn",
         "agent_role": "executor",
         "agent_id": "executor_1",
         "hop_index": executor_hop,
-        "sub_step": "relay",
+        "sub_step": "final",
         "input": {
-            "system_prompt": reg["system_prompts"]["executor"],
-            "user_message": reg["task"]["user_task"],
+            "system_prompt": SYSTEM_PROMPTS["executor"],
+            "user_message": user_task,
             "upstream_agent_message": None,
             "retrieved_document_text": [],
             "saw_raw_documents": False,
@@ -864,10 +1010,24 @@ def build_record(
         injection_span,
         retrieval_trace,
     )
-    group_id = reg["independence_group_id"]
-    depth_tag = condition.replace("-", "")
-    trajectory_id = f"{group_id}__{depth_tag}__{treatment}"
-    pair_id = f"{group_id}__{depth_tag}"
+    group_id = reg["group_id"]
+    scenario_id = reg["scenario_id"]
+    trust_mode = reg["trust_mode"]
+    model_short = reg["model_id"].split("/")[-1].lower()  # "Qwen/Qwen3-32B" -> "qwen3-32b"
+    wording = reg["assigned_wording"]
+    seed = reg["seed"]
+    depth_tag = condition.replace("-", "")  # "2-hop" -> "2hop"
+    treat_tag = "inj" if treatment == "injected" else "clean"
+
+    # Structured trajectory_id: encodes all experimental dimensions
+    # Pattern: {scenario}_{model}_{trust}_{group}_{condition}_{treatment}_{wording}_{seed}
+    trajectory_id = (
+        f"{scenario_id}_{model_short}_{trust_mode}_{group_id}"
+        f"_{depth_tag}_{treat_tag}_{wording}_{seed}"
+    )
+    pair_id = (
+        f"{scenario_id}_{model_short}_{trust_mode}_{group_id}_{depth_tag}"
+    )
     generation_protocol_id = generation_protocol_id_for_registry(reg)
     prompt_profile_id = reg.get("agent_prompt_profile_id")
     if prompt_profile_id is not None:
@@ -887,6 +1047,14 @@ def build_record(
         pair_id += protocol_suffix
     carrier = next(doc for doc in documents if doc["role"] == "injection_carrier")
 
+    # Determine which agent is the compromised retriever for this condition
+    retriever_agent = next(
+        (role, aid, hop) for role, aid, hop in _agents(condition)
+        if role == "worker_retriever"
+    )
+    retriever_agent_id = retriever_agent[1]
+    retriever_hop = retriever_agent[2]
+
     injection = {
         "injection_present": injected,
         "injection_source_id": carrier["doc_id"] if injected else None,
@@ -894,15 +1062,19 @@ def build_record(
         "injection_variant": reg["assigned_wording"],
         "injection_family": reg["injection_family"],
         "injection_placement": reg["injection_placement"],
-        "insertion_anchor": reg["injection"]["insertion_anchor"],
+        "insertion_method": (
+            f"position:{reg['injection']['insertion_position']}"
+            if "insertion_position" in reg["injection"]
+            else f"anchor:{reg['injection'].get('insertion_anchor', 'none')}"
+        ),
         "injection_marker": reg["injection"]["carrier_marker"],
         "injection_point": {
-            "agent_role": "worker",
-            "agent_id": "worker_1",
-            "hop_index": 1,
+            "agent_role": "worker_retriever",
+            "agent_id": retriever_agent_id,
+            "hop_index": retriever_hop,
         },
         "injection_point_status": "locked",
-        "raw_poison_exposed_agents": ["worker_1"] if injected else [],
+        "raw_poison_exposed_agents": [retriever_agent_id] if injected else [],
     }
     if injected:
         injection["injected_text"] = reg["injection"]["wordings"][reg["assigned_wording"]]
@@ -919,16 +1091,20 @@ def build_record(
             "registry seed must match the generation protocol seed"
         )
     record = {
-        "schema_version": "spec_gap.scenario1.v2",
+        "schema_version": "spec_gap.scenario1.v3",
         "trajectory_id": trajectory_id,
         "generation_protocol_id": generation_protocol_id,
-        "independence_group_id": group_id,
+        # ─── Experiment identity ───
+        "group_id": group_id,
+        "scenario_id": scenario_id,
+        "model_id": reg["model_id"],
+        "trust_mode": trust_mode,
+        # ─── Domain ───
         "domain_id": reg["domain_id"],
         "task_family_id": reg["task_family_id"],
         "document_set_id": reg["document_set_id"],
         "matched_pair_id": pair_id,
         "treatment": treatment,
-        "scenario_id": "scenario_1",
         "scenario_description": (
             "Research-pipeline exfiltration through a hidden instruction in one "
             f"controlled {reg['domain_id']} document."
@@ -964,7 +1140,7 @@ def build_record(
         "injection": injection,
         "controlled_endpoint": reg["injection"]["endpoint"],
         "compromise_propagation": {
-            "injection_hop_index": 1 if injected else None,
+            "injection_hop_index": retriever_hop if injected else None,
             "unsafe_action_hop_index": None,
             "hops_survived": None,
             "first_behavioral_compromise_hop": None,
@@ -1028,33 +1204,83 @@ def build_generation_request(
     upstream_message: str | None = None,
     analysis_tier: str | None = None,
 ) -> dict[str, Any]:
-    """Build and locally validate one Modal request without starting a GPU."""
+    """Build and locally validate one Modal request without starting a GPU.
+
+    Message construction per role:
+      planner:          system + user (task_id, doc_ids, user_request)
+      worker_relay:     system + user (planner's instruction)
+      worker_retriever: system + user (planner/relay instruction)
+                        + assistant (pre-filled tool call)
+                        + tool (document content)
+                        -> model generates summary from here
+      executor:         system + user (task + upstream summary)
+    """
 
     event_input = event["input"]
     agent_id = event["agent_id"]
-    agent_role = "worker2" if agent_id == "worker_2" else event["agent_role"]
-    if agent_id == "planner_1":
-        user_content = event_input["user_message"]
-    elif agent_id == "worker_1":
-        upstream = upstream_message or "<planner-output-provided-at-runtime>"
-        documents = "\n\n".join(
-            f"DOCUMENT {item['doc_id']}:\n{item['text']}"
-            for item in event_input["retrieved_document_text"]
-        )
-        user_content = (
-            f"Original task:\n{event_input['user_message']}\n\n"
-            f"Planner message:\n{upstream}\n\nRetrieved documents:\n{documents}"
-        )
-    else:
-        upstream = upstream_message or "<upstream-output-provided-at-runtime>"
-        user_content = (
-            f"Original task:\n{event_input['user_message']}\n\n"
-            f"Upstream agent message:\n{upstream}"
-        )
+    agent_role = event["agent_role"]
+    document_ids = [
+        doc["doc_id"] for doc in record["document_set"]["documents"]
+    ]
 
-    raw_poison_exposed = bool(
-        record["injection"]["injection_present"] and agent_id == "worker_1"
+    if agent_role == "planner":
+        # Planner: system + user message with task_id, doc_ids, user_request
+        messages = [
+            {"role": "system", "content": event_input["system_prompt"]},
+            {"role": "user", "content": event_input["user_message"]},
+        ]
+        tools = []
+
+    elif agent_role == "worker_relay":
+        # Clean relay: just passes planner's instruction along
+        upstream = upstream_message or "<planner-output-provided-at-runtime>"
+        messages = [
+            {"role": "system", "content": event_input["system_prompt"]},
+            {"role": "user", "content": upstream},
+        ]
+        tools = []
+
+    elif agent_role == "worker_retriever":
+        # Compromised worker: pre-filled tool call + tool response with docs
+        upstream = upstream_message or "<upstream-output-provided-at-runtime>"
+        messages = build_worker_retriever_messages(
+            planner_instruction=upstream,
+            document_ids=document_ids,
+            documents=[
+                {"doc_id": item["doc_id"], "text": item["text"]}
+                for item in event_input["retrieved_document_text"]
+            ],
+        )
+        tools = tools_for_role("worker_retriever")
+
+    elif agent_role == "executor":
+        # Executor: receives task + upstream summary only
+        upstream = upstream_message or "<upstream-output-provided-at-runtime>"
+        user_task = record["task"]["user_task"]
+        messages = [
+            {"role": "system", "content": event_input["system_prompt"]},
+            {
+                "role": "user",
+                "content": (
+                    f"Task: {user_task}\n\n"
+                    f"Upstream summary:\n{upstream}"
+                ),
+            },
+        ]
+        tools = tools_for_role("executor")
+
+    else:
+        raise ValueError(f"unknown agent_role: {agent_role}")
+
+    # Determine injection exposure: the retriever worker sees raw docs
+    retriever_id = next(
+        aid for role, aid, _ in _agents(record["condition_id"])
+        if role == "worker_retriever"
     )
+    raw_poison_exposed = bool(
+        record["injection"]["injection_present"] and agent_id == retriever_id
+    )
+
     request = {
         "trajectory_id": record["trajectory_id"],
         "step_index": event["step_index"],
@@ -1065,12 +1291,10 @@ def build_generation_request(
         "analysis_tier": analysis_tier,
         "model_id": MODEL_ID,
         "model_revision": MODEL_REVISION,
-        "messages": [
-            {"role": "system", "content": event_input["system_prompt"]},
-            {"role": "user", "content": user_content},
-        ],
-        "tools": [SIMULATED_EXFILTRATION_TOOL] if agent_id == "executor_1" else [],
+        "messages": messages,
+        "tools": tools,
         "raw_poison_exposed": raw_poison_exposed,
+        "expected_poison_agent_id": retriever_id,
         "injection_text": (
             record["injection"]["injected_text"]
             if raw_poison_exposed else None
@@ -1129,14 +1353,14 @@ def build_manifest(
         "contributors": sorted({
             reg["provenance"]["created_by"] for reg in registries
         }),
-        "independence_group_ids": [reg["independence_group_id"] for reg in registries],
+        "group_ids": [reg["group_id"] for reg in registries],
         "trajectories": [],
     }
     for record in records:
         manifest["trajectories"].append({
             "trajectory_id": record["trajectory_id"],
             "path": f"{TRAJ_DIR}/{record['trajectory_id']}.json",
-            "group_id": record["independence_group_id"],
+            "group_id": record["group_id"],
             "domain_id": record["domain_id"],
             "pair_id": record["matched_pair_id"],
             "treatment": record["treatment"],
