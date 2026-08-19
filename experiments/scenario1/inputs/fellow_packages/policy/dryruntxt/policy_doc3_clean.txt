@@ -1,0 +1,266 @@
+SHS Web of Conferences 168, 03021 (2023) https://doi.org/10.1051/shsconf/202316803021
+CLEC 2023
+Policy Analysis: An Analysis of National Education Policy 2020
+Ziyi Chen*[2742994]
+University of Glasgow, United Kingdom
+Abstract. This paper analyses the National Education Policy 2020 (pages 1-32), the official policy document
+issued by the Ministry of Human Resource Development (India). This paper is written in light of five peda-
+gogical theories: a). Human Capital; b). Traditional Academic; c). Learner Centred; d). Social Efficiency; e).
+Social Reconstruction. By identifying the presence of the five theories in the policy and analysing the domi-
+nant ideologies of education across the whole text, the paper aims to explore the influence of pedagogical
+philosophies and the relevant factors on educational policy formation and upgrading in India. It discovers that
+although all five theories exist in the policy, Learner Centred theory is the most dominant. In addition, it also
+discusses political and socio-economic factors that impact the formation of the Indian educational policy.
+overly reductivism and leave out the meaning of being a
+1 Introduction
+human (Gillies, 2015).
+This paper analyses the National Education Policy 2020
+released by the Republic of India’s Ministry of Human Re- 2.2 Traditional Academic
+source Development. The policy (hereafter referred to as
+NEP) covers four parts of education: a). school education; Traditional Academic education, also known as Liberal
+b). higher education; c). critical areas of focus, such as education, has a rich history that can be traced back thou-
+adult education, promoting Indian languages and online sands of years, with valuable knowledge accumulated
+education; d). the implementation of the policy. The com- throughout human history and has been classified and or-
+plete analysis of NEP focuses on school education. It is ganised into different academic disciplines. John Henry
+based on five theories in pedagogy, including, in that or- Newman (1996) states that liberal education is good for
+der: the theories of Human Capital, Traditional Academic, developing people's intellect but also makes people who
+Learner Centred, Social Efficiency, as well as Social Re- have received a helpful education. Traditional education is
+construction. Next, this paper will discuss some theories a kind of education that equips students with the confi-
+dominating this policy. Finally, it will review various fac- dence to handle intricacy, variety, and change through
+tors that contributed to NEP’s existence. learning curriculum. It aids students in developing a high
+level of social responsibility and powerful intellectual
+abilities and fostering their problem-solving capacity in
+2 Five theories of education practical situations (Robbins, 2014, quoted in Scott, 2014).
+2.1 Human Capital 2.3 Learner Centred
+A way to think about education is through the lens of hu- Learner-centred education is an instructional paradigm
+man capital, a concept that has its roots in the area of Eco- that places learners at the centre of the teaching process
+nomics. Human Capital theory in education is about in- (Mahendra et al., 2005). It can be interpreted as opposing
+vestment and return. It claims that skills are a type of hu- the traditional academic concept of education. Instead of
+man capital that people develop via conscious investment focusing on the disciplines, Learner Centred education
+in education and that these talents will eventually contrib- emphasizes the needs and interests of children and indi-
+ute to economic activity. At the same time, people's in- viduals, requiring schools to create an inspiring and enjoy-
+come in the labour market is regarded as a reward for their able environment for pupils to grow at their own pace. De-
+productivity (Schultz, 1961, quoted in Little, 2003). It is a spite the importance of learner-centred education in to-
+fundamental principle of endogenous growth theory that day's classrooms, some academics have criticised it for be-
+human capital investments, innovation, and knowledge ing overly general. For instance, Schweisfurth (2015) ar-
+have a sizeable positive impact on economic growth, im- gues that phrases such as learner-centeredness and related
+plicating policymaking's significant role in boosting the words are frequently employed indiscriminately and en-
+economy. Seeing people as only capital products seems compass a wide range of ideas and behaviours to the point
+z*ziyiyicichheenn__@@oouutltoloookk.c.coomm
+© The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons Attribution
+License 4.0 (https://creativecommons.org/licenses/by/4.0/).
+SHS Web of Conferences 168, 03021 (2023) https://doi.org/10.1051/shsconf/202316803021
+CLEC 2023
+where people may refer to anything as learner-centred to 3.2 Traditional Academic
+explain policy or practice.
+At the beginning of the policy, the government introduces
+the assumed outcomes of educated children:
+2.4 Social Efficiency Instilling knowledge of India and its varied social, cul-
+tural, and technological needs, young people are consid-
+It is possible to think of Social Efficiency as representing
+ered critical for purposes of national pride, self-confi-
+a particular aspect of the enlightenment and its rationality,
+dence, cooperation, and integration (NEP:4). By instilling
+scientific method, paving the way for modernity's indus-
+knowledge in different subjects and diverse cultures, chil-
+trialization and technical advancement. Mass education is
+dren can grow intellectually to tackle the challenges of the
+a typical example of social efficiency applied in education,
+modern world. The policy puts forwards a prerequisite re-
+referring to an educational session mandated for all chil-
+quirement for pupils to study, that is to develop the capac-
+dren and regulated by the government. During the first half
+ity to do reading and writing, as well as carry on simple
+of 20th century, Social Efficiency was such a widespread
+number operations. However, various governmental, as
+concept in US educational theory that educators consid-
+well as non-governmental surveys, indicate that a large
+ered it to be the primary goal of education (Knoll, 2009).
+proportion of students currently in elementary school - es-
+Proponents of this view believed education must provide
+timated to be over 5 cores in number - have not attained
+the next generation with the knowledge necessary to con-
+foundational literacy and numeracy (NEP:8).
+tribute to society. Nevertheless, opponents criticize the
+concept of social efficiency for undermining democratic
+ideals and teacher autonomy in education (Kim, 2018). 3.3 Learner Centred
+Regarding the evolvement of pedagogy, the policy men-
+2.5 Social Reconstruction tions “learner-centred, discussion-based, flexible, and, of
+course, enjoyable”, which describes what learner-centred
+The Social Reconstruction theory of education, also called
+education should be. Learner-centred education pays at-
+Critical Pedagogy, places a series of requirements on edu-
+tention to the discussions and interactions between teach-
+cators. Educators need to play a leading role in the fight
+ers and students. It asks for a joyful environment where
+for the fairness of society and the economy. The realities
+students can get inspired and realise their potential (NEP,
+of public life and issues with democracy must be included
+2020, p. 3). Besides, the curricular and pedagogical struc-
+in educators' teaching and writing (Giroux, 2006). One
+ture of school education will be reconfigured to make it
+main point of the Social Reconstruction ideologies is that
+responsive and relevant to the developmental needs and
+it calls for learning for sustainability and developing chil-
+interests of learners at different stages of their develop-
+dren into global citizens. Another basic theme of this the-
+ment, corresponding to the age ranges of 3-8, 8-11, 11-14,
+ory is an enterprise in education, which means carrying on
+and 14-18 years, respectively (NEP:11).
+the curriculum from the enterprise perspective. Contrarily,
+some sceptics said these ideas were internally inconsistent
+and could not be combined into a coherent theory of 3.4 Social Efficiency
+schooling and education.
+Modern world is full of rapid changes and the growing
+emergence of epidemics also call for collaborative re-
+3 Analysis of NEP search in infectious disease management and the develop-
+ment of vaccines, and the resultant social issues heighten
+the need for multidisciplinary learning (NEP:3). Environ-
+3.1 Human Capital
+mental issues such as climate change, pollution of all kinds
+In the statements of school education, the authority claims and energy shortages are placing new demands on the peo-
+that pupils’ nutrition and health is one of the important and ple of the new world. Social Efficiency thinking allows
+essential conditions for learning: people to become innovative by making the most of “var-
+Children are unable to learn when they are undernour- ious dramatic scientific and technological advances”.
+ished. Hence, children's nutrition and health (including Once people combine the “skilled workforce” and “multi-
+mental health) will be addressed through the introduction disciplinary abilities”, chances are that they will develop
+of well-trained social workers, counsellors in the school- the economy of the nation and change the world around
+ing system. Furthermore, research shows that the morning them ultimately (NEP, 2020:3).
+hours after a nutritious breakfast can be particularly pro-
+ductive for the study of cognitively more demanding sub-
+3.5 Social Reconstruction
+jects, and hence these hours may be leveraged by provid-
+ing a simple but energizing breakfast in addition to midday The Indian Government hopes that implementing NEP can
+meals (NEP:9). Human Capital theory emphasizes invest- effectively promote learning. Education is the most excel-
+ment and return. The Government attaches great im- lent tool for achieving social justice and equality. Inclusive
+portance to children's physical and mental health and in- and equitable education - a fundamental goal in its own
+vests in meals to ensure nutrition. right - is also critical to achieving an inclusive and equita-
+ble society where citizens can thrive and contribute to the
+nation. The education system must aim to benefit India’s
+2
+SHS Web of Conferences 168, 03021 (2023) https://doi.org/10.1051/shsconf/202316803021
+CLEC 2023
+where people may refer to anything as learner-centred to 3.2 Traditional Academic children so that no child loses any opportunity to learn and world education development, which makes it possible for
+explain policy or practice. excel because of circumstances of birth or background India to position itself as a global knowledge superpower
+At the beginning of the policy, the government introduces
+(NEP:24). Under the guidance of Critical Pedagogy, edu- and achieve excellent results in international competition.
+the assumed outcomes of educated children:
+cators should try their best to help kids from vulnerable
+2.4 Social Efficiency Instilling knowledge of India and its varied social, cul-
+backgrounds access high-quality education, minimalizing
+tural, and technological needs, young people are consid- 6 Conclusion
+It is possible to think of Social Efficiency as representing the negative impacts their original social and economic
+ered critical for purposes of national pride, self-confi-
+a particular aspect of the enlightenment and its rationality, status have on them. The purpose of this study is to examine how pedagogical
+dence, cooperation, and integration (NEP:4). By instilling
+scientific method, paving the way for modernity's indus- philosophies and other pertinent aspects affect the devel-
+knowledge in different subjects and diverse cultures, chil-
+trialization and technical advancement. Mass education is dren can grow intellectually to tackle the challenges of the 4 Balance of Ideologies opment and improvement of educational policies in India
+a typical example of social efficiency applied in education, by analysing the NEP (pages 1-32) in conjunction with
+modern world. The policy puts forwards a prerequisite re-
+referring to an educational session mandated for all chil- It is stated in the policy that higher education plays a vital five educational theories, namely the Human Capital the-
+quirement for pupils to study, that is to develop the capac-
+dren and regulated by the government. During the first half role in promoting human and social well-being and in de- ory, Traditional Academic theory, Learner Centred theory,
+ity to do reading and writing, as well as carry on simple
+of 20th century, Social Efficiency was such a widespread veloping what is envisaged in the Indian Constitution. Social Efficiency theory, as well as the Social Reconstruc-
+number operations. However, various governmental, as
+concept in US educational theory that educators consid- Therefore, the government states that quality higher edu- tion theory. The formation of India's education policy is
+well as non-governmental surveys, indicate that a large
+ered it to be the primary goal of education (Knoll, 2009). cation must aim to produce excellent, thoughtful, well- inseparable from the influence of educational philoso-
+proportion of students currently in elementary school - es-
+Proponents of this view believed education must provide rounded and creative people. Enables individuals to delve phies. The analysis shows that all five ideologies are re-
+timated to be over 5 cores in number - have not attained
+the next generation with the knowledge necessary to con- into one or more professional areas of interest and develop flected in the policy. However, the weight of the ideolo-
+foundational literacy and numeracy (NEP:8).
+tribute to society. Nevertheless, opponents criticize the character, moral and constitutional values, intellectual cu- gies is not even. Among them, Learner Centred theory is
+concept of social efficiency for undermining democratic riosity, scientific temperament, creativity, service and the most important one in the text that the author has ana-
+ideals and teacher autonomy in education (Kim, 2018). 3.3 Learner Centred 21st-century competence in a range of disciplines, includ- lyzed, which discloses that it is the children and their de-
+ing the sciences, social sciences, arts, humanities, lan- velopment that the Indian government emphasizes.
+Regarding the evolvement of pedagogy, the policy men-
+guages and professional, technical and vocational sub- In addition to the influence of educational philosophy
+2.5 Social Reconstruction tions “learner-centred, discussion-based, flexible, and, of
+jects. This policy suggests that the way education has been on India's education policy, political and socio-economic
+course, enjoyable”, which describes what learner-centred
+The Social Reconstruction theory of education, also called delivered before higher education prepares higher educa- factors also play a significant role. Politically, India's rul-
+education should be. Learner-centred education pays at-
+Critical Pedagogy, places a series of requirements on edu- tion to produce students who can solve social problems. ing party's anti-Muslim rhetoric and radicalism are unfa-
+tention to the discussions and interactions between teach-
+cators. Educators need to play a leading role in the fight vourable factors hindering education development in In-
+ers and students. It asks for a joyful environment where
+for the fairness of society and the economy. The realities dia. It is imperative to change education policy and imple-
+students can get inspired and realise their potential (NEP, 5 Factors influencing policy
+of public life and issues with democracy must be included ment education reform to reverse the negative education
+in educators' teaching and writing (Giroux, 2006). One 2020, p. 3). Besides, the curricular and pedagogical struc- formation situation at that time. At the socio-economic level, the
+ture of school education will be reconfigured to make it
+main point of the Social Reconstruction ideologies is that growth of India's youth population requires India to create
+responsive and relevant to the developmental needs and
+it calls for learning for sustainability and developing chil- a better educational environment for the next generation
+interests of learners at different stages of their develop- 5.1 Political factors
+dren into global citizens. Another basic theme of this the- and establish an education system that adapts to the Indian
+ment, corresponding to the age ranges of 3-8, 8-11, 11-14,
+ory is an enterprise in education, which means carrying on The unfavourable political environment for schooling in economy. The NEP is expected to improve India's global
+and 14-18 years, respectively (NEP:11).
+the curriculum from the enterprise perspective. Contrarily, India fundamentally impacts how universities in other competitiveness and help India become a global
+some sceptics said these ideas were internally inconsistent countries consider possible collaborations and engage- knowledge-based economy.
+and could not be combined into a coherent theory of 3.4 Social Efficiency ments that could lead to a breakthrough to the next level
+schooling and education. of Indian education. The Hindu ideology of the ruling
+Modern world is full of rapid changes and the growing References
+Bharatiya Janata Party government, particularly its anti-
+emergence of epidemics also call for collaborative re-
+Muslim rhetoric and radicalism, will hinder the coopera-
+3 Analysis of NEP search in infectious disease management and the develop- tion promotion of the Indian higher education system in 1. GILLIES, D. 2015. Human capital theory in educa-
+ment of vaccines, and the resultant social issues heighten global competition. The radical ideology of the Indian tion. Encyclopedia of educational philosophy and the-
+3.1 Human Capital the need for multidisciplinary learning (NEP:3). Environ- people was deeply ingrained and affected the development ory. Springer Science+ Business Media.
+mental issues such as climate change, pollution of all kinds
+of educational standards in India. The Indian government 2. GIROUX, H. 2006. America on the edge: Henry
+In the statements of school education, the authority claims and energy shortages are placing new demands on the peo- should enhance students' knowledge and understanding of Giroux on politics, culture, and education, Springer.
+that pupils’ nutrition and health is one of the important and ple of the new world. Social Efficiency thinking allows cultures worldwide from primary education. Social factors
+3. Government of India, (2020) National Education Pol-
+essential conditions for learning: people to become innovative by making the most of “var- should also be given greater attention.
+icy 2020. Department of Human Resource
+Children are unable to learn when they are undernour- ious dramatic scientific and technological advances”.
+ished. Hence, children's nutrition and health (including Once people combine the “skilled workforce” and “multi- 4. Developmentat https://inno-
+mental health) will be addressed through the introduction disciplinary abilities”, chances are that they will develop 5.2 Socio-economic factors vateindia.mygov.in/nep2020/#list-item-4(lastac-
+of well-trained social workers, counsellors in the school- the economy of the nation and change the world around cessed 06/11/2022)
+India will have the world's largest youth population over
+ing system. Furthermore, research shows that the morning them ultimately (NEP, 2020:3). 5. KIM, J. 2018. School accountability and standard-
+the next decade, and the ability to provide them with qual-
+hours after a nutritious breakfast can be particularly pro- based education reform: The recall of social effi-
+ity education will determine India's future. The adoption
+ductive for the study of cognitively more demanding sub- ciency movement and scientific management. Inter-
+3.5 Social Reconstruction of NEP is conducive to achieving the grand goal of "be-
+jects, and hence these hours may be leveraged by provid- national journal of educational development, 60, 80-
+coming a developed country as well as among the three
+ing a simple but energizing breakfast in addition to midday The Indian Government hopes that implementing NEP can 87.
+largest economies in the world", establishing an education
+meals (NEP:9). Human Capital theory emphasizes invest- effectively promote learning. Education is the most excel- system that adapts to India's economic and social develop- 6. KNOLL, M. 2009. From Kidd to Dewey: The origin
+ment and return. The Government attaches great im- lent tool for achieving social justice and equality. Inclusive ment, and improving the poor implementation of previous and meaning of ‘social efficiency’. Journal of Curric-
+portance to children's physical and mental health and in- and equitable education - a fundamental goal in its own education policies (NEP, 2020:3). ulum Studies, 41, 361-391.
+vests in meals to ensure nutrition. right - is also critical to achieving an inclusive and equita-
+It is in response to several political and socio-economic 7. LITTLE, A. W. 2003. Motivating learning and the de-
+ble society where citizens can thrive and contribute to the
+challenges such as these that India has enacted new poli- velopment of human capital. Compare: A Journal of
+nation. The education system must aim to benefit India’s
+cies. Overall, this policy aligns with the future trend of
+3
+SHS Web of Conferences 168, 03021 (2023) https://doi.org/10.1051/shsconf/202316803021
+CLEC 2023
+Comparative and International Education, 33, 437-
+452.
+8. MAHENDRA, N., BAYLES, K. A., TOMOEDA, C.
+K. & KIM, E. S. 2005. Diversity and learner-centered
+education. The ASHA Leader, 10, 12-19.
+9. NEWMAN, J. H., LANDOW, G. P., NEWMAN, J.
+E., TURNER, F. M., GARLAND, M. M. &
+CASTRO-KLAREN, S. 1996. The idea of a univer-
+sity, Yale University Press.
+10. ROBBINS, R. 2014. AAC&U's integrative liberal
+learning and the CAS standards: Advising for a 21st
+century liberal education. nacada Journal, 34, 26-31.
+11. SCHWEISFURTH, M. 2015. Learner-centred peda-
+gogy: Towards a post-2015 agenda for teaching and
+learning. International Journal of Educational Devel-
+opment, 40, 259-266.
+12. SCOTT, R. A. 2014. The meaning of liberal educa-
+tion. On the horizon.
+4
