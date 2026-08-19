@@ -1,0 +1,270 @@
+SHS Web of Conferences 170, 03015 (2023) https://doi.org/10.1051/shsconf/202317003015
+CDEMS 2023
+Research on Liquidity Risk Management of Commercial banks
+under the impact of Fed rate hike
+Xiaolong Duan
+University of Southampton, University Road, Southampton, England.
+Abstract: Liquidity risk refers to the risk of insolvency, credit decline, market value decline and other
+consequences that commercial banks cannot obtain enough working capital when paying debts or
+maintaining business operations. In the information society, liquidity risk has become a huge obstacle to the
+development of commercial banks and even to their survival. And in the most aggressive Fed rate hike cycle
+since March 2022, liquidity risk management should be a top concern for regulators and commercial banks.
+This paper studies the course of interest rate hike of the Federal Reserve, its impact on commercial banks,
+the current situation and difficulties of liquidity risk management of American commercial banks, and puts
+forward countermeasures and suggestions accordingly: commercial banks should strengthen the liquidity
+risk management ability, adjust and optimize the deposit and loan structure, strengthen the liquidity risk
+management awareness of managers, and so on.
+rate was sharply lowered to zero, resulting in the flood of
+liquidity in the financial market, and the asset scale of the
+1. Introduction
+Federal Reserve soared from 4 trillion dollars to 9 trillion
+dollars[4]. At the same time, a large amount of liquidity
+Commercial banks follow the three principles of
+flowed into the real estate industry and high-tech industry,
+profitability, security and liquidity. In today's world with
+leading to a sharp rise in the price of financial assets.
+the increasing popularity of the Internet, once the
+These industries put their deposits into banks. The total
+insolvency and huge losses of commercial banks occur,
+deposit balance of the United States increased from
+they will spread rapidly, manifested as liquidity problems.
+13,321.7 billion dollars on February 5, 2020 to
+It can be said that liquidity management is the core of the
+18,141616 billion dollars on April 6, 2022, an increase of
+current management of commercial banks and a key
+36.18% in two years[5].
+symbol of the management level of commercial banks.
+The massive liquidity has led to the most serious
+Recent events such as the bankruptcy of Silicon Valley
+inflation since the 1980s. According to the federal
+Bank, the closure of Signature Bank and the acquisition
+statistics, in June 2022, the consumer price index (CPI)
+of Credit Suisse Group by Swiss Bank show that once
+rose by 9.1% year-on-year, which became a new record
+liquidity risk breaks out, it will become a critical turning
+since November 1981. Except for December, the CP of
+point for commercial banks[1]. The interest rate hike of
+other years in 2022 has remained at around 7%[6]. In
+the Federal Reserve will greatly increase the risk of
+order to tame inflation, the Federal Reserve began to
+various financial crises[2]. That the interest rate hike of
+raise interest rates aggressively in March 2022. By
+the Federal Reserve would have a negative impact on
+March 2023, it had raised interest rates by 475 basis
+China's short-term capital flow, RMB exchange rate and
+points for 9 times in just one year, including raising
+inflation[3]. Therefore, analyzing the negative impact of
+interest rates by 75 basis points for four consecutive
+the Fed's interest rate hike on liquidity can help to
+times, increasing interest rates from 0~0.25% to
+prepare in advance, maintain the financial stability of the
+4.75%~5%[7]. The Fed's sharp interest rate hike has
+banking sector and ensure the objective of stable
+changed market liquidity, raised the yield curve,
+economic growth.
+expanded risk premium, and accelerated the
+accumulation of risks in the financial system. At the
+2. The Fed's rate hike cycle since March same time, price indices and debt pricing in some
+2022 emerging or developing economies are likely to come
+under significant pressure.
+In 2020, the outbreak of COVID-19 led to the economic
+recession, and the Federal Reserve implemented
+aggressive monetary policies and started a new round of
+Quantitative Easing (QE). In March 2020, the interest
+1471725977@qq.com
+© The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons Attribution
+License 4.0 (https://creativecommons.org/licenses/by/4.0/).
+SHS Web of Conferences 170, 03015 (2023) https://doi.org/10.1051/shsconf/202317003015
+CDEMS 2023
+3. The impact of the Federal Reserve's the closure and bankruptcy of many banks.
+In addition, a recession caused by higher interest rates
+interest rate hike on US commercial
+will also increase the non-performing loan ratio of small
+banks
+and medium-sized banks. Goldman Sachs estimates that
+as of mid-January 2023, Americans had already spent 35
+This cycle has been one of the most aggressive in history,
+percent of their savings during the coronavirus pandemic,
+with the frequency and steepness of the increases leading
+and that savings will be completely depleted by the end
+to a liquidity crisis in US commercial banks. On March
+of 2023[13]. At the same time, according to the data of the
+10, 2023, Silicon Valley Bank, the 16th largest Bank in
+Federal Reserve Bank of St. Louis, the total amount of
+the United States, suspended its shares and was shut
+debt carried by Americans has soared. With high inflation
+down by the California Department of Financial
+in the United States and the increasing risk of economic
+Protection and Innovation, and on March 12, the New
+recession, the American people are in financial
+York Department of Financial Services shut down
+Signature Bank[8]. Moody's downgraded the credit rating difficulties and are constantly reducing consumption. In
+turn, the revenue of American companies has fallen, the
+of America's First bank to "junk" after its share price
+balance sheet structure has deteriorated, which in turn
+plummeted. Nearly 190 small and medium-sized US
+leads to the delay of bank loans and the economic
+banks are at risk of a run.
+downturn in the United States. Non-performing loan
+(1) Continuous loss of deposits
+ratios will continue to climb.
+Aggressive rate hikes have severely hit primary
+(4) Lack of public confidence
+market funding for US tech startups and real estate
+Faced with a liquidity squeeze, US banks borrowed
+companies, which have been forced to burn through
+record amounts from the Fed. Banks borrowed a
+deposits at a rapid rate. According to jpmorgan Chase's
+whopping $152.85 billion from the Fed between March 8
+latest liquidity report, about $1tn has been lost in deposit
+and 15, well above the previous week's $4.58 billion and
+balances at small and medium-sized US banks since
+the $111 billion they borrowed from the central bank
+2022, with about $550bn of that loss occurring in just
+one week after Silicon Valley Bank was taken over[9]. In during the 2008 financial crisis, Fed data showed.
+Meanwhile, eligible depository institutions borrowed
+addition, savers will reduce their allocation to deposits
+about $11.9 billion from the Fed in the three days after
+and put their money where it can earn more. At present,
+the Fed announced the Bank Term Funding Program on
+according to the personal financial management
+Wednesday.
+consulting website Bankrate, according to data from
+A string of three bank outbursts fueled recession fears,
+money market mutual funds rate close to 4.5%, but the
+and the VIX rose to its highest level since October 2022.
+average interest rate of savings deposits is still less than
+The international spot gold price rose sharply to a high of
+0.3% , carry enough to drive depositors withdraw
+deposits[10]. $2,009.5[14]. Many stock markets around the world
+plunged, reflecting the lack of investor confidence in
+(2) The value of bonds has fallen sharply
+consumption, which may trigger a chain reaction in the
+By the end of 2022, according to the Federal Deposit
+event of bank bankruptcy, which will lead to a systemic
+Insurance Corporation, Us banks have more than $600bn
+financial crisis.
+of unrealised losses on their available for sale (AFS) and
+hold-to-maturity (HTM) portfolios, and the unrealised
+losses are likely to be more severe at smaller banks. 4. Conclusion
+Silicon Valley Bank, for example, lost $1.8 billion by
+selling a $21 billion portfolio of securities to raise By February 2023, the UK, Canada, Australia, New
+enough liquidity to cope with a deposit run[11]. Zealand and the European Central Bank had raised
+More seriously, the crisis of confidence caused by the interest rates by 390 basis points, 425, 325, 450 and 300
+closure of Silicon Valley Bank and Signature Bank led to basis points respectively. The continuous tightening of
+more banks selling assets in the event of a run, which global liquidity has had an impact on our financial
+could lead to even more losses than the $100bn deposit system, and we need to attach importance to liquidity
+insurance fund would have been able to cope with. risk management ability.
+(3) High non-performing loan ratio First, optimize liquidity support tools. There is also a
+Liquidity pressures from falling bond values and problem of mismatch between the term structure of
+deposit losses could lead regional banks to be more assets and liabilities in the asset structure of small and
+conservative in lending to ensure they can meet medium-sized banks. The People's Bank of China should
+depositors' demands in a timely manner, resulting in introduce policy tools to allow commercial banks to
+stricter lending markets, additional margin requirements exchange their national bonds, policy-based financial
+or higher capital requirements, which could hinder bonds and other long-term bonds at par value, and make
+commercial and industrial activities. According to a comprehensive use of the standing lending facility and
+report released by Goldman Sachs Group, small and open market operations to continuously and steadily
+medium-sized banks (assets less than $250 billion) in the release liquidity into the market. At the same time, we
+United States provide about 50 percent of industrial and will strengthen cooperation with the central banks of the
+commercial loans, 60 percent of housing loans and 80 Belt and Road countries and regions to jointly cope with
+percent of commercial real estate loans[12]. Small and the negative effects of the Fed's interest rate hike. Take
+medium-sized banks began to tighten their lending after the United States as an example. In order to solve the
+2
+SHS Web of Conferences 170, 03015 (2023) https://doi.org/10.1051/shsconf/202317003015
+CDEMS 2023
+maturity mismatch problem between long-term Treasury mortgage loan business accounts for more than 50% of
+bonds held by banks such as Silicon Valley Bank and some banks, and commercial banks may face liquidity
+short-term deposits, the Federal Reserve issued an problems if real estate enterprises default on bonds and
+additional term funding plan for banks on March 12, delivery defaults. Therefore, Chinese regulatory
+which stipulates that Banks, savings societies, credit authorities should focus on real estate financial risks and
+unions and other depository institutions would be able to communicate and cooperate with commercial banks in a
+borrow money from the Fed for up to a year against their timely manner.
+holdings of Treasurys, agency bonds and
+mortgage-backed securities or other conforming assets at
+References
+par, avoiding the risk that banks would be forced to sell
+the assets at a discount if they faced liquidity risks. Thus
+1. Wu Qiong. (2023) Spillover effect analysis of Fed rate
+insolvency or even insufficient capital. On March 19, the
+hike to Chinese economy. Price in China,
+Federal Reserve, together with the central banks of
+(03):17-20.
+Canada, the United Kingdom, Japan, the European Union
+2. Popelo O, Dubyna M, Kholiavko N. (2021) World
+and Switzerland, launched the US Dollar liquidity swap
+experience in the introduction of modern innovation
+facility. The frequency of US dollar swap operation was
+and information technologies in the functioning of
+upgraded from weekly to daily.
+financial institutions. Baltic Journal of Economic
+Second, we will improve the classification oversight
+Studies, 7(2): 188-199.
+mechanism. For example, only banks with assets of more
+than $50 billion need to carry out stress tests, and banks 3. Scannella E. (2016) Theory and regulation of liquidity
+with assets of less than $3 billion will extend the on-site risk management in banking. International Journal of
+inspection cycle. China can learn from the strict Risk Assessment and Management, 19(1-2): 4-21.
+classification supervision system of the United States, 4. Galletta S, Mazzù S. (2019) Liquidity risk drivers and
+develop practical, scientific and effective classification bank business models. Risks, 7(3): 89.
+supervision, and adhere to the principle of "focusing on
+5. Zhe D, Weihui F. (2021) Research on the operation
+the key and comprehensive". The liquidity management
+mechanism of green bank based on international
+ability of large banks should be more strictly required,
+experience. Academic Journal of Business &
+but liquidity risks similar to those caused by the incident
+Management, 3(2): 97-105.
+of rural banks in Henan should also be prevented. It is
+6. Jo Y, Kim J, Santos F. (2022) The impact of liquidity
+necessary to improve the efficiency of supervision and
+risk in the Chinese banking system on the global
+ensure the orderly and stable financial market.
+commodity markets. Journal of Empirical Finance,
+Third, strengthen the liquidity management capacity
+66: 23-50.
+of commercial banks. The managers of commercial
+banks should take liquidity risk management as the 7. Arce O, Nuno G, Thaler D, et al. (2020) A large
+primary consideration in their work, enhance their own central bank balance sheet? Floor vs corridor
+sensitivity to liquidity risk, make liquidity risk disposal systems in a New Keynesian environment. Journal
+plans in advance, and deal with the risks in time when of monetary economics, 114: 350-367.
+they are exposed. Commercial banks should also actively 8. Phan H T, Anwar S, Alexander W R J, et al. (2019)
+adjust their asset structure, avoid "putting eggs in one Competition, efficiency and stability: An empirical
+basket", take the road of diversification, actively innovate, study of East Asian commercial banks. The North
+expand off-balance sheet business and intermediate American Journal of Economics and Finance, 50:
+business. At the same time, commercial banks should 100990.
+also expand financing channels, sign liquidity
+9. Dong J, Yin L, Liu X, et al. (2020) Impact of internet
+supplementary agreements with shareholders, apply to
+finance on the performance of commercial banks in
+the central bank for the use of deposit reserves and so on.
+China. International Review of Financial Analysis,
+Fourth, establish a more complete liquidity
+72: 101579.
+monitoring mechanism and stress tests. Real-time
+monitoring of cash flow, focusing on large depositors, 10. Guo X, Liu X, Yang Z. (2021) The Effectiveness of
+deposit year-on-year changes, and timely detection of Fourth US Quantitative Easing Policy on
+abnormal withdrawals. Through the collection of real China[C]//2021 3rd International Conference on
+data of commercial banks, increase the scope of Economic Management and Cultural Industry
+application of stress test, focus on the test of inter-bank (ICEMCI 2021). Atlantis Press, 426-432.
+business, the liquidity risk of bonds in the event of 11. Tian S, Wang D, Wang L. (2023) Spillover impact of
+liquidity risk, evaluation of concentration risk, etc. At the the US monetary policy shock on China's economy:
+same time, to promote the transformation and application capital flow channel. Economic
+of stress test results, regulatory authorities and Research-Ekonomska Istraživanja, 36(1):
+commercial banks to launch targeted measures. 3328-3350.
+Fifth, focus on real estate financial risks. In the wake
+12. Vollmer U. (2022) Monetary policy or
+of the COVID-19 pandemic, a large number of people
+macroprudential policies: What can tame the cycles?
+are making early payments due to low mortgage interest
+Journal of Economic Surveys, 36(5): 1510-1538.
+rates and lower income expectations. In China, individual
+13. Bera R K. (2023) China's Novel Strategy of World
+3
+SHS Web of Conferences 170, 03015 (2023) https://doi.org/10.1051/shsconf/202317003015
+CDEMS 2023
+Domination: Float Silent, Float High with Balloons.
+Float High with Balloons (Online March 2, 2023).
+14. Armeanu D S, Gherghina S C, Andrei J V, et al.
+(2022) Modeling the impact of the COVID‐19
+outbreak on environment, health sector and energy
+market. Sustainable Development, 30(5): 1387-1416.
+4
