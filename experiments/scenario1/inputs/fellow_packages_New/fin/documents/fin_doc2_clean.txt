@@ -1,0 +1,408 @@
+*
+Corresponding author: Chengyuhua0514@163.com
+The Current Status of Central Bank Digital Currencies and Their
+Development
+Yuhua Cheng1,*
+1
+Marine finance, Shanghai Maritime University, Shanghai, 200000, China
+Abstract. Relying on the big data era, economic growth is also undergoing an accelerated transformation
+towards digitalisation and has triggered digital changes in finance due to the accelerated development of
+information technology and the emergence of technologies such as blockchain, artificial intelligence, and
+big data. This is why the BIS (Bank for International Settlements) received worldwide attention when it
+introduced the concept of a central bank digital currency (CBDC) in 2017. CBDC has many advantages,
+will inject new vitality into the global monetary and financial system, may become a new cornerstone of
+payment transactions and future de-velopment; But it also brings potential risks and complex policy issues.
+In this paper, through a review of the research literature on CBDC in recent years, with a specific example
+of China's central digital currency (DC/EP), this paper provides a concise demonstration of the current state
+of CBDC and its development.
+1.Introduction
+1.1 Origin of CBDC
+CBDC, is a form of currency that has been derived and
+evolved under the impetus of digital technology, but the
+specific concept and connotation does not have a specific
+definition in the international arena now. However, what
+we can learn about the CBDC is that it is designed and
+issued using financial innovations such as artificial
+intelligence, blockchain and cryptography. And it is a
+digital currency backed by national credit. Wang Xin,
+director of the research bureau of the central bank, said
+CBDC is positioned as M0 like other forms of central
+bank money including physical cash and reserves, but its
+unique operating mechanism greatly reduces transaction
+costs and increase M0 circulation efficiency and the
+status of central bank money. However, the emergence
+and issuance of CBDCs can have varying degrees of
+impact on monetary policy and the financial system.
+The emergence of CBDC is not accidental, but the
+product of a combination of factors such as technology
+accumulation and private digital currency experience.
+Private digital currencies have continued to push the
+boundaries of blockchain and distributed ledger
+technology (DLT), and the market has continued to grow
+in size.[1] The digital economy has given rise to CBDCs,
+while at the same time the emergence of CBDCs will
+surely accelerate the development of the digital economy.
+The emergence of the 2020 New Coronavirus
+outbreak has also brought CBDC into prominence even
+more. And because individual countries have also
+accelerated their research and rollout of CBDCs amidst
+the accelerating evolution of the new world monetary
+competition landscape.
+1.2 Classification of CBDC
+CBDCs can be divided into retail CBDCs and interbank
+or wholesale CBDCs from the perspective of business
+models, which mainly reflect the type of issuance and
+appli-cation scenarios of CBDCs and determine who the
+CBDCs are issued to. Wholesale CBDCs are mainly
+used for large value transactions between financial
+institutions or other non-financial institutions. In a
+wholesale currency, the central bank assumes the
+function of an "information carrier" and can quickly and
+effectively attach transaction data to the digital currency,
+thus significantly improving the efficiency of
+information transmission and facilitating the settlement
+of large transactions between financial institutions, and
+is suitable for countries with large economies and
+frequent cross-border trade transactions. The main
+application scenarios for wholesale central bank digital
+currencies are the settlement of securities transactions,
+interbank settlement and cross-border settlement. Retail-
+type CBDC is mainly used for consumers' daily
+transaction activities, which is conducive to solving the
+problems of high operating costs and difficult
+supervision of paper money, helping to collect and track
+the money supply and demand situation of micro-entities
+in the market, and most importantly, helping to penetrate
+inclusive finance and improve the overall welfare level
+of society, and is suitable for countries with poorly
+managed paper money and poor circulation.[2]
+SHS Web of Conferences 170, 01010 (2023) https://doi.org/10.1051/shsconf/202317001010
+CDEMS 2023
+© The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons Attribution
+License 4.0 (https://creativecommons.org/licenses/by/4.0/).
+2. Appliance of CBDC (using the
+example of DC/EP)
+2.1 Macro level
+2.1.1 Improving circulation and payment efficiency
+At this stage, the main payment instruments used by
+residents in China for daily consumption are physical
+cash, bank card payments or transfers, and third-party
+payment instruments such as WeChat or Alipay. Each of
+the instruments mentioned here has a cost of use and
+therefore causes friction for residents' consumption.
+Physical cash is legal tender and is legally reimbursable,
+but there are costs associated with its production and
+storage. Bank card payments rely on devices such as
+POS machines and are subject to fees for merchants, not
+all of whom will open them and the scope of payments is
+relatively small. The third is third-party payment tools
+(led by Alipay and WeChat), which have become widely
+used in China as the main tool for residents to pay for
+their daily consumption, but they are commercial credits
+with a low credit rating, are not legally solvent and
+require a fee for withdrawals The platforms are
+independent of each other and funds are not
+interchangeable.
+Although the CBDC only digitises legal tender notes
+in a non-interest-bearing sce-nario, it is the integration of
+new information technologies such as cryptography,
+distributed ledger technology and big data analytics that
+makes its currency operation system more secure,
+intelligent and efficient. Although the need for cash
+payments will be significantly reduced if the CBDC is
+put into circulation, it will circulate more quickly,
+making payments more efficient in this mode and greatly
+increasing the speed of currency circulation.
+Due to the emergence of CBDC, which itself, as M0
+(base money), already has the properties of money itself,
+only that the digital payment method will make
+payments easier and faster, and therefore will allow for
+an increase in the number of currency turnover and a
+faster circulation of money. Then relatively more of the
+value of the commodity can be realised, which can lead
+to higher public consumption, increased spending and an
+increase in national income.
+2.1.2 Consolidation of the central bank's control
+over the currency
+Digital currencies were in fact already present in people's
+daily lives before countries laid out legal digital
+currencies. China has taken the lead in the digital
+economy, especially in digital payments, moving directly
+from credit cards and cheques to digital payments in one
+fell swoop: third-party micropayments, as exemplified
+by Alibaba Group's Alipay, have become the preferred
+payment tool for the public within a few years. The
+development of mobile payments, as represented by
+Alipay and WeChat, has greatly contributed to the
+development of China’s e-economy. But it has also
+resulted in the weakening of the central bank's ability to
+monitor the circulation of money instantly and to adjust
+monetary policy. Thus CBDCs are issued using more
+advanced technology and effective data management,
+making it possible to achieve scientific and controlled
+currency management.[3] For CBDCs, the constant is
+the "peer-to-peer" and "cash" nature.
+Bringing digital currencies under the control of the
+central bank and issuing legal digital currencies will be
+helpful for the central bank regain better control of the
+cur-rency. Helps to consolidate the central bank's control
+over the currency.
+2.2 Micro level
+2.2.1 Movement of circulation data from third-party
+platforms to the central bank to guide supply-
+consumption synergies
+Tencent and Alibaba set up the CaiPay and Alipay
+platforms respectively, opening up the era of third-party
+quick payment applications, while paper money
+transactions at the time transitioned to cashless
+transactions for a while due to the iteration of
+smartphones and communication technology.
+This has resulted in the CaiPay and Alipay platforms
+de facto assuming some of the functions of banks, while
+the digital money issued by the platforms assumes some
+of the payment functions of legal tender. This makes
+these platforms are tied to e-commerce consumption
+behaviour, with payment records of different individuals,
+geographies and frequencies owned by the private sector.
+The central bank is unable to follow up on the current
+monetary circulation data of residents' consumption
+behaviour in a timely manner and lacks an adequate
+basis when formulating monetary ad-justment policies.
+From the perspective of the monetary authority's access
+to residential consumption data, a legal digital currency
+issued and managed by the central bank can provide the
+central bank and other departments with complete and
+timely access to residential consumption data, detect the
+flow of funds and forecast residential con-sumption
+demand.
+Guiding the synergistic development of supply-side
+reform and the upgrading of residents' consumption, thus
+realising the reshaping of their consumption behaviour.
+2.2.2 Facilitating international settlement and
+promoting cross-border consump-tion.
+As globalisation progresses, cross-border transactions
+become closer and the demand for related financial
+transactions increases, cross-border payments are be-
+coming an important direction for CBDC to explore. As
+the traditional cross-border payment system often suffers
+from a series of problems such as high costs, low effi-
+ciency and low clarity. Digital technology, on the other
+hand, can effectively reduce the amount of money in the
+middle since it adopts a peer-to-peer transmission mode,
+making the convenience and security of payments
+greatly enhanced, which to a certain extent greatly
+2
+SHS Web of Conferences 170, 01010 (2023) https://doi.org/10.1051/shsconf/202317001010
+CDEMS 2023
+facilitates international calculations and makes CBDC a
+major source of power for international settlements.
+3. The risks of CBDC and its regulation
+3.1 Technical and regulatory issues in CBDC
+CBDC will need to increase infrastructure for
+cybersecurity technology if they are to replace the
+existing cross-border settlement system. the BOI said the
+test will include comprehensive cybersecurity protection
+and, under the proposal, intermediaries will not be
+exposed to financial risk as a result of their customers
+storing or transferring digital currencies, thereby
+reducing risk and costs. Typically, commercial banks
+distribute central bank money to the general public. Even
+in digital payment systems, transferring funds from one
+end to the other usually exposes the intermediaries
+involved in the transaction to financial risk, albeit for a
+short period of time.
+3.2 Information privacy protection issues
+If central bank digital currencies are determined by the
+state to be the equivalent of cash for anonymous
+payments, one has to wonder if the right to personal
+privacy can be "purely" introduced into the digital future?
+Can this personal privacy really be protected?
+Explaining the idea of the future crypto ruble, Russian
+Finance Minister Siluanov elaborated "We have reached
+an agreement that the state regulates the process of
+issuing, mining and circulation of cryptocurrencies. The
+state must control everything." In other words, while we
+use this currency we carry a database of our own bright
+red, such as online purchases, banking information,
+identity documents, all in one place. Once such a system
+is set up, citizens will have to "voluntarily" dive into it
+and give their data to companies and government
+agencies "as a matter of practice". This means that data
+security and the protection of personal privacy become
+more difficult.
+4. Future development of CBDC
+4.1 Accelerating pilot roll-out
+Introduce preferential welfare policies to attract more
+users. Starting from 2020, on the basis of the basic
+completion of the preliminary research and development
+work.In parallel with the launch of the digital RMB pilot,
+many local governments and pilot banks have also
+jointly launched a variety of payment incentives to drive
+local consumption. The Changsha Central Sub-branch of
+the People's Bank of China said that by the end of 2022,
+the Changsha Central Sub-branch had organised activi-
+ties to benefit the public, such as digital RMB spending
+with full reductions and green travel, with an investment
+of over 130 million RMB, driving digital RMB spending
+of 500 million RMB and benefiting over 8 million
+people. Since the start of 2023, the pilot status of several
+pilot areas, including Jiangsu Province, Fujian Province,
+Changsha City and Shenzhen City, has been announced,
+involving the number of accounts opened, number of
+transactions and transaction amounts. It is worth men-
+tioning that local spending has further heated up with the
+help of digital RMB offers.
+While the pilot cities have a bright track record, to be
+able to accelerate the pace of digital RMB even more,
+more preferential policies should definitely be
+implemented to prompt consumers to change their old
+ways of spending and try digital RMB payments.
+4.2 Actively bridging the "digital divide"
+Simplifying operations and account opening to achieve
+one-stop shopping. One of the major challenges
+encountered in the promotion of digital RMB is the
+operational difficulties and limitations. In particular, the
+further ageing of the country will make it easier to create
+a "digital divide" in these financial services, as older
+people are generally less educated and slower to learn
+and accept devices such as computers and the in-ternet.
+Therefore, when designing digital RMB, the "digital
+divide" should be taken into account and more concise
+and easy-to-understand digital RMB operation pages
+should be introduced as far as possible. At the same time,
+in the context of accelerated elec-tronic, digital and non-
+contact financial services, the overall scale of traditional
+physical outlets and manual service resources continues
+to shrink, and the elderly are facing a digital divide along
+with a reduction in traditional financial services
+resources, further exacerbating the "digital divide". It is
+therefore imperative that financial insti-tutions improve
+their financial services.[4] If they can provide point-to-
+point services to these people in need, help them open
+accounts, realise one-stop-shopping, and operate through
+one business channel to minimise operational difficulties,
+the "digital divide" will be largely reduced.
+5. Challenges and opportunities
+brought by CBDC to traditional banking
+and financial institutions (using DC/EP
+as an example)
+5.1 The emergence of and solutions to the
+phenomenon of financial disintermediation
+Due to its nature, the CBDC is an upgrade to the
+traditional binary account system of money placement
+by issuing digital currency using a two-tier operational
+system ap-proach. Therefore, under the two-tier
+operation system issuance model, commercial banks and
+other institutions, with their relatively mature IT
+technology and service system, the use of financial
+technology and the accumulation of experience in the
+relevant talent pool, give full play to the advantages of
+commercial banks and other institutions in terms of
+talent, technology and resources, and avoid the huge
+waste of duplicate construction. At the same time, it
+avoids financial disintermediation and the crowding-out
+3
+SHS Web of Conferences 170, 01010 (2023) https://doi.org/10.1051/shsconf/202317001010
+CDEMS 2023
+effect on commercial banks' deposits, which may lead to
+a reduction in commercial banks' ability to make loans.
+5.2 Remaining third party payment platforms
+The emergence of the CBDC will also have a significant
+impact on third party payment platforms. Although it
+may seem that the emergence of the digital RMB is just
+one more way of classifying money on these platforms,
+making payment methods more diverse. But in fact it
+still poses a strong competitive advantage for third party
+payment platforms. Firstly, the digital RMB has lower
+transaction fees. The digital RMB is formally equivalent
+to the digitisation of cash, so commercial banks do not
+charge additional service fees, whereas third party
+payment platforms often require fees for fund operations
+(such as withdrawals). Secondly, CBDC has greater
+privacy. It was developed with the idea that the digital
+RMB uses a centralised management model. Under a
+loosely-coupled account system, proxy depositories may
+be required to transmit transaction data to the central
+bank asynchronously on a daily basis." It is clear from
+this that third-party platforms are likely to have no
+access to digital RMB transaction data. However, in the
+era of big data, a very crucial point for third-party
+platforms to be able to profit is the collection, collation
+and finally re-use of data. If they lose the consumption
+data of users, they will not be able to use the data for
+secondary attraction and profit.
+6.Conclusion
+6.1 Central bank digital currency design
+aspects
+In terms of interest-bearing, the features of the legal
+digital currency should be set in line with the national
+context. The impact of different set features of the legal
+digital currency should be carefully screened and its
+functions continuously optimised. Ini-tially, digital RMB
+should be issued in a non-interest-bearing manner, which
+is an issuance method conducive to social welfare; in the
+future, when conditions are ripe, the digital RMB interest
+rate can be considered as a new monetary policy tool,
+en-riching the monetary policy toolbox and expanding
+the monetary policy space.[5] But interest-bearing also
+has its unique advantages, and China can learn from the
+idea of a graded interest-bearing system in Europe,
+where interest is charged on different digital RMB
+holdings at variable rates, in order to mitigate the
+potential impact of digital RMB on the banking sector,
+financial stability and monetary policy transmis-sion.
+6.2 Strengthening international exchange and
+cooperation
+"Digital currency + economic foundation + institutional
+credit" is the key to deter-mining the future of the
+international monetary system. The same horse-race
+mech-anism applies to international competition for
+central bank digital currencies. The international
+influence of a country's currency is ultimately
+determined by the country's overall strength, national
+credit, and the stability of the currency. The competition
+for central bank digital currencies may introduce new
+factors, including technological prowess and the stage of
+development of the digital economy, but the
+determinants of the status of currencies will not change
+fundamentally, and emerging countries will need to
+make efforts in many aspects on the road to enhancing
+the international competi-tiveness of their currencies. It
+is therefore particularly important to increase global
+communication and collaboration, fully absorb and draw
+on international research and development experience
+and technology, strengthen international regulatory
+collaboration and coordination of cross-border data
+flows, create a technical path and circulation path
+suitable for the cross-border circulation of digital
+currencies, and create a domestic and international
+circulation and regulatory environment that promotes the
+healthy development of digital currencies.
+References
+1. Qiao Yide, Yu Yang. Understanding the essence of
+CBDC accurately to better utilize the role of digital
+RMB[J]. Technology and
+Finance,2022,No.58(12):29-33.
+2. Ge Hongling, Ma Xiaorong. Comparison of digital
+currency R&D programs of major global and
+regional central banks and insights[J]. Science and
+Technology Think Tank,2022(04):6-13.
+DOI:10.19881/j.cnki.1006-3676.2022.04.01.
+3. Bai Zinfu, Ge Hongling. Central bank's digital
+currency gives opportunities for RMB inter-
+nationalization[J]. China Economic
+Weekly,2021,No.816(19):111-112.
+4. ZHAO Xue-er, DANG Boyuan. Cross-border
+payment becomes an important exploration direction
+for central bank's digital currency[J]. World
+Knowledge,2021(18):64-65.
+5. Lian Fei. Macro impact of legal digital currency
+under open economy conditions: based on two
+design features, non-interest-bearing and interest-
+bearing[J]. International economic and trade
+exploration,2022,38(10):84-
+98.DOI:10.13687/j.cnki.gjjmts.2022.10.002.
+4
+SHS Web of Conferences 170, 01010 (2023) https://doi.org/10.1051/shsconf/202317001010
+CDEMS 2023
+
