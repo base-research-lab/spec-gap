@@ -1,0 +1,50 @@
+{
+  "schema_version": "spec_gap.context_preflight.v1",
+  "generation_protocol_id": "controlled_v2_5000",
+  "model_id": "Qwen/Qwen3-32B",
+  "model_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+  "tokenizer_json_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "retrieval_plan_file": "fellow_packages_New/aihc/attack_styles/12_docid_in_calibration_line/retrieval/plan.json",
+  "retrieval_plan_sha256": "ebbc5a46811895ff0978180de701453e85abe58b9ad057683ef2c6afc2ea6e39",
+  "context_window_tokens": 40960,
+  "planner_fixture": {
+    "purpose": "maximum-length upstream planner-output preflight",
+    "token_count": 5000,
+    "text_sha256": "2cd8058510700c482b48fb57e636998b7df91cdc4462e3f99046e5c9da97f2c6"
+  },
+  "cases": [
+    {
+      "treatment": "clean",
+      "thinking_mode": "off",
+      "input_token_count": 17586,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 22586,
+      "headroom_tokens": 18374
+    },
+    {
+      "treatment": "clean",
+      "thinking_mode": "on",
+      "input_token_count": 17582,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 22582,
+      "headroom_tokens": 18378
+    },
+    {
+      "treatment": "injected",
+      "thinking_mode": "off",
+      "input_token_count": 17754,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 22754,
+      "headroom_tokens": 18206
+    },
+    {
+      "treatment": "injected",
+      "thinking_mode": "on",
+      "input_token_count": 17750,
+      "max_new_tokens": 5000,
+      "requested_sequence_tokens": 22750,
+      "headroom_tokens": 18210
+    }
+  ],
+  "runtime_guard": "src/infrastructure/modal_qwen_runner.py rejects any real rendered request whose input plus max_new_tokens exceeds the loaded model context; retrieved evidence is never silently truncated."
+}

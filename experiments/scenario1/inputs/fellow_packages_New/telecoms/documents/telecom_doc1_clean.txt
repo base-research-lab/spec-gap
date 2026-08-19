@@ -1,0 +1,652 @@
+arXiv:1902.08072v1
+[eess.SP]
+21
+Feb
+2019 1
+Radiation Efficiency Aware High-Mobility Massive
+MIMO with Antenna Selection
+Zhinan Hu and Weile Zhang
+Abstract—High-mobility wireless communications have re-
+ceived a lot of attentions in the past few years. In this paper,
+we consider angle-domain Doppler shifts compensation scheme
+to reduce the channel time variation for the high-mobility uplink
+from a high-speed terminal (HST) to a base station (BS). We
+propose to minimize Doppler spread by antenna weighting under
+the constraint of maintaining radiation efficiency. The sequential
+parametric convex approximation (SPCA) algorithm is exploited
+to solve the above non-convex problem. Moreover, in order to save
+the RF chains, we further exploit the idea of antenna selection
+for high-mobility wireless communications. Simulations verify the
+effectiveness of the proposed studies.
+Index Terms—High-mobility communication, antenna selec-
+tion, Doppler spread, radiation efficiency.
+I. INTRODUCTION
+Over the past few years, the research on high-mobility
+wireless communication has received a lot of attentions [1].
+The multiple Doppler shifts caused by relative motion between
+transceivers superimpose at the receiver, resulting in fast time
+fluctuations of the channel and bringing severe inter-carrier
+interference (ICI). The approach to estimate and compensate
+the Doppler shifts from spatial domain has been widely
+studied. For sparse high-mobility communication scenarios
+with a few dominating propagation paths, small-scale uniform
+circular antenna array (UCA) and uniform linear antenna array
+(ULA) can be adopted to separate the multiple Doppler shifts
+and eliminate ICI via array beamforming [3].
+More recently, the large-scale antenna array or massive
+multi-input multi-output (MIMO) has attracted increasing in-
+terests in dealing with richly scattered high-mobility scenarios
+due to its high spatial resolution [4]–[6]. For high-mobility
+downlink, the work in [7] separated the Doppler shifts by
+beamforming network with a large-scale antenna array and
+proposed a joint oscillator frequency offset and Doppler shift
+estimation scheme. For uplink transmissions, it has been
+demonstrated that the harmful effect of Doppler shift can
+be also mitigated by massive MIMO technique [8], [9]. For
+example, the authors in [8] proposed a transmit multi-branch
+beamforming scheme where the angle domain Doppler shifts
+compensation is exploited to suppress the uplink channel
+variation. The corresponding exact power spectrum density
+(PSD) of uplink equivalent channel is derived in [9], and
+an antenna weighting technique is further proposed to reduce
+the channel time variation. However, the antenna weighting
+scheme in [9] only consider the target of Doppler spread
+Z. Hu and W. Zhang are with the MOE Key Lab for Intelligent Networks
+and Network Security, Xi’an Jiaotong University, Xi’an, Shaanxi, 710049,
+China. (email: wlzhang@mail.xjtu.edu.cn)
+M
+!
+!"#$%&'()"*))%'
++*#,-".
+()"*))%'+*#,-"#),
+w
+w
+M
+w
+!"#$%&'()*"%+,!%&#-
+!
+"
+!
+!
+"
+!
+Q
+! "
+b
+! "
+!
+b
+! "
+M
+b
+! "
+!
+b
+! "
+b
+! "
+M
+b
+澳 ! "
+Q
+b
+澳 ! "
+Q
+b
+澳 ! "
+M Q
+b
+!""#$%&'()*+&
+,!-"$.'/+)!.
+!""#$%&'()*+&
+,!-"$.'/+)!.
+!""#$%&'()*+&
+,!-"$.'/+)!.
+'RSSOHU6KLIWV
+&RPSHQVDWLRQ
+01
+! !
+" !
+"
+2
+345
+6
+718
+Fig. 1. Uplink transmission with angle-domain Doppler shifts compensation
+from a HST to a BS.
+reduction and may lead to a severe loss of energy radiation
+efficiency. This motivates our current work.
+In this paper, we consider angle-domain Doppler shifts
+compensation scheme to reduce the channel time variation for
+the high-mobility uplink from a high-speed terminal (HST) to
+a base station (BS). We formulate Doppler spread minimiza-
+tion problem by antenna weighting under the constraint of
+maintaining radiation efficiency. We then exploit the sequential
+parametric convex approximation (SPCA) algorithm to solve
+the above non-convex problem. On the other side, in view of
+the fact that the fully connected massive MIMO may suffer
+from prohibited high cost and complexity [10], we further
+exploit the idea of antenna selection for high-mobility wireless
+communications. Simulation results are provided to verify the
+proposed studies.
+II. SYSTEM MODEL
+As illustrated in Fig. 1, we consider the high-mobility uplink
+transmission from a HST to BS, where an M-element ULA
+is equipped at HST. Denote the normalized antenna space
+of ULA as d, which is the ratio between the antenna space
+and the radio wavelength. Let the direction of ULA coincide
+with that of HST motion. We consider the flat fading channel
+for simplicity. Nevertheless, the proposed scheme can be
+directly applied to frequency selective channels. Specifically,
+the channel from HST to BS is composed of a bunch of
+propagation paths. We assume the angle of departure (AOD)
+of these paths is constrained within a region of (θL, θR).
+Denote s = [s(0), s(1), ..., s(N − 1)]T
+as the length-N
+transmitted time domain symbols in one orthogonal frequency
+division multiplexing (OFDM) block. We consider the antenna
+weighting technique [9] is adopted, where the mth antenna is
+weighted by a complex weight wm. The multi-branch transmit
+matched filtering (MF) beamforming is performed towards a
+set of Q selected directions ϑq ∈ (θL, θR), q = 1, 2, ..., Q.
+The qth MF beamformer is b(ϑq) = ζ · a(ϑq)ejπφq
+, where
+a(ϑq) = [1, ej2πd cos ϑq
+, · · · , ej2πd(M−1) cos ϑq
+]T
+denotes the
+2
+array response vector corresponding to direction ϑq, ζ is the
+normalization coefficient to keep the total transmit power per
+symbol to 1 and φq denotes the introduced random phase.
+Let Φ(ǫ) = diag(1, ejωdTsǫ
+, · · · , ejωdTs(N−1)ǫ
+) represent
+the N × N diagonal phase rotation matrix introduced by fre-
+quency shift of fdǫ, with ωd = 2πfd and Ts being sampling in-
+terval. After transmit beamforming and Doppler shift compen-
+sation, the transmitted M×N signal matrix at transmit antenna
+array can be expressed as diag(w)b∗
+(ϑq)sT
+Φ(− cosϑq).
+w = [w1, w2, · · · , wM ]T
+denotes the weighting vector. Then,
+according to [9], the received signal at BS can be expressed
+in the form of
+r =
+Q
+X
+q=1
+Z θR
+θL
+α(θ)a(θ)T
+diag(w)b∗
+(ϑq)sT
+× Φ(− cos ϑq)Φ(cos θ)dθ, (1)
+where α(θ) represents the complex gain of the path associated
+with AOD θ. Then, the equivalent uplink channel can be
+expressed as
+g(t) = ζ ·
+Q
+X
+q=1
+Z θR
+θL
+α(θ)G(cos θ, cos ϑq) (2)
+ejωd(cos θ−cos ϑq)t+jφq
+dθ
+where G(cos θ, cos ϑq) = 1
+M aH
+(ϑq)diag(w)a(θ).
+Assume that the directions are selected according to
+‘Equi-cos’ criterion in [9] such that cos ϑq, q = 1, 2, ..., Q
+are evenly distributed between (cos θR, cos θL). Accord-
+ing to [9], the channel PSD at BS can be expressed
+as P(ω) = 1
+ωd
+|G(ω̃)|2
+W(ω̃), where ωd = 2πfd and
+ω̃ = ω
+ωd
+denotes the normalized Doppler frequency
+with respect to maximum Doppler shift. Denote ς(ω̃) =
+[1, e−j2πdω̃
+, · · · , e−j2πd(M−1)ω̃
+]T
+. Here, |G(ω̃)|2
+and W(ω)
+are respectively named as beam function and window function,
+where |G(ω̃)|2
+= | 1
+M ςT
+(ω̃)w|2
+and
+W(ω) =
+(
+2π
+(θR−θL)
+arccos(cos θR−ω̃)−θL
+µ(θL,θR) , −µ(θL, θR) ≤ ω̃ < 0
+2π
+(θR−θL)
+θR−arccos(cos θL−ω̃)
+µ(θL,θR) , 0 ≤ ω̃ ≤ µ(θL, θR)
+Afterwards, the Doppler spread with antenna weighting can
+be calculated as
+σD = ωd
+s
+wHC2w
+wHC0w
+, (3)
+where C0 =
+R µ(θL,θR)
+−µ(θL,θR)
+W(ω̃)ς∗
+(ω̃)ςT
+(ω̃)dω̃, C2 =
+R µ(θL,θR)
+−µ(θL,θR)
+ω̃2
+W(ω̃)ς∗
+(ω̃)ςT
+(ω̃)dω̃ and µ(θL, θR) = cosθL −
+cosθR.
+Then, the normalized Doppler spread can be defined as
+σD
+ωd
+=
+s
+wH C2w
+wH C0w
+, (4)
+which represents the magnitude of Doppler spread suppression
+benefiting from the angle-domain Doppler shifts compensation
+scheme.
+III. RADIATION EFFICIENCY AWARE DOPPLER SPREAD
+SUPPRESION
+In the scheme in [9] (labelled as ‘AW-Mini-DS’), the
+antenna weighting is designed to only minimize the Doppler
+0 50 100 150
+Angle (degree)
+10-15
+10-10
+10-5
+100
+Beam
+pattern
+AW-Mini-DS
+proposed
+Fig. 2. Comparison of the radiation pattern between AW-Mini-DS [9] and
+the proposed scheme.
+spread, which may lead to severe loss of transmission effi-
+ciency. Let us consider the following example. The AoDs are
+constrained within (θL, θR) with θL = 85◦
+, θR = 95◦
+. The
+ULA consists of M = 64 antennas, the maximum Doppler
+shift is set as fd = 5000Hz, and the antenna spacing is
+taken as d = 0.45. We depict the radiation pattern of the
+antenna array with the weighting technique in AW-Mini-DS
+in Fig. 2 by the solid line. It is evident that, in this case,
+although AW-Mini-DS can achieve the lowest Doppler spread,
+i.e., the smallest channel fluctuations, its radiation mainlobe is
+extremely lower than the sidelobes. This intuitively indicates
+that the vast majority of radiation power in AW-Mini-DS has
+leak out from the expected AoD region (85◦
+, 95◦
+).
+More mathematically, it can be observed from [9] that,
+the total transmit signal power from antenna array can be
+expressed as wH
+w, while wH
+C0w represents the magnitude
+of received signal power. Hence, we can define the energy
+radiation efficiency as wH
+C0w
+wH w
+. The maximal energy radiation
+efficiency can be immediately obtained as λmax(C0), which
+is the maximal eigenvalue of C0. Then, we further define the
+normalized energy radiation efficiency as
+η =
+wH
+C0w
+wH w
+λmax(C0)
+, (5)
+which is the ratio of the radiation efficiency to the maximum
+possible radiation efficiency and represents the level of main-
+tained relative radiation efficiency. The normalized radiation
+efficiency equals 2 × 10−10
+in AW-Mini-DS for the above
+example in Fig. 2, which means almost all of the radiation
+power has leaked out.
+Based on the above observations, we propose a new an-
+tenna weighting scheme which targets at minimizing Doppler
+spread as well as maintaining the radiation efficiency. Given
+a minimal required normalized radiation efficiency ε, the
+optimization problem can be formulated as:
+ŵ = arg min
+w̃
+w̃H
+C2w̃
+w̃H C0w̃
+, (6)
+s.t.
+w̃H
+C0w̃
+w̃Hw̃
+≥ ε · λmax(C0).
+We can transfer the optimization problem (6) into
+ŵ = arg min
+w̃
+w̃H
+C2w̃, (7a)
+s.t. w̃H
+w̃ ≤
+1
+ε · λmax(C0)
+, (7b)
+3
+w̃H
+C0w̃ ≥ 1. (7c)
+The detailed proof is omitted here due to the space limita-
+tion. Note that (7c) is a non-convex constraint. We then resort
+to the the SPCA method [11] to solve the above non-convex
+problem iteratively. Specifically, given the optimal solution in
+the lth iteration ŵl, we know w̃H
+C0w̃ is lower bounded by
+its first Taylor expansion f(w̃, ŵl), where
+f(w̃, ŵl) = ŵH
+l C0ŵl + 2ℜ
+
+Tr ŵH
+l C0(w̃ − ŵl)
+
+. (8)
+Hence, the feasible set of f(w̃, ŵl) ≥ 1 serves as a subset
+of the original constraint w̃H
+C0w̃ ≥ 1. Then, the optimal
+solution in the (l + 1)th iteration can be obtained by solving
+the following convex problem:
+ŵl+1 = arg min
+w̃
+w̃H
+C2w̃, (9)
+s.t. w̃H
+w̃ ≤
+1
+ε · λmax(C0)
+,
+1 − f(w̃, ŵl) ≤ 0.
+Note that the initial feasible solution ŵ0 can be found by
+the Iterative Feasibility Search Algorith (IFSA) algorithm [12].
+In Fig. 2, we further include the radiation pattern of the
+proposed scheme with ε = 0.5 for comparison. As expected,
+it is observed that the sidelobe level of the proposed scheme
+is much lower than that of AW-Mini-DS and the mainlobe
+level of the proposed scheme is much higher than that of AW-
+Mini-DS. This intuitively implies that the proposed method
+should provide much better radiation efficiency than AW-Mini-
+DS. More exactly, the normalized radiation efficiencies of
+the AW-Mini-DS and the proposed scheme in this example
+are 2 × 10−10
+and 0.5, respectively. In comparison, the
+corresponding normalized Doppler spreads are approximately
+given by 0.010 and 0.012, respectively. This verifies that the
+proposed scheme indeed could maintain radiation efficiency
+with slight sacrifice of Doppler spread suppression capability.
+IV. ANTENNA SELECTION FOR DOPPLER SPREAD
+SUPPRESSION
+The massive MIMO system may suffer from high cost and
+complexity due to a large number of RF chains, making an-
+tenna selection urgently needed to reduce system complexity.
+In this section, we further exploit the idea of antenna selection
+for radiation efficiency aware Doppler spread suppression.
+We consider that the M-element ULA of HST has at most
+N RF chains (N ≤ M). This is equivalent to impose an l0-
+norm constraint on the weighting vector, that is kwk0 ≤ N.
+Here, l0-norm | · |0 returns the number of non-zero elements
+of given argument. Especially, when N ≪ M, the constraint
+of kwk0 ≤ N implies that w is a sparse vector. Then,
+the antenna selection problem for radiation efficiency aware
+Doppler spread suppression can be formulated as:
+ŵ = arg min
+w̃
+w̃H
+C2w̃
+w̃HC0w̃
+, (10a)
+s.t.
+w̃H
+C0w̃
+w̃Hw̃
+≥ ε · λmax C0(w̃)
+
+, (10b)
+||w̃||0 ≤ N. (10c)
+TABLE I
+ALGORITHM: PROPOSED ANTENNA SELECTION ALGORITHM:
+Initialization: set σl = σmin and σh = σmax
+Repeat:
+1 : Set σ = σl+σh
+2
+;
+2 : Solve the problem (14) by exploiting SPCA method;
+if kŵk0 > N, set σl = σ.
+if kŵk0 < N, set σh = σ.
+if kŵk0 = N, break.
+Return: The non-zero elements of ŵ correspond to the selected
+antennas.
+Here, C0(w̃) is a submatrix of C0 by deleting the column and
+row vectors corresponding to zero entries of trial weighting
+vector w̃.
+Bearing in mind that C0(w̃) is parameterized by w̃, directly
+solving the above problem (10) should be a nontrivial task.
+Next, we propose a two-step sub-optimal solution to the
+problem. The first step is to optimize the antenna selection
+for Doppler spread minimization without consideration of
+radiation efficiency. Once the antenna selection is determined,
+the radiation efficiency aware Doppler spread suppression
+scheme proposed in Section III can be immediately employed
+in the second step. Thus, in the following we will focus in the
+first step, which can be formulated as:
+ŵ = arg min
+w̃
+w̃H
+C2w̃
+w̃HC0w̃
+,
+s.t. ||w̃||0 ≤ N. (11)
+To circumvent the intractable non-convex problem (11), we
+formulate the following function S(σ):
+S(σ) = min
+w̃
+kw̃k0
+s.t.
+w̃H
+C2w̃
+w̃H C0w̃
+≤ σ. (12)
+The above problem (12) tries to find the sparsest w̃, given a
+maximal allowable Doppler spread σ. Moreover, the function
+S(σ) is a decreasing function of the allowable Doppler spread
+σ. It can be observed that, the problem of (11) is equiva-
+lent to solve the equation S(σ) = N. This can be solved
+efficiently via bisection method from an interval [σmin, σmax]
+with S(σmin) ≥ N and S(σmax) ≤ N. Here, σmin and σmax
+can be set as the minimal Doppler spreads via AW-Mini-DS
+scheme with a fully connected M-element and N-element
+ULA, respectively.
+Next, given a fixed σ, in order to solve the problem (12),
+a good approach is to approximate the objective function by
+the well-known l1-norm [10], that is
+ŵ = arg min
+w̃
+||w̃||1,
+s.t.
+w̃H
+C2w̃
+w̃HC0w̃
+≤ σ. (13)
+The above problem (13) can be further transformed into
+ŵ = min
+w̃
+kwk1 (14)
+s.t. w̃H
+C2w̃ ≤ σ,
+w̃H
+C0w̃ ≥ 1.
+Similar to (7), the non-convex problem (14) can be itera-
+tively solved by with the aid of SPCA method. In summary,
+4
+10 15 20 25 30 35 40
+angle spread
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Normalized
+radiation
+effiency
+10 15 20 25 30 35 40
+angle spread
+0.01
+0.0105
+0.011
+0.0115
+0.012
+0.0125
+0.013
+0.0135
+0.014
+0.0145
+0.015
+Normalized
+Doppler
+spread AW-Mini-DS
+proposed, =0.5
+proposed, =0.9
+Fig. 3. Performance comparison between AW-Mini-DS and the proposed
+method in terms of both normalized radiation efficiency and Doppler spread.
+the proposed antenna selection scheme in the first step can be
+described in table I.
+V. SIMULATION RESULTS
+In this section, we present simulation results to verify the
+proposed studies. We consider a ULA with a total of M = 64
+antennas and normalized antenna spacing of 0.45.
+In the first example, we consider the case of fully connected
+ULA. We compare the performance between AW-Mini-DS and
+the proposed scheme in terms of both normalized radiation
+efficiency and Doppler spread as the angle spread θR − θL
+increases in Fig. 3. The center AOD is fixed as (θL +θR)/2 =
+90◦
+. We can make the following observations: As the angle
+spread decreases, AW-Mini-DS can always provide the lowest
+Doppler spread (the best Doppler spread suppression). Un-
+fortunately, the radiation efficiency of AW-Mini-DS quickly
+drops almost to zero once the angle spread becomes below
+30◦
+. In comparison, the results verify the effectiveness of the
+proposed radiation efficiency aware scheme. It is seen that,
+the proposed scheme could maintain the radiation efficiency
+according to the constraint ε at the expense of slight Doppler
+spread suppression capability. Take the angle spread of 10◦
+as an example. As compared to AW-Mini-DS, the proposed
+scheme raises the Doppler spread by a factor of round 20%,
+but in the meanwhile improves the radiation efficiency from
+almost zero to 0.9. Hence, the proposed scheme has provided
+more balanced performance as compared to AW-Mini-DS.
+Next, we consider the case of partly connected ULA, where
+M-element ULA has at most N RF chains. We display
+the evolution of normalized Doppler spread of the proposed
+antenna selection scheme as the number of RF chains increases
+in Fig. 4. We assume θL = 30◦
+and θR = 60◦
+. For comparison,
+we also include the results of AW-Mini-DS in this figure.
+We consider that AW-Mini-DS employs the fully connected
+ULA with N and M RF chains, respectively. As expected, the
+AW-Mini-DS scheme with N and M RF chains serve as the
+upper and lower bound of the proposed scheme, respectively.
+With the same number of RF chains, the proposed scheme
+can greatly reduce the Doppler spread as compared to AW-
+Mini-DS. Moreover, as the number of RF chains increases,
+the proposed scheme could closely approach the lower bound,
+8 12 16 20 24 28 32
+Number of RF chains (N)
+0
+0.005
+0.01
+0.015
+0.02
+0.025
+0.03
+0.035
+0.04
+0.045
+0.05
+Normalized
+Doppler
+spread
+AW-Mini-DS, N RF chains
+AW-Mini-DS, M RF chains
+proposed, N RF chains
+Fig. 4. Normalized Doppler spread of the proposed scheme as the number
+of RF chains increases.
+which demonstrates the effectiveness of the proposed antenna
+selection scheme.
+VI. CONCLUSIONS
+In this paper, we considered the angle-domain Doppler
+shifts compensation scheme with maintaining radiation effi-
+ciency for high-mobility uplink communication. The idea of
+antenna selection is further exploited to reduce the number
+of required RF chains. Numerical results were provided to
+corroborate the proposed studies.
+REFERENCES
+[1] J. Wu, and P. Fan, “A survey on high mobility wireless communications:
+Challenges, opportunities and solutions,” IEEE Access, vol. 4, pp. 450-
+476, 2016.
+[2] T. Hwang, C. Yang, G. Wu, S. Li, and G. Y. Li, “OFDM and its wireless
+applications: A survey,” IEEE Trans. Veh. Technol., vol. 58, no. 4, pp.
+1673-1694, May 2009.
+[3] Y. Zhang, Q. Yin, P. Mu, and L. Bai, “Multiple Doppler shifts com-
+pensation and ICI elimination by beamforming in high-mobility OFDM
+systems,” in Proc. Int. ICST Conf. Commun. and Netw. in China, Aug.
+2011, pp. 170-175.
+[4] T. Marzetta, “Noncooperative cellular wireless with unlimited numbers
+of base station antennas,” IEEE Trans. Wirel. Commun., vol. 9, no. 11,
+pp. 3590-3600, Nov. 2010.
+[5] E. Larsson, O. Edfors, F. Tufvesson, and T. Marzetta, “Massive MIMO
+for next generation wireless systems,” IEEE Commun. Mag., vol. 52,
+no. 2, pp. 186-195, Feb. 2014.
+[6] W. Zhang, F. Gao, S. Jin, and H. Lin, “Frequency synchronization for
+uplink massive MIMO systems,” IEEE Trans. Wirel. Commun., vol. 17,
+no. 1, pp. 235-249, Jan. 2018.
+[7] W. Guo, W. Zhang, P. Mu and F. Gao, “High-Mobility OFDM Downlink
+Transmission With Large-Scale Antenna Array,” in IEEE Transaction-
+son Vehicular Technology., vol. 66, no. 9, pp. 8600-8604, Sept. 2017.
+[8] W. Guo, W. Zhang, P. Mu, F. Gao, and B. Yao, “Angle-domain Doppler
+pre-compensation for high-mobility OFDM uplink with massive ULA,”
+in Proc. IEEE GLOBECOM, Dec. 2017, pp. 1-6.
+[9] Y. Ge, W. Zhang, F. Gao, S. Zhang, and X Ma, “Antenna Weighting for
+Reducing Channel Time Variation in High-Mobility Massive MIMO,”
+2018. [Online]. Available: https://arxiv.org/abs/1809. 00137.
+[10] S. E. Nai, W. Ser, Z. L. Yu, and H. Chen, “Beampattern synthesis for
+linear and planar arrays with antenna selection by convex optimization,
+” IEEE Trans. Ant. Propag., vol. 58, no. 12, pp. 3923-3930, Dec. 2010.
+[11] A. Beck, A. Ben-Tal, and L. Tetruashvili, “A sequential parametric con-
+vexapproximation method with applications to nonconvex truss topology
+design problems,” J. Global Optim., vol. 47, no. 1, pp. 29-51, May 2010.
+[12] Y. Cheng and M. Pesavento, “Joint optimization of source power
+allocation and distributed relay beamforming in multiuser peer-to-peer
+relay networks,” IEEE Trans. Signal Process., vol. 60, no. 6, pp. 2962-
+2973, Jun. 2012.
+

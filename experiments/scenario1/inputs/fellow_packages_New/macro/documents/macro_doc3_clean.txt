@@ -1,0 +1,417 @@
+ZBW – Leibniz Information Centre for Economics
+151
+Forum
+Since the outbreak of the COVID-19 pandemic, global
+factors have played a much more important role in shap-
+ing inﬂation dynamics than over the previous two dec-
+ades. As a result, global monetary tightening has been
+synchronised to an unprecedented degree, bringing to
+the fore the importance of cross-country monetary poli-
+cy spillovers through aggregate demand, exchange rate
+and ﬁnancial channels. After reviewing recent inﬂation
+developments, the article discusses how exchange rate
+spillovers can put upward pressure on the inﬂation out-
+look complicating the assessment of the ECB’s monetary
+policy stance.
+Global inﬂation
+Inﬂation around the world has risen strongly since the reo-
+pening of the economies in the ﬁrst half of 2021 (Figure 1a
+and 1b). Far from proving a temporary phenomenon, inﬂa-
+tion turned out higher and more persistent than initially
+expected. As headline inﬂation appears to have peaked
+in several countries in late 2022, core inﬂation is still rising
+or stable. At the same time, increases in services prices
+have become more prominent relative to those of goods
+prices, indicating that inﬂationary pressures have become
+more broad-based and persistent.
+The burst of inﬂation has been a common phenomenon
+across countries. Indeed, all countries responded to the
+Richhild Moessner, Bank for International
+Settlements, Basel, Switzerland.
+Dora Xia, Bank for International Settlements, Basel,
+Switzerland.
+Fabrizio Zampolli, Bank for International
+Settlements, Basel, Switzerland.
+© The Author(s) 2023. Open Access: This article is distributed under the
+terms of the Creative Commons Attribution 4.0 International License
+(https://creativecommons.org/licenses/by/4.0/).
+Open Access funding provided by ZBW – Leibniz Information Centre
+for Economics.
+* The views expressed in this study reﬂect those of authors and are not
+necessarily those of the Bank for International Settlements.
+Richhild Moessner, Dora Xia and Fabrizio Zampolli*
+Global Inﬂation and Global Monetary Policy Tightening: Implications
+for the Euro Area
+DOI: 10.2478/ie-2023-0031
+Intereconomics, 2023, 58(3), 151-154
+JEL: E31, E52
+pandemic in similar ways – a combination of lockdowns
+as well as aggressive ﬁscal and monetary easing. All
+countries saw deep falls in activity early in the pandemic
+and strong rebounds afterwards. All experienced the im-
+pact of supply bottlenecks, in part driven by a widespread
+shift from services to goods. And none were spared from
+the further increase in commodity prices after the Rus-
+sian invasion of Ukraine.
+As a result, inﬂationary developments have been highly
+correlated globally. This co-movement – measured by the
+variance explained by a “common factor” – reﬂects not
+only the inﬂuence of energy and food prices but also that
+of less volatile components, as it also holds for core inﬂa-
+tion (Figure 1c). The panel shows that the importance of
+this common factor has increased recently for the euro
+area, as well as for other advanced economies (AEs) and
+emerging market economies (EMEs).
+At the same time, cross-country inﬂation spillovers also ap-
+pear to have risen sharply, although they remain below the
+levels prevailing prior to the early 2000s. The index shown
+in Figure 1d measures the extent to which shocks to inﬂa-
+tion tend to propagate across economies over a 12-month
+horizon. Since it ﬁlters out the impact of the contempora-
+neous correlation between shocks, it suggests that the
+current dynamics of domestic inﬂation depend more on the
+path of inﬂation abroad than has been the case for the past
+15 years, even after controlling for common shocks.
+Global monetary policy tightening and monetary
+policy spillovers
+Most central banks did not respond to inﬂation immedi-
+ately. While some emerging-market central banks started
+raising rates in early 2021, as soon as inﬂation climbed
+above target, most central banks waited as they initially
+saw the increase in inﬂation as temporary. However, in
+the second half of 2021, after being repeatedly surprised
+by higher inﬂation, central banks eventually began rais-
+ing rates in earnest. The ECB was one of the last to shift
+policy, starting to increase its policy rate only in July 2022.
+The global monetary tightening cycle turned out to be
+the most synchronised one in the past half-century. By
+February 2023, more than 90% of economies had hiked
+their policy rates (Figure 2a). Historically, this share has
+Intereconomics 2023 | 3
+152
+Forum
+policy in the rest of the world (say country B) through three
+partly overlapping channels:
+• Aggregate demand channel. When country A tightens
+monetary policy, the resulting reduction in its domestic
+spending also dampens exports from country B. Re-
+duced exports would then weaken output and inﬂation
+in country B. The resulting decline in global aggregate
+demand also lowers commodity prices, adding to the
+disinﬂationary pressures. In addition, the weakening of
+demand in country B may, in turn, reinforce the down-
+ward pressure on inﬂation in both countries through
+global supply chains and competition in product and
+labour markets.1
+• Exchange rate channel. When country A tightens mon-
+etary policy, its currency tends to appreciate, which
+likely leads to expenditure switching from country A to
+country B (for a given level of income). Hence exports
+from country B increase, which tends to boost both
+1 Consistent with this view, estimates of Phillips curves indicate that
+both domestic and global output gaps inﬂuence inﬂation across AEs
+and EMEs and that global value chains play a key role (eg. Borio and
+Filardo, 2007; Auer et al., 2017; and Jašová et al., 2020).
+rarely exceeded 50%, reaching 70% only during the oil
+price shocks of the 1970s. Besides, the pace of tightening
+proved remarkably fast in EMEs where central banks have
+raised nominal policy rates at about twice their historical
+pace. Several central banks have also started to shrink their
+balance sheets (with Japan as the notable exception). That
+said, in AEs nominal policy rates are still far below inﬂa-
+tion and inﬂation expectations, implying negative real rates
+(Figure 2b). In EMEs, nominal policy rates are below current
+inﬂation, but above inﬂation expectations (Figure 2c).
+The unprecedented degree of synchronicity in monetary
+policy tightening makes it more difficult for individual cen-
+tral banks, including the ECB, to calibrate their own mon-
+etary policy. One risk, highlighted by some commenta-
+tors, is that central banks may underestimate the strength
+of cross-country monetary policy spillovers and hence
+end up implementing an excessively tighter monetary
+policy. Such spillovers are normally considered by central
+banks when formulating their own monetary policy, but
+their magnitudes can be quite uncertain, especially when
+central banks face unusual circumstances.
+Monetary policy tightening in one country (say country A)
+can affect the economic conditions relevant for monetary
+Figure 1
+Inﬂation around the world
+Notes: AEs: advanced economies; EME: emerging market economies.1
+For the regions, GDP PPP-weighted averages for eight advanced, ﬁve Latin Ameri-
+can, 10 Asian and 11 Eastern European economies. Global is the average of 34 economies. 2
+Share of variance explained by ﬁrst principal component
+in each country group based on standardised yoy inﬂation rates (mean of zero and standard deviation of one) and a 15-year rolling window. Calculation
+based on the PC decomposition of the full sample. Core inﬂation based partially on estimated data to increase historical data availability. Eight AEs and
+20 EMEs. 3
+Nine AEs and ﬁve EMEs. Based on Diebold and Yilmaz (2014) and Lombardi et al. (2013), using a Bayesian VAR for core inﬂation (including oil
+and food prices as controls) estimated on rolling windows of 15 years (1980 refers to the window 1965-80). First, a total spillover index is calculated from
+forecast error variance decomposition of each variable into own variance and cross variance. The index measures the contribution of all cross variances to
+the total forecast error variance. The ratio between the 12-months-ahead spillover index and 0-month-ahead spillover index is used to measure spillovers
+that are adjusted for contemporaneous correlations.
+Sources: OECD; Reﬁnitiv Datastream; national data; BIS.
+15
+10
+5
+0
+–5
+2022
+2021
+2020
+2019
+US
+Global
+Euro area
+Japan
+15
+10
+5
+0
+–5
+2022
+2021
+2020
+2019
+Other AEs
+EMEs Asia
+Latin America
+Eastern Europe
+80
+60
+40
+20
+0
+20
+10
+00
+90
+80
+AEs excl. euro area
+Euro area EMEs
+5
+4
+3
+2
+1
+2020
+2010
+2000
+1990
+1980
+Estimation window (end year)
+a. Headline inﬂation1 b. Core inﬂation1 c. Share of inﬂation variance d. Core inﬂation spillovers3
+explained by the global factor2
+Yoy, % Yoy, % % Ratio
+ZBW – Leibniz Information Centre for Economics
+153
+Forum
+through of US dollar appreciation to higher inﬂation
+abroad is larger for energy and food consumer price
+inﬂation than for core inﬂation, since energy and food
+prices are often set in US dollars (Moessner, 2022).
+As regards the ﬁnancial channel, the US dollar is the
+pre-eminent funding currency and therefore the cur-
+rency most associated with leverage. Hence, a strong-
+er US dollar tends to go hand in hand with deleverag-
+ing and tighter global funding conditions.2
+More gener-
+ally, long-term interest rates and asset prices tend to
+be highly correlated across countries as they track US
+rates and prices.3
+A tightening of US monetary policy
+therefore leads to a tightening of global ﬁnancial condi-
+tions.
+2 Currency mismatches can exacerbate such effects through balance
+sheet constraints of borrowers with net US dollar debt (“original sin”)
+or through the retrenchment of global investors with unhedged expo-
+sures to foreign assets (“original sin redux”).
+3 For example, Kearns et al. (2022) ﬁnd that surprises in US monetary
+policy decisions would have a signiﬁcant impact on long-term interest
+rates in more than 80% of advanced economies and 60% of emerging
+market economies.
+its output and inﬂation. In addition, the depreciation of
+country B’s currency tends to have a direct inﬂationary
+impact by raising import prices and costs.
+• Financial channel: This channel captures how a tight-
+ening of monetary policy in one country (country A)
+leads to a tightening of ﬁnancial conditions in the rest
+of the world (country B). Here, the impacts of higher
+interest rates through capital ﬂows and exchange rates
+loom large.
+The exchange rate and the ﬁnancial channels tend to
+be larger and more contractionary for activity when
+monetary tightening takes place in the United States.
+Since a large share of goods exchanged in interna-
+tional markets are invoiced in US dollars, a US dollar
+appreciation tends to boost import prices elsewhere,
+not only of imports from the United States. In addi-
+tion, as trade credit is mainly US dollar-denominated, a
+stronger US dollar tends to tighten trade credit condi-
+tions and weigh on global trade.
+An appreciation of the US dollar tends to lead to an
+increase in consumer price inﬂation abroad via ex-
+change rate pass-through. Exchange rate pass-
+Figure 2
+Global monetary tightening episodes
+Notes: AEs: advanced economies; EME: emerging market economies. 1
+For each country, tightening episodes are identiﬁed as months between the
+trough and peak in the policy rate around periods when the seven-month centred moving average of the policy rate is increasing. Episodes in which the
+policy rate increases by less than one percentage point or more than 20 percentage points, or episodes that last less than six months or more than 48
+months, are excluded from the analysis. Based on data for 11 AEs and 16 EMEs from January 1970 to February 2023 (subject to country availability); 154
+tightening episodes. 2
+REER: real effective exchange rate. Trade-weighted real broad dollar index; an increase indicates an appreciation of the USD.
+3
+Median based on monthly data for 11 AEs and 23 EMEs. 4
+Policy rate deﬂated by the weighted average of the current and next year. Consensus fore-
+casts for year-on-year inﬂation.
+Sources: Cavallino et al. (2022); FRED; Consensus Economics; Reﬁnitiv Datastream; national data; BIS.
+a. Central bank tightening episodes1 b. Advanced economies3 c. Emerging market economies3
+% of central banks % %
+10
+5
+0
+–5
+2022
+2012
+2002
+1992
+1982
+Inﬂation, yoy
+10
+5
+0
+–5
+2022
+2017
+2012
+2007
+2002
+Policy rate Ex ante real rate4
+Jan. 2010 = 100
+USD REER2 (rhs)
+2023
+2003
+1993
+1983
+1973 2013
+AEs (lhs)
+EMEs (lhs)
+140
+120
+100
+80
+75
+50
+25
+0
+Intereconomics 2023 | 3
+154
+Forum
+recovery in services consumption may have some spillovers
+to countries that are heavily dependent on Chinese tourism
+such as Thailand, its impact on other regions, the euro area
+included, may be limited.
+The initial US dollar strength was partly driven by US mon-
+etary policy tightening ahead of other economies. As other
+central banks followed suit and monetary policy became
+more globally synchronised, the US dollar has dropped from
+its peak in October 2022. While a weakening of the US dol-
+lar can reduce the inﬂationary pressures discussed above,
+synchronised global tightening may increase the risk of
+having an excessively tighter monetary policy, which would
+slow economic activity more than anticipated. On the other
+hand, indirect effects on inﬂation from earlier increases in
+energy and food prices in local currency due to earlier US
+dollar appreciation, which take longer to pass through than
+direct effects, could lead to euro area inﬂation staying higher
+for longer. Ultimately, the assessment of these risks needs
+to consider the broader macroeconomic environment. In
+the euro area, inﬂation is well above the central bank target
+and is expected to remain above target for some time (ECB,
+2023). If global monetary policy spillovers are much larger
+for activity than central banks currently expect and central
+banks “overtighten”, inﬂation would return to target more
+quickly, but at the risk of a larger slowdown in economic ac-
+tivity. It is also possible that those spillovers for activity are
+smaller than anticipated, in which case inﬂation would be
+higher for longer, increasing the risk of transiting to a persis-
+tent high-inﬂation regime.
+References
+Auer, R., C. Borio and A. Filardo (2017), The globalisation of inﬂation: the
+growing importance of global value chains, BIS Working Papers, 602.
+Borio, C. and A. Filardo (2007), Globalisation and inﬂation: new cross-country
+evidence on the global determinants of domestic inﬂation, BIS Working
+Papers, 227.
+Cavallino, P., G. Cornelli, P. Hoerdahl and E. Zakrajšek (2022), Front-loading
+monetary tightening: pros and cons, BIS Bulletin, 63.
+Diebold, F. and K. Yilmaz (2014), On the network topology of variance de-
+compositions: Measuring the connectedness of ﬁnancial ﬁrms, Journal of
+Econometrics, 182(1), 119-134.
+ECB (2023), ECB staff macroeconomic projections for the euro area, March.
+Galati, G., R. Moessner and M. van Rooij (2022), Reactions of household in-
+ﬂation expectations to a symmetric inﬂation target and high inﬂation, DNB
+Working Papers, 743.
+Ider, G., A. Kriwoluzky, F. Kurcz and B. Schumann (2023), The Energy-Price
+Channel of (European) Monetary Policy, DIW Discussion Paper, 2033.
+Jašová, M., R. Moessner and E. Takats (2020), Domestic and global output
+gaps as inﬂation drivers: what does the Phillips curve tell?, Economic
+Modelling, 87, 238-253.
+Kearns, J., A. Schrimpf and D. Xia (2022), Explaining Monetary Spillovers: The
+Matrix Reloaded, Journal of Money, Credit and Banking.
+Lombardi, M., R. Calvi and F. Di Mauro (2013), Measuring international spillo-
+vers during economic expansions and slowdowns, Global interdependence,
+decoupling, and recoupling, MIT Press.
+Moessner, R. (2022), Exchange rate pass-through to food and energy con-
+sumer price inﬂation, CESifo Working Papers, 10164.
+Nagel, J. (2023, 2 January), Interview, Zeitschrift für das Gesamte Kreditwesen.
+Implications for inﬂation and monetary policy in the
+euro area
+Spillovers that operate through a stronger US dollar are
+particularly important for the euro area inﬂation outlook. As
+noted above, an appreciation of the US dollar tends to drive
+up energy and food consumer price inﬂation in local cur-
+rency. Moreover, energy and food consumer price inﬂation
+are generally salient for consumers’ decisions and therefore
+affect household expectations of inﬂation strongly. There is
+some evidence that long-term consumers’ inﬂation expec-
+tations in the euro area have risen as euro area inﬂation in-
+creased strongly above the central bank’s inﬂation target,
+initially driven by high energy and food prices (Nagel, 2023;
+and Galati et al., 2022). This channel has been very relevant
+for the euro area recently. Ider et al. (2023) ﬁnd that the ECB
+can affect euro area inﬂation by affecting domestic and
+global energy prices with monetary policy via the effect of
+policy rate changes on the euro-dollar exchange rate. They
+ﬁnd that this “energy-price channel” of monetary policy
+plays an important role in the transmission mechanism of
+monetary policy in the euro area.
+The inﬂation outlook is further complicated by the re-open-
+ing of the Chinese economy, after prolonged lockdowns, in
+early January 2023. The timing and pace of reopening sur-
+prised the market whose consensus as of early November
+2022 was that a gradual reopening would take place from
+March 2023. Notwithstanding a sharp increase in COVID-19
+cases immediately after the reopening, mobility improved,
+and activity indicators bounced back to pre-COVID-19 lev-
+els by around March and April 2023.
+China’s reopening can potentially generate signiﬁcant spillo-
+vers to global inﬂation given the important role that China
+plays in the global economy. For one, China’s strong growth
+could increase the demand for commodities and drive up
+their prices, contributing to global inﬂation. In addition, Chi-
+na’s strong recovery could stimulate economic activity of
+countries in the upstream and downstream of supply chains,
+leading to upward price pressures in these countries.
+That said, such inﬂation spillovers from China to the euro
+area may be limited this time. The magnitude of the spillo-
+vers discussed above hinges on the composition of China’s
+growth, not just its overall level. For example, growth in con-
+struction and manufacturing activities is likely to have larger
+spillovers than that in services. This is because construction
+and manufacturing require imports of raw materials and in-
+termediate goods from other countries. In contrast, services
+are less tradable and more dependent on domestic markets.
+China’s recovery this time around is generally expected to
+be driven by consumption, especially services consump-
+tion, rather than investment, at least in the short run. While
+

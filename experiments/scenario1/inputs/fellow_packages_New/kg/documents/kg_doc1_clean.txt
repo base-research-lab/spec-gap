@@ -1,0 +1,296 @@
+Context-Enhanced Entity and Relation Embedding for
+Knowledge Graph Completion (Student Abstract)
+Ziyue Qiao, Zhiyuan Ning, Yi Du*, Yuanchun Zhou
+Computer Network Information Center, Chinese Academy of Sciences, Beijing 100190, China
+University of Chinese Academy of Sciences, Beijing, China
+{qiaoziyue,ningzhiyuan,duyi,zyc}@cnic.cn
+Abstract
+Most researches for knowledge graph completion learn repre-
+sentations of entities and relations to predict missing links in
+incomplete knowledge graphs. However, these methods fail
+to take full advantage of both the contextual information of
+entity and relation. Here, we extract contexts of entities and
+relations from the triplets which they compose. We propose a
+model named AggrE, which conducts efficient aggregations
+respectively on entity context and relation context in multi-
+hops, and learns context-enhanced entity and relation embed-
+dings for knowledge graph completion. The experiment re-
+sults show that AggrE is competitive to existing models.
+Introduction
+Knowledge graphs(KGs) store a wealth of knowledge from
+real world into structured graphs, which consist of collec-
+tions of triplets, and each triplet (h, r, t) represents that head
+entity h is related to tail entity t through a relation type
+r. KGs have play a significant role in AI-related applica-
+tions such as recommendation systems, question answering,
+and information retrieval. However, the coverage of knowl-
+edge graphs nowadays is still far from complete and com-
+prehensive, researchers have proposed a number of knowl-
+edge graph completion(KGC) methods to predict the miss-
+ing links/relations in the incomplete knowledge graph.
+Most state-of-the-art methods for KGC are usually based
+on knowledge graph embeddings, which normally assign an
+embedding vector to each entity and relation in the continu-
+ous embedding space and train the embeddings based on the
+existing triplets, i.e., to make the scores for observed graph
+triplets higher than random ones. However, most of them fail
+to utilize the context/neighborhood of the entity or relation,
+which may contain rich and valuable information for KGC.
+Recently, some researches have proved the significance
+of contextual information of entity and relation in KGC. For
+example, A2N (Bansal et al. 2019) and RGHAT (Zhang et al.
+2020) propose attention-based methods which leverage the
+contextual information for link prediction by attending to the
+neighbor entities and lead to more accurate KGC. PathCon
+(Wang, Ren, and Leskovec 2020) considers relational con-
+text of the head/tail entity and relational paths between head
+*Corresponding author
+Copyright © 2021, Association for the Advancement of Artificial
+Intelligence (www.aaai.org). All rights reserved.
+(e1, r1, e2)
+(e1, r1, e3)
+(e1, r2, e4)
+(e1, r2, e5)
+(e3, r1, e6)
+(e4, r1, e7)
+… …
+Triplets
+r1
+(e1, e2)
+Entity context of e1 Relation context of r1
+(e1, e3)
+(e3, e6) (e4, e7)
+e1
+(r1, e2) (r1, e3)
+(r2, e4) (r2, e5)
+Extracting
+Figure 1: An illustration of extracting entity context and re-
+lation context from the triplets of knowledge graphs.
+and tail entity in one model, and finds that they are critical
+to the task of relation prediction. However, these researches
+just utilize entity context or relation context, which may lead
+to information loss.
+In this paper, we aim to take full advantage of both the
+entity context and relation context for enhancing the KGC
+task. Specifically, different from the neighborhood definition
+in traditional KG topology, for each element in each triplet,
+we extract the pair composed of the other two elements as
+one neighbor in its context. Then we propose an efficient
+model, named AggrE, to alternately aggregate the informa-
+tion of entity context and relation context in multi-hops into
+entity and relation, and learn context-enhanced entity em-
+beddings and relation embeddings. Then we use the learned
+embeddings to predict the missing relation r given a pair of
+entities (h, ?, t) to complete knowledge graphs.
+The Proposed Model
+Given a knowledge graph G = {(h, r, t)} ⊆ E × R × E,
+where E and R are entity set and relation set respectively.
+Firstly, we extract contexts of entities and relations from
+the existing triplets, as shown in Figure 1. For an entity
+ei in G, we define the entity context of ei as Cei =
+{(rj, ek)|(ei, rj, ek) ∈ G ∨ (ek, rj, ei) ∈ G}, which is ac-
+tually the set of neighbor entities with their corresponding
+relations of ei. For a relations ri in G, we define the relation
+context of ri as Cri
+= {(ej, ek)|(ej, ri, ek) ∈ G}, which
+is actually the two endpoints of ri. Denote e
+(0)
+i and r
+(0)
+i as
+the randomly initialized embedding of ei and ri respectively,
+our intuition is to aggregate the contextual information into
+the representations of each entity and relation to help the
+arXiv:2012.07011v1
+[cs.CL]
+13
+Dec
+2020
+prediction. We define the aggregation functions as:
+e
+(l+1)
+i = e
+(l)
+i +
+X
+(rj ,ek)∈Cei
+α
+(l)
+i,j,k · (r
+(l)
+j e
+(l)
+k ) (1)
+r
+(l+1)
+i = r
+(l)
+i +
+X
+(ej ,ek)∈Cri
+β
+(l)
+i,j,k · (e
+(l)
+j e
+(l)
+k ) (2)
+where 0 ≤ l < L and L is the number of aggre-
+gation layers, e
+(l+1)
+i and r
+(l+1)
+i is the l-th layer’s output
+embedding of ei and ri, is the element-wise product,
+α
+(l)
+i,j,k and β
+(l)
+i,j,k are layer-specific softmax normalization
+constants, α
+(l)
+i,j,k represent how important each entity context
+is for ei: α
+(l)
+i,j,k =
+exp(s
+(l)
+i,j,k)
+P
+(r
+j0 ,e
+k0 )∈Cei
+exp(s
+(l)
+i,j0,k0 )
+, and β
+(l)
+i,j,k rep-
+resent how important each relation context is for ri:β
+(l)
+i,j,k =
+exp(s
+(l)
+j,i,k)
+P
+(e
+j0 ,e
+k0 )∈Cri
+exp(s
+(l)
+j0,i,k0 )
+. The s
+(l)
+i,j,k represents the score for
+each possible triplet (ei, rj, ek) after l layers’ aggregation,
+and we use the same score function with DistMult(Yang
+et al. 2014) to calculate the triplet scores:
+s
+(l)
+i,j,k = (e
+(l)
+i )T
+Diag(r
+(l)
+j )e
+(l)
+k (3)
+Where Diag(r
+(l)
+j ) is a diagonal matrix with r
+(l)
+j in its di-
+agonal. After L layers’ aggregation, we can obtain the final
+output e
+(L)
+i and r
+(L)
+i of each entity and relation, which con-
+tain neighbor information from their L-hops contexts. Then
+we conduct a softmax loss function on the final triplet scores
+to compute the likelihood of predicting the correct relations:
+L = −
+X
+(ei,rj ,ek)∈G
+log
+exp(s
+(L)
+i,j,k)
+P
+rj0 ∈R exp(s
+(L)
+i,j0,k)
+(4)
+where R is the set of relations. We use a mini-batch Adam
+optimizer to minimize L. The difference between our ag-
+gregation model and Graph Neural Network(GNN) is that
+instead of using complex matrix transformation, we use
+element-wise products to obtain neighborhood information
+and add it directly to central nodes, as the embedding itself
+can be regarded as trainable transformation parameters. Also
+our model is expected to be more efficient and suitable for
+larger knowledge graph.
+Experiments
+We conduct experiments on two widely used KG bench-
+marks: FB15K-237 and WN18RR. Noted that the trainable
+parameters in our model are only entity and relation embed-
+dings, for a fair comparison, we choose 5 traditional base-
+lines with a small amount of parameters. We use Mean Re-
+ciprocal Rank (MRR, the mean of all the reciprocals of pre-
+dicted ranks), Mean Rank (MR, the mean of all the predicted
+ranks), and Hit@3(the proportion of correctly predicted en-
+tities ranked in the top 3 predictions) as evaluation metrics.
+In the experiment, we set the embedding dimensionality as
+256, the learning rate as 5e-3, l2 penalty coefficient as 1e-7,
+WN18RR FB15K-237
+MRR MR Hit@3 MRR MR Hit@3
+TransE 0.784 2.079 0.870 0.966 1.352 0.984
+Distmult 0.847 2.024 0.891 0.875 1.927 0.936
+ComplEx 0.840 2.053 0.880 0.924 1.494 0.970
+SimplE 0.730 3.259 0.755 0.971 1.407 0.987
+RotatE 0.799 2.284 0.823 0.970 1.315 0.980
+AggrE 0.953 1.136 0.989 0.966 1.171 0.989
+Table 1: Results of relation prediction. The results of base-
+lines are taken from (Wang, Ren, and Leskovec 2020)
+batch size as 512 and a maximum of 20 epochs. We set the
+number of aggregation layers L as 2 for WN18RR and 4 for
+FB15K-237 repectively.
+As shown in Table 1, The results indicate that AggrE sig-
+nificantly outperforms all the baselines on two benchmarks,
+which indicates the effectiveness of AggrE. Specifically, the
+improvement is rather significant for WN18RR, where the
+links between entities are more sparse than in FB15K-237,
+this may because without using extra parameters other than
+embeddings, AggrE is less prone to overfitting. Besides, Ag-
+grE achieves substantial improvements against DistMult on
+all the metrics, and noted that they have the similar objec-
+tive functions, it indicates that aggregating contextual infor-
+mation for entities and relations is valuable and can great
+improve the performance of prediction.
+Conclusion
+In this paper, we specify a novel definition on the con-
+text/neighborhood of entity and relation in KGs, and propose
+a multi-layer aggregation models to compose contextual in-
+formation to embeddings for KGC. In the future, we will
+explore more possible aggregation functions in our model.
+Acknowledgments
+This research was supported by the NSFC under
+Grant 61836013, National Key R&D Plan of China
+(2016YFB0501901), Beijing Nova Program of Science and
+Technology (Z191100001119090).
+References
+Bansal, T.; Juan, D.-C.; Ravi, S.; and McCallum, A. 2019.
+A2N: attending to neighbors for knowledge graph inference.
+In Proceedings of the 57th Annual Meeting of the Associa-
+tion for Computational Linguistics, 4387–4392.
+Wang, H.; Ren, H.; and Leskovec, J. 2020. Entity Con-
+text and Relational Paths for Knowledge Graph Completion.
+arXiv preprint arXiv:2002.06757 .
+Yang, B.; Yih, W.-t.; He, X.; Gao, J.; and Deng, L. 2014.
+Embedding entities and relations for learning and inference
+in knowledge bases. arXiv preprint arXiv:1412.6575 .
+Zhang, Z.; Zhuang, F.; Zhu, H.; Shi, Z.-P.; Xiong, H.; and
+He, Q. 2020. Relational Graph Neural Network with Hi-
+erarchical Attention for Knowledge Graph Completion. In
+AAAI, 9612–9619.
+
