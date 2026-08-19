@@ -1,0 +1,131 @@
+TheThirty-SixthAAAIConferenceonArtificialIntelligence(AAAI-22)
+A Simplified Benchmark for Ambiguous Explanations of Knowledge Graph Link
+Prediction Using Relational Graph Convolutional Networks (Student Abstract)
+NicholasHalliwell,1 FabienGandon,1 FreddyLecue1,2
+1Inria,Universite´ Coˆted’Azur,CNRS,I3S,France
+2CortAIx,Thales,Montreal,Canada
+nicholas.halliwell@inria.fr,fabien.gandon@inria.fr,freddy.lecue@inria.fr
+Abstract User-ScoredNon-UniqueExplanations
+Relational Graph Convolutional Networks (RGCNs) are
+commonly used on Knowledge Graphs (KGs) to perform In a Knowledge Graph, the available formal semantics al-
+blackboxlinkprediction.Severalalgorithmshavebeenpro- low us to view ground truth explanations as equivalent
+posedtoexplaintheirpredictions.Evaluatingperformanceof to computing justification for an entailment. We select an
+explanation methods for link prediction is difficult without open-source semantic reasoner with rule-tracing capabili-
+groundtruth explanations.Furthermore,there can bemulti-
+ties (Corby et al. 2012) to generate ground truth explana-
+ple explanations for a given prediction in a KG. No dataset
+tionsforeachdefinedrule.Theexplanationassociatedwith
+existswhereobservationshavemultiplegroundtruthexpla-
+a triple consists of all possible triples that triggered each
+nationstocompareagainst.Additionally,nostandardscoring
+rule.Thistracingpinpointstheinputtriplesthatcausedthe
+metricsexisttocomparepredictedexplanationsagainstmul-
+tiple ground truth explanations. We propose and evaluate a generationofatriplewewillthentrytopredictandexplain.
+method,includingadataset,tobenchmarkexplanationmeth- All resources used and produced in this work are available
+odsonthetaskofexplainablelinkpredictionusingRGCNs. online.1
+From DBpedia, we built a Knowledge Graph of the
+ExplainableGCNLinkPrediction French Royalty focusing on 6 family relationships: has-
+Knowledge Graphs represent facts as triples where a sub- Spouse, with 3 possible explanations, hasBrother, with 7
+jectandobjectrepresentingrealworldentitiesarelinkedby possible explanations, hasSister, with 7 possible explana-
+somepredicate.Linkpredictionmethodsdiscovernewfacts tions, hasGrandparent, with 6 possible explanations, and
+fromexistingones.Onemethodistousegraphembeddings, hasChild, and hasParent with 9 possible explanations. We
+whereafunctionislearnedtomapeachsubject,object,and distinguish between two types of rules, logical derivation
+predicate to a low dimensional space. A Relational Graph andpartialexplanation.Wedefinealogicalderivationrule
+Convolutional Network (RGCN) (Schlichtkrull et al. 2018) asonethatisalwaystrue,andapartialexplanationruleas
+leveragesGraphConvolutionalNetworks(KipfandWelling one that is not always true without additional information,
+2017)withascoringfunctionsuchasDistMult(Yangetal. such as gender. The logical derivation rules trigger every
+2015)asanoutputlayer,returningaprobabilityoftheinput timetheirantecedentismatched,anditscorrespondingtriple
+triplebeingafact. andlogicallytrueexplanationaregenerated.Thepartialex-
+Recent research has been devoted to develop methods to planation rules trigger only if the triple is already known
+explain the predictions of Graph Neural Networks on link (asserted or inferred by other rules) and are just adding al-
+prediction. GNNExplainer (Ying et al. 2019) explains the ternativepartialexplanations,thereforepreventinganyfalse
+predictions of any Graph Neural Network, learning a mask triplesfrombeingincludedinthegraph.
+over the adjacency matrix to identify the most informative Weconductedasurveytoscoreeachpossibleexplanation
+subgraph. ExplaiNE (Kang, Lijffijt, and Bie 2019) quanti- rule,allowingustodistinguishexplanationsthatareintuitive
+fies how the predicted probability of a link changes when fromthosethatarenotwithoutrelyingonanypriorassump-
+weakeningorremovingalinkwithaneighboringnode. tions.Intotal,42usersrespondedfrom11differentnational-
+The weakness of these papers is their evaluation of ex- ities,consistingofbothcomputerscienceandnon-computer
+planation quality due to the lack of available datasets with sciencebackgrounds.Wenormalizedtheaveragescoresbe-
+ground truth explanations. In this work, we propose a tween0and1foreachpossibleexplanation,androundthem
+method,includingadataset(FrenchRoyalty-200k),toquan- tothenearesttenth.Theseuserscoresareusedintherules
+titatively evaluate non-unique explanations. We adapt sev- and in the benchmark, to penalize unintuitive predicted ex-
+eral scoring metrics for use on this dataset, and perform a planations,andrewardintuitivepredictedexplanations.
+benchmarkcomparingstate-of-the-artexplanationmethods.
+Copyright©2022,AssociationfortheAdvancementofArtificial
+Intelligence(www.aaai.org).Allrightsreserved. 1https://github.com/halliwelln/multiple-explanations/
+12963
+Predicate
+Models Metrics Spouse Brother Sister Grandparent Child Parent Fulldata
+RGCN Accuracy 0.786 0.878 0.826 0.822 0.804 0.8 0.81
+GeneralizedPrecision 0.071 0.174 0.117 0.129 0.109 0.091 0.11
+GNN GeneralizedRecall 0.106 0.192 0.142 0.129 0.125 0.102 0.121
+Explainer GeneralizedF 0.083 0.18 0.126 0.129 0.114 0.095 0.114
+1
+Max-Jaccard 0.066 0.2 0.151 0.102 0.125 0.12 0.11
+GeneralizedPrecision 0.138 0.25 0.194 0.177 0.166 0.182 0.173
+GeneralizedRecall 0.221 0.263 0.214 0.177 0.207 0.222 0.2
+ExplaiNE
+GeneralizedF 0.165 0.253 0.2 0.177 0.18 0.195 0.182
+1
+Max-Jaccard 0.133 0.27 0.237 0.145 0.187 0.225 0.174
+Table 1: Benchmark results on FrenchRoyalty-200k: Link prediction results for RGCN, and explanation evaluation for GN-
+NExplainerandExplaiNEoneachsubsetofthefulldataset.Highestscoresperpredicatedenotedinbold.
+EvaluatingRGCNExplanationQuality themostcommonuserscores.
+The binary precision and recall could be used to measure
+Conclusion
+performanceforthistask,however,thesemetricsfailtoac-
+countforthefactthatsomeexplanationscanbemoreintu- We propose a method, including a dataset (FrenchRoyalty-
+itivethanotherstousers.Bothmetricswouldgiveascoreof 200k), to benchmark explanation methods when there are
+1 when a predicted explanation exactly matches a ground multiplegroundtruthstoconsider.Weadaptseveralscoring
+truth explanation. However, an explanation method could metrics to account for differences in explanation simplic-
+predict an unintuitive explanation, and receive the highest ity.Webenchmarktwostate-of-the-artexplanationmethods,
+possibleevaluationscore,potentiallymisleadingpractition- ExplaiNE and GNNExplainer, using the proposed dataset
+ersintothinkingthepredictedexplanationisofhighquality. andscoringmetrics.
+Therefore, scoring metrics used for this task must compare
+apredictedexplanationtoallpossibleexplanations,andac- References
+countforthefactthatexplanationshavedifferentdegreesof
+Corby,O.;Gaignard,A.;FaronZucker,C.;andMontagnat,
+relevance.
+J.2012. KGRAMVersatileInferenceandQueryEnginefor
+Weadaptedthegeneralizedprecisionandgeneralizedre- theWebofLinkedData.InIEEE/WIC/ACMInt.Conference
+call (Keka¨la¨inen and Ja¨rvelin 2002) to the context of link onWebIntelligence,1–8.Macao,China.
+prediction on Knowledge Graphs, using the user scores as
+Kang, B.; Lijffijt, J.; and Bie, T. D. 2019. ExplaiNE: An
+relevance weights for each explanation. Furthermore, we
+Approach for Explaining Network Embedding-based Link
+proposedtheuseofthemax-Jaccardacrossallpossibleex-
+Predictions. CoRR,abs/1904.12694.
+planations for a given triple. The max-Jaccard score mea-
+Keka¨la¨inen, J.; and Ja¨rvelin, K. 2002. Using graded rele-
+suresiftheexplanationmethodisabletoaccuratelypredict
+vanceassessmentsinIRevaluation. J.Assoc.Inf.Sci.Tech-
+one of the possible explanations to choose from. The gen-
+nol.,53(13):1120–1129.
+eralizedprecisionandgeneralizedrecallmeasureifthepre-
+dictedexplanationwasgivenahighintuitivescoreassigned Kipf, T. N.; and Welling, M. 2017. Semi-Supervised Clas-
+byusers.Bothmetricspreventanexplanationmethodfrom sificationwithGraphConvolutionalNetworks. InInt.Conf.
+onlypredictinglowscored,unintuitiveexplanations,andre- onLearningRepresentations,ICLR.
+ceivingahighscore.Lastly,thegeneralizedF 1 providesan Schlichtkrull, M. S.; Kipf, T. N.; Bloem, P.; van den Berg,
+overview of performance on the generalized precision and R.; Titov, I.; and Welling, M. 2018. Modeling Relational
+recall. DatawithGraphConvolutionalNetworks. InEuropeanSe-
+Table 1 breaks down the results on the FrenchRoyalty- manticWebConference,ESWC.
+200k dataset. We filter the results on the full data for each
+Yang,B.;Yih,W.;He,X.;Gao,J.;andDeng,L.2015. Em-
+predicate and compare performance metrics to each predi-
+bedding Entities and Relations for Learning and Inference
+catesubset.Forexample,theSpousecolumnofTable1re-
+in Knowledge Bases. In 3rd International Conference on
+portsthebenchmarkperformanceofallinputtripleswiththe
+LearningRepresentations,ICLR.
+hasSpousepredicatefromanRGCNtrainedonthefulldata,
+Ying,Z.;Bourgeois,D.;You,J.;Zitnik,M.;andLeskovec,
+hencetheRGCNisexposedtoallpossiblepredicates.
+J.2019.GNNExplainer:GeneratingExplanationsforGraph
+WefindExplaiNEoutperformsGNNExplaineronallsub-
+NeuralNetworks. InAdvancesinNeuralInformationPro-
+sets,acrossallmetrics.Uponexaminingtheerrors,wefind
+cessingSystems.
+thatbothexplanationmethodsdonotalwaysattempttopre-
+dict explanations with the highest user scores. We find that
+bothexplanationmethodsinsteadpredictexplanationswith
+12964
