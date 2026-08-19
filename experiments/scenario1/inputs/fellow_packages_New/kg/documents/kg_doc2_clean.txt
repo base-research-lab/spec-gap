@@ -1,0 +1,491 @@
+Human-centric Transfer Learning Explanation via Knowledge Graph
+[Extended Abstract]
+Yuxia Geng1
+, Jiaoyan Chen2
+, Ernesto Jiménez-Ruiz3,4
+, Huajun Chen1,5
+1
+College of Computer Science, Zhejiang University, China
+2
+Department of Computer Science, University of Oxford, UK
+3
+The Alan Turing Institute, London, UK
+4
+Department of Informatics, University of Oslo, Norway
+5
+ZJU-Alibaba Joint Lab on Knowledge Engine, China
+Abstract
+Transfer learning which aims at utilizing knowledge
+learned from one problem (source domain) to solve
+another different but related problem (target domain)
+has attracted wide research attentions. However, the
+current transfer learning methods are mostly uninter-
+pretable, especially to people without ML expertise. In
+this extended abstract, we brief introduce two knowl-
+edge graph (KG) based frameworks towards human un-
+derstandable transfer learning explanation. The ﬁrst one
+explains the transferability of features learned by Con-
+volutional Neural Network (CNN) from one domain to
+another through pre-training and ﬁne-tuning, while the
+second justiﬁes the model of a target domain predicted
+by models from multiple source domains in zero-shot
+learning (ZSL). Both methods utilize KG and its reason-
+ing capability to provide rich and human understandable
+explanations to the transfer procedure.
+Introduction
+Machine learning (ML) systems such as deep neural net-
+works are becoming increasingly complex for more power.
+It costs big data and much time for training. Transfer learn-
+ing refers to a series of ML methods that aim to utilize sam-
+ples, models or model parameters gained while solving one
+problem (source domain) to solve another related but differ-
+ent problem (target domain) (Pan et al. 2010). It now has
+attracted wide research attentions in reusing learned models
+in new contexts, dealing with training data shortage, etc.
+Transfer learning has shown its effectiveness and efﬁ-
+ciency in many applications such as using satellite image
+features to predict global poverty (Jean et al. 2016). How-
+ever, an arbitrary transfer might decrease the performance in
+the target domain, which is called a negative transfer. Some
+work analyze the theoretical or empirical principles to guide
+the transfer, but do not explain a speciﬁc positive or negative
+transfer. Some other work develop methods to transform the
+samples or model parameters from source domains towards
+a target domain, but they are often black-box models.
+On the other hand, ML explanation, including model in-
+terpretation and prediction justiﬁcation is now becoming a
+more and more urgent requirement, especially in making
+critical or safety-sensitive decisions. Among them, human-
+centric explanation, which is enriched by human under-
+standable common sensne and background knowledge (Bi-
+ran and McKeown 2017), is especially important for none
+ML experts to optimize a learning system or understand the
+prediction. However, there are currently few human-centric
+explanation studies for transfer learning problems.
+Knowledge graph (KG), which originally refers to a
+knowledge base used by Google to enrich its searching re-
+sults with different data sources, now often means a wide
+range of semantic data including RDF (Resource Descrip-
+tion Framework) graph, OWL (Web Ontology Language)
+ontology, Linked Data and so on. It’s widely used to model
+common sense or background knowledge with the potential
+of knowledge representation and reasoning. In this paper,
+we introduce our idea and framework that utilize KGs to
+support human-centric explanation of transfer learning with
+two case studies. The ﬁrst case study is pair-wise feature
+transferability explanation. We infer evidences from explicit
+ontology axioms (facts) to understand the transferability of
+features learned by Convolutional Neural Networks (CNNs).
+The second case study is zero-shot learning eXplanation (X-
+ZSL). We use external knowledge to justify the CNN of a
+new class (i.e., class unseen in the training data) predicted
+by a Graph Convolutional Network (GCN) with CNNs of
+training classes.
+Feature Transferability Explanation
+We assume features learned by a CNN is transferred from a
+source domain Dα to a target domain Dβ, where Dα has a
+large training sample set while Dβ has a small training sam-
+ple set. A feature transfer from Dα to Dβ, denoted as Fα→β
+includes three steps: (i) pre-train a CNN with samples from
+Dα, (ii) transfer (reuse) the parameters from the input layer
+to a speciﬁc convolutional layer, which corresponds to a spe-
+ciﬁc feature, and (iii) ﬁne tune the CNN with samples from
+Dβ. The model trained with Fα→β is denoted as Mα→β,
+while the model trained with samples in Dβ alone is denoted
+as Mβ. Fα→β is deﬁned as a positive transfer if Mα→β
+outperforms Mβ on the testing sample set from Dβ, and a
+negative transfer otherwise.
+We use OWL ontologies (expressive KGs) to model the
+background knowledge and data for human-centric expla-
+nation. In particular, each domain has an ontology com-
+posed of a terminology axiom set T and an assertion ax-
+iom set A. T models the background knowledge while
+A models the data. Each ontology axiom is equal to
+a fact of the domain. Considering a case of ﬂight de-
+parture delay forecasting in US, and a domain identi-
+ﬁed by the carrier Delta Airline (DL), the original airport
+LAX and the target airport ORD, the domain’s terminol-
+ogy axioms include concept deﬁnitions e.g., Carrier �
+∃hasStockPrice.Float � ListCarrier, relation deﬁni-
+tions e.g., hasCarrier ◦ hasCarHub � hasDepHub,
+etc., while its assertion axioms include individuals e.g.,
+LAX, DL and dep (representing a ﬂight departure), indi-
+vidual classiﬁcations e.g., Airport(LAX), individual rela-
+tions locatedIn(LAX, CA), etc. Such an ontology has the
+capability of reasoning , namely inferring underlying axioms
+e.g., hasDepHub(dep, LAX), and can be aligned with ex-
+ternal KGs for knowledge enrichment.
+We use explanatory evidences to interpret the transfer-
+ability of features. An explanatory evidence is an ontol-
+ogy axiom or a combination of ontology axioms whose co-
+existence in the source and target domains is highly corre-
+lated with the transferability of a feature. We aim at discov-
+ering a set of positive (negative) explanatory evidences that
+can explain the positive (negative) transferability of a spe-
+ciﬁc transfer (cf. Example 1).
+Example 1. (Explanatory Evidence) In the above case of
+ﬂight departure delay forecastsing, considering three learn-
+ing domains: D(DL,ORD,LAX) for Delta Airlines from ORD
+to LAX, D(B6,LAX,JF K) for JetBlue from LAX to JFK
+and D(AA,ORD,SF O) for American Airlines from ORD to
+SFO, for a speciﬁc CNN feature, let axiom combination
+“locatedIn(ori, East)” and “ListCarrier(car)” be an
+example of positive explanatory evidence, let axiom combi-
+nation “hasOri(dep, ORD)” and “locatedIn(des, CA)”
+be an example of negative explanatory evidence, human be-
+ings can understand the feature’s transferability as “the
+transfer from D(DL,ORD,LAX) to D(AA,ORD,SF O) is posi-
+tive as the original airport of both source and target domains
+is located in the east part of US and the carrier of both is list
+airline company” and “the transfer from D(DL,ORD,LAX)
+to D(B6,LAX,JF K) is negative as the original airport of both
+source and target domains is ORD and the destination air-
+port of both is located in California”.
+Framework and Technical Challenges
+Figure 1 presents the computation framework for explana-
+tory evidences of feature transferability. It mainly includes
+two parts: (i) knowledge construction and enrichment, and
+(ii) correlative reasoning for evidence inference.
+Knowledge construction refers to the modeling of back-
+ground knowledge and data of a domain with an ontol-
+ogy, while knowledge enrichment refers to align individ-
+uals of initial ontology with instances of external KGs
+like DBPedia so as to importing more background and
+common sense axioms. This part ﬁnally leads to a com-
+plete ontology mentioned above. For example, axioms
+hasDepHub(dep, LAX) and ListCarrier(DL) depend
+on some external knowledge about DL’s stock price and
+DL’s relationship with LAX.
+In this part, one technical challenge is selecting a part of
+indviduals (called root individuals) instead of all the indi-
+Domains Knowledge Bases
+Explanatory
+Knowledge
+External
+Knowledge Base
+1. Ontology
+Modeling and
+Reasoning
+Part 1: Knowledge
+Construction and Enrichment
+2. Root Individual Section
+3. Knowledge matching
+Transfer
+Examples
+Feature
+Transferability
+Index (FTI)
+Evidence Vectors Explanatory
+Evidences
+Part 2: Correlative Reasoning
+3. Correlation analysis
+4. Evidence searching
+1. FTI measurement
+2. Directed entailment
+co-existence
+Figure 1: The Computation Framework for Explanatory Ev-
+idences for Feature Transferability
+viduals to match, in order to keep the completeness of ex-
+planatory evidences but reduce the computation and storage.
+Our previous work (Chen et al. 2018) presents a solution. It
+selects effective and important axioms according to the pre-
+diction task, and adopts the individuals involved in such ax-
+ioms. Another challenge is ensuring accuracy in matching,
+which is under work now.
+Correlative reasoning is an algorithm that infers the cor-
+relation between a feature’s transferability and a candidate
+evidence’s co-existence in source and target domains from
+a set of given transfers. An axiom or axiom combination
+is selected as a positive (negative) evidence if the correla-
+tion coefﬁcient exceeds a positive (negative) threshold and
+is signiﬁcant in statistic testing.
+In correlative reasoning, one challenge is measuring the
+transferability of a feature. We consider the feature’s sep-
+ciﬁcity and generality according to (Yosinski et al. 2014).
+Another challenge is searching axiom combinations for ex-
+planatory evidences. We search from low dimension to high
+dimension, and propose an early stop mechanism and fast
+extension mechansim for acceleration. More details of cor-
+relation reasoning and our solutions to the challenges are
+presented in (Chen et al. 2018).
+With such human understandable explanations to the
+transferability of CNN features, none ML experts can opti-
+mize a transfer learning procedure by (i) ﬁnding out when to
+transfer (i.e., at which convolutional layer) for given source
+and target domains, and (ii) selecting what source domains
+to transfer for a given target domain. However, the evalua-
+tion of explanatory evidences, such as their generalization
+(i.e., performance in applying evidences inferred from one
+set of transfers to another set of transfer) and quality, is still
+an open problem.
+Zero-shot Learning Justiﬁcation
+Zero-shot learning (ZSL) is to categorize samples of new
+classes (i.e., classes unseen in the training data) by trans-
+ferring features from seen classes (i.e., classes of the train-
+ing data) without any additional sample annotation effort
+(Palatucci et al. 2009). However, the transferring process is
+often complex, vague and uninterpretable. According to our
+knowledge, there are currently few work that can provide ev-
+idences to justify such a process, especially towards people
+Felidae
+Felinae
+subclass
+Pantheriinae
+Felis
+Cat
+Serval
+Cheetah Tiger
+Lion
+subclass
+subclass
+subclass
+subclass subclass
+subclass
+subclass
+Leopard
+subclass
+White Tiger
+subclass
+Manchurian Tiger
+subclass
+Cat
+Cheetah
+Serval
+ZSLClass
+Entity (i.e., ZSLClass)
+Properties
+Entity(i.e., ZSLClass) Description (e.g.,
+anchor text)
+Seen
+Class
+Cat (Cat, ear_shape,Sharp)
+The domestic cat (Felis catus or Felis silvestris
+catus,informally Felis domesticus)is a small,
+usually furry, domesticated,carnivorous
+mammal.The cat species is commonly kept as a pet.
+Cheetah
+(Cheetah, coat_color,
+Golden yellow)
+Thisis a large cat of the subfamily Felinae.It has
+several distinctive features – a slenderbody,
+spotted pelage,a small rounded head,long thin
+legs and a long spotted tail.
+Unseen
+Class
+Serval
+(Serval,ear_shape,
+Sharp)
+(Serval,coat_color,
+Golden yellow)
+The serval,Leptailurus serval orCaracal serval,
+known in Afrikaansas Tierboskat,"tiger-forest-
+cat", is a medium-sized African wild cat.Facial
+features include the round eyes,white whiskers on
+the snout and nearthe ears, ears as large as those of
+a domestic cat.
+Figure 2: An example of KG-based ZSL, where Serval, a kind of animal with a cat-like face and a cheetah-like body is an
+unseen class, while Cat and Cheetah are two of the seen classes. A ZSL algorithm is to automatically generate the classiﬁcation
+model for Serval, by transferring features from other seen classes using entity relations (graph structure), entity properties and
+descriptions of a KG (e.g., (Wang et al. 2018; Kampffmeyer et al. 2018)). Each class in ZSL is equivalent to an entity in KG.
+without ML expertise.
+An example of KG-based ZSL classiﬁcation is shown in
+Figure 2, where testing samples of an unseen class Serval is
+to be classiﬁed. We ﬁrst assume that a ZSL method builds
+a model for Serval by transferring the feature knowledge
+from a set of seen classes, according to their internally im-
+plicit and close relationships in semantics of class (KG en-
+tity) name, description, property and hierarchical structure.
+The target of our X-ZSL method is to ﬁnd out some evi-
+dences to justify why the generated prediction model for the
+unseen class Serval is reasonable, with the help of common
+sense and background knowledge of these classes. One ex-
+ample to justify this model is ”the two seen classes Cat and
+Cheetah play an import role in transferring features to Ser-
+val, while they share the same ancestors Felinae.” It utilizes
+the subClassOf relation between entities in the KG. An-
+other justiﬁcation example is “the two seen classes Cat and
+Cheetah transfer their local features to the visual features of
+Serval, as the ear shape of Serval and Cat are both Sharp,
+and Serval has the same Golden yellow coat as Cheetah.”
+These evidences are supported by the shared properties of
+Sharp and Golden yellow in the KG.
+Technical Framework
+Our ZSL justiﬁcation framework includes two modules: a
+KG-based ZSL classiﬁer and an justiﬁcation generator, as
+shown in Figure 3. The classiﬁer learns to predict the model
+of unseen classes with a Graph Attention Network (Velick-
+ovic et al. 2017). It is able to learn the attentions of the seen
+classes, from which we can select impressive ones. The ex-
+planation generator extracts convincing justiﬁcations from
+the KG according to the impressive seen classes, using class
+name to entity matching, SPARQL queries and reasoning.
+KG-based ZSL Classiﬁer We ﬁrst build a hierarchy
+structure among all classes via knowledge graph, where each
+entity models one class. With the graph input, we use a kind
+of Graph Neural Network called Graph Attention Network
+(GAT) (Velickovic et al. 2017) to transfer the features from
+different unseen classes (entities) to each seen class with
+convolutional layers and attention layers. With the transfer,
+KG
+Graph
+Conv
+Layer
+Attention
+Layer
+𝛼"
+𝛼#𝛼$
+𝛼%
+Entity
+Matching &
+SPARQL
+queries
+KG
+(e.g. DBPedia)
+entities, e.g., dbr:Cat,
+dbr:Cheetah
+triples, e.g, (dbr:Cheetah,
+rdfs:subClassOf
+dbr:Felinae
+Explanation
+Explanation Generator
+KG-based ZSL Classifier
+Attentions &
+Impressive
+Seen Classes
+Figure 3: The technical framework for ZSL justiﬁcation. The
+KG-based ZSL classiﬁer learns the attention weight of seen
+classes (αi) w.r.t. an unseen class. Those with high atten-
+tions are selected as justiﬁcation evidences. The explanation
+generator utilizes the KG (e.g., DBPedia) to obtain common
+sense and background knowledge to enrich the justiﬁcation
+evidences so that common people can understand.
+we eventually use logistic regression to predict a CNN clas-
+siﬁer for an unseen class (i.e., the combination parameters
+of pre-trained CNN features).
+For each convolutional operation, GAT leverages a self-
+attention mechanism to update the features distribution of
+entities in the graph, where one entity includes features from
+its neighborhoods. So we can assign different weights to dif-
+ferent entities in a neighborhoods. We also realize that not all
+seen classes contributes equally to the transferring to an un-
+seen class. Thus the attention-weighted seen classes in the
+transferring process are extracted. Those seen classes with
+high attention weights in transferring are called impressive
+classes. They are selected as evidences for justiﬁcation.
+Current KG-based ZSL methods utilize the graph struc-
+ture and class name (Wang et al. 2018; Kampffmeyer et al.
+2018), but ignore the semantics from properties. To fully uti-
+lize the semantics of a KG, we transform some entity proper-
+ties from the KG to so called anonymous entities, which is a
+knowledge representation and reasoning technique. Besides
+improving the accuracy of ZSL classiﬁer, this will provide
+additional justiﬁcation evidences.
+Explanation Generator Some external KGs contains rich
+common sense and background knowledge. For example,
+DBPedia includes knowledge extracted from Wikipedia,
+with 4.58 million entities. We utilize such KGs to enrich the
+extracted justiﬁcation evidence so that common people can
+understand.
+Each class name is matched with an entity of the ex-
+ternal KG by lexical index, which is built based on en-
+tity descriptions. For example, we can use the lookup ser-
+vice provided by DBPedia1
+. As shown in Figure 3, Cat
+and Cheetah are matched the KG entity �dbr : Cat� and
+�dbr : Cheetah� respectively2
+. The triples composed of en-
+tities and their relationships can form a hierarchical struc-
+ture among entities that paired with same relations, e.g.
+�dbr : Cheetah, rdfs:subClassOf, dbr : Felinae� is a sin-
+gle unit in hierarchical graph in Figure 2. On the other hand,
+the rich triples also contain some properties about entities,
+such as the Entity Property column in the table of Figure 2.
+We then access more entities and triples of the external
+KG, that are related to the impressive seen classes (justiﬁca-
+tion evidences), using an SQL-like query language for RDF
+called SPARQL which can support knowledge reasoning.
+With returned entities and triples, we enrich the evidence to
+justify the generation of the classiﬁer of each unseen class,
+during which some hand-crafted templates may be needed.
+The challenge here is to select and evaluate the returned en-
+tities for high quality explanation.
+Text description of the returned entities from the external
+KG can also be used to enrich the explanation. However, the
+noise of text description is a challenge to deal with.
+Conclusion and Outlook
+Transfer learning is playing a more and more important role
+in building complex ML systems, but the methods are still
+uninterpretable, especially to none ML experts. In this pa-
+per, we introduce our KG-based methods to provide human-
+understandable evidence for feature transferability explana-
+tion and ZSL justiﬁcation. For the former, we infer evi-
+dences from axioms of OWL ontologies to explain the trans-
+ferability of features learned by a CNN, while for the later,
+we use entity relations and properties (RDF triples) to jus-
+tify the classiﬁcation model generated for an unseen class.
+Different KG techniques, including ontology modeling, se-
+mantic reasoning, knowledge matching, semantic query and
+so on are incorporated for high quality explanations.
+Although the solutions to the two transfer learning prob-
+lems are different and there are quite a few challenges to
+deal with, two core and common technical problems for
+1
+https://github.com/dbpedia/lookup
+2
+dbr represents http://dbpedia.org/resource, a URI preﬁx of
+DBPedia.
+human-centric transfer learning explanation in our mind are
+knowledge matching and explanation evaluation. Knowl-
+edge matching refers to matching ML data (often in tabular
+format) with KG e.g., classes in ZSL with entities in DBPe-
+dia, or matching one KG with another KG. It signiﬁcantly
+impacts the quality of explanations. In the future work, we
+will apply a hybrid matching approach combing lexical in-
+dex, semantic reasoning and deep learning (cf. our work
+ColNet (Chen et al. 2019) and BootOX/LogMap (Jiménez-
+Ruiz et al. 2015)). While for explanation evaluation, we will
+feed human knowledge back to the transfer learning system
+through the explanation.
+Acknowledgments
+The work is supported by NSFC 91846204/61673338 and
+the SIRIUS Centre for Scalable Data Access (Research
+Council of Norway, project 237889).
+References
+Or Biran and Kathleen R McKeown. Human-centric justi-
+ﬁcation of machine learning predictions. In IJCAI, pages
+1461–1467, 2017.
+Jiaoyan Chen, Freddy Lécué, Jeff Z Pan, Ian Horrocks, and
+Huajun Chen. Knowledge-based transfer learning explana-
+tion. In KR, 2018.
+Jiaoyan Chen, Ernesto Jiménez-Ruiz, Ian Horrocks, and
+Charles Sutton. Colnet: Embedding the semantics of web
+tables for column type prediction. In AAAI, 2019.
+Neal Jean, Marshall Burke, Michael Xie, W Matthew Davis,
+David B Lobell, and Stefano Ermon. Combining satellite
+imagery and machine learning to predict poverty. Science,
+353(6301):790–794, 2016.
+Ernesto Jiménez-Ruiz, Evgeny Kharlamov, Dmitriy
+Zheleznyakov, Ian Horrocks, Christoph Pinkel, Martin G
+Skjæveland, Evgenij Thorstensen, and Jose Mora. Bootox:
+Practical mapping of rdbs to owl 2. In International
+Semantic Web Conference, pages 113–132. Springer, 2015.
+Michael Kampffmeyer, Yinbo Chen, Xiaodan Liang, Hao
+Wang, Yujia Zhang, and Eric P Xing. Rethinking knowledge
+graph propagation for zero-shot learning. arXiv preprint
+arXiv:1805.11724, 2018.
+Mark Palatucci, Dean Pomerleau, Geoffrey E Hinton, and
+Tom M Mitchell. Zero-shot learning with semantic output
+codes. In NIPS, pages 1410–1418, 2009.
+Sinno Jialin Pan, Qiang Yang, et al. A survey on transfer
+learning. IEEE Transactions on knowledge and data engi-
+neering, 22(10):1345–1359, 2010.
+Petar Velickovic, Guillem Cucurull, Arantxa Casanova,
+Adriana Romero, Pietro Lio, and Yoshua Bengio. Graph
+attention networks. arXiv preprint arXiv:1710.10903, 2017.
+Xiaolong Wang, Yufei Ye, and Abhinav Gupta. Zero-
+shot recognition via semantic embeddings and knowledge
+graphs. In CVPR, pages 6857–6866, 2018.
+Jason Yosinski, Jeff Clune, Yoshua Bengio, and Hod Lipson.
+How transferable are features in deep neural networks? In
+NIPS, pages 3320–3328, 2014.
+

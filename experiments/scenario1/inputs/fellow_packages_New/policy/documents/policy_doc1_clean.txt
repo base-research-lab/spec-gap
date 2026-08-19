@@ -1,0 +1,342 @@
+
+Corresponding author: 153468148@qq.com
+Research on the implementation of 1+X Certificate System in
+Vocational Education reform
+Xiuming Yue1, *, Hong Wang2
+, Wenhua Zhang3
+1
+College of computer, Shandong Xiehe University, Shandong, China
+2
+College of computer, Shandong Xiehe University, Shandong, China
+3
+College of computer, Shandong Xiehe University, Shandong, China
+Abstract: Since February 2019, “National Vocational Education Reform implementation program” sounded
+the 1+X certificate system reform horn. The 1+X certificate system is an innovative design to promote the
+transformation of the talent training mode in vocational education. It impels the reform of the type
+development of vocational education, and it is also related to the promotion of the overall quality of talents in
+the future and the establishment of the economic modernization system in our country. In the view of the
+fuzzy-conflict theory, this paper reflects the causes of the present situation with the established ought-to-be
+model of policy implementation, and obtains the causes of the present situation by grasping the overall
+development direction. At present, the problems of resource passivity, planning backwardness and insufficient
+function lead to the suspension of reform, and the difficulty of path dependence is difficult to surmount. In
+order to Kalanchoe pinnata the floating 1+X certificate system, this paper combines the practice patterns and
+their causes to return to the three dimensions of resources, planning and function, based on the relationship
+between top-level design and bottom-level promotion, concept remolding and action breakthrough, supply
+optimization and demand matching, to construct the 1+X certificate system, which is coordinated from top to
+bottom, internal and external, left and right, to optimize the implementation practice strategy system.
+1 INTRODUCTION
+Since 2019, the 1+X certificate system has been a hot topic
+in the field of vocational education research after the 1+X
+certificate system was launched as a pilot reform in the
+implementation plan of the state vocational education
+reform promulgated by the State Council. Now, the
+construction blueprint of 1+X certificate system has been
+drawn, and higher vocational colleges also follow the top-
+down or bottom-up policy implementation analysis path,
+and set up a special 1+X certificate system construction
+team. Although the school in the country's strong call to
+build a series of 1+X certificate system to match the
+implementation of the construction program and
+personnel training program, but in the actual operation
+process or maintain the traditional curriculum system,
+teaching mode and evaluation methods, resulting in 1+X
+certificate system implementation deviation.
+Therefore, the 1+X certificate system is defined in this
+study as supporting the formulation, evaluation,
+recognition and issuance of “1” and “X” certificates.
+Promote the organic integration of “1” certificate and “X”
+certificate to link the world of education and the world of
+work, diploma education and non-diploma education,
+school field and industry enterprises, individual learning
+development and career development, which is composed
+of informal constraints, formal rules and their
+implementation mechanism.
+2 DESIGN AND RESEARCH
+This thesis follows the logic approach from macro-meso-
+micro, from theory-practical theory, and conducts a series
+of research on how to solve the main problem of 1+X
+certificate system.
+(1) Research on the necessary execution Mode of 1+X
+certificate System. Starting from the analysis of the
+ambiguity and conflict of the text of 1+X certificate
+system at the national macro level, the paper determines
+which kind of it belongs to administrative execution,
+political execution, experimental execution and symbolic
+execution, analyzes the key factors affecting the execution
+mode, and then constructs the execution mode of the
+required state from the macro, middle and micro levels.
+(2) Research on Implementation effect of 1+X
+certificate system. By interpreting the text of the 1+X
+certificate system to clarify the policy objectives, and
+constructing the evaluation indicators of the
+implementation progress and effectiveness of the 1+X
+certificate system according to the policy objectives and
+the school's implementation perception, the questionnaire
+interview outline is formed to investigate the
+implementation effect of the 1+X certificate system in the
+field of practice.
+(3) Research on the action logic of the executive body
+of 1+X certificate system. For the provincial government,
+https://doi.org/10.1051/shsconf/202315702009
+, 02009 (2023)
+SHS Web of Conferences 157
+ESSC 2022
+© The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons Attribution License 4.0
+(http://creativecommons.org/licenses/by/4.0/).
+which is the subject of implementation at the middle level,
+it mainly judges its action logic through the relevant policy
+texts issued by it. For the school, which is the subject of
+implementation at the micro level, it deeps into the
+practical field to understand the reform status quo,
+dilemma and causes of the implementation of 1+X
+certificate system in the aspects of teaching reform and
+management system.
+(4) Research on Adjustment Strategy of 1+X
+certificate system executive body. Combined with the
+appropriate policy implementation mode, review. And
+reflect on the middle level government and micro school
+existing 1+X certificate system of the action logic, on this
+basis to put forward the effective implementation of 1+X
+certificate system countermeasures.
+3 AMBIGUITY AND CONFLICT RECOG
+NITION OF 1+X CERTIFICATE SYSTE
+M
+3.1 Analysis and research of 1+X system
+Content analysis, the aim is to reveal the hidden
+information in the policy text, and finally to see through
+the characteristics of the policy text through the corpus
+data, by making objective and systematic Quantitative
+analysis of the 1+X certification scheme policies, such as
+the use of counting and recording procedures, and
+quantitative description of the content of literal symbols in
+the text.
+The specific steps of the analysis are as follows. Firstly,
+the text of 1+X certificate system is selected as the sample
+of content analysis. Then, the policy tools, policy
+objectives and policy subjects in the 1+X certification
+system text are coded to define the analysis unit. In the
+meantime, based on the main line of 1+X certificate
+system, this paper analyzes the content of special policies
+at the national level by sentence, adopts browse-coding
+method, and through layer-by-layer induction, looks for
+the internal correlation and logical relationship of nodes
+from the context it presents, and forms the model of
+provincial-level policy reference text. Finally, the policy
+text has been coded for the content of the elements of the
+frequency statistics and analysis, in order to get the 1+X
+certificate system of fuzziness.
+3.2 The fuzzy recognition of 1+X certificate
+system
+The premise of 1+X certificate system execution mode is
+the fuzziness and conflict. Therefore, firstly, the fuzzy
+degree of policy is analyzed from the three dimensions of
+policy instruments, policy subjects and policy objectives,
+and the conflict level of policy is analyzed from the three
+dimensions of policy diffusion, policy evolution and
+policy interests. Then, according to the analysis results,
+based on the fuzzy-conflict theory, the paper determines
+which policy implementation mode 1+X certificate
+system belongs to, and explores the key factors affecting
+the policy implementation. Based on the key factors, the
+paper Outlines the appropriate mode of 1+X certificate
+system.
+(1) In the supply-oriented policy tools, the amount of
+research funding, teacher training, information
+infrastructure construction and policy preference are
+13,9,5,2 respectively, the proportion of supply-oriented
+policy tools was 48.83%, 31.03%, 17.24% and 6.90%,
+respectively.
+(2) The number of environmental policy tools that are
+subject to research goal planning, management oversight,
+responsibility deployment, and resource coordination are
+4,40,32, and 6, respectively, the proportion of
+environmental policy instruments was 4.88%, 48.78%,
+39.02% and 8.33% respectively. Thus, about half of the
+environmental policies in the 1+X certification system are
+in the category of management supervision, it reflects that
+the national government departments and provinces (cities
+and districts) pay more attention to the process supervision
+of 1+X certification system.
+(3) In the demand-based policy tools, the study found
+that the number of government purchase and assessment
+of the number of protection were 1,10, in order in the
+demand-based policy tools accounted for 16.67%, 83.33%.
+On the one hand, the government buys directly for schools
+and students, through the purchase of 1+X certificate
+system assessment services, attracting professional social
+organizations to participate in the construction of 1+X
+certificate system, so as to continuously enhance the level
+of professional skill level certificate assessment services.
+3.3 Conflict identification of 1+X certificate
+system
+The 1+X certificate system spreads fast and strongly, and
+continues the traditional central and local transmission
+mode. The variation of the policy text is small, and the
+policy text strictly follows the guiding ideology of the
+central policy-making body. On this basis, some regions
+make flexible adjustments. Each policy subject can obtain
+the growth point of interest in the 1+X certificate system,
+and the values of some subjects converge. However, the
+ensuing question, such as whether the absence of conflicts
+means that the 1+X certificate system can be effectively
+enforced, is clearly not. First of all, the high intensity and
+speed of the diffusion of 1+X certificate system, as well as
+the high similarity of policy evolvement, reflect the
+administrative characteristics of local governments, which
+failed to adjust policies to local conditions. In addition,
+although through the analysis of the text of 1+X certificate
+system, it is found that there is no obvious conflict of
+interest among various policy subjects, in the complex
+practice field, faced with changing situations, and the high
+ambiguity of 1+X certificate system itself, it is easy to
+generate action benefits among various executive subjects.
+Conflict of interest and structural conflict of interest.
+Therefore, it is necessary to design the appropriate mode
+of execution according to the characteristics of 1+X
+certificate system.
+https://doi.org/10.1051/shsconf/202315702009
+, 02009 (2023)
+SHS Web of Conferences 157
+ESSC 2022
+2
+4 THE CONSTRUCTION OF 1+X CERT
+IFICATE SYSTEM EXECUTION MODE
+4.1 Resources are allocated on demand
+The resource demand investigation and the construction
+channel solves the resource supply question, namely
+wants what and how to give. Resource efficiency focuses
+on how to use it. As far as the allocative efficiency is
+concerned, first, we should strengthen the fund
+management of 1+X certificate system. Scientific
+quantification of project expenditure, emphasizing the
+rigidity of budget, and strict management of personnel
+funds. Second, develop a scientific equipment acquisition
+plan. According to the requirement of 1+X certificate
+system training and examination, the present situation of
+equipment in school and Shared Resource Bank, and the
+basic scheme of equipment configuration of 1+X
+certificate system training and examination practice, the
+necessary equipment is supplemented by a cooperative
+enterprise or school. Third, formulate and improve the
+1+X certificate system, implement the relevant equipment
+management and application system, inventory and
+Disposal Approval System, Performance Assessment and
+statistical reports.
+4.2 Optimize the quality according to local
+conditions
+Theoretically, due to the ambiguity of the 1+X certificate
+system's objectives, tools and subjects, the policy
+implementation situation is unclear and uncertain. In this
+case, the implementation of the 1+X certificate system
+needs to give local policies flexibility, that is, give local
+governments a certain autonomy to promote local
+measures to ensure the effect of policy implementation.
+However, in the practical situation, it is easy to have the
+disordered and loose policy implementation caused by the
+mismatch between policy flexibility and policy
+implementation ability, which will eventually lead to the
+implementation of 1+X certificate system, the
+implementation goal and implementation action run
+counter to each other, or even the alienation of the
+situation. Therefore, it is necessary to tighten the elasticity
+of policy appropriately, and ensure the trend of
+implementation by constraining local areas through the
+rigidity of scientific and reasonable policy performance
+indicators.
+4.3 Innovative structures shape the environment
+The micro action structure of the execution of 1+X
+certificate system is the strengthening of the responsibility
+consciousness which promotes the initiation of the action
+ability of the end executive. We will create a feedback
+space for the reform of the democratic and harmonious
+1+X certificate system. Establish an information platform
+for principals, middle-level cadres and professional
+teachers to communicate on an equal footing, facilitate all
+subjects to put forward suggestions on the reform of 1+X
+certificate system in time, and achieve a virtuous circle
+atmosphere of internalized policy implementation,
+evaluation, feedback and adjustment. In addition, it is
+necessary to create a space environment filled with the
+culture of change. Teachers and administrators with great
+contributions will be awarded corresponding titles and set
+as examples, which will be spread on the school's official
+website or wechat official account. With the theme of
+cultural change, various activities such as curriculum
+reform and teaching skills competitions have been carried
+out.
+5 SUMMARY
+In this paper, the policy subject is also included in the
+measurement dimension of policy text fuzziness, and a
+three-dimensional analysis framework of policy text
+fuzziness is constructed. To enhance the Operability of
+analysis on the structural relationships and elements of the
+policy texts involved in policy networks, a policy conflict
+analysis framework is established for policy diffusion,
+policy evolution and policy interests. Based on the 1+X
+certificate system attribute analysis system should follow
+the pattern, the present situation and the countermeasure,
+the combination of the macro-paradigm and the micro-
+paradigm, has broken through the previous 1+X certificate
+system research limitation, has widened the research
+domain. The framework of fuzzy-conflict analysis, the
+1+X certification system should be implemented and the
+implementation of the optimization strategy can be used
+for reference.
+Acknowledgement
+The research project of Vocational Education Innovation
+and Development Highland Theory and practice of of
+Shandong Xiehe University (XHXY202015)
+References
+1. Liting Chen, Shoubing Li. Analysis on the
+significance and practical problems of 1+X certificate
+system implementation. Vocational and technical
+education. Vol 2,13-18(2020).
+2. Yu Chen, Xiaokun Sun. Study on the implementation
+mechanism of pilot policies in the perspective of
+policy ambiguity I-A case study based on the pilot
+policies of low-carbon cities. Be realistic. Vol
+2,46(2020).
+3. Shutong Cheng. Research on the synergetic
+development of Qualifications Framework, credit
+bank and 1+X certificate system. Vocational
+Education Forum. Vol 12,38(2020).
+4. Yanqiang Cui, Yelin Wu. The system function and
+construction of higher vocational education degree in
+our country. Education research. Vol 36,84(2015).
+5. Yizi Tang. 1+X Certificate System: Innovation o
+f Vocational education system design in the Ne
+w era. China Vocational and Technical Educatio
+n. Vol 16,5(2019).
+https://doi.org/10.1051/shsconf/202315702009
+, 02009 (2023)
+SHS Web of Conferences 157
+ESSC 2022
+3
+6. Jian Zhao, Yaocheng Luo. Some thoughts and p
+reliminary practice on promoting the pilot work
+of 1+X certificate system. China's vocational and
+technical education. Vol 27,8(2019).
+7. Xibao Lin, Jingbo Yu. 1+X certificate system un
+der the higher vocational professional teaching st
+andards and professional skills level standards in
+tegration research. Vocational Education study.,
+Vol 1,11(2020).
+8. Xueqin Wang. The Origin, logic and Implementa
+tion of 1+X Certificate System in Vocational Ed
+ucation. Vocational Education Forum. Vol 7,149
+(2019).
+9. Mingguo Shao, Chuanwei Li. Research on the I
+ntegration of 1+X Certificate System and Higher
+Vocational Personnel training Program. Journal o
+f Beijing Vocational College of Finance and Tra
+de. Vol 6,72(2019).
+10. liting Chen, Shoubing Li. 1+X certificate system
+implementation significance and realistic problem
+analysis. Vocational and technical education.Vol
+27,18(2020).
+https://doi.org/10.1051/shsconf/202315702009
+, 02009 (2023)
+SHS Web of Conferences 157
+ESSC 2022
+4
+
