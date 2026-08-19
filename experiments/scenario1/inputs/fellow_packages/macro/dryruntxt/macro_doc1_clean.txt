@@ -1,0 +1,308 @@
+Research & Policy Briefs
+From the World Bank Malaysia Hub
+No. 64 July 04, 2024
+Implications of Heightened Global Uncertainty for the East Asia and Pacific Region
+Jongrim Ha, Ergys Islamaj, and Aaditya Mattoo1
+Macroeconomic, financial, and policy-related uncertainty have increased since the COVID-19 pandemic globally and in individual
+developing economies in the East Asia and Pacific region. Uncertainty shocks can transmit across borders and their economic
+consequence is quite sizeable, affecting both the financial sector and the real economy in the EAP region.
+Introduction Box 1 presents more details about the measurement of
+different types of uncertainty.
+Extensive literature documents heightened economic
+uncertainty since the COVID-19 pandemic (Cascaldi-Garcia et Macroeconomic uncertainty is elevated in the United
+al. 2023). All types of uncertainty have increased: States, reflecting uncertain future output growth and inflation
+macroeconomic, financial, economic policy, geopolitical, and developments (figure 1, panel a). After peaking in April 2020 at
+trade uncertainty. However, less is known about the the onset of the COVID-19 pandemic, it spiked again in 2022,
+implications of global uncertainty for emerging markets and mainly due to a surge in inflation. Despite the decline since
+developing economies (EMDEs) in the East Asia and Pacific mid-2022, inflation uncertainty is still high in the United States,
+(EAP) region. This Research and Policy Brief examines the reflecting disagreements on the speed and degree of the future
+effects of global uncertainty on EAP by addressing the following (dis)inflation process. Global economic policy uncertainty,
+questions. First, what are the basic sources of economic which aggregates future monetary, fiscal, and financial policies,
+uncertainty? Second, how has uncertainty evolved globally and is twice as high as the pre-pandemic levels (figure 1, panel b). In
+in individual EAP EMDEs in recent decades? Third, how has the United States, debates continue about the path of future
+global uncertainty affected macroeconomic and financial monetary policy decisions by the Federal Reserve; the
+conditions in EAP? monetary policy uncertainty index has stayed persistently
+above the long-term averages since 2020. Similarly, financial
+The empirical results suggest that the effects of
+uncertainty (VIX) surged in 2020 and 2022 and, despite
+uncertainty—mainly related to the volatility (second moment)
+declines, remains above pre-pandemic levels (figure 1, panel c).
+of the variables—are distinctive from the effects of the level
+(first moment) fluctuations in underlying business, financial, Uncertainty regarding future output, inflation, financial
+and policy variables. The economic consequences of the markets, and economic policies is higher than before the
+uncertainty shocks are quite sizeable, almost comparable to pandemic in many EAP countries. Macro uncertainty, which
+the effects of the “level” shocks. In addition, the results suggest suffered from record-high levels in 2020–21 (output uncertainty)
+that different types of uncertainty shocks affect EAP countries or 2022 (inflation uncertainty), has generally declined since
+differently, individually and as a group cause somewhat 2023 (figure 2). That said, uncertainty measures are at levels
+heterogeneous effects on EAP countries. In terms of cumulative above pre-pandemic ones, and in some countries (Thailand),
+effect, macro uncertainty, followed by financial and economic output and inflation uncertainty are still increasing. News-based
+policy uncertainty, contributes the most to the variations in the economic policy uncertainty remains elevated—particularly in
+key domestic variables in EAP. In particular, macro uncertainty China. Survey-based uncertainty indicators on short- and
+can explain up to one-quarter of variations in macro variables in long-term interest rates, which are typically a critical
+EAP. determinant of investment, have increased across all EAP
+economies (World Bank 2023).
+Evolution of global and EAP economic uncertainty
+Economic effects of heightened uncertainty
+Global economic uncertainty rose sharply to a record-high level
+after the outbreak of the COVID-19 pandemic and stayed To assess the effects of global uncertainty on EAP, a series of
+elevated through 2023 and early 2024.This Brief discusses structural vector autoregressive (SVAR) models are estimated
+the effect of global uncertainty on macroeconomic and over 2000–19 for five EAP countries: China, Indonesia,
+financial conditions in the EAP. It highlights three types of Malaysia, the Philippines, and Thailand. The models consist of a
+uncertainty: macroeconomic uncertainty–forecast-based measures; set of macro and financial variables in the United States (or
+policy uncertainty–news-based measures; and financial global measures), China, and individual EAP countries. China,
+uncertainty–stock market volatility-based measures. Where a the largest EMDE, is taken separately in the model to reflect its
+global index is unavailable, US uncertainty indexes are used as role as both a source and a recipient of global uncertainty
+proxies for global uncertainty, as is common in the literature. shocks. Three sources of uncertainty are distinguished:
+1Affiliations: Aaditya Mattoo is the Chief Economist of East Asia Pacific, World Bank. Jongrim Ha is with the Prospects Group (DECPG), World Bank. Ergys Islamaj is with the East
+Asia and Pacific Chief Economist Office, World Bank.
+Acknowledgements: Nancy Morrison provided editorial assistance.
+Objective and disclaimer: Research & Policy Briefs synthetize existing research and data to shed light on a useful and interesting question for policy debate. Research & Policy Briefs
+carry the names of the authors and should be cited accordingly. The findings, interpretations, and conclusions are entirely those of the authors. They do not necessarily represent
+the views of the World Bank Group, its Executive Directors, or the governments they represent.
+dezirohtuA
+erusolcsiD
+cilbuP
+dezirohtuA
+erusolcsiD
+cilbuP
+dezirohtuA
+erusolcsiD
+cilbuP
+dezirohtuA
+erusolcsiD
+cilbuP
+Implications of Heightened Global Uncertainty
+for the East Asia and Pacific Region
+Box 1. Empirical methodology and data Model. Both country-specific and panel SVAR models are run.
+Country models provide more detailed county-specific results,
+This Research and Policy Brief takes two sequential empirical while the panel model is more efficient and clearer to present but
+steps: (1) measuring uncertainty; and (2) estimating SVAR models loses country-specific results. This Brief reports the results based
+to quantify the economic effects of global uncertainty on EAP. on panel SVARs. Country-specific results are featured as
+robustness or sensitivity checks. In identifying the uncertainty
+Measures of uncertainty shocks, the Brief employs recursive restriction. Following the
+The Brief employs various measures of uncertainty based on the previous literature—such as Baker, Bloom, and Davis (2016); Leduc
+extensive literature and authors’ calculations. and Lui (2016)—and to overcome the endogeneity problem, the
+uncertainty measures are ordered last (along with various control
+• Forecast-based measures. To gauge macroeconomic uncertainty,
+variables to reduce the endogeneity).
+this set of measures relies on economic forecasting models for
+a variable of interest. For instance, a vector autoregressive Data set. The analyses are based on monthly macroeconomic and
+(VAR) model is recursively estimated, and the standard financial data for the global analysis, US analysis, and analysis of
+deviation of the forecast error for the variable of interest is EAP countries in a panel setup. Where a global index is
+assumed to reflect the uncertainty in the variable. unavailable, US uncertainty indexes are used as proxies for global
+• Survey-based measures. This set of measures uses economic uncertainty, in keeping with the literature. The sample period is
+surveys from professional forecasters on a variable of interest: 2000–19. Main endogenous variables (in this order) are: US
+output, inflation, short- and long-term interest rates, and (global) output, inflation, uncertainty measure, domestic output,
+current account. The uncertainty is measured as the survey inflation, exchange rates, equity prices, and domestic uncertainty
+measure. Control variables are: volatility (VIX) index, US monetary
+responses' standard deviation or cross-sectional differences,
+policy instrument, time trends, and commodity prices. EAP
+such as inter-quartile ranges.
+countries in the sample include China, Indonesia, Malaysia, the
+• News-based measures. To gauge policy uncertainty, this set of
+Philippines, and Thailand. These countries were selected after
+measures uses a keyword-searching algorithm. An example is
+considering the economic scale and the availability of uncertainty
+the algorithm used by Baker et al. (2016) and Husted et al.
+data. China, which is the largest emerging market and developing
+(2020), which puts together economic policy uncertainty in the
+economy (EMDE), is taken separately in a model that includes both
+United States and other economies by searching the keywords
+global (US) and Chinese variables. Three types of uncertainty
+for momentary, fiscal, and other policies in the local newspapers.
+measures are tested: macroeconomic, financial, and policy. For
+China’s uncertainty measures, the dataset in Ahir et al. (2022) is
+Structural vector autoregressive (SVAR) models
+also employed.
+An open-economy model characterizes the data-generating process
+Robustness checks. The main empirical results are tested using
+as follows:
+alternative modeling [factor-augmented vector autoregressive
+AY t =∑ i p =1 B i Y t-i +∑ j q =0 C j X t-j +ε t . (FAVAR) framework], alternative measures of uncertainty,
+different ordering of the variables, the inclusion of other control
+Y t is an n×1 vector of endogenous macroeconomic and financial variables—in particular, the different types of uncertainty measures
+variables. X t is exogenous regressors. A, B i ( A i ≥ 1), and C j ( A j ≥ 0) and the inclusion of post-pandemic data, among others. The
+are nonsingular coefficient matrices. ε t is an n×1 structural results confirm that the key empirical results are robust to these
+disturbances vector and serially uncorrelated. alternative models.
+Figure 1. Evolution of uncertainty in the global economy and the United States
+a. US macroeconomic uncertainty b. Global economic policy uncertainty c. US financial uncertainty (VIX)
+and US monetary policy uncertainty
+1.3 Macro uncertainly 450 Global EPU US MPU (RHS) 350
+GDP uncertainty (RHS) 400 300
+1.2 Inflation uncertainty (RHS) 350
+250
+300
+1.1 250 200
+200 150
+1.0
+150
+100
+0.9 100
+50
+50
+0.8 0 0
+2000 2005 2010 2015 2020 2000 2005 2010 2015 2020 2000 2005 2010 2015 2020
+Source: World Bank estimates; Haver Analytics; Baker, Bloom, and Davis 2016; Jurado, Ludvigson, and Ng 2015.
+Note: In panel a, macroeconomic uncertainty is based on forecast-based measures by Jurado, Ludvigson, and Ng (2015). The long-term average is 0.9. GDP and inflation
+uncertainty are based on a standard deviation of Consensus Forecasts for US GDP and Consumer Price Index (CPI) inflation. In panel b, the Global Economic Policy Uncertainty
+(EPU) and US Monetary Policy Uncertainty (MPU) index are based on news-based measures by Baker, Bloom, and Davis (2016). In panels b and c, the horizontal lines indicate
+the long-term average (set to 100). RHS = right-hand side.
+2
+Research & Policy Brief No.64
+Figure 2. Evolution of economic uncertainty in the East Asia and Pacific region
+a. Macroeconomic uncertainty b. Financial and policy uncertainty
+2.5 China policy uncertainty
+EAP long-term rate uncertainty (RHS)
+GDP uncertainty 700 EAP short-term rate uncertainty (RHS) 1.0
+2.0 Inflation uncertainly
+600
+0.8
+500
+1.5
+0.6
+400
+1.0 300
+0.4
+200
+0.5 0.2
+100
+0.0 0 0.0
+2000 2005 2010 2015 2020 2000 2005 2010 2015 2020
+Source: World Bank estimates; Consensus Economics; Baker, Bloom, and Davis 2016.
+Note: In panel a, EAP macroeconomic uncertainty is based on the average cross-sectional standard deviation of Consensus Forecast surveys for four emerging markets and
+developing economies (EMDEs) in EAP (China, Indonesia, Malaysia, Thailand). In panel b, China policy uncertainty is based on news-based measures by Baker et al. (2016). EAP
+financial uncertainty is based on the average standard deviation of Consensus Forecasts for 3-month Treasury bill yields and 10-year bond yields in the four EAP countries. EAP
+= East Asia and Pacific; RHS = right-hand side.
+macroeconomic, financial, and policy (for estimation details, impacts on key domestic financial variables in EAP, although
+see box 1). their impacts are overall more immediate but short-lived
+compared with macro uncertainty (figure 3, panel c). Following
+The findings suggest that global uncertainty shocks have
+a one- standard-deviation VIX shock, average stock prices in
+negatively affected macro and financial conditions in EAP
+EAP declined by 1.2 percent, which is comparable to the effects
+countries. This result is statistically and economically significant
+of a negative shock on US equity prices (-1.6 percent). The
+based on average results (that is, based on the panel
+effects of policy uncertainty shocks appear to add another layer
+model), as well as in country-specific perspectives—the
+of negative effects on EAP countries. While US monetary
+results hold for all EAP countries in the sample. Following a
+tightening led to a decline in EAP stock prices by up to 1.4
+one-standard-deviation increase in US macro uncertainty,
+percent, heightened US monetary policy uncertainty resulted
+growth of output declined by 0.5 percent and stock prices
+in another 0.7 percent decline in stock prices.
+declined by 3.0 percent in EAP within one year after the shock
+(figure 3, panels a and b). The effects are stronger than the The sizeable uncertainty effects reflect various channels of
+effects from a one-standard-deviation decline in US output (by international transmission of uncertainty shocks. First of all, the
+0.3 percent and 1.0 percent, respectively). Global financial dynamic responses of the macro variables are consistent with
+market and economic policy uncertainty also had significant the theories on the economic effects of uncertainty—typically
+Figure 3. Impact of US uncertainty on the East Asia and Pacific region
+a. EAP output responses to negative US b. EAP stock price responses to c. EAP stock price responses to US
+output and macro uncertainty shocks negative US stock price and monetary policy tightening and
+financial uncertainty shocks monetary policy uncertainty shocks
+Percent Percent Percent
+0.6 1.0 0.0
+0.4 0.5
+0.2 0.0 -0.5
+0.0
+-0.5
+-0.2 -1.0
+-1.0
+-0.4
+-0.6 -1.5 -1.5
+-0.8 -2.0
+-1.0 -2.5 -2.0
+t=0 6 12 24 t=0 6 12 24 t=0 6 12 24 t=0 6 12 24 t=0 6 12 24 t=0 6 12 24
+Negative US Marco uncertainly Negative US US financial US monetary policy US monetary policy
+output shock shock stock prices uncertainty (VIX) shock uncertainty shock
+Source: World Bank estimates; Jarocińksy and Karadi 2020.
+Note: The results are based on panel vector autoregressions estimated with a sample for January 2000 through December 2019 for the United States and four emerging
+markets and developing economies (EMDEs) in EAP (Indonesia, Malaysia, Philippines, Thailand). The model includes, in this order, the following measures: the US production,
+US Consumer Price Index (CPI), US uncertainty; and domestic (EAP) industrial production, prices, stock prices, exchange rates, and uncertainty. Panel a shows dynamic
+responses of EAP industrial production to a one-standard-deviation increase in macroeconomic uncertainty and decline in output. Bars indicate the median responses, and
+vertical lines indicate 16 percent–84 percent confidence intervals. Panel b shows dynamic responses of EAP equity prices to a one-standard-deviation increase in financial
+uncertainty (VIX) and decline in US equity prices. Panel c shows dynamic responses of EAP stock prices to US monetary policy tightening shock and US monetary policy
+uncertainty shock. EAP = East Asia and Pacific.
+3
+Implications of Heightened Global Uncertainty
+for the East Asia and Pacific Region
+Figure 4. Impact of United States and China uncertainty on the East Asia and Pacific region
+a. China output and stock price responses to b. EAP responses to heightened uncertainty
+heightened macro uncertainty in the in China
+United States
+Percent Percent
+0.2 0.3
+0.2
+0.0 0.1
+0.0
+-0.2 -0.1
+-0.2
+-0.4 -0.3
+-0.4
+-0.6 -0.5
+-0.6
+-0.8
+-0.7
+-1.0 t=0 6 12 24 t=0 6 12 24
+t=0 6 12 24 t=0 6 12 24 EAP output to EAP prices to
+China macro China macro
+Industrial production CPI inflation
+uncertainly uncertainly
+Source: World Bank estimates.
+Note: The results are based on a panel Vector autoregression estimated for January 2000 through December 2019 for four emerging markets and developing economies
+(EMDEs) in EAP (Indonesia, Malaysia, Philippines, Thailand). The model includes, in this order, the US production, US Consumer Price Index (CPI), US uncertainty measure; China
+production, China CPI, China uncertainty measure; and domestic (EAP) industrial production, prices, stock prices, exchange rates, and uncertainty measures. In panel a, bars
+show dynamic responses of China industrial production and CPI to a one-standard-deviation increase in macroeconomic uncertainty in the United States. In panel b, bars show
+dynamic responses of EAP production to a one-standard-deviation increase in macroeconomic uncertainty in the United States and China. EAP = East Asia and Pacific.
+on the “wait-and-see” channel that strains private investment recipient of uncertainty shocks in the global markets,
+and consumption (Binder 2017; Bloom 2009). In particular, high particularly in connection with EAP countries.
+levels of macro uncertainty have a negative impact on
+investment growth, as investors become hesitant to invest in Conclusion
+new projects or expand their existing businesses (Leduc and Liu
+The findings lead to at least two types of novel implications.
+2016). Second, the reactions of financial asset prices and
+First, the effects of uncertainty—which is mainly related to the
+increases in credit costs also contribute to the contractionary
+volatility (second moment) of the variables—are distinctive
+effects of economic uncertainty. Third, following the
+from the effects of the level (first moment) fluctuations in
+heightened global and US uncertainty, the uncertainty
+underlying business, financial, and policy variables. The
+indicators in individual EAP countries also responded
+economic consequence of the uncertainty shocks is quite
+significantly, which supports the narratives of internationally
+sizeable, almost comparable to the effects of the “level”
+correlated risk and uncertainty (Londono et al. 2021).
+shocks. These findings are quite robust across different types of
+The heightened uncertainty in the domestic economy
+uncertainty measures—specifically, across macro, financial,
+is estimated to have played a negative role in economic
+and policy uncertainties. Second, the results suggest that
+confidence/sentiments in EAP countries (Ha and So 2023).
+different types of uncertainty shocks affect EAP countries
+Estimation results also suggest that while China was differently, individually and as a group. In terms of cumulative
+negatively affected by the global and US uncertainty shocks, its effect, macro uncertainty, followed by financial and economic
+own uncertainty shocks had an impact on the macroeconomic policy uncertainty, contributes the most to the variations in the
+and financial conditions in EAP (figure 4). Following a key domestic variables in EAP. In particular, macro uncertainty,
+one-standard-deviation increase in macro uncertainty in China, which explains up to 40 percent of total variations in US output
+industrial production in EAP countries declined by around 0.3 and prices, can explain up to one-quarter of variations in macro
+percent—about half of the responses to the same type of US variables in EAP. This result is in line with the findings of Stock
+uncertainty. Again, China's heightened policy uncertainty was and Watson (2012), who argue that the global uncertainty
+followed by heightened uncertainty in EAP countries. These shock has been a key driver of global recessions and other
+results collectively suggest that China is both a source and severe fluctuations.
+References
+Ahir, H., N. Bloom, and D. Furceri. 2022. “The World Uncertainty Index.” NBER Working Paper 29763, Jarociński, M., and P. Karadi. 2020. “Deconstructing Monetary Policy Surprises—The Role of Information
+National Bureau of Economic Research, Cambridge, MA. Shocks.” American Economic Journal: Macroeconomics 12 (2): 1–43.
+Baker, S. R., N. Bloom, and S. J. Davis. 2016. “Measuring Economic Policy Uncertainty.” Quarterly Journal of Jurado, K., S. C. Ludvigson, and S. Ng. 2015. “Measuring Uncertainty.” American Economic Review 105 (3):
+Economics 131 (4): 1593–1636. 1177–1216.
+Binder, C. C. 2017. “Measuring Uncertainty Based on Rounding: New Method and Application to Inflation Leduc, S., and Z. Liu. 2016. “Uncertainty Shocks Are Aggregate Demand Shocks.” Journal of Monetary
+Expectations.” Journal of Monetary Economics 90 (October): 1–12. Economics 82 (September): 20–35.
+B loom, N. 2009. “The Impact of Uncertainty Shocks.” Econometrica 77 (3): 623–85. Londono, J. M., S. Ma, and B. A. Wilson. 2021. “The Global Transmission of Real Economic Uncertainty.”
+Cascaldi-Garcia, D., C. Sarisoy, J. M. Londono, B. Sun, D. D. Datta, T. Ferreira, O. Grishchenko, M. R. International Finance Discussion Paper 1317, Board of Governors of the Federal Reserve System,
+Jahan-Parvar, F. Loria, S. Ma, M. Rodriguez, I. Zer, and J. Rogers. 2023. "What Is Certain about Washington, DC.
+Uncertainty?" Journal of Economic Literature 61 (2): 624–54. Stock, J. H., and M. W. Watson. 2012. “Disentangling the Channels of the 2007–2009 Recession.” NBER
+Ha, J., and I. So. 2023. “Global Confidence, Uncertainty, and Business Cycles. Uncertainty, and Business Working Paper 18094, National Bureau of Economic Research, Cambridge, MA.
+Cycles.” International Journal of Central Banking 19 (1): 451–95. World Bank. 2023. “World Bank East Asia and Pacific Economic Update, April 2023: Services for
+Husted, L., J. Rogers, and B. Sun. 2020. “Monetary Policy Uncertainty.” Journal of Monetary Economics 115: 20–36. Development.” Washington, DC: World Bank.
+4
