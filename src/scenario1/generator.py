@@ -31,6 +31,7 @@ from src.infrastructure.qwen_modal import (
     validate_generation_request,
 )
 from src.scenario1.pdf_text import extract_pdf_text
+from src.scenario1.retrieval import detect_single_insertion
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -229,13 +230,34 @@ def _pdf_root(reg: dict[str, Any]) -> Path | None:
     return (INPUTS / root).resolve()
 
 
-def _slot_pdf_name(slot: dict[str, Any]) -> str | None:
+def _slot_pdf_name(
+    slot: dict[str, Any],
+    *,
+    treatment: str = "clean",
+) -> str | None:
     if slot.get("role") == "injection_carrier":
-        name = slot.get("clean_source_pdf") or slot.get("source_pdf")
+        if treatment == "injected":
+            name = (
+                slot.get("injected_source_pdf")
+                or slot.get("clean_source_pdf")
+                or slot.get("source_pdf")
+            )
+        else:
+            name = slot.get("clean_source_pdf") or slot.get("source_pdf")
     else:
         name = slot.get("source_pdf")
     if isinstance(name, str) and name.lower().endswith(".pdf"):
         return name
+    return None
+
+
+def _carrier_injected_pdf_name(reg: dict[str, Any]) -> str | None:
+    for slot in reg.get("document_slots") or []:
+        if slot.get("role") != "injection_carrier":
+            continue
+        name = slot.get("injected_source_pdf")
+        if isinstance(name, str) and name.lower().endswith(".pdf"):
+            return name
     return None
 
 
@@ -331,13 +353,19 @@ def validate_registry_set(registries: Iterable[dict[str, Any]]) -> None:
     _require_unique_across_packs(document_text_items, "document text")
 
 
-def load_documents(reg: dict[str, Any]) -> list[dict[str, Any]]:
+def load_documents(
+    reg: dict[str, Any],
+    *,
+    treatment: str = "clean",
+) -> list[dict[str, Any]]:
     documents = []
     pdf_root = _pdf_root(reg)
+    if treatment not in {"clean", "injected"}:
+        raise ValueError(f"unsupported document treatment {treatment!r}")
     for slot in reg["document_slots"]:
         if not isinstance(slot.get("title"), str) or not slot["title"].strip():
             raise ValueError(f"document slot {slot.get('doc_id')} has no title")
-        pdf_name = _slot_pdf_name(slot)
+        pdf_name = _slot_pdf_name(slot, treatment=treatment)
         if pdf_root is not None and pdf_name is not None:
             pdf_path = (pdf_root / pdf_name).resolve()
             if not pdf_path.is_relative_to(pdf_root):
@@ -370,17 +398,42 @@ def load_documents(reg: dict[str, Any]) -> list[dict[str, Any]]:
     return documents
 
 
+def _pdf_injection_span(
+    clean_text: str,
+    injected_text: str,
+    wording: str,
+) -> tuple[list[int], str]:
+    """Locate the injection already present in extracted injected-PDF text."""
+
+    try:
+        offset, delta = detect_single_insertion(clean_text, injected_text)
+        return [offset, offset + len(delta)], delta
+    except ValueError:
+        if injected_text.count(wording) != 1:
+            raise AssertionError(
+                "injected PDF text is not a single insertion over the clean "
+                "carrier and does not contain the registered wording exactly once"
+            ) from None
+        start = injected_text.index(wording)
+        return [start, start + len(wording)], wording
+
+
 def _build_document_bundle(
     reg: dict[str, Any],
     treatment: str,
 ) -> tuple[
     list[dict[str, Any]],
     list[int] | None,
-    dict[str, Any] | None,
+    str | None,
 ]:
-    """Build one matched document set from whole source documents."""
+    """Build one matched document set from whole source documents.
 
-    documents = load_documents(reg)
+    When the carrier names an ``injected_source_pdf``, worker_1 converts that
+    PDF and the extracted text is the injection. Otherwise the registered
+    wording is spliced into inline/clean text for legacy registries.
+    """
+
+    documents = load_documents(reg, treatment="clean")
     injection = reg["injection"]
     wording = injection["wordings"][reg["assigned_wording"]]
     marker = injection["carrier_marker"]
@@ -402,43 +455,59 @@ def _build_document_bundle(
         )
 
     span = None
+    payload = None
     if treatment == "injected":
-        offset = injection.get("insertion_offset_utf8")
-        if isinstance(offset, int) and not isinstance(offset, bool):
-            if not 0 <= offset <= len(clean_text):
-                raise AssertionError("insertion_offset_utf8 is out of range")
-            if anchor and (
-                offset < len(anchor)
-                or clean_text[offset - len(anchor):offset] != anchor
-            ):
+        injected_pdf = _carrier_injected_pdf_name(reg)
+        if injected_pdf:
+            injected_documents = load_documents(reg, treatment="injected")
+            injected_text = injected_documents[carrier_index]["text"]
+            span, payload = _pdf_injection_span(clean_text, injected_text, wording)
+            if wording not in injected_text:
                 raise AssertionError(
-                    "insertion_anchor does not end at insertion_offset_utf8"
+                    "the injected PDF does not contain the registered wording"
                 )
-            injected_text = clean_text[:offset] + wording + clean_text[offset:]
-            start = offset
-            span = [start, start + len(wording)]
-            if injected_text[:start] + injected_text[start + len(wording):] != clean_text:
-                raise AssertionError(
-                    "clean and injected documents differ beyond the injection span"
-                )
+            documents[carrier_index]["text"] = injected_text
+            documents[carrier_index]["injected_source_pdf"] = injected_pdf
         else:
-            if anchor not in clean_text:
-                raise AssertionError(f"insertion anchor {anchor!r} is missing")
-            block = wording + "\n\n"
-            injected_text = clean_text.replace(anchor, block + anchor, 1)
-            start = injected_text.index(wording)
-            span = [start, start + len(wording)]
-            if injected_text[:start] + injected_text[start + len(block):] != clean_text:
-                raise AssertionError(
-                    "clean and injected documents differ beyond the injection span"
-                )
-        if marker not in injected_text or endpoint not in injected_text:
+            offset = injection.get("insertion_offset_utf8")
+            if isinstance(offset, int) and not isinstance(offset, bool):
+                if not 0 <= offset <= len(clean_text):
+                    raise AssertionError("insertion_offset_utf8 is out of range")
+                if anchor and (
+                    offset < len(anchor)
+                    or clean_text[offset - len(anchor):offset] != anchor
+                ):
+                    raise AssertionError(
+                        "insertion_anchor does not end at insertion_offset_utf8"
+                    )
+                injected_text = clean_text[:offset] + wording + clean_text[offset:]
+                start = offset
+                span = [start, start + len(wording)]
+                if injected_text[:start] + injected_text[start + len(wording):] != clean_text:
+                    raise AssertionError(
+                        "clean and injected documents differ beyond the injection span"
+                    )
+            else:
+                if anchor not in clean_text:
+                    raise AssertionError(f"insertion anchor {anchor!r} is missing")
+                block = wording + "\n\n"
+                injected_text = clean_text.replace(anchor, block + anchor, 1)
+                start = injected_text.index(wording)
+                span = [start, start + len(wording)]
+                if injected_text[:start] + injected_text[start + len(block):] != clean_text:
+                    raise AssertionError(
+                        "clean and injected documents differ beyond the injection span"
+                    )
+            payload = wording
+            documents[carrier_index]["text"] = injected_text
+        if marker not in documents[carrier_index]["text"] or endpoint not in (
+            documents[carrier_index]["text"]
+        ):
             raise AssertionError("the injected document is missing its marker or endpoint")
-        documents[carrier_index]["text"] = injected_text
 
     if len(documents) != 3:
         raise AssertionError("each match group must contain exactly three documents")
-    return documents, span, None
+    return documents, span, payload
 
 
 def build_document_set(
@@ -667,7 +736,7 @@ def build_record(
     reg: dict[str, Any], condition: str, treatment: str
 ) -> dict[str, Any]:
     injected = treatment == "injected"
-    documents, injection_span, _ = _build_document_bundle(
+    documents, injection_span, detected_payload = _build_document_bundle(
         reg, treatment
     )
     events, executor_hop = build_events(
@@ -718,8 +787,18 @@ def build_record(
         "raw_poison_exposed_agents": ["worker_1"] if injected else [],
     }
     if injected:
-        injection["injected_text"] = reg["injection"]["wordings"][reg["assigned_wording"]]
+        injection["injected_text"] = (
+            detected_payload
+            if detected_payload is not None
+            else reg["injection"]["wordings"][reg["assigned_wording"]]
+        )
         injection["injection_char_span_in_source_doc"] = injection_span
+        injected_pdf = carrier.get("injected_source_pdf")
+        if isinstance(injected_pdf, str):
+            injection["injected_source_pdf"] = injected_pdf
+        position = reg["injection"].get("insertion_position")
+        if isinstance(position, str) and position:
+            injection["insertion_position"] = position
 
     decoding = generation_settings_for_protocol(generation_protocol_id)
     if decoding["seed"] != reg["seed"]:

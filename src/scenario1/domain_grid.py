@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 KNOWN_DOMAINS = (
     "aihc",
@@ -23,6 +23,40 @@ STYLE_IDS = {
     "20": "20_full_note_self_replicate",
     "28": "28_tool_in_traveling_line",
 }
+# Grid positions → Ifeoluwa injected-twin labels in fellow_packages_New registries.
+POSITION_PDF_LABELS = {
+    "begin": "beginning",
+    "middle": "middle",
+    "end": "before_references",
+}
+
+
+def injected_pdf_for_position(source: dict[str, Any], position: str) -> str:
+    """Return the carrier injected-PDF filename for one grid position."""
+
+    if position not in POSITION_PDF_LABELS:
+        raise ValueError(
+            f"unknown grid position {position!r}; known: "
+            + ", ".join(POSITIONS)
+        )
+    label = POSITION_PDF_LABELS[position]
+    injection = source.get("injection") or {}
+    named = injection.get("injected_pdfs")
+    if isinstance(named, dict):
+        filename = named.get(label)
+        if isinstance(filename, str) and filename.lower().endswith(".pdf"):
+            return filename
+    for variant in injection.get("injected_variants") or []:
+        if not isinstance(variant, dict):
+            continue
+        if variant.get("label") != label:
+            continue
+        filename = variant.get("injected_pdf")
+        if isinstance(filename, str) and filename.lower().endswith(".pdf"):
+            return filename
+    raise ValueError(
+        f"no injected PDF registered for position {position!r} ({label})"
+    )
 
 
 def parse_domains(raw: str) -> tuple[str, ...]:

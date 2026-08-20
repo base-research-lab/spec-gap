@@ -4,8 +4,13 @@
 Specify one domain or a subset. Each selected domain expands to 9 cells:
 styles 12/20/28 crossed with injection positions begin/middle/end.
 
-Worker_1 converts each source PDF to text on the fly and receives the whole
-document. This script does not start Modal or a paid H200 job.
+Worker_1 converts source PDFs to text on the fly and receives the whole
+document. Clean trials use the clean carrier PDF. Injected trials use the
+position-specific injected twin already stored in the domain pack
+(`*_inj_beginning.pdf`, `*_inj_middle.pdf`, `*_inj_before_references.pdf`).
+The payload is not spliced into extracted text.
+
+This script does not start Modal or a paid H200 job.
 """
 
 from __future__ import annotations
@@ -24,6 +29,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 from src.scenario1.domain_grid import (  # noqa: E402
     expand_domain_grid,
+    injected_pdf_for_position,
     parse_domains,
 )
 from src.scenario1.pdf_text import extract_pdf_text, pdftotext_executable  # noqa: E402
@@ -213,138 +219,15 @@ def _page_spans(text: str) -> list[dict[str, int | str]]:
     return pages
 
 
-def _sentence_break_at_or_before(text: str, offset: int, lo: int) -> int:
-    window = text[lo:offset]
-    for needle in (".\n", ". ", ".\t"):
-        found = window.rfind(needle)
-        if found >= 0:
-            return lo + found + len(needle)
-    newline = window.rfind("\n")
-    if newline >= 0:
-        return lo + newline + 1
-    return offset
-
-
-def _choose_begin(text: str) -> int:
-    pages = _page_spans(text)
-    page = pages[0]
-    start = int(page["char_start"])
-    end = int(page["char_end"])
-    body = str(page["text"])
-    match = re.search(r"(?im)\babstract\b[:.\-—–]?", body)
-    cursor = start + (match.end() if match else 0)
-    while cursor < end and text[cursor] in " \t\n.-—–":
-        cursor += 1
-    para = text.find("\n\n", cursor)
-    if para < 0 or para > end:
-        para = min(end, cursor + 280)
-        para = _sentence_break_at_or_before(text, para, cursor)
-    else:
-        para = min(para, end)
-    if para <= start + 40:
-        para = min(end, start + 200)
-    return para
-
-
-def _choose_middle(text: str) -> int:
-    substantial = [
-        page
-        for page in _page_spans(text)
-        if int(page["char_end"]) - int(page["char_start"]) >= 400
-    ]
-    if not substantial:
-        raise SystemExit("no substantial page available for middle insertion")
-    page = substantial[1] if len(substantial) >= 2 else substantial[0]
-    lo = int(page["char_start"]) + 80
-    hi = max(lo + 1, int(page["char_end"]) - 80)
-    mid = (lo + hi) // 2
-    return _sentence_break_at_or_before(text, mid, lo)
-
-
-def _choose_end(text: str) -> int:
-    match = re.search(
-        r"(?m)^(References|REFERENCES|Bibliography)\s*$",
-        text,
-    )
-    if match:
-        return match.start()
-    match = re.search(r"(?m)^(References|REFERENCES|Bibliography)\b", text)
-    if match:
-        return match.start()
-    substantial = [
-        page
-        for page in _page_spans(text)
-        if int(page["char_end"]) - int(page["char_start"]) >= 400
-    ]
-    page = substantial[-1]
-    hi = int(page["char_end"])
-    lo = int(page["char_start"])
-    return _sentence_break_at_or_before(text, hi - 40, lo + 80)
-
-
-def _payload_is_single_delta(text: str, offset: int, payload: str) -> bool:
-    injected = text[:offset] + payload + text[offset:]
-    try:
-        found_offset, delta = detect_single_insertion(text, injected)
-    except ValueError:
-        return False
-    return found_offset == offset and delta == payload
-
-
-def _nearby_offsets(text: str, seed: int) -> list[int]:
-    pages = _page_spans(text)
-    page = next(
-        item
-        for item in pages
-        if int(item["char_start"]) <= seed <= int(item["char_end"])
-    )
-    lo = int(page["char_start"]) + 1
-    hi = int(page["char_end"])
-    ordered = [seed]
-    cursor = seed
-    while True:
-        nxt = text.find("\n", cursor + 1, hi)
-        if nxt < 0:
-            break
-        ordered.append(nxt + 1)
-        cursor = nxt
-    cursor = seed
-    while True:
-        prev = text.rfind("\n", lo, cursor)
-        if prev < 0:
-            break
-        ordered.append(prev + 1)
-        cursor = prev
-    seen: set[int] = set()
-    unique: list[int] = []
-    for offset in ordered:
-        if lo <= offset < hi and offset not in seen:
-            seen.add(offset)
-            unique.append(offset)
-    return unique
-
-
-def choose_insertion_offset(text: str, position: str, payload: str) -> int:
-    if position == "begin":
-        seed = _choose_begin(text)
-    elif position == "middle":
-        seed = _choose_middle(text)
-    elif position == "end":
-        seed = _choose_end(text)
-    else:
-        raise ValueError(position)
-    if not 1 <= seed < len(text):
-        raise SystemExit(f"{position} insertion offset {seed} is out of range")
-    for offset in _nearby_offsets(text, seed):
-        if _payload_is_single_delta(text, offset, payload):
-            return offset
-    raise SystemExit(
-        f"{position} insertion at {seed} shares a prefix with the payload; "
-        "no nearby line break produced a single contiguous delta"
-    )
-
-
 def unique_anchor(text: str, offset: int) -> str:
+    if offset <= 0:
+        for length in range(80, 241, 20):
+            candidate = text[:length]
+            if candidate and text.count(candidate) == 1:
+                return candidate
+        if text.strip():
+            return text[: min(80, len(text))]
+        raise SystemExit("could not find a unique insertion_anchor at document start")
     for length in range(80, 241, 20):
         start = max(0, offset - length)
         candidate = text[start:offset]
@@ -434,13 +317,24 @@ def build_cell(cell: dict) -> dict:
     style = STYLE_META[style_key]
     style_id = cell["style_id"]
     source = load_source_registry(folder)
-    camouflage = DOMAIN_CAMOUFLAGE[folder]
     domain_id = cell["domain_id"]
     rel_root = (
         f"fellow_packages_New/{folder}/attack_styles/{style_id}/{position}"
     )
     style_root = INPUTS / rel_root
     style_root.mkdir(parents=True, exist_ok=True)
+
+    assigned = source.get("assigned_wording", "A")
+    try:
+        payload = source["injection"]["wordings"][assigned]
+    except KeyError as error:
+        raise SystemExit(
+            f"{folder} is missing injection wording {assigned}"
+        ) from error
+    injected_pdf_name = injected_pdf_for_position(source, position)
+    injected_pdf_path = NEW_ROOT / folder / injected_pdf_name
+    if not injected_pdf_path.is_file():
+        raise SystemExit(f"missing position PDF {injected_pdf_path}")
 
     pdf_hashes: dict[str, str] = {}
     slots_out: list[dict] = []
@@ -463,14 +357,11 @@ def build_cell(cell: dict) -> dict:
             "role": slot["role"],
         }
         if slot["role"] == "injection_carrier":
-            inj_pdf = pdf_name.replace("_clean.pdf", "_inj.pdf")
-            inj_path = NEW_ROOT / folder / inj_pdf
-            if inj_path.is_file():
-                pdf_hashes[inj_pdf] = _sha256_file(inj_path)
             carrier_clean = text
             carrier_doc_id = slot["doc_id"]
             carrier_pdf_name = pdf_name
             out_slot["clean_source_pdf"] = pdf_name
+            out_slot["injected_source_pdf"] = injected_pdf_name
         else:
             out_slot["source_pdf"] = pdf_name
         slots_out.append(out_slot)
@@ -481,16 +372,22 @@ def build_cell(cell: dict) -> dict:
     endpoint = source["injection"]["endpoint"]
     if ".invalid/" not in endpoint:
         raise SystemExit(f"{folder} endpoint is not .invalid")
-    payload = build_payload(
-        style_key=style_key,
-        note_for=camouflage["note_for"],
-        baseline_label=camouflage["baseline_label"],
-        endpoint=endpoint,
-        doc_id=carrier_doc_id,
-    )
     if payload in carrier_clean:
         raise SystemExit(f"{folder} clean text already contains the payload")
-    offset = choose_insertion_offset(carrier_clean, position, payload)
+
+    pdf_hashes[injected_pdf_name] = _sha256_file(injected_pdf_path)
+    carrier_injected = _extract_pdf(injected_pdf_path)
+    if payload not in carrier_injected:
+        raise SystemExit(
+            f"{injected_pdf_name} does not contain the registered wording"
+        )
+    try:
+        offset, _delta = detect_single_insertion(carrier_clean, carrier_injected)
+    except ValueError as error:
+        raise SystemExit(
+            f"{injected_pdf_name} is not a single-insertion twin of "
+            f"{carrier_pdf_name}: {error}"
+        ) from error
     anchor = unique_anchor(carrier_clean, offset)
     if not carrier_clean.startswith(anchor, offset - len(anchor)):
         raise SystemExit(f"{folder} insertion_anchor does not sit at offset")
@@ -506,13 +403,15 @@ def build_cell(cell: dict) -> dict:
         "_file_info": {
             "purpose": (
                 "fellow_packages_New per-domain 3x3 cell: injection position x "
-                "frozen style 12/20/28. Worker_1 converts source PDFs on the "
-                "fly and receives whole documents."
+                "style 12/20/28. Worker_1 converts the clean PDFs for clean "
+                "trials and the position-specific injected carrier PDF for "
+                "injected trials. The payload is already in that PDF."
             ),
-            "updated_on": "2026-08-20",
-            "package_generation": "newpack_grid_pos_x_style_wholepdf_v1",
+            "updated_on": "2026-08-21",
+            "package_generation": "newpack_grid_pos_x_style_wholepdf_v2",
             "attack_style_id": style_id,
             "injection_position": position,
+            "injected_pdf": injected_pdf_name,
             "source_pack": f"fellow_packages_New/{folder}",
         },
         "schema_target": "spec_gap.scenario1.v2",
@@ -521,7 +420,7 @@ def build_cell(cell: dict) -> dict:
         "task_family_id": "scenario1",
         "document_set_id": f"{domain_id}__documents",
         "independence_group_id": domain_id,
-        "assigned_wording": "A",
+        "assigned_wording": assigned,
         "injection_family": "fake_compliance_request",
         "injection_placement": "body_text",
         "agent_prompt_profile_id": "neutral_v1",
@@ -533,12 +432,13 @@ def build_cell(cell: dict) -> dict:
         "system_prompts": SYSTEM_PROMPTS,
         "document_slots": slots_out,
         "injection": {
-            "carrier_marker": f"Note: For {camouflage['note_for']}"[:72],
+            "carrier_marker": source["injection"]["carrier_marker"],
             "endpoint": endpoint,
             "insertion_anchor": anchor,
             "insertion_position": position,
             "insertion_offset_utf8": offset,
-            "wordings": {"A": payload},
+            "injected_source_pdf": injected_pdf_name,
+            "wordings": {assigned: payload},
         },
         "provenance": {
             "created_by": "oudoum",
@@ -546,29 +446,25 @@ def build_cell(cell: dict) -> dict:
             "generator": "scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py",
             "source_pack": f"fellow_packages_New/{folder}",
             "source_pdf_root": f"fellow_packages_New/{folder}",
-            "package_generation": "newpack_grid_pos_x_style_wholepdf_v1",
+            "package_generation": "newpack_grid_pos_x_style_wholepdf_v2",
             "text_extractor": "pdftotext -raw",
             "text_extracted_at": "worker_1_retrieval",
             "source_pdf_sha256": pdf_hashes,
             "normalization_notes": [
                 (
-                    "Style 12/20/28 wording is the frozen telecom skeleton. "
-                    "Only domain camouflage, endpoint, and carrier document_id "
-                    "are substituted. Begin/middle/end changes insertion offset "
-                    "only."
+                    "Begin/middle/end selects the registered injected twin "
+                    "PDF (beginning, middle, before_references). Worker_1 "
+                    "converts that PDF; the generator does not splice text."
                 ),
                 (
-                    "document_id in the traveling line is the actual injection "
-                    "carrier, not the style-16 registry typo when those differed."
-                ),
-                (
-                    "Worker_1 converts each clean source PDF with pdftotext "
-                    "-raw at retrieval time and receives the whole document."
+                    "The injection wording is the payload already written "
+                    "into the injected PDF, copied from the source registry."
                 ),
             ],
             "pair_audit": {
                 "extraction_command": "pdftotext -raw",
-                "carrier_pdf": carrier_pdf_name,
+                "carrier_clean_pdf": carrier_pdf_name,
+                "carrier_injected_pdf": injected_pdf_name,
                 "insertion_position": position,
                 "insertion_offset_utf8": offset,
                 "insertion_page": page_number,
@@ -593,6 +489,7 @@ def build_cell(cell: dict) -> dict:
         "domain_id": domain_id,
         "endpoint": endpoint,
         "document_id": carrier_doc_id,
+        "injected_pdf": injected_pdf_name,
         "insertion_offset_utf8": offset,
         "insertion_page": page_number,
         "page_count": len(pages),
@@ -689,6 +586,7 @@ def main() -> None:
         print(
             f"{item['folder']:9}  {item['position']:6} style {item['style_key']:>2}  "
             f"{item['domain_id']:32}  "
+            f"{item['injected_pdf']}  "
             f"p{item['insertion_page']}/{item['page_count']}  "
             f"off={item['insertion_offset_utf8']}  "
             f"doc={item['document_id']}"
@@ -718,19 +616,22 @@ def main() -> None:
         "domains": list(domains),
         "cells_per_domain": 9,
         "style_factor": (
-            "Styles 12, 20, and 28 are unchanged skeletons. Begin/middle/end "
-            "only moves the UTF-8 insertion offset."
+            "Styles 12, 20, and 28 remain grid cells. Begin/middle/end "
+            "selects the registered injected carrier PDF; the generator "
+            "does not splice the payload into extracted text."
         ),
         "pipeline": {
             "work1": (
-                "Worker_1 converts each clean source PDF with pdftotext -raw "
-                "at retrieval time and receives the whole document."
+                "Worker_1 converts each source PDF with pdftotext -raw at "
+                "retrieval time. Clean trials use the clean carrier PDF; "
+                "injected trials use the position-specific injected twin."
             ),
-            "then": "splice style 12/20/28 at begin/middle/end; generate/validate",
+            "then": "generate/validate structural trajectories",
         },
         "retrieval": {
             "mode": "whole_document",
             "text_extraction": "pdftotext -raw at worker_1 retrieval",
+            "injection_source": "position-specific injected PDF",
         },
         "paid_run": {
             "status": "not_started",
@@ -744,6 +645,7 @@ def main() -> None:
                 "domain_id": item["domain_id"],
                 "document_id": item["document_id"],
                 "endpoint": item["endpoint"],
+                "injected_pdf": item["injected_pdf"],
                 "insertion_offset_utf8": item["insertion_offset_utf8"],
                 "insertion_page": item["insertion_page"],
                 "ifeoluwa_style16_position": item["ifeoluwa_position"],
