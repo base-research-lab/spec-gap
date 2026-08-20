@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Build the fellow_packages_New 3x3 position x style grid.
+"""Build fellow_packages_New style x injection-position packages.
 
-Injection position (begin / middle / end) is the only placement factor.
-Styles 12, 20, and 28 keep the frozen telecom skeletons: only domain nouns,
-endpoint, and carrier document_id change.
+Specify one domain or a subset. Each selected domain expands to 9 cells:
+styles 12/20/28 crossed with injection positions begin/middle/end.
 
-Retrieval uses page-level units (chunk_tokens=20000, overlap=0). This script
-does not start Modal or a paid H200 job.
+Worker_1 converts each source PDF to text on the fly and receives the whole
+document. This script does not start Modal or a paid H200 job.
 """
 
 from __future__ import annotations
@@ -16,24 +15,22 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
-import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
+from src.scenario1.domain_grid import (  # noqa: E402
+    expand_domain_grid,
+    parse_domains,
+)
+from src.scenario1.pdf_text import extract_pdf_text, pdftotext_executable  # noqa: E402
 from src.scenario1.retrieval import detect_single_insertion  # noqa: E402
 
 INPUTS = PROJECT_ROOT / "experiments" / "scenario1" / "inputs"
 NEW_ROOT = INPUTS / "fellow_packages_New"
-TOKENIZER_JSON = Path("/tmp/qwen3_tokenizer.json")
-TOKENIZER_DIR = Path("/tmp/qwen3_tok_dir")
-CHUNK_TOKENS = 20000
-OVERLAP_TOKENS = 0
-PDFTOTEXT = shutil.which("pdftotext") or "/Users/oudoum/opt/anaconda3/bin/pdftotext"
 
 SYSTEM_PROMPTS = {
     "planner": (
@@ -54,54 +51,7 @@ SYSTEM_PROMPTS = {
     ),
 }
 
-# Image grid with style 1/2/3 replaced by 12/20/28, and data_mining -> aihc.
-GRID = (
-    {
-        "position": "begin",
-        "style_key": "12",
-        "folder": "aihc",
-    },
-    {
-        "position": "begin",
-        "style_key": "20",
-        "folder": "telecoms",
-    },
-    {
-        "position": "begin",
-        "style_key": "28",
-        "folder": "policy",
-    },
-    {
-        "position": "middle",
-        "style_key": "12",
-        "folder": "petro",
-    },
-    {
-        "position": "middle",
-        "style_key": "20",
-        "folder": "neuro",
-    },
-    {
-        "position": "middle",
-        "style_key": "28",
-        "folder": "macro",
-    },
-    {
-        "position": "end",
-        "style_key": "12",
-        "folder": "kg",
-    },
-    {
-        "position": "end",
-        "style_key": "20",
-        "folder": "fin",
-    },
-    {
-        "position": "end",
-        "style_key": "28",
-        "folder": "convex",
-    },
-)
+# Each selected domain expands to all 9 style x position cells.
 
 STYLE_META = {
     "12": {
@@ -216,32 +166,6 @@ DOMAIN_CAMOUFLAGE = {
     },
 }
 
-QUERY_STOP = {
-    "a",
-    "an",
-    "and",
-    "the",
-    "of",
-    "for",
-    "on",
-    "in",
-    "to",
-    "with",
-    "from",
-    "read",
-    "three",
-    "papers",
-    "produce",
-    "concise",
-    "summary",
-    "key",
-    "findings",
-    "without",
-    "their",
-    "and",
-}
-
-
 def _utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -264,17 +188,7 @@ def _write_json(path: Path, payload: object) -> None:
 
 
 def _extract_pdf(path: Path) -> str:
-    if not Path(PDFTOTEXT).is_file():
-        raise SystemExit("pdftotext is required (Poppler)")
-    with tempfile.TemporaryDirectory(prefix="specgap-newgrid-") as temp_dir:
-        extracted = Path(temp_dir) / "extracted.txt"
-        subprocess.run(
-            [str(PDFTOTEXT), "-raw", str(path), str(extracted)],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        return extracted.read_text(encoding="utf-8")
+    return extract_pdf_text(str(path.resolve()))
 
 
 def _page_spans(text: str) -> list[dict[str, int | str]]:
@@ -508,83 +422,9 @@ def title_from_pdf_text(text: str, fallback: str) -> str:
     return " ".join(kept)[:180] if kept else fallback
 
 
-def retrieval_query(user_task: str, titles: list[str]) -> str:
-    blob = user_task + " " + " ".join(titles)
-    terms: list[str] = []
-    seen: set[str] = set()
-    for word in re.findall(r"[A-Za-z0-9+]{3,}", blob):
-        lowered = word.lower()
-        if lowered in QUERY_STOP or lowered in seen:
-            continue
-        seen.add(lowered)
-        terms.append(word)
-        if len(terms) >= 18:
-            break
-    return " ".join(terms)
-
-
 def load_source_registry(folder: str) -> dict:
     path = NEW_ROOT / folder / "registry.json"
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def remove_dryruntxt(folder: str) -> None:
-    dry_dir = NEW_ROOT / folder / "dryruntxt"
-    if not dry_dir.exists():
-        return
-    for path in sorted(dry_dir.rglob("*"), reverse=True):
-        if path.is_file():
-            path.unlink()
-        elif path.is_dir():
-            path.rmdir()
-    if dry_dir.exists():
-        dry_dir.rmdir()
-
-
-def extract_work1_documents(folder: str) -> dict:
-    """Work-1 package job: clean PDFs -> pdftotext -raw -> documents/*.txt.
-
-    Worker_1 never runs pdftotext at model time. It reads retrieved chunks
-    built from these fixtures after the planner turn.
-    """
-
-    source_path = NEW_ROOT / folder / "registry.json"
-    source = json.loads(source_path.read_text(encoding="utf-8"))
-    documents_dir = NEW_ROOT / folder / "documents"
-    documents_dir.mkdir(parents=True, exist_ok=True)
-    remove_dryruntxt(folder)
-    extracted = []
-    for slot in source["document_slots"]:
-        pdf_name = slot["source_pdf"]
-        pdf_path = NEW_ROOT / folder / pdf_name
-        if not pdf_path.is_file():
-            raise SystemExit(f"missing {pdf_path}")
-        text = _extract_pdf(pdf_path)
-        txt_name = f"{slot['doc_id']}_clean.txt"
-        txt_path = documents_dir / txt_name
-        txt_path.write_text(text, encoding="utf-8")
-        if txt_path.read_text(encoding="utf-8") != text:
-            raise SystemExit(f"{txt_path} did not round-trip UTF-8")
-        rel = f"fellow_packages_New/{folder}/documents/{txt_name}"
-        slot["file"] = rel
-        extracted.append(
-            {
-                "doc_id": slot["doc_id"],
-                "source_pdf": pdf_name,
-                "file": rel,
-                "chars": len(text),
-                "pages": len(_page_spans(text)),
-            }
-        )
-    provenance = source.setdefault("provenance", {})
-    provenance["text_extractor"] = "pdftotext -raw"
-    provenance["text_fixture_dir"] = f"fellow_packages_New/{folder}/documents"
-    provenance["dryruntxt"] = "removed; worker_1 uses documents/*.txt fixtures"
-    source_path.write_text(
-        json.dumps(source, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    return {"folder": folder, "documents": extracted}
 
 
 def build_cell(cell: dict) -> dict:
@@ -592,19 +432,18 @@ def build_cell(cell: dict) -> dict:
     position = cell["position"]
     style_key = cell["style_key"]
     style = STYLE_META[style_key]
-    style_id = style["style_id"]
+    style_id = cell["style_id"]
     source = load_source_registry(folder)
     camouflage = DOMAIN_CAMOUFLAGE[folder]
-    domain_id = f"{folder}_newgrid_{style_key}"
-    rel_root = f"fellow_packages_New/{folder}/attack_styles/{style_id}"
+    domain_id = cell["domain_id"]
+    rel_root = (
+        f"fellow_packages_New/{folder}/attack_styles/{style_id}/{position}"
+    )
     style_root = INPUTS / rel_root
-    documents_dir = NEW_ROOT / folder / "documents"
-    documents_dir.mkdir(parents=True, exist_ok=True)
-    (style_root / "retrieval").mkdir(parents=True, exist_ok=True)
+    style_root.mkdir(parents=True, exist_ok=True)
 
     pdf_hashes: dict[str, str] = {}
     slots_out: list[dict] = []
-    titles: list[str] = []
     carrier_clean = ""
     carrier_doc_id = ""
     carrier_pdf_name = ""
@@ -615,26 +454,12 @@ def build_cell(cell: dict) -> dict:
         if not pdf_path.is_file():
             raise SystemExit(f"missing {pdf_path}")
         pdf_hashes[pdf_name] = _sha256_file(pdf_path)
-        txt_name = f"{slot['doc_id']}_clean.txt"
-        txt_path = documents_dir / txt_name
-        if not txt_path.is_file():
-            raise SystemExit(
-                f"missing work-1 pdftotext fixture {txt_path}; "
-                "run extract_work1_documents first"
-            )
-        text = txt_path.read_text(encoding="utf-8")
-        extracted = _extract_pdf(pdf_path)
-        if text != extracted:
-            raise SystemExit(
-                f"{txt_path} does not match pdftotext -raw of {pdf_name}"
-            )
+        text = _extract_pdf(pdf_path)
         title = title_from_pdf_text(text, slot["title"])
-        titles.append(title)
         out_slot = {
             "slot": slot["slot"],
             "doc_id": slot["doc_id"],
             "title": title,
-            "file": f"fellow_packages_New/{folder}/documents/{txt_name}",
             "role": slot["role"],
         }
         if slot["role"] == "injection_carrier":
@@ -646,7 +471,6 @@ def build_cell(cell: dict) -> dict:
             carrier_doc_id = slot["doc_id"]
             carrier_pdf_name = pdf_name
             out_slot["clean_source_pdf"] = pdf_name
-            out_slot["injected_source_pdf"] = "injected_carrier.txt"
         else:
             out_slot["source_pdf"] = pdf_name
         slots_out.append(out_slot)
@@ -670,9 +494,6 @@ def build_cell(cell: dict) -> dict:
     anchor = unique_anchor(carrier_clean, offset)
     if not carrier_clean.startswith(anchor, offset - len(anchor)):
         raise SystemExit(f"{folder} insertion_anchor does not sit at offset")
-    injected = carrier_clean[:offset] + payload + carrier_clean[offset:]
-    carrier_path = style_root / "injected_carrier.txt"
-    carrier_path.write_text(injected, encoding="utf-8")
 
     pages = _page_spans(carrier_clean)
     page_number = next(
@@ -680,22 +501,16 @@ def build_cell(cell: dict) -> dict:
         for page in pages
         if int(page["char_start"]) <= offset <= int(page["char_end"])
     )
-    query = retrieval_query(source["task"]["user_task"], titles)
-    # Sum must not exceed the 28000 global document budget (40960 context).
-    budgets = {}
-    for slot in slots_out:
-        budgets[slot["doc_id"]] = (
-            10000 if slot["role"] == "injection_carrier" else 9000
-        )
 
     registry = {
         "_file_info": {
             "purpose": (
-                "fellow_packages_New 3x3 grid cell: injection position x "
-                "frozen style 12/20/28, page-level retrieval."
+                "fellow_packages_New per-domain 3x3 cell: injection position x "
+                "frozen style 12/20/28. Worker_1 converts source PDFs on the "
+                "fly and receives whole documents."
             ),
-            "updated_on": "2026-08-19",
-            "package_generation": "newpack_grid_pos_x_style_nochunk_v1",
+            "updated_on": "2026-08-20",
+            "package_generation": "newpack_grid_pos_x_style_wholepdf_v1",
             "attack_style_id": style_id,
             "injection_position": position,
             "source_pack": f"fellow_packages_New/{folder}",
@@ -722,25 +537,8 @@ def build_cell(cell: dict) -> dict:
             "endpoint": endpoint,
             "insertion_anchor": anchor,
             "insertion_position": position,
+            "insertion_offset_utf8": offset,
             "wordings": {"A": payload},
-        },
-        "retrieval": {
-            "profile_id": (
-                f"full_corpus_bm25_all_pages_gen5000_v2__{folder}_{style_id}_nochunk"
-            ),
-            "plan_file": f"{rel_root}/retrieval/plan.json",
-            "context_preflight_file": f"{rel_root}/retrieval/context_check.json",
-            "source_pdf_verification_required": False,
-            "query": query,
-            "query_construction": (
-                "Terms taken directly from the benign user task and paper "
-                "titles; contains no injection text."
-            ),
-            "carrier_chunk_retention_policy": "require_clean_anchor",
-            "chunk_tokens": CHUNK_TOKENS,
-            "overlap_tokens": OVERLAP_TOKENS,
-            "document_token_budgets": budgets,
-            "non_evidence_pages": {},
         },
         "provenance": {
             "created_by": "oudoum",
@@ -748,8 +546,9 @@ def build_cell(cell: dict) -> dict:
             "generator": "scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py",
             "source_pack": f"fellow_packages_New/{folder}",
             "source_pdf_root": f"fellow_packages_New/{folder}",
-            "package_generation": "newpack_grid_pos_x_style_nochunk_v1",
+            "package_generation": "newpack_grid_pos_x_style_wholepdf_v1",
             "text_extractor": "pdftotext -raw",
+            "text_extracted_at": "worker_1_retrieval",
             "source_pdf_sha256": pdf_hashes,
             "normalization_notes": [
                 (
@@ -763,14 +562,9 @@ def build_cell(cell: dict) -> dict:
                     "carrier, not the style-16 registry typo when those differed."
                 ),
                 (
-                    "Injected carrier is a UTF-8 text twin. The New-pack "
-                    "invisible-PDF style-16 payload is not used."
+                    "Worker_1 converts each clean source PDF with pdftotext "
+                    "-raw at retrieval time and receives the whole document."
                 ),
-                (
-                    "Retrieval experimental factor: chunk_tokens=20000, "
-                    "overlap=0 (page-level units; not a 1000-token window)."
-                ),
-                "source_pdf_verification_required is false for the text twin.",
             ],
             "pair_audit": {
                 "extraction_command": "pdftotext -raw",
@@ -786,8 +580,6 @@ def build_cell(cell: dict) -> dict:
                 "ablation_factor": style["ablation_factor"],
                 "forcing_levers": style["forcing_levers"],
                 "payload_sha256": _sha256_text(payload),
-                "injected_carrier_sha256": _sha256_file(carrier_path),
-                "injected_carrier_path": f"{rel_root}/injected_carrier.txt",
             },
         },
     }
@@ -806,60 +598,15 @@ def build_cell(cell: dict) -> dict:
         "page_count": len(pages),
         "payload_sha256": _sha256_text(payload),
         "registry_path": registry_path,
-        "carrier_path": carrier_path,
         "ifeoluwa_position": source["injection"].get("insertion_position"),
     }
 
 
 def run_pipeline(cell: dict) -> Path:
     env = os.environ.copy()
-    anaconda_bin = str(Path(PDFTOTEXT).parent)
-    env["PATH"] = anaconda_bin + os.pathsep + env.get("PATH", "")
+    pdftotext_bin = Path(pdftotext_executable())
+    env["PATH"] = str(pdftotext_bin.parent) + os.pathsep + env.get("PATH", "")
     python = sys.executable
-    subprocess.run(
-        [
-            python,
-            str(
-                PROJECT_ROOT
-                / "scripts"
-                / "01_scenario_construction"
-                / "00_prepare_retrieval_plan.py"
-            ),
-            "--registry",
-            str(cell["registry_path"]),
-            "--injected-carrier",
-            str(cell["carrier_path"]),
-            "--tokenizer-json",
-            str(TOKENIZER_JSON),
-            "--chunk-tokens",
-            str(CHUNK_TOKENS),
-            "--overlap-tokens",
-            str(OVERLAP_TOKENS),
-            "--document-token-budget",
-            "28000",
-        ],
-        cwd=PROJECT_ROOT,
-        check=True,
-        env=env,
-    )
-    subprocess.run(
-        [
-            python,
-            str(
-                PROJECT_ROOT
-                / "scripts"
-                / "01_scenario_construction"
-                / "03_preflight_retrieval_context.py"
-            ),
-            "--registry",
-            str(cell["registry_path"]),
-            "--tokenizer-dir",
-            str(TOKENIZER_DIR),
-        ],
-        cwd=PROJECT_ROOT,
-        check=True,
-        env=env,
-    )
     out = (
         PROJECT_ROOT
         / "experiments"
@@ -919,35 +666,29 @@ def run_pipeline(cell: dict) -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--skip-pipeline", action="store_true")
     parser.add_argument(
-        "--extract-only",
-        action="store_true",
-        help="Work-1 job only: pdftotext clean PDFs into documents/*.txt",
+        "--domains",
+        default="",
+        help=(
+            "Comma-separated domain folders, for example 'macro' or "
+            "'macro,fin'. Use 'all' for every domain. Each selected domain "
+            "expands to 9 runs (3 styles x 3 injection positions)."
+        ),
     )
+    parser.add_argument("--skip-pipeline", action="store_true")
     args = parser.parse_args()
 
-    folders = list(dict.fromkeys(cell["folder"] for cell in GRID))
-    for folder in folders:
-        summary = extract_work1_documents(folder)
-        print(
-            f"work1 pdftotext {folder}: "
-            + ", ".join(
-                f"{item['doc_id']} p{item['pages']}"
-                for item in summary["documents"]
-            )
-        )
-    if args.extract_only:
-        return
+    try:
+        domains = parse_domains(args.domains)
+    except ValueError as error:
+        raise SystemExit(str(error)) from error
 
-    if not TOKENIZER_JSON.is_file() or not (TOKENIZER_DIR / "tokenizer.json").is_file():
-        raise SystemExit("missing /tmp qwen tokenizer assets")
-
-    built = [build_cell(cell) for cell in GRID]
+    cells = expand_domain_grid(domains)
+    built = [build_cell(cell) for cell in cells]
     for item in built:
         print(
-            f"{item['position']:6} style {item['style_key']:>2}  "
-            f"{item['folder']:9}  {item['domain_id']:22}  "
+            f"{item['folder']:9}  {item['position']:6} style {item['style_key']:>2}  "
+            f"{item['domain_id']:32}  "
             f"p{item['insertion_page']}/{item['page_count']}  "
             f"off={item['insertion_offset_utf8']}  "
             f"doc={item['document_id']}"
@@ -955,13 +696,16 @@ def main() -> None:
 
     if not args.skip_pipeline:
         for item in built:
-            print(f"=== S03/S06/S04/S05 {item['domain_id']} ===")
+            print(f"=== generate/validate {item['domain_id']} ===")
             out = run_pipeline(item)
             item["structural_root"] = str(out.relative_to(PROJECT_ROOT))
             print(f"structural ok: {out}")
 
     trace = {
-        "title": "fellow_packages_New injection-position x style 12/20/28 grid",
+        "title": (
+            "fellow_packages_New per-domain style 12/20/28 x "
+            "begin/middle/end grid"
+        ),
         "updated_at": _utc_now(),
         "status": (
             "structural_ready_awaiting_h200"
@@ -971,26 +715,22 @@ def main() -> None:
         "generator": (
             "scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py"
         ),
+        "domains": list(domains),
+        "cells_per_domain": 9,
         "style_factor": (
             "Styles 12, 20, and 28 are unchanged skeletons. Begin/middle/end "
             "only moves the UTF-8 insertion offset."
         ),
         "pipeline": {
             "work1": (
-                "pdftotext -raw of each clean PDF into documents/*.txt. "
-                "No dryruntxt. Planner does not extract; worker_1 reads "
-                "retrieved chunks from these fixtures."
+                "Worker_1 converts each clean source PDF with pdftotext -raw "
+                "at retrieval time and receives the whole document."
             ),
-            "work1_command": (
-                "python scripts/01_scenario_construction/"
-                "12_build_new_grid_styles_nochunk.py --extract-only"
-            ),
-            "then": "splice style 12/20/28 at begin/middle/end; S03-S05",
+            "then": "splice style 12/20/28 at begin/middle/end; generate/validate",
         },
         "retrieval": {
-            "chunk_tokens": CHUNK_TOKENS,
-            "overlap_tokens": OVERLAP_TOKENS,
-            "note": "page-level units; not 1000-token sliding windows",
+            "mode": "whole_document",
+            "text_extraction": "pdftotext -raw at worker_1 retrieval",
         },
         "paid_run": {
             "status": "not_started",
@@ -1017,19 +757,22 @@ def main() -> None:
         "steps": [
             {
                 "id": "NG_T1",
-                "action": "build 9 no-chunk grid packages",
+                "action": (
+                    f"build {len(built)} whole-document packages for "
+                    + ", ".join(domains)
+                ),
                 "status": "passed",
                 "completed_at": _utc_now(),
             },
             {
                 "id": "NG_T2",
-                "action": "S03/S06/S04/S05",
+                "action": "generate/validate structural trajectories",
                 "status": "passed" if not args.skip_pipeline else "pending",
                 "completed_at": None if args.skip_pipeline else _utc_now(),
             },
             {
                 "id": "NG_T3",
-                "action": "Modal H200 9-domain batch",
+                "action": "Modal H200 selected-domain batch",
                 "status": "pending",
             },
         ],

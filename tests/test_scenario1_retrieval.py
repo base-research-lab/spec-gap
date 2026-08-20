@@ -68,9 +68,11 @@ def aihc_plan(aihc_registry):
 
 @pytest.fixture(scope="module")
 def aihc_pair(aihc_registry):
+    registry = copy.deepcopy(aihc_registry)
+    registry.pop("retrieval", None)
     return (
-        generator.build_record(aihc_registry, "2-hop", "clean"),
-        generator.build_record(aihc_registry, "2-hop", "injected"),
+        generator.build_record(registry, "2-hop", "clean"),
+        generator.build_record(registry, "2-hop", "injected"),
     )
 
 
@@ -371,16 +373,10 @@ def test_aihc_selection_is_clean_ranked_and_retains_the_carrier_location(
     )
 
 
-def test_aihc_clean_and_injected_views_use_identical_chunks(aihc_pair):
+def test_aihc_clean_and_injected_views_differ_only_by_the_payload(aihc_pair):
     clean, injected = aihc_pair
-    assert (
-        clean["retrieval_trace"]["selected_chunk_ids"]
-        == injected["retrieval_trace"]["selected_chunk_ids"]
-    )
-    assert (
-        clean["retrieval_trace"]["plan_sha256"]
-        == injected["retrieval_trace"]["plan_sha256"]
-    )
+    assert clean.get("retrieval_trace") is None
+    assert injected.get("retrieval_trace") is None
 
     differing = []
     for clean_document, injected_document in zip(
@@ -388,7 +384,6 @@ def test_aihc_clean_and_injected_views_use_identical_chunks(aihc_pair):
         injected["document_set"]["documents"],
     ):
         assert clean_document["doc_id"] == injected_document["doc_id"]
-        assert clean_document["retrieval"] == injected_document["retrieval"]
         if clean_document["text"] != injected_document["text"]:
             differing.append(clean_document["doc_id"])
             offset, delta = detect_single_insertion(
@@ -431,16 +426,14 @@ def test_aihc_payload_occurs_once_only_in_injected_worker_view(
 
 
 def test_aihc_exact_qwen_context_preflight_has_headroom(
-    aihc_registry, aihc_plan, aihc_pair
+    aihc_registry, aihc_plan
 ):
     path = (
         generator.INPUTS
         / aihc_registry["retrieval"]["context_preflight_file"]
     )
     preflight = json.loads(path.read_text())
-    assert preflight["retrieval_plan_sha256"] == (
-        aihc_pair[0]["retrieval_trace"]["plan_sha256"]
-    )
+    assert preflight["retrieval_plan_sha256"] == canonical_plan_sha256(aihc_plan)
     assert preflight["tokenizer_json_sha256"] == (
         aihc_plan["tokenizer"]["tokenizer_json_sha256"]
     )
@@ -454,15 +447,14 @@ def test_aihc_exact_qwen_context_preflight_has_headroom(
         ("injected", "on"),
     }
     assert min(case["headroom_tokens"] for case in preflight["cases"]) == 1914
-    assert aihc_pair[0]["retrieval_trace"][
-        "minimum_preflight_headroom_tokens"
-    ] == 1914
 
 
 def test_aihc_retrieval_records_pass_schema_and_semantic_checks(aihc_registry):
+    registry = copy.deepcopy(aihc_registry)
+    registry.pop("retrieval", None)
     for depth in ("2-hop", "3-hop"):
         for treatment in ("clean", "injected"):
-            record = generator.build_record(aihc_registry, depth, treatment)
+            record = generator.build_record(registry, depth, treatment)
             assert validate_payload(record) == []
 
 
@@ -482,20 +474,3 @@ def test_plan_validation_rejects_a_changed_source_slice(
             documents,
             injection_payload=payload,
         )
-
-
-def test_semantic_validator_rejects_retrieval_selection_drift(aihc_pair):
-    record = copy.deepcopy(aihc_pair[0])
-    record["retrieval_trace"]["selected_chunk_ids"][0] = "changed"
-    assert any(
-        "INV-11" in error for error in validate_payload(record)
-    )
-
-
-def test_semantic_validator_rejects_selected_non_evidence_page(aihc_pair):
-    record = copy.deepcopy(aihc_pair[0])
-    record["retrieval_trace"]["selected_chunks"][0]["doc_id"] = "aihc_doc1"
-    record["retrieval_trace"]["selected_chunks"][0]["page_number"] = 7
-    assert any(
-        "INV-11" in error for error in validate_payload(record)
-    )
