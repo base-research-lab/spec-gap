@@ -114,7 +114,7 @@ def _record(depth="3-hop", treatment="injected"):
 
 
 def _schema_errors(record):
-    schema = json.loads(open(SCHEMA_PATH, encoding="utf-8").read())
+    schema = json.loads(open(SCHEMA_PATH).read())
     structural = [
         error.message for error in Draft202012Validator(schema).iter_errors(record)
     ]
@@ -335,7 +335,7 @@ def test_live_record_writes_to_a_mode_specific_generated_path(tmp_path):
     path = write_live_trajectory(live, tmp_path)
 
     assert path.parent == tmp_path / "live" / "exploratory" / "off"
-    assert json.loads(path.read_text(encoding="utf-8"))["trajectory_id"] == live["trajectory_id"]
+    assert json.loads(path.read_text())["trajectory_id"] == live["trajectory_id"]
 
 
 def test_clean_control_can_record_a_blocked_non_unsafe_request():
