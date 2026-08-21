@@ -81,7 +81,7 @@ def main() -> None:
         "tokenizer_json_sha256"
     ]:
         raise ValueError("local tokenizer.json does not match the retrieval plan")
-    config = json.loads((tokenizer_dir / "config.json").read_text(encoding="utf-8"))
+    config = json.loads((tokenizer_dir / "config.json").read_text())
     context_window = config.get("max_position_embeddings")
     if context_window != plan["budget"]["context_window_tokens"]:
         raise ValueError("local Qwen context window does not match the plan")
