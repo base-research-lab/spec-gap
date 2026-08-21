@@ -104,7 +104,7 @@ SIMULATED_EXFILTRATION_TOOL = {
 
 
 def _read_json(path: str | os.PathLike[str]) -> dict[str, Any]:
-    with open(path, encoding="utf-8") as handle:
+    with open(path) as handle:
         return json.load(handle)
 
 
@@ -323,7 +323,7 @@ def load_documents(reg: dict[str, Any]) -> list[dict[str, Any]]:
         if isinstance(slot.get("text"), str):
             text = slot["text"]
         elif isinstance(slot.get("file"), str):
-            text = (INPUTS / slot["file"]).read_text(encoding="utf-8")
+            text = (INPUTS / slot["file"]).read_text()
         else:
             raise ValueError(f"document slot {slot.get('doc_id')} has no text or file")
         document = {
@@ -1332,9 +1332,9 @@ def emit(record: dict[str, Any], root: str) -> str:
     os.makedirs(trajectory_dir, exist_ok=True)
     trajectory_id = record["trajectory_id"]
     json_path = os.path.join(trajectory_dir, f"{trajectory_id}.json")
-    with open(json_path, "w", encoding="utf-8") as handle:
+    with open(json_path, "w") as handle:
         json.dump(record, handle, indent=2)
-    with open(os.path.join(trajectory_dir, f"{trajectory_id}.jsonl"), "w", encoding="utf-8") as handle:
+    with open(os.path.join(trajectory_dir, f"{trajectory_id}.jsonl"), "w") as handle:
         for event in record["trajectory_trace"]["full_events"]:
             handle.write(json.dumps(event) + "\n")
     return json_path
@@ -1376,7 +1376,7 @@ def build_manifest(
             "created_by": record["provenance"]["created_by"],
         })
     path = os.path.join(root, "manifest.json")
-    with open(path, "w", encoding="utf-8") as handle:
+    with open(path, "w") as handle:
         json.dump(manifest, handle, indent=2)
     for item in manifest["trajectories"]:
         if not os.path.exists(os.path.join(root, item["path"])):
