@@ -43,7 +43,6 @@ results/**/*.code-workspace
 !results/.gitkeep
 artifacts/
 trajectories/
-experiments/scenario1/inputs/fellow_packages/*/source_pdfs/
 experiments/scenario1/manifest.json
 week2_collusion_probe_results.json
 week2_collusion_probe_activations.npz
