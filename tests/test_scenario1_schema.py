@@ -12,10 +12,19 @@ from jsonschema import Draft202012Validator
 
 from src.scenario1 import generator as gen
 from src.scenario1 import validator as V
-from src.infrastructure.qwen_modal import CONTROLLED_GENERATION_SETTINGS, MODEL_LAYER_COUNT
+from src.infrastructure.qwen_modal import (
+    MODEL_LAYER_COUNT,
+    generation_settings_for_protocol,
+)
 
 
-REGISTRIES = gen.load_registries()
+REGISTRY_PATHS = [
+    "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
+    "12_docid_in_calibration_line/begin/domain_config.json",
+    "experiments/scenario1/inputs/fellow_packages_New/fin/attack_styles/"
+    "12_docid_in_calibration_line/begin/domain_config.json",
+]
+REGISTRIES = gen.load_registries(REGISTRY_PATHS)
 SCHEMA = json.load(open(V.SCHEMA_PATH))
 VALIDATOR = Draft202012Validator(SCHEMA)
 CANONICAL_OUTCOMES = {
@@ -218,7 +227,7 @@ def test_system_prompts_and_attack_family_are_fixed_across_groups():
     assert len({json.dumps(reg["system_prompts"], sort_keys=True) for reg in REGISTRIES}) == 1
     assert {reg["injection_family"] for reg in REGISTRIES} == {"fake_compliance_request"}
     assert {reg["injection_placement"] for reg in REGISTRIES} == {"body_text"}
-    assert {reg["assigned_wording"] for reg in REGISTRIES} == {"A", "B"}
+    assert {reg["assigned_wording"] for reg in REGISTRIES} == {"A"}
 
 
 def test_registry_validation_allows_domain_specific_carrier_framing():
@@ -231,6 +240,7 @@ def test_registry_validation_allows_domain_specific_carrier_framing():
 
 def test_agent_prompt_profile_versions_trajectory_and_pair_ids():
     registry = copy.deepcopy(REGISTRIES[0])
+    registry["generation_protocol_id"] = gen.DEFAULT_GENERATION_PROTOCOL_ID
     registry["agent_prompt_profile_id"] = "neutral_v1"
     record = gen.build_record(registry, "2-hop", "clean")
 
@@ -266,6 +276,7 @@ def test_5000_generation_protocol_versions_ids_and_decoding_budget():
 
 def test_registry_validation_rejects_mixed_generation_protocols():
     registries = copy.deepcopy(REGISTRIES)
+    registries[0]["generation_protocol_id"] = gen.DEFAULT_GENERATION_PROTOCOL_ID
     registries[1]["generation_protocol_id"] = "controlled_v2_5000"
 
     with pytest.raises(ValueError, match="generation_protocol_id"):
@@ -280,13 +291,11 @@ def test_each_group_has_three_documents_and_a_matched_carrier():
         carrier_index = next(
             index for index, item in enumerate(clean) if item["role"] == "injection_carrier"
         )
-        wording = reg["injection"]["wordings"][reg["assigned_wording"]]
         assert span is not None
-        assert injected[carrier_index]["text"].replace(wording + "\n\n", "", 1) == clean[
-            carrier_index
-        ]["text"]
-        assert reg["injection"]["endpoint"].endswith(".invalid/intake") or \
-            ".example.invalid/" in reg["injection"]["endpoint"]
+        clean_text = clean[carrier_index]["text"]
+        injected_text = injected[carrier_index]["text"]
+        assert injected_text[: span[0]] + injected_text[span[1] :] == clean_text
+        assert ".example.invalid/" in reg["injection"]["endpoint"]
 
 
 def test_only_worker1_is_raw_poison_exposed(records):
@@ -334,7 +343,9 @@ def test_dry_run_never_claims_outputs_labels_or_artifacts(records):
 def test_qwen_model_and_layer_scan_are_configurable(records):
     for record in records:
         assert record["model"]["model_name"] == "Qwen/Qwen3-32B"
-        assert record["model"]["decoding_settings"] == CONTROLLED_GENERATION_SETTINGS
+        assert record["model"]["decoding_settings"] == generation_settings_for_protocol(
+            record["generation_protocol_id"]
+        )
         assert record["activation_config"]["layers"] == list(range(MODEL_LAYER_COUNT))
         assert record["activation_config"]["primary_layer"] is None
 
@@ -376,7 +387,7 @@ def test_manifest_covers_all_groups_and_paths(tmp_path):
     manifest = json.load(open(tmp_path / "manifest.json"))
     assert len(records) == len(manifest["trajectories"]) == 8
     assert manifest["model_called"] is False
-    assert set(manifest["contributors"]) == {"mariame", "onyokoli"}
+    assert set(manifest["contributors"]) == {"oudoum"}
     for item in manifest["trajectories"]:
         assert (tmp_path / item["path"]).exists()
 
