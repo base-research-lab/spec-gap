@@ -448,13 +448,13 @@ def test_apply_repair_updates_artifact_checkpoint_and_live_record(tmp_path):
     ]["expected_checksum_sha256"]
     assert summary["new_checksum_sha256"] == payload["new_checksum_sha256"]
 
-    saved = json.loads(Path(item["checkpoint_path"]).read_text(encoding="utf-8"))
+    saved = json.loads(Path(item["checkpoint_path"]).read_text())
     assert saved["activation_metadata"]["checkpoint_forward_scopes"][
         "last_input_token"
     ] == "prompt_only"
     assert saved["activation_repair_metadata"]["generated_outputs_preserved"] is True
 
-    live = json.loads(Path(item["live_path"]).read_text(encoding="utf-8"))
+    live = json.loads(Path(item["live_path"]).read_text())
     turn = next(
         event
         for event in live["trajectory_trace"]["full_events"]
@@ -555,7 +555,7 @@ def test_apply_repair_can_resume_after_artifact_write(tmp_path):
     )
 
     assert summary["new_checksum_sha256"] == payload["new_checksum_sha256"]
-    saved = json.loads(Path(item["checkpoint_path"]).read_text(encoding="utf-8"))
+    saved = json.loads(Path(item["checkpoint_path"]).read_text())
     assert saved["activation_repair_metadata"]["repair_method"] == (
         ACTIVATION_REPAIR_METHOD
     )
@@ -604,7 +604,7 @@ def test_reconcile_completes_checkpoint_written_live_missing_transaction(tmp_pat
         and candidate["step_index"] == item["step_index"]
     )
     assert completed["status"] == "complete"
-    live = json.loads(Path(item["live_path"]).read_text(encoding="utf-8"))
+    live = json.loads(Path(item["live_path"]).read_text())
     event = next(
         candidate
         for candidate in live["trajectory_trace"]["full_events"]
