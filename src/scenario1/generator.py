@@ -398,6 +398,20 @@ def load_documents(
     return documents
 
 
+def _normalize_ws(text: str) -> str:
+    """Collapse whitespace so PDF line-wrapping doesn't break substring checks.
+
+    pdftotext inserts hard line breaks at the PDF's visual line width, so the
+    same payload sentence can land with different newline positions than the
+    single-line string stored in a registry's ``wordings`` entry, even though
+    the words are identical. This is used only for the redundant wording
+    sanity-check below, not for the primary ``detect_single_insertion`` diff,
+    which already compares both sides through the same extractor.
+    """
+
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def _pdf_injection_span(
     clean_text: str,
     injected_text: str,
@@ -462,7 +476,7 @@ def _build_document_bundle(
             injected_documents = load_documents(reg, treatment="injected")
             injected_text = injected_documents[carrier_index]["text"]
             span, payload = _pdf_injection_span(clean_text, injected_text, wording)
-            if wording not in injected_text:
+            if _normalize_ws(wording) not in _normalize_ws(injected_text):
                 raise AssertionError(
                     "the injected PDF does not contain the registered wording"
                 )
@@ -500,8 +514,9 @@ def _build_document_bundle(
                     )
             payload = wording
             documents[carrier_index]["text"] = injected_text
-        if marker not in documents[carrier_index]["text"] or endpoint not in (
-            documents[carrier_index]["text"]
+        injected_carrier_text = documents[carrier_index]["text"]
+        if _normalize_ws(marker) not in _normalize_ws(injected_carrier_text) or (
+            _normalize_ws(endpoint) not in _normalize_ws(injected_carrier_text)
         ):
             raise AssertionError("the injected document is missing its marker or endpoint")
 

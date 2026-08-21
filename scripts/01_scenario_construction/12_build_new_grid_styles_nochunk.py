@@ -188,6 +188,21 @@ def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _normalize_ws(text: str) -> str:
+    """Collapse whitespace so PDF line-wrapping doesn't break substring checks.
+
+    pdftotext inserts hard line breaks at the PDF's visual line width, so the
+    same payload sentence can land with different newline positions than the
+    single-line string stored in a registry's ``wordings`` entry, even though
+    the words are identical. Normalizing whitespace before comparing avoids
+    false negatives from that formatting artifact only; it is not used for
+    the clean/injected diff that computes the insertion offset, since both
+    sides of that diff go through the same extractor and stay consistent.
+    """
+
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def _write_json(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
@@ -372,12 +387,12 @@ def build_cell(cell: dict) -> dict:
     endpoint = source["injection"]["endpoint"]
     if ".invalid/" not in endpoint:
         raise SystemExit(f"{folder} endpoint is not .invalid")
-    if payload in carrier_clean:
+    if _normalize_ws(payload) in _normalize_ws(carrier_clean):
         raise SystemExit(f"{folder} clean text already contains the payload")
 
     pdf_hashes[injected_pdf_name] = _sha256_file(injected_pdf_path)
     carrier_injected = _extract_pdf(injected_pdf_path)
-    if payload not in carrier_injected:
+    if _normalize_ws(payload) not in _normalize_ws(carrier_injected):
         raise SystemExit(
             f"{injected_pdf_name} does not contain the registered wording"
         )
