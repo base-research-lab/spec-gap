@@ -35,7 +35,7 @@ PLANNER_FIXTURE = "Retrieve and summarize the selected evidence."
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text())
 
 
 def _worker_message_content(registry_path: Path, treatment: str) -> str:
