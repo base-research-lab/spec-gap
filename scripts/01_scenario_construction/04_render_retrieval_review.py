@@ -331,7 +331,7 @@ def build_review(
         generator.INPUTS
         / registry["retrieval"]["context_preflight_file"]
     )
-    preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
+    preflight = json.loads(preflight_path.read_text())
     minimum_headroom = min(
         case["headroom_tokens"] for case in preflight["cases"]
     )
