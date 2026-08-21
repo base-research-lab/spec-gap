@@ -1222,7 +1222,7 @@ def validate_retrieval_plan(
 
 
 def load_retrieval_plan(path: str | Path) -> dict[str, Any]:
-    with open(path, encoding="utf-8") as handle:
+    with open(path) as handle:
         plan = json.load(handle)
     if not isinstance(plan, dict):
         raise ValueError("retrieval plan must be a JSON object")
