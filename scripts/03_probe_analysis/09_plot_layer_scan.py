@@ -55,7 +55,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    result = json.loads(args.input.read_text(encoding="utf-8"))
+    result = json.loads(args.input.read_text())
     analysis_tier = normalize_index_analysis_tier(result.get("analysis_tier"))
     paper_policy = load_paper_input_policy(args.paper_input_policy)
     paper_input_selection = validate_embedded_paper_input_audit(
