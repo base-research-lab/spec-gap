@@ -214,13 +214,9 @@ def main() -> None:
     )
     for destination in (args.packet_out, args.key_out, args.review_out):
         destination.parent.mkdir(parents=True, exist_ok=True)
-    # args.packet_out.write_text(packet, encoding="utf-8")
-    # args.key_out.write_text(_canonical_json(key), encoding="utf-8")
-    # args.review_out.write_text(_canonical_json(review), encoding="utf-8")
-
-    args.packet_out.write_text(packet, encoding="utf-8", newline="")
-    args.key_out.write_text(_canonical_json(key), encoding="utf-8", newline="")
-    args.review_out.write_text(_canonical_json(review), encoding="utf-8", newline="")
+    args.packet_out.write_text(packet, encoding="utf-8")
+    args.key_out.write_text(_canonical_json(key), encoding="utf-8")
+    args.review_out.write_text(_canonical_json(review), encoding="utf-8")
 
 
 if __name__ == "__main__":
