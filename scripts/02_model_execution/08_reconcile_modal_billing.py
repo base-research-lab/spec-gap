@@ -74,7 +74,7 @@ def _local_estimates(
     excluded_other_tier_count = 0
     for path in sorted(checkpoint_root.rglob("step_*.json")):
         try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
+            payload = json.loads(path.read_text())
         except (OSError, json.JSONDecodeError):
             continue
         cost = payload.get("cost_metadata")
@@ -132,7 +132,7 @@ def _local_app_references(results_root: Path) -> dict[str, list[str]]:
         if "modal_billing_reconciliation" in path.name:
             continue
         try:
-            text = path.read_text(encoding="utf-8")
+            text = path.read_text()
         except (OSError, UnicodeDecodeError):
             continue
         relative = path.relative_to(PROJECT_ROOT).as_posix()
@@ -223,7 +223,7 @@ def _write_csv(path: Path, apps: list[dict[str, Any]]) -> None:
         "tags_json", "local_references_json",
     ]
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="") as handle:
+    with path.open("w", newline="") as handle:
         writer = csv.DictWriter(
             handle,
             fieldnames=fields,
