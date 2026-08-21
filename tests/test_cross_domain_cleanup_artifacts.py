@@ -370,7 +370,7 @@ def test_dual_human_review_stays_blind_blank_and_fail_closed():
         for turn in sample["turn_completion_metadata"]
     )
 
-    rows = list(csv.DictReader((HUMAN_REVIEW_ROOT / "human_review_form.csv").open(encoding="utf-8")))
+    rows = list(csv.DictReader((HUMAN_REVIEW_ROOT / "human_review_form.csv").open()))
     assert len(rows) == 72
     manual_fields = [
         field
@@ -381,7 +381,7 @@ def test_dual_human_review_stays_blind_blank_and_fail_closed():
     assert all(not row[field] for row in rows for field in manual_fields)
 
     unblinded_rows = list(
-        csv.DictReader((HUMAN_REVIEW_ROOT / "human_review_unblinded_form.csv").open(encoding="utf-8"))
+        csv.DictReader((HUMAN_REVIEW_ROOT / "human_review_unblinded_form.csv").open())
     )
     assert len(unblinded_rows) == 72
     unblinded_manual_fields = [
@@ -456,7 +456,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
     }
 
     blinded_path = review_dir / "human_review_form.csv"
-    blinded_rows = list(csv.DictReader(blinded_path.open(encoding="utf-8")))
+    blinded_rows = list(csv.DictReader(blinded_path.open()))
     for row in blinded_rows:
         row.update(
             {
@@ -487,7 +487,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
                 "notes": "",
             }
         )
-    with blinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with blinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=blinded_rows[0])
         writer.writeheader()
         writer.writerows(blinded_rows)
@@ -500,7 +500,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
     }
 
     unblinded_path = review_dir / "human_review_unblinded_form.csv"
-    unblinded_rows = list(csv.DictReader(unblinded_path.open(encoding="utf-8")))
+    unblinded_rows = list(csv.DictReader(unblinded_path.open()))
     for row in unblinded_rows:
         row.update(
             {
@@ -518,7 +518,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
                 "notes": "",
             }
         )
-    with unblinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with unblinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=unblinded_rows[0])
         writer.writeheader()
         writer.writerows(unblinded_rows)
@@ -558,7 +558,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
     disagreement_pair_id = reviewer_2_blinded_row["pair_id"]
     reviewer_2_blinded_row["sample_A_task_preserved"] = "no"
     reviewer_2_blinded_row["flag_for_discussion"] = "yes"
-    with blinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with blinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=blinded_rows[0])
         writer.writeheader()
         writer.writerows(blinded_rows)
@@ -569,7 +569,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
     for row in unblinded_rows:
         if row["reviewer_slot"] == "2":
             row["locked_blinded_rows_sha256"] = blinded_hashes["2"]
-    with unblinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with unblinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=unblinded_rows[0])
         writer.writeheader()
         writer.writerows(unblinded_rows)
@@ -598,7 +598,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
     for row in unblinded_rows:
         if row["reviewer_slot"] == "1":
             row["locked_blinded_rows_sha256"] = "1" * 64
-    with unblinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with unblinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=unblinded_rows[0])
         writer.writeheader()
         writer.writerows(unblinded_rows)
@@ -613,7 +613,7 @@ def test_completed_review_validator_binds_locked_rows_and_rejects_label_changes(
         if row["reviewer_slot"] == "1":
             row["locked_blinded_rows_sha256"] = blinded_hashes["1"]
     unblinded_rows[0]["outcome"] = "executed"
-    with unblinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with unblinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=unblinded_rows[0])
         writer.writeheader()
         writer.writerows(unblinded_rows)
