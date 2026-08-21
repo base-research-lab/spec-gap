@@ -438,7 +438,7 @@ def test_activation_index_cli_reads_only_selected_tier(tmp_path, monkeypatch):
     rows = load_activation_index(output)
     assert {row["trajectory_id"] for row in rows} == {"trajectory-definitive"}
     assert {row["analysis_tier"] for row in rows} == {"definitive"}
-    assert json.loads(summary_output.read_text(encoding="utf-8"))["analysis_tier"] == "definitive"
+    assert json.loads(summary_output.read_text())["analysis_tier"] == "definitive"
 
 
 def test_activation_index_cli_upgrades_legacy_index_as_unclassified(
