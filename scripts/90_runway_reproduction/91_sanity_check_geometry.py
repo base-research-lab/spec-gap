@@ -163,7 +163,7 @@ def run_sanity_check(device: str = "cuda", n_statements: int | None = None):
     out_dir = Path(__file__).resolve().parents[2] / "results"
     out_dir.mkdir(exist_ok=True)
     out_path = out_dir / "sanity_check_geometry_of_truth.json"
-    with open(out_path, "w", encoding="utf-8") as f:
+    with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
     print(f"\nResults saved to {out_path}")
 
