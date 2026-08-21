@@ -8,6 +8,8 @@ include the complete lifetime of an App container.
 
 from __future__ import annotations
 
+import hashlib
+import re
 from collections import defaultdict
 from decimal import Decimal
 from typing import Any, Iterable
@@ -22,6 +24,21 @@ BASE_BILLING_TAGS = {
     "scenario": "scenario1",
 }
 ANALYSIS_TIERS = frozenset({"exploratory", "definitive"})
+_MODAL_TAG_MAX_LENGTH = 63
+_MODAL_TAG_UNSAFE = re.compile(r"[^A-Za-z0-9._-]+")
+
+
+def _modal_tag_value(value: str) -> str:
+    """Return a Modal-legal tag value, hashing when the raw value is too long."""
+
+    safe = _MODAL_TAG_UNSAFE.sub("-", value).strip("-_.")
+    if not safe:
+        raise ValueError("billing tag value is empty after sanitizing")
+    if len(safe) <= _MODAL_TAG_MAX_LENGTH:
+        return safe
+    digest = hashlib.sha256(value.encode("utf-8")).hexdigest()[:10]
+    keep = _MODAL_TAG_MAX_LENGTH - len(digest) - 1
+    return f"{safe[:keep].rstrip('-_.')}-{digest}"
 
 
 def as_decimal(value: Any, field: str) -> Decimal:
@@ -79,9 +96,9 @@ def scenario1_billing_tags(
     tier = validate_analysis_tier(analysis_tier)
     return {
         **BASE_BILLING_TAGS,
-        "domains": ",".join(domains),
-        "generation_protocols": ",".join(protocols),
-        "run_kind": run_kind.strip(),
+        "domains": _modal_tag_value(".".join(domains)),
+        "generation_protocols": _modal_tag_value(".".join(protocols)),
+        "run_kind": _modal_tag_value(run_kind.strip()),
         "analysis_tier": tier,
     }
 
