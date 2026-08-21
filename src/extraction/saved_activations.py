@@ -298,7 +298,7 @@ def build_activation_index(
                         ),
                         "treatment": _required_string(record, "treatment"),
                         "match_group_id": _required_string(
-                            record, "group_id"
+                            record, "independence_group_id"
                         ),
                         "matched_pair_id": _required_string(record, "matched_pair_id"),
                         "domain_id": _required_string(record, "domain_id"),

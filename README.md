@@ -48,7 +48,7 @@ python scripts/00_repository/00_show_pipeline.py --check
 python scripts/run_portable_smoke_test.py
 ```
 
-The first command validates the canonical `S00`–`S23` run order. The portable
+The first command validates the canonical `S00`–`S21` run order. The portable
 smoke test builds and schema-validates 44 structural trajectories across 11
 active domains plus 308 Modal request templates. It uses temporary storage and
 starts no model, app, image build, or GPU.
@@ -59,24 +59,24 @@ Run the complete test suite with:
 python -m pytest -q
 ```
 
-Rebuilding retrieval inputs from source PDFs also requires Poppler's `pdftotext`;
+Building trajectories from source PDFs also requires Poppler's `pdftotext`;
 see the
-[construction prerequisite](docs/scenario1/pipeline-runbook.md#s03-s06-only-when-constructing-or-changing-a-package).
+[construction prerequisite](docs/scenario1/pipeline-runbook.md#s03-s04-only-when-constructing-or-changing-a-package).
 
 Choose only the path needed for the task:
 
 | Goal | Run | Stop point |
 | --- | --- | --- |
 | Check a checkout or code change | `S00`–`S02` | Portable smoke passes |
-| Rebuild public figures | `S00`–`S02`, then `S20` | Reporting bundle passes |
-| Add or change a domain package | `S00`–`S06` | Package and context review pass |
-| Check authorized Modal access | `S07` | Workspace and billing owner are confirmed |
-| Execute a new experiment | `S07`–`S13` | Every research and paid gate passes |
-| Analyze hydrated run artifacts | `S14`–`S22` | Cohort, tier, policy, and hashes agree |
-| Finalize behavioral labels | `S23` | Two human reviews and adjudication are complete |
+| Rebuild public figures | `S00`–`S02`, then `S18` | Reporting bundle passes |
+| Add or change a domain package | `S00`–`S04` | Package and schema validation pass |
+| Check authorized Modal access | `S05` | Workspace and billing owner are confirmed |
+| Execute a new experiment | `S05`–`S11` | Every research and paid gate passes |
+| Analyze hydrated run artifacts | `S12`–`S20` | Cohort, tier, policy, and hashes agree |
+| Finalize behavioral labels | `S21` | Two human reviews and adjudication are complete |
 
 The [pipeline runbook](docs/scenario1/pipeline-runbook.md) is the only detailed
-operating sequence. Existing filename numbers are phase-local; `S00`–`S23` are
+operating sequence. Existing filename numbers are phase-local; `S00`–`S21` are
 the repository-wide order.
 
 ![Scenario 1 evaluation pipeline](docs/assets/scenario1_pipeline_overview.png)
@@ -108,7 +108,7 @@ simulated, no-network tool, so it cannot contact the registered endpoint.
 
 | Location | Responsibility |
 | --- | --- |
-| `experiments/scenario1/inputs/` | Canonical tasks, documents, injections, retrieval plans, and provenance |
+| `experiments/scenario1/inputs/` | Canonical tasks, documents, injections, and provenance |
 | `schemas/scenario1/v2/` | Machine-readable trajectory and event contracts |
 | `scripts/00_repository/` | Environment-independent repository checks |
 | `scripts/01_scenario_construction/` | Package construction, validation, and source audits |
@@ -131,20 +131,26 @@ or historical outputs belong under `results/`; documentation belongs under
 
 ## Inputs and artifact boundaries
 
-Active fellow packages use one predictable structure:
+Active fellow packages use one predictable structure. Worker_1 receives whole
+documents at retrieval time; there is no separate retrieval-plan or chunking
+artifact:
 
 ```text
-experiments/scenario1/inputs/fellow_packages/<domain>/
-├── domain_config.json
-├── documents/
-└── retrieval/
-    ├── plan.json
-    └── context_check.json
+experiments/scenario1/inputs/fellow_packages_New/<domain>/
+├── registry.json
+├── <domain>_doc*_clean.pdf
+├── <domain>_doc*_inj_{beginning,middle,before_references}.pdf
+├── documents/                 # extracted *_clean.txt fixtures
+└── attack_styles/<style>/<position>/domain_config.json
 ```
 
-The active domains are `aihc`, `convex_open_access_v3`, `fin`, `kg`, `macro`,
-`neuro`, `petro`, `policy`, and `telecom`. Pilot configurations live under
-package `archive/` directories.
+Each domain's `registry.json` expands to a 3x3 grid of injection style
+(`12`, `20`, `28`) x position (`begin`, `middle`, `end`) via
+`scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py`.
+
+The active domains are `aihc`, `convex`, `fin`, `kg`, `macro`, `neuro`,
+`petro`, `policy`, and `telecoms`. Historical pre-grid packages are preserved
+for provenance under `archive/old_experiment_inputs/fellow_packages/`.
 
 Large raw trajectories and activation tensors are intentionally ignored. Git
 tracks canonical inputs, compact evidence, public summaries, checksums, and
@@ -180,7 +186,7 @@ Its tracked input is `results/scenario1/reporting_snapshot.json`.
 ## Remote and human gates
 
 Modal resources and billing belong to the workspace selected by the active
-profile; they are not tied to one person's filesystem. Run `S07` before any
+profile; they are not tied to one person's filesystem. Run `S05` before any
 remote preparation. Paid H200 stages require explicit confirmation strings and
 research-group approval.
 
@@ -195,7 +201,6 @@ substitutes.
 - [Canonical pipeline runbook](docs/scenario1/pipeline-runbook.md)
 - [Domain-package build guide](docs/scenario1/package-build-guide.md)
 - [Trajectory schema guide](docs/scenario1/schema.md)
-- [Full-corpus retrieval guide](docs/scenario1/full-corpus-retrieval.md)
 - [Modal execution and billing](docs/modal.md)
 - [Historical runway reproduction](docs/runway.md)
 
@@ -213,7 +218,10 @@ substitutes.
 Repository-authored code and metadata are licensed under [MIT](LICENSE).
 Third-party documents retain their original licenses and redistribution terms.
 Neuro-specific restrictions are recorded in
-[`LICENSE_NOTICE.md`](experiments/scenario1/inputs/fellow_packages/neuro/LICENSE_NOTICE.md).
+[`LICENSE_NOTICE.md`](archive/old_experiment_inputs/fellow_packages/neuro/LICENSE_NOTICE.md)
+(the notice predates the `fellow_packages_New` package layout; its per-source
+license table still governs `neuro_doc1`–`neuro_doc3` there — the controlled
+injection remains applied only to `neuro_doc1`, the CC BY 4.0 source).
 
 ## Citation
 

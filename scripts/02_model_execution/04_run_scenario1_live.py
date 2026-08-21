@@ -18,7 +18,6 @@ from src.infrastructure.modal_billing import (  # noqa: E402
 from src.infrastructure.modal_qwen_runner import Qwen3Runner, app  # noqa: E402
 from src.scenario1.generator import (  # noqa: E402
     ARTIFACT_ROOT,
-    REGISTRY_PATH,
     build_record,
     build_request_plan,
     load_registry,
@@ -32,7 +31,7 @@ from src.scenario1.orchestrator import (  # noqa: E402
 
 @app.local_entrypoint()
 def run_scenario1_trajectory(
-    registry_path: str = str(REGISTRY_PATH),
+    registry_path: str,
     condition_id: str = "2-hop",
     treatment: str = "clean",
     thinking_mode: str = "off",

@@ -1,7 +1,7 @@
 <!--
 Purpose: canonical, ordered operating guide for the active Scenario 1 pipeline.
 Created: 2026-08-10.
-The S00-S23 table is generated from src/scenario1/pipeline_catalog.py.
+The S00-S21 table is generated from src/scenario1/pipeline_catalog.py.
 -->
 
 # Scenario 1 pipeline runbook
@@ -11,7 +11,7 @@ command from the repository root. Use `scripts/` as command entry points and
 `src/` when reading or changing reusable implementation code.
 
 Do not run every numbered file simply because it exists. Filename numbers are
-stable, phase-local names; `S00` through `S23` below are the unique
+stable, phase-local names; `S00` through `S21` below are the unique
 repository-wide order. Package-specific evidence builders, legacy repairs, and
 the `90_` runway reproduction are side paths, not missing main stages.
 
@@ -20,22 +20,22 @@ the `90_` runway reproduction are side paths, not missing main stages.
 ```text
 S00 install -> S01 inspect order -> S02 portable smoke
                                       |
-                                      +-> public checkout: S20 reporting rebuild
-                                      +-> package edit: S03 -> S04 -> S05 -> S06
-                                      +-> new lab run: S07 -> S08 -> S09 -> S10 -> S11
+                                      +-> public checkout: S18 reporting rebuild
+                                      +-> package edit: S03 -> S04
+                                      +-> new lab run: S05 -> S06 -> S07 -> S08 -> S09
                                                                   |       |
-                                                                  |       +-> S12/S13 accounting
-                                                                  |       +-> S14-S22 analysis/reporting
-                                                                  |       +-> S23 human review
+                                                                  |       +-> S10/S11 accounting
+                                                                  |       +-> S12-S20 analysis/reporting
+                                                                  |       +-> S21 human review
                                                                   +-> stop unless the one-run gate passes
 ```
 
 - A contributor checking the repository stops after `S02`.
 - A contributor rebuilding public figures from tracked compact data jumps from
-  `S02` to `S20`; private trajectories and activation tensors are not needed.
-- A package author runs `S03` through `S06`, then stops unless the research
+  `S02` to `S18`; private trajectories and activation tensors are not needed.
+- A package author runs `S03` through `S04`, then stops unless the research
   group has approved new model execution.
-- The research group owns `S10` onward for any new Scenario 1 run. Repository
+- The research group owns `S08` onward for any new Scenario 1 run. Repository
   cleanup does not authorize a redesign, rerun, or definitive paper claim.
 
 ## Canonical stage catalog
@@ -54,33 +54,31 @@ python scripts/00_repository/00_show_pipeline.py --check
 | `S00` | Setup | all contributors | local only | `pyproject.toml` | Editable development and Modal dependencies installed |
 | `S01` | Setup | all contributors | local only | `scripts/00_repository/00_show_pipeline.py` | Catalog, entry-point, and runbook consistency check |
 | `S02` | Setup | all contributors | local only | `scripts/run_portable_smoke_test.py` | 44 validated structural trajectories and 308 request templates |
-| `S03` | Construction | package changes | local only | `scripts/01_scenario_construction/00_prepare_retrieval_plan.py` | Clean-ranked, hash-bound retrieval plan |
-| `S04` | Construction | package changes | local only | `scripts/01_scenario_construction/01_generate_trajectories.py` | Matched clean/injected 2-hop and 3-hop records |
-| `S05` | Construction | package changes | local only | `scripts/01_scenario_construction/02_validate_trajectories.py` | Schema and semantic validation pass |
-| `S06` | Construction | package changes | local only | `scripts/01_scenario_construction/03_preflight_retrieval_context.py`<br>`scripts/01_scenario_construction/04_render_retrieval_review.py` | Tokenizer-bound context check and review material |
-| `S07` | Modal | authorized workspace | read-only network | `scripts/run_portable_smoke_test.py` | Authenticated workspace check with no app or GPU start |
-| `S08` | Modal | authorized workspace | remote CPU/storage | `scripts/02_model_execution/03_modal_qwen_runner.py` | Pinned Qwen revision stored in the selected workspace |
-| `S09` | Modal | authorized workspace | remote app setup | `scripts/02_model_execution/04_run_scenario1_live.py` | Exact no-model trajectory preview |
-| `S10` | Modal | lab-owned | paid H200 | `scripts/02_model_execution/04_run_scenario1_live.py` | Saved exploratory trajectory, checkpoints, activations, and costs |
-| `S11` | Modal | lab-owned | paid H200 | `scripts/02_model_execution/05_run_scenario1_batch.py` | Complete tier-isolated matrix for the explicitly selected cohort |
-| `S12` | Accounting | lab-owned | local only | `scripts/02_model_execution/07_summarize_scenario1_protocol.py` | Protocol-specific trajectory and cost ledger |
-| `S13` | Accounting | authorized workspace | read-only network | `scripts/02_model_execution/08_reconcile_modal_billing.py` | Tier-specific metered and billed cost reconciliation |
-| `S14` | Analysis | lab-owned | local artifacts | `scripts/03_probe_analysis/07_build_activation_index.py` | One-tier activation index with policy and checksum provenance |
-| `S15` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/08_scan_activation_layers.py` | Exploratory all-layer scan and paired negative-control audit |
-| `S16` | Analysis | optional | local CPU | `scripts/03_probe_analysis/09_plot_layer_scan.py` | Guarded diagnostic layer-scan figures |
-| `S17` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/10_score_baseline_probes.py` | Per-step Goldowsky-Dill and LAT scores |
-| `S18` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/11_analyze_depth_degradation.py` | Depth, calibration, and temporal analysis artifacts |
-| `S19` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/12_plot_probe_analysis.py` | Compact hash-bound snapshot, figures, tables, and manifest |
-| `S20` | Reporting | all contributors | local CPU | `scripts/04_reporting/15_build_reporting_bundle.py` | Public figures rebuilt from the tracked compact snapshot |
-| `S21` | Reporting | lab-owned | local CPU | `scripts/04_reporting/16_build_fixed_layer_analysis.py` | Prespecified fixed-layer tables, figures, and manifest |
-| `S22` | Reporting | lab-owned | local CPU | `scripts/04_reporting/17_build_cross_domain_robustness.py` | Ablations, paired deltas, nulls, and residualization checks |
-| `S23` | Human review | external humans | human judgment | `scripts/04_reporting/18_build_cross_domain_human_review.py` | Hash-locked reviews and adjudication, or an explicit pending gate |
+| `S03` | Construction | package changes | local only | `scripts/01_scenario_construction/01_generate_trajectories.py` | Matched clean/injected 2-hop and 3-hop records |
+| `S04` | Construction | package changes | local only | `scripts/01_scenario_construction/02_validate_trajectories.py` | Schema and semantic validation pass |
+| `S05` | Modal | authorized workspace | read-only network | `scripts/run_portable_smoke_test.py` | Authenticated workspace check with no app or GPU start |
+| `S06` | Modal | authorized workspace | remote CPU/storage | `scripts/02_model_execution/03_modal_qwen_runner.py` | Pinned Qwen revision stored in the selected workspace |
+| `S07` | Modal | authorized workspace | remote app setup | `scripts/02_model_execution/04_run_scenario1_live.py` | Exact no-model trajectory preview |
+| `S08` | Modal | lab-owned | paid H200 | `scripts/02_model_execution/04_run_scenario1_live.py` | Saved exploratory trajectory, checkpoints, activations, and costs |
+| `S09` | Modal | lab-owned | paid H200 | `scripts/02_model_execution/05_run_scenario1_batch.py` | Complete tier-isolated matrix for the explicitly selected cohort |
+| `S10` | Accounting | lab-owned | local only | `scripts/02_model_execution/07_summarize_scenario1_protocol.py` | Protocol-specific trajectory and cost ledger |
+| `S11` | Accounting | authorized workspace | read-only network | `scripts/02_model_execution/08_reconcile_modal_billing.py` | Tier-specific metered and billed cost reconciliation |
+| `S12` | Analysis | lab-owned | local artifacts | `scripts/03_probe_analysis/07_build_activation_index.py` | One-tier activation index with policy and checksum provenance |
+| `S13` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/08_scan_activation_layers.py` | Exploratory all-layer scan and paired negative-control audit |
+| `S14` | Analysis | optional | local CPU | `scripts/03_probe_analysis/09_plot_layer_scan.py` | Guarded diagnostic layer-scan figures |
+| `S15` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/10_score_baseline_probes.py` | Per-step Goldowsky-Dill and LAT scores |
+| `S16` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/11_analyze_depth_degradation.py` | Depth, calibration, and temporal analysis artifacts |
+| `S17` | Analysis | lab-owned | local CPU | `scripts/03_probe_analysis/12_plot_probe_analysis.py` | Compact hash-bound snapshot, figures, tables, and manifest |
+| `S18` | Reporting | all contributors | local CPU | `scripts/04_reporting/15_build_reporting_bundle.py` | Public figures rebuilt from the tracked compact snapshot |
+| `S19` | Reporting | lab-owned | local CPU | `scripts/04_reporting/16_build_fixed_layer_analysis.py` | Prespecified fixed-layer tables, figures, and manifest |
+| `S20` | Reporting | lab-owned | local CPU | `scripts/04_reporting/17_build_cross_domain_robustness.py` | Ablations, paired deltas, nulls, and residualization checks |
+| `S21` | Human review | external humans | human judgment | `scripts/04_reporting/18_build_cross_domain_human_review.py` | Hash-locked reviews and adjudication, or an explicit pending gate |
 <!-- END GENERATED PIPELINE TABLE -->
 
-`S03` and `S08` are conditional: reuse a checksummed retrieval plan or the
-pinned model cache when they already exist in the selected package/workspace.
-`S13` can run in parallel with analysis after Modal's billing data settles.
-`S16` is diagnostic and does not select the prespecified fixed layer.
+`S06` is conditional: reuse the pinned model cache when it already exists in
+the selected workspace. `S11` can run in parallel with analysis after Modal's
+billing data settles. `S14` is diagnostic and does not select the
+prespecified fixed layer.
 
 ## S00-S02: every checkout starts here
 
@@ -106,12 +104,15 @@ python scripts/run_portable_smoke_test.py \
 
 The command refuses to overwrite a nonempty path.
 
-## S03-S06: only when constructing or changing a package
+## S03-S04: only when constructing or changing a package
 
-Existing active packages already contain their checked retrieval plans. Do not
-regenerate them merely to inspect the repository.
+Worker_1 receives whole documents. There is no retrieval plan, chunking, or
+ranking step: a domain package is its clean and injected source PDFs plus one
+`registry.json` (or, for the style x position grid, one
+`fellow_packages_New/<domain>/registry.json`). Do not regenerate an existing
+active package's structural trajectories merely to inspect the repository.
 
-The canonical source-PDF verification calls `pdftotext -raw`. That executable
+The canonical source-PDF extraction calls `pdftotext -raw`. That executable
 comes from Poppler and is outside the Python environment created at `S00`.
 Install it with the operating system's package manager when needed (for
 example, `brew install poppler` on macOS or `sudo apt-get install
@@ -135,21 +136,23 @@ pdftotext -v
 ```
 
 Stop if the command is absent. A Poppler-version extraction difference will
-also fail the tracked text/hash checks rather than silently changing a plan.
+fail the tracked text/hash checks rather than silently changing a document.
 
-For a new or intentionally changed package, first prepare its plan with the
-exact pinned tokenizer and source files:
+For the style x position grid domains, build and validate every cell in one
+step:
 
 ```bash
-python scripts/01_scenario_construction/00_prepare_retrieval_plan.py \
-  --registry PATH/TO/domain_config.json \
-  --injected-carrier PATH/TO/INJECTED_CARRIER \
-  --tokenizer-json PATH/TO/PINNED_QWEN/tokenizer.json \
-  --source-pdf-root PATH/TO/SOURCE_PDFS
+python scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py \
+  --domains DOMAIN_OR_COMMA_LIST
 ```
 
-Generate structural records into an isolated directory, then validate every
-record before any Modal step:
+This writes each cell's `domain_config.json` under
+`fellow_packages_New/<domain>/attack_styles/<style>/<position>/` and, unless
+`--skip-pipeline` is passed, internally runs `S03` and `S04` (below) against
+every cell.
+
+For a one-off or non-grid registry, generate structural records into an
+isolated directory, then validate every record before any Modal step:
 
 ```bash
 python scripts/01_scenario_construction/01_generate_trajectories.py \
@@ -161,23 +164,10 @@ python scripts/01_scenario_construction/02_validate_trajectories.py \
   PATH/TO/NEW_STRUCTURAL_OUTPUT/*.json
 ```
 
-Run the tokenizer-bound maximum-context preflight and render the retrieval
-review:
+Stop if the single-insertion clean/injected diff, schema validation, or
+source/license review fails.
 
-```bash
-python scripts/01_scenario_construction/03_preflight_retrieval_context.py \
-  --registry PATH/TO/domain_config.json \
-  --tokenizer-dir PATH/TO/PINNED_QWEN
-
-python scripts/01_scenario_construction/04_render_retrieval_review.py \
-  --registry PATH/TO/domain_config.json \
-  --out PATH/TO/retrieval_review.html
-```
-
-Stop if hashes, context headroom, clean/injected selection parity, schema
-validation, or source/license review fails.
-
-## S07-S11: guarded Modal execution
+## S05-S09: guarded Modal execution
 
 These stages use whichever workspace the active contributor profile selects;
 they are not tied to one person's laptop or former lab membership.
@@ -190,7 +180,7 @@ modal setup
 
 `modal setup` opens the authentication flow and writes local profile/token
 configuration. It starts no app or compute, but it is not part of the read-only
-`S07` verification.
+`S05` verification.
 
 Once credentials exist, confirm the workspace, inspect its current billing
 summary, and run the read-only access check:
@@ -268,11 +258,11 @@ modal run \
   --confirm-paid-run RUN_H200_BATCH
 ```
 
-Never omit `--registry-paths` when the intended cohort is larger than the
-runner's shared-core default. Record the approved cohort, expected trajectory
-count, protocol ID, tier, workspace, and cost ceiling before the paid command.
+`--domains` or `--registry-paths` is required; there is no default cohort.
+Record the approved cohort, expected trajectory count, protocol ID, tier,
+workspace, and cost ceiling before the paid command.
 
-## S12-S13: execution accounting
+## S10-S11: execution accounting
 
 Build a tier-specific protocol ledger immediately after the matrix validates:
 
@@ -302,7 +292,7 @@ python scripts/02_model_execution/08_reconcile_modal_billing.py \
 Local per-turn estimates are not the invoice. Preserve both Modal's metered
 resource cost and billed cost after credits/adjustments.
 
-## S14-S19: analysis after artifact hydration
+## S12-S17: analysis after artifact hydration
 
 Hydrate the exact raw trajectories and activation tensors first. The paths and
 hashes must match the run ledger; never silently mix `exploratory`,
@@ -359,10 +349,10 @@ python scripts/03_probe_analysis/12_plot_probe_analysis.py \
   --analysis-dir PATH/TO/FINAL_ANALYSIS
 ```
 
-`S15` is an exploratory scan. `S16` visualizes that scan; it does not choose a
-paper layer. Prespecified fixed-layer work begins at `S21`.
+`S13` is an exploratory scan. `S14` visualizes that scan; it does not choose a
+paper layer. Prespecified fixed-layer work begins at `S19`.
 
-## S20-S23: reporting and human gates
+## S18-S21: reporting and human gates
 
 Anyone can rebuild the public bundle from the tracked compact snapshot:
 
@@ -421,11 +411,11 @@ human outcome claim. AI-generated ratings are not substitutes for reviewers.
 The following are intentionally outside the main line:
 
 - `scripts/01_scenario_construction/05_*` through `07_*` rebuild
-  package-specific lexical, result-evidence, PDF, or style audits.
+  package-specific language, result-evidence, PDF, or style audits.
 - `scripts/02_model_execution/06_repair_prompt_activations.py` repairs a
   documented legacy checkpoint defect; never run it on a normal new matrix.
 - `scripts/04_reporting/13_plot_pipeline_overview.py` and
-  `14_plot_investor_figures.py` are called by the `S20` bundle wrapper.
+  `14_plot_investor_figures.py` are called by the `S18` bundle wrapper.
 - `scripts/90_runway_reproduction/` is frozen historical reproduction and is
   not a prerequisite for active Scenario 1 work.
 - A combined natural-text attack, mechanism axis, arbitrary-target tool, or
@@ -436,7 +426,7 @@ The following are intentionally outside the main line:
 Stop rather than working around any of these conditions:
 
 - `S01` reports catalog/runbook drift or `S02` fails locally.
-- A source, license, retrieval-plan, tokenizer, or context hash does not match.
+- A source, license, tokenizer, or context hash does not match.
 - The active Modal workspace, billing owner, or spend ceiling is unclear.
 - The no-model preview or single exploratory trajectory has not passed review.
 - A purported definitive cohort is partial, mixed-tier, selectively rerun, or

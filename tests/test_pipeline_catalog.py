@@ -24,7 +24,7 @@ def test_pipeline_catalog_is_contiguous_and_repository_bound() -> None:
     validate_repository_pipeline(PROJECT_ROOT)
 
     assert [stage.stage_id for stage in PIPELINE_STAGES] == [
-        f"S{index:02d}" for index in range(24)
+        f"S{index:02d}" for index in range(22)
     ]
     assert PIPELINE_STAGES[0].title == "Install the project environment"
     assert PIPELINE_STAGES[-1].gate == "external humans"
@@ -81,5 +81,5 @@ def test_readme_points_to_one_start_command_and_one_detailed_runbook() -> None:
 
     assert "python scripts/00_repository/00_show_pipeline.py --check" in readme
     assert "docs/scenario1/pipeline-runbook.md" in readme
-    assert "S00" in readme and "S23" in readme
+    assert "S00" in readme and "S21" in readme
     assert "Poppler's `pdftotext`" in readme

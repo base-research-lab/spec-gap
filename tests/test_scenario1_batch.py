@@ -10,9 +10,16 @@ from src.scenario1.batch import (
 )
 from src.scenario1.generator import load_registries
 
+REGISTRY_PATHS = [
+    "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
+    "12_docid_in_calibration_line/begin/domain_config.json",
+    "experiments/scenario1/inputs/fellow_packages_New/fin/attack_styles/"
+    "12_docid_in_calibration_line/begin/domain_config.json",
+]
+
 
 def test_live_batch_contains_full_two_mode_matrix(tmp_path):
-    plan = build_live_batch(load_registries(), output_root=tmp_path)
+    plan = build_live_batch(load_registries(REGISTRY_PATHS), output_root=tmp_path)
 
     assert len(plan) == 16
     assert len({item["trajectory_id"] for item in plan}) == 16
@@ -26,7 +33,7 @@ def test_live_batch_contains_full_two_mode_matrix(tmp_path):
 
 
 def test_live_batch_rejects_invalid_mode_list(tmp_path):
-    registries = load_registries()
+    registries = load_registries(REGISTRY_PATHS)
     with pytest.raises(ValueError, match="non-empty unique"):
         build_live_batch(registries, thinking_modes=["off", "off"], output_root=tmp_path)
     with pytest.raises(ValueError, match="only 'off' and 'on'"):
@@ -41,7 +48,7 @@ def test_live_batch_rejects_invalid_mode_list(tmp_path):
 
 def test_resume_rejects_mismatched_existing_record(tmp_path):
     item = build_live_batch(
-        load_registries(), thinking_modes=["off"], output_root=tmp_path
+        load_registries(REGISTRY_PATHS), thinking_modes=["off"], output_root=tmp_path
     )[0]
     item["output_path"].parent.mkdir(parents=True)
     item["output_path"].write_text(json.dumps({"trajectory_id": "wrong"}))
@@ -52,13 +59,13 @@ def test_resume_rejects_mismatched_existing_record(tmp_path):
 
 def test_missing_batch_item_is_pending(tmp_path):
     item = build_live_batch(
-        load_registries(), thinking_modes=["off"], output_root=tmp_path
+        load_registries(REGISTRY_PATHS), thinking_modes=["off"], output_root=tmp_path
     )[0]
     assert load_completed_batch_item(item) is None
 
 
 def test_analysis_tiers_have_distinct_batch_output_paths(tmp_path):
-    registries = load_registries()
+    registries = load_registries(REGISTRY_PATHS)
     exploratory = build_live_batch(
         registries,
         thinking_modes=["off"],

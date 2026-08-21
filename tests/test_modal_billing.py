@@ -1,3 +1,4 @@
+import re
 import runpy
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -36,11 +37,33 @@ def test_scenario1_billing_tags_are_stable_and_specific():
         "project": "spec-gap",
         "component": "qwen3-inference",
         "scenario": "scenario1",
-        "domains": "aihc,macro",
+        "domains": "aihc.macro",
         "generation_protocols": "controlled_v2_5000",
         "run_kind": "batch",
         "analysis_tier": "definitive",
     }
+
+
+def test_scenario1_billing_tags_fit_modal_limits_for_nine_domains():
+    tags = scenario1_billing_tags(
+        domain_ids=[
+            "aihc_newgrid_12",
+            "convex_newgrid_28",
+            "fin_newgrid_20",
+            "kg_newgrid_12",
+            "macro_newgrid_28",
+            "neuro_newgrid_20",
+            "petro_newgrid_12",
+            "policy_newgrid_28",
+            "telecoms_newgrid_20",
+        ],
+        generation_protocol_ids=["controlled_v2_5000"],
+        run_kind="batch",
+        analysis_tier="exploratory",
+    )
+    assert len(tags["domains"]) <= 63
+    assert "," not in tags["domains"]
+    assert re.fullmatch(r"[A-Za-z0-9._-]+", tags["domains"])
 
 
 def test_analysis_tier_is_explicit_and_closed_set():

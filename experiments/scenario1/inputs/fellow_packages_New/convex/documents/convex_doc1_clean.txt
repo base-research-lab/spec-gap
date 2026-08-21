@@ -1,0 +1,392 @@
+arXiv:2402.10221v1
+[math.OC]
+23
+Jan
+2024
+Noname manuscript No.
+(will be inserted by the editor)
+Convergence Rate of Projected Subgradient Method
+with Time-varying Step-sizes
+Zhihan Zhu · Yanhao Zhang · Yong Xia
+Received: date / Accepted: date
+Abstract We establish the optimal ergodic convergence rate for the classical
+projected subgradient method with time-varying step-sizes. This convergence
+rate remains the same even if we slightly increase the weight of the most recent
+points, thereby relaxing the ergodic sense.
+Keywords Subgradient method · step-size · ergodic convergence rate ·
+nonsmooth convex optimization
+Mathematics Subject Classification (2010) 90C25, 90C30
+1 Introduction
+Consider the nonsmooth convex optimization problem
+x∗
+∈ argminx∈X f(x),
+where X ⊂ Rn
+is a compact convex set that is contained within the Euclidean
+ball B(x∗
+, R), and f is (possibly nonsmooth) convex and Lipschitz on X, i.e.,
+there is an L > 0 such that kgk ≤ L for any g ∈ ∂f(x) 6= ∅ and x ∈ X.
+The classical projected subgradient method (PSG) iterates the following
+equations for t ≥ 1:
+(
+yt+1 = xt − ηtgt, where gt ∈ ∂f(xt),
+xt+1 = argminx∈X kx − yt+1k.
+Utilizing the following constant step size
+ηs ≡
+R
+L
+√
+t
+, s = 1, · · · , t, (1)
+Zhihan Zhu · Yanhao Zhang · Yong Xia (corresponding author)
+School of Mathematical Sciences, Beihang University, Beijing 100191, People’s Republic of
+China. E-mail: {zhihanzhu, yanhaozhang, yxia}@buaa.edu.cn
+2 Zhihan Zhu et al.
+PSG achieves an optimal ergodic convergence rate (see, for example, [1,2,3])
+expressed as 1
+f
+Pt
+s=1 xs
+t
+!
+− f(x∗
+) ≤
+RL
+√
+t
+. (2)
+A more practical approach is to use a step-size that monotonically decreases
+towards 0. One such time-varying step-size, motivated by (1) and suggested
+in [1,2], is expressed as follows:
+ηs =
+R
+L
+√
+s
+, s = 1, · · · , t. (3)
+However, using this step size results in sub-optimal ergodic convergence rate
+[1,2], as it adds an additional log(t) factor compared to the right-hand side of
+(2).
+The contribution of this note is to demonstrate that PSG with the time-
+varying step-size (3) indeed achieves the following optimal convergence rate.
+Theorem 1 PSG with the time-varying step-size (3) satisfies
+f
+Pt
+s=1 xs
+t
+!
+− f(x∗
+) ≤
+3RL
+2
+√
+t
+.
+In Section 2, we present a more generalized convergence analysis, allowing us
+to provide some insightful observations.
+2 Analysis
+Consider PSG with a general step-size ηs, which is assumed to be positive and
+non-increasing. We can establish the following convergence rate.
+Theorem 2 For any fixed k ≥ −1, PSG with a positive and non-increasing
+step-size sequence {ηs} satisfies
+f
+Pt
+s=1
+1
+ηk
+s
+xs
+Pt
+s=1
+1
+ηk
+s
+!
+− f(x∗
+) ≤
+R2
+ηk+1
+t
++ L2
+Pt
+s=1
+1
+ηk−1
+s
+2
+Pt
+s=1
+1
+ηk
+s
+. (4)
+1 f((
+Pt
+s=1 xs)/t) can be replaced with mins=1,··· ,t f(xs) based on similar analysis.
+On Step-size of Subgradient Method 3
+Proof According to the definition of subgradient, we have
+f(xs) − f(x∗
+) ≤ gT
+s (xs − x∗
+)
+=
+1
+ηs
+(xs − ys+1)T
+(xs − x∗
+)
+=
+1
+2ηs
+(kxs − ys+1k2
++ kxs − x∗
+k2
+− kys+1 − x∗
+k2
+) (5)
+=
+1
+2ηs
+(kxs − x∗
+k2
+− kys+1 − x∗
+k2
+) +
+ηs
+2
+kgsk2
+≤
+1
+2ηs
+(kxs − x∗
+k2
+− kxs+1 − x∗
+k2
+) +
+ηs
+2
+L2
+, (6)
+where (5) follows from the elementary identity 2aT
+b = kak2
++ kbk2
+− ka − bk2
+,
+and (6) holds since kgsk ≤ L and
+kys+1 − x∗
+k2
+≥ kxs+1 − x∗
+k2
+,
+which is implied by the projection theorem.
+Consequently, we have
+t
+X
+s=1
+1
+ηk
+s
+!
+f
+Pt
+s=1
+1
+ηk
+s
+xs
+Pt
+s=1
+1
+ηk
+s
+!
+− f(x∗
+)
+!
+≤
+t
+X
+s=1
+1
+ηk
+s
+(f(xs) − f(x∗
+)) (since f is convex)
+≤
+t
+X
+s=1
+1
+2ηk+1
+s
+(kxs − x∗
+k2
+− kxs+1 − x∗
+k2
+) +
+t
+X
+s=1
+1
+2ηk−1
+s
+L2
+(7)
+=
+1
+2ηk+1
+1
+kx1 − x∗
+k2
++
+t
+X
+s=2
+(
+1
+2ηk+1
+s
+−
+1
+2ηk+1
+s−1
+)kxs − x∗
+k2
+−
+1
+2ηk+1
+t
+kxt+1 − x∗
+k2
++
+t
+X
+s=1
+1
+2ηk−1
+s
+L2
+≤
+R2
+2ηk+1
+1
++
+R2
+2
+t
+X
+s=2
+(
+1
+ηk+1
+s
+−
+1
+ηk+1
+s−1
+) +
+t
+X
+s=1
+1
+2ηk−1
+s
+L2
+(8)
+=
+R2
+2ηk+1
+t
++
+t
+X
+s=1
+1
+2ηk−1
+s
+L2
+,
+where (7) follows from (6), and (8) holds since 1/ηk+1
+s − 1/ηk+1
+s−1 ≥ 0 when
+k ≥ −1. The proof is complete. ⊓
+⊔
+Remark 1 By setting k = −1 in Theorem 2, the upper bound on the right-
+hand side (4) simplifies to
+R2
++ L2
+Pt
+s=1 η2
+s
+2
+Pt
+s=1 ηs
+,
+4 Zhihan Zhu et al.
+which is exactly the same as the result presented in [1]. Then PSG with the
+time-varying step-size (3) satisfies
+f
+Pt
+s=1
+1
+√
+s
+xs
+Pt
+s=1
+1
+√
+s
+!
+− f(x∗
+) ≤
+2RL + RL log t
+4(
+√
+t + 1 − 1)
+, (9)
+which is sub-optimal. Note that computing the weighted average of the iterates
+in the second half of the sequence yields the optimal convergence rate [4,
+Corollary 3.2].
+Remark 2 By setting k = 0 in Theorem 2, we can immediately obtain the
+optimal convergence rate, as presented in Theorem 1.
+Remark 3 By setting any k such that k > −1 in Theorem 2, the conver-
+gence rate of f((
+Pt
+s=1 xs/ηk
+s )/(
+Pt
+s=1 1/ηk
+s ))− f(x∗
+) will be O(1/
+√
+t), without
+the presence of a log t factor. In comparison with the sub-optimal case (9),
+when k > 0, the weighting scheme (
+Pt
+s=1 xs/ηk
+s )/(
+Pt
+s=1 1/ηk
+s ) assigns smaller
+weights to the initial points and larger weights to the most recent points. This
+new result can be referred to as the “weak” ergodic convergence rate.
+Remark 4 We can apply the same proof techniques to extend the conclusion
+of weak ergodic convergence to mirror descent, Nesterov’s dual averaging, and
+other schemes with time-varying step sizes for solving nonsmooth convex op-
+timization, see [1,2].
+Funding
+This research was supported by National Key R&D Program of China under
+grant 2021YFA1003300, the National Natural Science Foundation of China
+under grant 12171021, and the Fundamental Research Funds for the Central
+Universities.
+Data Availability
+The manuscript has no associated data.
+References
+1. Y. Nesterov, Lectures on convex optimization, volume 137, Springer, 2018.
+2. S. Bubeck, Convex optimization: Algorithms and complexity. Foundations and Trends
+Trends® in Machine Learning, 8(3-4): 231-357, 2015.
+3. P. Rigollet, K. Li, Convex optimization for machine learning. Massachusetts Institute of
+Technology: MIT OpenCouseWare, https://ocw.mit.edu/, Oct. 2015.
+4. G. Lan, First-order and Stochastic Optimization Methods for Machine Learning,
+Springer-Nature, 2020
+

@@ -1,0 +1,666 @@
+Analysis of Favorable Injection-production Area Near the Fault
+Where the Directional Wells Were Deployed
+Lili Meng
+Fifth Oil Production Plant of Daqing Oilfield Co., Ltd., Daqing, China
+Abstract. Through the large-scale application of directional well technology, X development zone has
+achieved good potential tapping effect near the fault. However, with the increase of production batches of
+directional wells, the proportion of high-yield wells decreases, and the difficulty of well location optimization
+increases gradually. In order to further improve the recovery near the fault, under the condition of large-scale
+development of sand body in the study area, this paper focuses on the analysis of the deployment area
+conducive to the high yield of directional wells from the perspective of injection-production relationship.
+Combined with the development practice of 48 directional wells that have been deployed and have achieved
+good development results, the well distribution effect is evaluated from three aspects of well pattern, well
+spacing and injection-production location, and the deployment principle of directional wells are determined.
+The favorable injection-production area for the deployment of directional wells near the fault is summarized,
+which indicates the direction for further improving oil recovery near the fault in the old oilfield.
+Keywords: Fault; directional well; injection-production relationship; well location deployment.
+1. Introduction
+X Development Zone is a structural reservoir and
+structural-lithologic reservoir. At present, it has entered
+a period of ultra-high water cut development. The
+remaining oil is highly scattered, only enriched locally,
+and it is difficult to tap potential. In the past, when the
+dense well pattern was deployed near the fault, in order
+to avoid the loss of the target layer, the designed well
+position was far away from the fault as far as possible,
+resulting in low well pattern density near the fault and
+imperfect injection and production relationship, which
+was the main remaining oil enrichment area. Since 2013,
+based on the results of well-seismic combined with fine
+fault interpretation, 48 large displacement directional
+wells have been deployed near the fault of X
+development zone, and good development results have
+been achieved, which broadens the technical path of
+oilfield potential tapping in the late stage of ultra-high
+water cut. In practice, it is found that the structure,
+reservoir and injection-production relationship jointly
+affect the development effect of large displacement
+directional wells near the fault. This paper analyzes the
+three aspects of well pattern, well spacing and injection-
+production location, and summarizes the laws that they
+have a positive impact on the development effect of
+directional wells, providing guidance for the
+popularization and application of large displacement
+directional wells.
+2. Analysis and evaluation of directional
+well production effect
+The evaluation standard of directional well production
+effect is established. Because of the good correlation
+between the initial cumulative production, the initial daily
+oil production, the initial water content and the predicted
+ten-year cumulative production of the directional well
+with large displacement, the evaluation standard of
+directional well production effect is established by
+determining the parameters.
+The wells that have been put into operation in X
+development zone are divided into four categories : the
+first type well has the best production effect, the second
+type well is relatively good, the third type well meets the
+design requirements, and the fourth type well has
+relatively poor production effect and low production,
+which does not meet the design requirements ( Table 1 ).
+E3S Web of Conferences 358, 02032 (2022) https://doi.org/10.1051/e3sconf/202235802032
+GESD 2022
+© The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons Attribution
+License 4.0 (http://creativecommons.org/licenses/by/4.0/).
+Table 1. Statistical table of well distribution effect
+classification for large displacement wells
+classifi
+cation
+First-year
+cumulative
+production
+（million
+tons）
+Initial
+daily oil
+production
+（tons）
+Water
+conte
+nt in
+the
+first
+year
+（%
+）
+Predi
+ction
+of ten
+years
+cumu
+lative
+produ
+ction
+well
+num
+bers
+outco
+me
+evalu
+ation
+（mil
+lion
+tons
+）
+（p
+cs）
+first
+kind
+≥0.3 ≥15 <80 ≥1.5 7
+very
+good
+second
+kind
+0.2~0.3 15~9
+80~9
+0
+1~1.5 19 good
+third
+kind
+0.1~0.2 9 ~3
+90~9
+5
+0.5~1 11
+achie
+ve
+desig
+n
+fourth
+kind
+<0.1 <3 ≥95 <0.5 5
+wors
+e
+3. Analysis of injection-production
+relationship in directional wells
+The distance between different well patterns and the target
+layer of directional wells , and the position of directional
+wells in the injection-production relationship of different
+well patterns were analyzed to evaluate the well
+distribution effect.
+Correlation analysis was carried out by using the
+evaluation type of directional wells and the initial oil
+production with the distance of adjacent wells and the
+injection-production location ( Table 2 ).
+Table 2. Statistical table of distance between target layer and
+adjacent wells, injection-production location
+Se
+ri
+al
+de
+si
+gn
+we
+ll
+nu
+m
+be
+r
+eva
+luat
+ion
+typ
+e
+Oil
+pro
+duct
+ion
+in
+earl
+y
+year
+s
+B
+as
+ic
+oi
+l
+w
+el
+ls
+Bas
+ic
+wel
+ls
+F
+ir
+st
+I
+n
+fi
+ll
+W
+el
+l
+first
+infil
+l
+wat
+er
+wel
+l
+Se
+co
+nd
+inf
+ill
+oil
+w
+ell
+s
+Sec
+ond
+infil
+l
+wat
+er
+wel
+ls
+t
+hi
+r
+d
+in
+fi
+ll
+oi
+l
+w
+el
+ls
+thir
+d
+infil
+l
+wat
+er
+wel
+ls
+Po
+ly
+me
+r
+flo
+odi
+ng
+oil
+we
+lls
+Pol
+ym
+er
+floo
+din
+g
+wat
+er
+wel
+ls
+1
+X
+1
+2
+0.8
+595
+2
+6
+0
+550
+outs
+ide
+2
+6
+2
+199
+edg
+e
+13
+0
+95
+mid
+dle
+2
+2
+2
+313
+outs
+ide
+2
+X
+2
+2
+0.7
+251
+3
+3
+5
+662
+outs
+ide
+9
+7
+400
+outs
+ide
+13
+2
+345
+edg
+e
+2
+4
+5
+217
+edg
+e
+3
+X
+3
+1
+0.6
+023
+3
+1
+6
+419
+edg
+e
+7
+5
+334
+outs
+ide
+12
+9
+262
+edg
+e
+2
+0
+8
+362
+edg
+e
+X
+4
+2
+0.5
+818
+1
+7
+6
+415
+outs
+ide
+7
+5
+272
+edg
+e
+97
+260
+outs
+ide
+1
+9
+5
+239
+edg
+e
+4
+X
+5
+3
+0.5
+719
+2
+2
+0
+480
+edg
+e
+1
+2
+6
+76
+mid
+dle
+81
+315
+outs
+ide
+2
+5
+2
+224
+edg
+e
+5
+X
+6
+2
+0.8
+595
+3
+7
+5
+522
+edg
+e
+2
+0
+8
+130
+mid
+dle
+11
+7
+333
+outs
+ide
+2
+2
+2
+686
+outs
+ide
+… …
+35
+X
+7
+4
+0.1
+382
+345
+outs
+ide
+98
+316
+outs
+ide
+11
+5
+360
+outs
+ide
+36
+X
+8
+2
+0.1
+288
+344
+outs
+ide
+13
+1
+335
+outs
+ide
+14
+1
+349
+outs
+ide
+41
+X
+9
+3
+0.0
+933
+4
+2
+8
+163
+outs
+ide
+10
+2
+200
+outs
+ide
+13
+8
+171
+edg
+e
+42
+X
+10
+4
+0.0
+908
+6
+5
+8
+183
+outs
+ide
+1
+4
+6
+436
+outs
+ide
+34
+3
+180
+outs
+ide
+34
+5
+464
+outs
+ide
+2
+E3S Web of Conferences 358, 02032 (2022) https://doi.org/10.1051/e3sconf/202235802032
+GESD 2022
+⑴Effect of well spacing on well distribution : basic well
+The directional well and the basic well with relatively
+good effect are more than 200 meters, and the directional
+well is more than 250 meters away from the basic well.
+⑵ Effect of well spacing on well distribution : basic well
+The distance between primary wells has little effect on
+the overall effect of directional well layout. When the
+primary well is more than 60 meters, and the primary
+well is more than 100 meters, it can meet the design
+requirements of directional wells.
+⑶Effect of well spacing on well distribution:secondary
+well
+The distance between the secondary wells has little effect
+on the overall effect of directional well layout. The
+secondary wells are more than 60 meters, and the
+secondary wells are more than 100 meters, which can
+meet the design requirements of directional wells.
+⑷ Effect of well spacing on well distribution : third infill
+well
+Third infill well within 100 meters from the directional
+well will affect the well distribution effect.
+4. The position of directional wells with
+different distribution effect in
+injection-production well pattern
+One kind of directional well is more than 200 meters away
+from the foundation well and is located outside the main
+flow line of injection and production of the basic well.
+If the directional well is more than 170 meters away from
+the first, second and third wells, it will not affect the well
+distribution effect at any injection-production location.
+The second type of directional wells are more than 100
+meters away from the foundation wells, and are located
+outside the main streamline of injection and production of
+the foundation wells; directional well is more than 130
+meters from first infill well and more than 100 meters
+from second well; when the distance from polymer
+flooding wells is more than 240 meters, the well
+distribution effect will be relatively good. The three types
+of directional wells are close to oil wells or wells, and
+most of them are located on the main flow line of water
+injection. If the four types of directional wells are within
+200 meters from the basic well or are located on the
+injection-production relationship main streamline of the
+basic well , the well distribution effect will become worse .
+Table 3. Influence of injection-production position on well
+location deployment
+Well
+deplo
+ymen
+t
+evalu
+ation
+Direc
+tiona
+l
+well
+type
+Ba
+sic
+oil
+we
+lls
+Basic
+water
+wells
+The
+first、sec
+ond、thir
+d oil
+wells
+The
+first、sec
+ond、thir
+d water
+well
+good
+effect
+Cate
+gory
+I, II
+≧
+18
+0
+≧25
+0 and
+Outsi
+de
+main
+strea
+m
+≧60 ≧150
+best
+effect
+Third
+type
+≧
+10
+0
+≧20
+0 and
+Outsi
+de
+main
+strea
+m
+≧50 ≧100
+poor
+effect
+Fourt
+h
+type
+≧
+10
+0
+≦20
+0 or
+insid
+e
+main
+strea
+m
+poor
+effect
+5. Conclusions and recommendations
+1. Basic well pattern has the greatest impact on directional
+well deployment, while first, second and third wells have
+relatively small impact on directional well deployment.
+2. It is recommended that directional well locations be
+deployed over 180 metres from the basic well and over
+200 metres from the basic well and outside the main
+stream line.
+3
+E3S Web of Conferences 358, 02032 (2022) https://doi.org/10.1051/e3sconf/202235802032
+GESD 2022
+References
+1. Author,WANGHui-yun.:Technical Difficulties in
+Directional Well Logging [ J ]. Science and
+Technology Information Development and Economy,
+2009.
+2. Author,GENG Qiang.:Directional well trajectory
+design principles and control strategies [ J ].China
+Science and Technology Expo, 2017.
+3. Author,WANG Xue-jian.: Shallow directional well
+continuous control drilling technology [ J ].Petroleum
+drilling technology, 2004.
+4
+E3S Web of Conferences 358, 02032 (2022) https://doi.org/10.1051/e3sconf/202235802032
+GESD 2022
+

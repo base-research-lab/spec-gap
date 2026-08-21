@@ -1,0 +1,290 @@
+MICRO REPORT Open Access
+Molecular Brain
+Kim et al. Molecular Brain (2026) 19:62
+https://doi.org/10.1186/s13041-026-01320-3
+PAK1 expression protects cellular
+and behavioral defects in animal models
+of Parkinson’s disease
+Jeong Eun Kim1†
+, Kina Lee1†
+, Hee Jeong Kim1
+, Won-Jong Oh2
+and Hyong Kyu Kim1*
+†
+Jeong Eun Kim and Kina Lee contributed equally to this work.
+*Correspondence:
+Hyong Kyu Kim
+hkkim69@chungbuk.ac.kr
+1
+Graduate Program in Neuroscience, Department of Medicine and
+Microbiology, Chungbuk National University, Cheongju
+28160, the Republic of Korea
+2
+Neurovascular Unit Research Group, Korea Brain Research Institute,
+Daegu 41062, the Republic of Korea
+©The Author(s) 2026. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use,
+sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and
+the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this
+article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included
+in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will
+needtoobtainpermissiondirectlyfromthecopyrightholder.Toviewacopyofthislicence,visithttp://​creativ​ecommon​s.or​g/licenses/by/4.0/.The
+Creative Commons Public Domain Dedication waiver ​
+(​
+​
+​h​t​​t​p​:​​/​/​c​r​​e​a​​t​i​v​e​c​o​m​m​o​n​s​.​o​r​g​/​p​u​b​l​i​c​d​o​m​a​i​n​/​z​e​r​o​/​1​.​0​/​​​​​
+) applies to the data made available
+in this article, unless otherwise stated in a credit line to the data.
+Abstract
+Parkinson’s disease (PD) is the second most prevalent neurodegenerative disorder worldwide. Although various
+therapeutics have been developed, no disease-modifying treatment has been established to date. Recent studies
+highlight critical roles of p21-activated protein kinases (PAKs) in the pathogenesis of PD. To investigate the potential
+of PAK1 as a therapeutic target for PD, we examined the effects of a constitutively active form of PAK1 (PAK1-T423E;
+PAK1-CA) in animal models. An animal model of PD, recapitulating α-synucleinopathy was established by injecting
+human α-synuclein preformed fibrils into the biceps femoris of M83 A53T homozygous mice. PAK1-CA expression
+significantly ameliorated behavioral deficits and prevented the loss of dopaminergic neurons in the substantia
+nigra pars compacta (SNpc). Moreover, PAK1-CA expression increased the survival rate, although it was not
+significant in this model. In contrast, in the 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine (MPTP)-induced neurotoxin
+model, PAK1-CA expression significantly improved survival rates compared to the GFP-expressing control group.
+These findings suggest a potential role for constitutively active PAK1 in contributing to the neuroprotection of
+dopaminergic neurons, which may imply its utility as a candidate for gene therapy.
+Keywords PAK1, AAV, α-synuclein, Parkinson’s disease
+Main text
+Parkinson’s disease is the fast growing a neurological dis-
+order and the second most common neurodegenerative
+disease worldwide. The burden for treatments is steeply
+rising, but there is no effective disease modifying treat-
+ment to date [1, 2]. The p21-activated protein kinases
+(PAKs) are a serine/threonine kinase. Because of acting
+downstream of small GTPases such as Cdc42 and Rac1,
+the molecular function of PAKs is wildly ranged from
+cytoskeleton remodeling to gene expression [3]. Recently,
+it has been reported that several PAKs have critical roles
+in development and pathogenesis of neurodegenerative
+diseases, such as Alzheimer’s disease (AD), Huntington’s
+disease, and PD [3]. In human brains with AD, levels of
+PAK1 and PAK3 were significantly reduced and phos-
+phorylated PAKs (pPAKs) were redistributed [4]. In
+contrast, an increase of total level of PAK1-3 at the early
+stages of AD is followed by a loss of soluble pPAK at the
+late stages [5], indicating PAKs roles in AD pathogen-
+esis [3]. Our previous study has suggested that activity of
+PAK1 is involved in mesencephalic dopamine neurons in
+oxidative stress-induced cell death [6]. In addition, PAK4
+activity is decreased in the SNpc of brain tissues with PD
+Page 2 of 4
+Kim et al. Molecular Brain (2026) 19:62
+Fig. 1 (See legend on next page.)
+Page 3 of 4
+Kim et al. Molecular Brain (2026) 19:62
+and the expression of a constitutively active form of PAK4
+rescues the loss of dopamine neurons in the PD animal
+models [7]. Altogether, these suggest that PAK activity
+could be related with neurodegenerative diseases and its
+increase have protective effects on the PD pathogenesis.
+Accordingly, we examined the effects of a constitutively
+active form of PAK1 (PAK1-CA, Thr423Glu, T423E) on
+an animal model of PD.
+The α-synuclein inclusions are hallmark of synucle-
+inopathies, including PD, multiple system atrophy, and
+dementia with Lewy bodies [8]. Sacino et al. [9] proposed
+a convenient PD animal model, showing synchronized
+rapid-onset motor symptoms, α-synuclein pathology
+in the CNS, and the progression of α-synuclein inclu-
+sions from muscles to CNS. Accordingly, we established
+α-synuclein inclusions model as a PD animal model to
+examine the effects of PAK1 expression. The human
+α-synuclein (21–140 amino acids) was fibrillated and
+monitored with K114 fluorometry. The fibrillar human
+α-synuclein (hFib αS) was sonicated and examined by
+negative staining electron microscopy to measure the
+average size of fibrils (73.2 nm±3.1 nm) [10]. Aged 8
+weeks of homozygous M83 transgenic mice expressing
+human Ala53Thr (A53T) mutant αS [10] were respec-
+tively injected with recombinant adeno-associated
+virus2/DJ -GFP (AAV-GFP), AAV2/DJ-human PAK1-CA
+(AAV-PAK1), or AAV2/DJ-human glial cell line-derived
+neurotrophic factor (AAV-GDNF), which is widely
+known to promote the survival of neuronal cells, to the
+bilateral SNpc (Fig. 1A). Two weeks following viral injec-
+tion, viral expression was monitored by immunohisto-
+chemistry for PAK1, GDNF, and tyrosine hydroxylase
+(TH) (Fig. 1B) and western blotting assay (Fig. 1C). Sub-
+sequently, 5 µg of hFib αS was injected into each biceps
+femoris muscle (Fig. 1A).
+Because unilateral foot drop is developed as early as 40
+days post intramuscular injection of hFib αS.
+[9], six weeks following the intramuscular injection of
+hFib αS, motor defects of model mice were examined by
+pole tests and grip strength tests. The bilateral muscular
+injection of hFib αS was significantly increased time to
+fall and this increase was blocked by PAK1-CA expres-
+sion, but not by GDNF expression (Fig. 1D, E). Consis-
+tently, grip strength of four limbs was decreased by the
+bilateral muscular injection of hFib αS. This effect was
+prevented by PAK-CA expression, but not by GDNF
+expression (Fig. 1F). The intramuscular injection of hFib
+αS induces both α-synuclein inclusions, and astroglio-
+sis and microgliosis [9]. We next assessed dopaminergic
+neuron levels in the SNpc and striatum by immunohisto-
+chemistry using TH antibody. Ten weeks after intramus-
+cular injection, the mice were perfused. Injection of hFib
+αS led to the reduction of TH-positive neurons in the
+SNpc. This loss was significantly attenuated by PAK1-CA
+expression and, although the effect did not reach statisti-
+cal significance, by GDNF (Fig. 1G, H). Similarly, hFib αS
+injection decreased striatal TH-positive fibers, an effect
+that was blocked by the expression of either PAK1-CA
+or GDNF (Fig. 1G, I). Interestingly, while GDNF attenu-
+ated the loss of dopaminergic neurons and terminals, it
+failed to improve behavioral outcomes in this α-synuclein
+model. This observation aligns with previous reports
+indicating that the therapeutic efficacy of GDNF varies
+across different PD models [11]. In contrast, PAK1-CA
+expression successfully rescued both the behavioral defi-
+cits and the loss of dopaminergic neurons.
+We monitored the survival of PD mouse models. While
+a previous study [9] reports a median survival of 77 days
+post-injection of human α-synuclein fibrils (hFib αS), our
+experiments showed median survival times of 86 days
+(See figure on previous page.)
+Fig. 1 PAK1-CA expression enhances striatal dopaminergic neuron survival and improves survival in an hFib aS injection PD model. A A schematic for ste-
+reotaxic surgery and viral injection (AAV-hSyn-GFP, AAV-hSyn-myc-hPAK1-CA-2A-GFP, AAV-hSyn-hGDNF-myc-2A-GFP), fibrillar human α-synuclein (hFib
+αS) injection, and timeline for survival tests. B Viral infection and expression. Two weeks following viral injection, mice were perfused. Brain sections were
+stained with myc-antibody for PAK1 and GDNF and tyrosine hydroxylase (TH) antibody. Scale bar: mm. C Western blotting assay for expressed proteins
+by viral infections. The brain lysates including the SNpc were subjected to assays for PAK1 and GDNF using anti-myc antibody and GFP using anti-GFP
+antibody. D Scheme of the pole test E PAK1-CA expression recovered increased the time to fall (GFP-: 100.0% ± 19.05%, N=8 animals; GFP+: 219.6%
+± 37.48%, N=8 animals; PAK1+: 103.8% ± 18.49%, N=11 animals; GDNF+: 151.1% ± 22.33%, N=9 animals; One-way ANOVA: F(3,32) =4.879, P=0.0066;
+Šídák’s multiple comparisons test: * P<0.05, ns: not significant). F PAK1-CA expression recovered the grip strength of four limbs (GFP-: 100.0% ± 7.78%,
+N=8 animals; GFP+: 68.1% ± 4.95%, N=8 animals; PAK1+: 104.1% ± 9.45%, N=11 animals; GDNF+: 76.86% ± 6.51%, N=9 animals; One-way ANOVA:
+F(3,32) =5.012, P=0.0058; Tukey’s multiple comparisons test: * P<0.05, ns: not significant). G PAK-CA expression recovered the loss of striatal dopamine
+neurons. H Relative intensity of TH-positive neurons in the SNpc (GFP-: 100.0% ± 3.96%, N=6 hemi-midbrains from 3 animals; GFP+: 84.3% ± 1.63%, N=6
+hemi-midbrains from 3 animals; PAK1+: 102.7% ± 5.05%, N=6 hemi-midbrains from 3 animals; GDNF+: 96.1% ± 3.90%, N=6 hemi-midbrains 3 animals;
+One-way ANOVA: F(3,20) =4.470, P=0.0147; Tukey’s multiple comparisons test: * P<0.05, ns: not significant). I Relative intensity of striatal TH-positive fibers
+(GFP-: 100.0% ± 5.63%, N=6 hemi-striata from 3 animals; GFP+: 77.9% ± 4.08%, N=6 hemi-striata from 3 animals; PAK1+: 97.2% ± 3.76%, N=6 hemi-striata
+from 3 animals; GDNF+: 102.6% ± 1.34%, N=6 hemi-striata from 3 animals; One-way ANOVA: F(3,20) =7.843, P=0.0012; Tukey’s multiple comparisons test:
+* P<0.05, ** P<0.01, ns: not significant). JKaplan-Meier survival plot shows increased survival rate by PAK1-CA expression. Homozygous M83 transgenic
+mice were injected with the indicated AAV particles and allowed two weeks for expression. Following intramuscular injection of hFib αS, survival times
+were monitored (GFP-: 4 animals; GFP+: 5 animals; PAK1+: 8 animals; GDNF+: 7 animals) (Log-rank test: χ2
+=12.63, df=3, P=0.0055; Median survival dates:
+GFP+: 86 days; PAK1+: 93 days; GDNF+: 78 days). K A schematic for stereotaxic surgery and viral injection (AAV-GFP, AAV-PAK1, AAV-GDNF), MPTP injec-
+tions, and timeline for survival tests. L Kaplan-Meier survival plot shows increased survival rate by PAK1-CA expression (GFP-: 3 animals; GFP+: 7 animals;
+PAK1+: 8 animals; GDNF+: 7 animals) (Log-rank test: χ2
+=12.64, df=3, P=0.0055)
+Page 4 of 4
+Kim et al. Molecular Brain (2026) 19:62
+Consent for publication
+Not applicable.
+Competing interests
+The authors declare no competing interests.
+Received: 4 May 2026 / Accepted: 1 June 2026
+References
+1. Stocchi F, Bravi D, Emmi A, Antonini A. Parkinson disease therapy: current
+strategies and future research priorities. Nat Rev Neurol. 2024;20(12):695–707.
+https:/​/doi.or​g/10.10​38/s​41582-024-01034-x.
+2. Tanner CM, Ostrem JL. Parkinson’s disease. Reply. N Engl J Med.
+2024;391(16):1559. https:/​/doi.or​g/10.10​56/N​EJMc2410843.
+3. Civiero L, Greggio E. PAKs in the brain: function and dysfunction. Biochim
+Biophys Acta Mol Basis Dis. 2018;1864(2):444–53. ​h​t​t​​p​s​:​/​​/​d​o​​i​.​​o​r​g​/​1​0​.​1​0​1​6​/​j​.​b​b​
+a​d​i​s​.​2​0​1​7​.​1​1​.​0​0​5​​​​​.​​​
+4. Zhao L, Ma QL, Calon F, Harris-White ME, Yang F, Lim GP, Morihara T, Ubeda OJ,
+Ambegaokar S, Hansen JE, et al. Role of p21-activated kinase pathway defects
+in the cognitive deficits of Alzheimer disease. Nat Neurosci. 2006;9(2):234–42.
+https:/​/doi.or​g/10.10​38/n​n1630.
+5. Nguyen TV, Galvan V, Huang W, Banwait S, Tang H, Zhang J, Bredesen DE. Sig-
+nal transduction in Alzheimer disease: p21-activated kinase signaling requires
+C-terminal cleavage of APP at Asp664. J Neurochem. 2008;104(4):1065–80.
+https:/​/doi.or​g/10.11​11/j​.1471-4159.2007.05031.x.
+6. Kim H, Oh JY, Choi SL, Nam YJ, Jo A, Kwon A, Shin EY, Kim EG, Kim HK. Down-
+regulation of p21-activated serine/threonine kinase 1 is involved in loss of
+mesencephalic dopamine neurons. Mol Brain. 2016;9(1):45. ​h​t​t​​p​s​:​/​​/​d​o​​i​.​​o​r​g​/​1​0​
+.​1​1​8​6​/​s​1​3​0​4​1​-​0​1​6​-​0​2​3​0​-​6​​​​​.​​​
+7. Won SY, Park MH, You ST, Choi SW, Kim HK, McLean C, Bae SC, Kim SR, Jin BK,
+Lee KH, et al. Nigral dopaminergic PAK4 prevents neurodegeneration in rat
+models of Parkinson’s disease. Sci Transl Med. 2016;8(367):367ra170. ​h​t​t​​p​s​:​/​​/​d​
+o​​i​.​​o​r​g​/​1​0​.​1​1​2​6​/​s​c​i​t​r​a​n​s​l​m​e​d​.​a​a​f​1​6​2​9​​​​​.​​​
+8. McCann H, Stevens CH, Cartwright H, Halliday GM. alpha-Synucleinopathy
+phenotypes. Parkinsonism Relat Disord. 2014;20(Suppl 1):S62–67. ​h​t​t​​p​s​:​/​​/​d​o​​i​.​​
+o​r​g​/​1​0​.​1​0​1​6​/​S​1​3​5​3​-​8​0​2​0​(​1​3​)​7​0​0​1​7​-​8​​​​​.​​​
+9. Sacino AN, Brooks M, Thomas MA, McKinney AB, Lee S, Regenhardt RW,
+McGarvey NH, Ayers JI, Notterpek L, Borchelt DR, et al. Intramuscular
+injection of alpha-synuclein induces CNS alpha-synuclein pathology and a
+rapid-onset motor phenotype in transgenic mice. Proc Natl Acad Sci U S A.
+2014;111(29):10732–7. https:/​/doi.or​g/10.10​73/p​nas.1321785111.
+10. Giasson BI, Duda JE, Quinn SM, Zhang B, Trojanowski JQ, Lee VM. Neuronal
+alpha-synucleinopathy with severe movement disorder in mice expressing
+A53T human alpha-synuclein. Neuron. 2002;34(4):521–33. ​h​t​t​​p​s​:​/​​/​d​o​​i​.​​o​r​g​/​1​0​.​
+1​0​1​6​/​s​0​8​9​6​-​6​2​7​3​(​0​2​)​0​0​6​8​2​-​7​​​​​.​​​
+11. Barker RA, Bjorklund A, Gash DM, Whone A, Van Laar A, Kordower JH,
+Bankiewicz K, Kieburtz K, Saarma M, Booms S, et al. GDNF and Parkinson’s
+disease: where next? A summary from a recent workshop. J Parkinsons Dis.
+2020;10(3):875–91. https:/​/doi.or​g/10.32​33/J​PD-202004.
+12. Jackson-Lewis V, Przedborski S. Protocol for the MPTP mouse model of Parkin-
+son’s disease. Nat Protoc. 2007;2(1):141–51. ​h​t​t​​p​s​:​/​​/​d​o​​i​.​​o​r​g​/​1​0​.​1​0​3​8​/​n​p​r​o​t​.​2​0​0​
+6​.​3​4​2​​​​​.​​​
+13. Yao D, Li C, Rajoka MSR, He Z, Huang J, Wang J, Zhang J. P21-activated kinase
+1: emerging biological functions and potential therapeutic targets in cancer.
+Theranostics. 2020;10(21):9741–66. https:/​/doi.or​g/10.71​50/t​hno.46913.
+14. Yuan Y, Jin J, Yang B, Zhang W, Hu J, Zhang Y, Chen NH. Overexpressed
+alpha-synuclein regulated the nuclear factor-kappaB signal pathway. Cell Mol
+Neurobiol. 2008;28(1):21–33. https:/​/doi.or​g/10.10​07/s​10571-007-9185-6.
+15. Won SY, Park JJ, You ST, Hyeun JA, Kim HK, Jin BK, McLean C, Shin EY, Kim EG.
+p21-activated kinase 4 controls the aggregation of alpha-synuclein by reduc-
+ing the monomeric and aggregated forms of alpha-synuclein: involvement
+of the E3 ubiquitin ligase NEDD4-1. Cell Death Dis. 2022;13(6):575. ​h​t​t​​​​p​​s​:​​/​​/​d​​o​​i​.​​
+o​​r​g​/​​1​0​.​1​0​3​8​/​s​4​1​4​1​9​-​0​2​2​-​0​5​0​3​0​-​1​​​​​.​​​
+Publisher’s note
+Springer Nature remains neutral with regard to jurisdictional claims in
+published maps and institutional affiliations.
+(GFP), 78 days (GDNF), and 93 days (PAK1-CA) (Fig. 1J).
+Although not statistically significant, PAK1-CA expres-
+sion appeared to improve survival in this model. To fur-
+ther evaluate the neuroprotective effects of PAK1-CA, we
+utilized an MPTP-induced PD mouse model [12]. Eight-
+week-old wild-type male mice received four intraperito-
+neal injections of MPTP (20 mg/kg per dose) every 2 h
+(Fig. 1K), a protocol known to deplete striatal dopamine
+by 90% within 7 days [12]. Consistent with the results
+from the hFib αS model, PAK1-CA expression signifi-
+cantly increased the survival rate in the MPTP-treated
+mice (Fig. 1L).
+PAK1 activity is associated with the level of Bcl-2
+(B-cell CLL/lymphoma 2), a pro-survival protein [6] and
+survival of tumor cells [13]. Interestingly, Bcl-2 levels
+are inversely correlated with those of α-synuclein [14].
+Furthermore, PAK4—a related PAK isoform—phos-
+phorylates E3 ubiquitin ligases to promote the degrada-
+tion of α-synuclein [15]. Consequently, PAK1 activation
+may delay the progression of α-synuclein pathology or
+neurotoxin-induced damage by enhancing neuronal sur-
+vival within the SNpc. Collectively, our findings suggest
+that PAK1 activity exerts a neuroprotective effect against
+α-synuclein inclusions and neurotoxins, thereby improv-
+ing overall survival. These data highlight the potential of
+PAK1 as a therapeutic target for gene therapy or as a bio-
+marker for PD.
+Supplementary Information
+The online version contains supplementary material available at ​h​t​t​​p​s​:​/​​/​d​o​​i​.​​o​r​
+g​/​1​0​.​1​1​8​6​/​s​1​3​0​4​1​-​0​2​6​-​0​1​3​2​0​-​3​​​​​.​​
+Supplementary Material 1
+Acknowledgements
+Not applicable.
+Author contributions
+J.E.K. and K.L.: implemented the experiments and interpreted the results. H.J.K.:
+assisted in experimental work and data collection. W.O.: assisted the data
+analysis. H.K.K.: wrote the manuscript and provided supervision. All authors
+read and approved the final manuscript.
+Funding
+This work was supported under Research Program for PM managed by
+National Research Foundation of Korea (NRF) (PM2024ST0018) and the KBRI
+basic research program of the Korea Brain Research Institute funded by the
+Ministry of Science and ICT (KBRI 26-BR-01-02).
+Data availability
+The datasets generated and analyzed during the current study are available
+from the corresponding author on request.
+Declarations
+Ethics approval and consent to participate
+All animal experiments were conducted in accordance with the Guide for
+the Care and Use of Laboratory animals and approved by the Institutional
+Animal Care and Use Committee of Chungbuk National University (IACUC
+CBNUA-24-0040-01).
+

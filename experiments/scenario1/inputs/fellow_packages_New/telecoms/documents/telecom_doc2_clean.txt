@@ -1,0 +1,808 @@
+arXiv:1612.03788v4
+[cs.IT]
+3
+Jul
+2017 1
+Robust MIMO Beamforming for Cellular and Radar
+Coexistence
+Fan Liu, Student Member, IEEE, Christos Masouros, Senior Member, IEEE, Ang Li, Student Member, IEEE,
+and Tharmalingam Ratnarajah, Senior Member, IEEE
+Abstract—In this letter, we consider the coexistence and
+spectrum sharing between downlink multi-user multiple-input-
+multiple-output (MU-MIMO) communication and a MIMO
+radar. For a given performance requirement of the downlink
+communication system, we design the transmit beamforming such
+that the detection probability of the radar is maximized. While
+the original optimization problem is non-convex, we exploit the
+monotonically increasing relationship of the detection probability
+with the non-centrality parameter of the resulting probability
+distribution to obtain a convex lower-bound optimization. The
+proposed beamformer is designed to be robust to imperfect
+channel state information (CSI). Simulation results verify that the
+proposed approach facilitates the coexistence between radar and
+communication links, and illustrates a scalable trade-off between
+the two systems’ performance.
+Index Terms—MU-MIMO downlink, radar-communication co-
+existence, spectrum sharing, robust beamforming.
+I. INTRODUCTION
+TO address the explosive growth of wireless communi-
+cation devices and services, a broadband plan has been
+agreed to free additional spectrum that is currently exclusive
+for military and governmental operations [1]. Typically, this
+spectrum is occupied by air surveillance and weather radar
+systems, and henceforth spectrum sharing between radar and
+communication has drawn much attention as an enabling so-
+lution [2]. While policy and regulations my delay the practical
+application of such solutions, research efforts are well under
+way to address the practical implementation of radar and
+communication coexistence. In [3], Opportunistic Spectrum
+Sharing (OSS) between cellular system and rotating radar has
+been considered, where the communication system are allowed
+to transmit signals when the space and frequency spectra
+are not occupied by the radar. Although the OSS method is
+straightforward, it does not allow radar and communication
+to work simultaneously. Additionally, traditional rotating radar
+will soon be replaced by MIMO radar in the near future due to
+Manuscript received January 25, 2017; revised March 13, 2017; accepted
+April 9, 2017. This work was supported by the Engineering and Physical
+Sciences Research Council (EPSRC) project EP/M014150/1 and the China
+Scholarship Council (CSC). The editor coordinating the review of this letter
+and approving it for publication was Prof. M. Nafie.
+Fan Liu is with the School of Information and Electronics, Beijing Institute
+of Technology, Beijing, 100081, China (e-mail: liufan92@bit.edu.cn). Fan
+Liu, Christos Masouros and Ang Li are with the Department of Electronic
+and Electrical Engineering, University College London, London, WC1E 7JE,
+UK (e-mail: chris.masouros@ieee.org, ang.li.14@ucl.ac.uk). Tharmalingam
+Ratnarajah is with the Institute for Digital Communications, School of
+Engineering, The University of Edinburgh, Edinburgh, EH9 3JL, UK (e-mail:
+t.ratnarajah@ed.ac.uk).
+the advantages of waveform diversity and higher detection ca-
+pability [4]. In recent years, several methods that consider the
+coexistence between MIMO radar and MIMO communication
+have been proposed, among which the Null Space Projection
+(NSP) method has been widely discussed [5], [6]. More
+relevant to this work, optimization techniques have also been
+proposed to solve the problem. In [7], authors optimize the
+Signal-to-Interference-plus-Noise-Ratio (SINR) of radar sub-
+ject to power and capacity constraints. Related work discusses
+the coexistence between MIMO-Matrix Completion (MIMO-
+MC) radar and MIMO communication system, where the radar
+beamforming matrix and communication covariance matrix are
+jointly optimized [8]. Similar work has been done in [9], where
+the transmit beamforming design for the base station (BS)
+based on Linearly Constrained Minimum Variance (LCMV)
+optimization is proposed. Nevertheless, all of these works
+assume that CSI is perfectly known by radar or BS, which is
+not possible in practical scenarios. While robust beamformers
+exist in the broader area of cognitive radio networks for unicast
+and multicast transmission [10], [11], robust radar-specific
+coexistence solutions are yet to be explored in the related
+literature.
+In this letter, we consider the transmit beamforming for
+spectrum sharing between downlink MU-MIMO communica-
+tion and colocated MIMO radar. Focusing on a radar-specific
+optimization, we maximize the detection probability of radar
+while guaranteeing the transmit power budget of the BS and
+the received SINR of each downlink user. The beamforming
+design is initially formulated as an optimization problem under
+the perfect CSI assumption. Since the objective function is
+non-concave, we then optimize its lower bound instead. We
+further consider two optimization approaches where both the
+communication channel and interference channel are subject
+to CSI quantization errors. The proposed problems can be
+transformed into Semidefinite Programs (SDP) and solved by
+Semidefinite Relaxation (SDR) techniques. Simulation results
+validate the effectiveness of the proposed beamforming ap-
+proach under the coexistence scenario for both perfect and
+imperfect CSI cases.
+II. SYSTEM MODEL
+We consider a Time Division Duplex (TDD) downlink MU-
+MIMO communication system that coexists with a MIMO
+radar on the same frequency band. As shown in Fig. 1, an
+N-antenna BS transmits signals to K single-antenna users.
+Meanwhile, a MIMO radar with Mt TX and Mr RX antennas
+2
+is detecting a point-like target in the far-field. The received
+signal at the i-th user is
+yC
+i [l] = hT
+i
+K
+X
+k=1
+tkdk[l] +
+p
+PRfT
+i sl + ni[l], i = 1, 2, ..., K,
+(1)
+where hi ∈ CN×1
+, fi ∈ CMt×1
+, ti ∈ CN×1
+, di[l] and
+ni[l] ∼ CN 0, σ2
+C
+
+denote the communication channel vector,
+the interference channel vector from radar, the beamforming
+vector, the communication symbol and the received noise
+for the i-th user respectively. l = 1, 2, ..., L is the symbol
+duration index, and L is the length of the communication
+frame. S = [s1, s2, ..., sL] ∈ CMt×L
+denotes the radar transmit
+waveforms, with sl being the l-th snapshot across the transmit
+antennas. PR is the power of the radar signals. Without loss of
+generality, we assume that the communication symbol has unit
+power, i.e., E
+h
+|dk[l]|
+2
+i
+= 1, where E denotes the ensemble
+average. It is also assumed that MIMO radar uses orthogonal
+waveforms, i.e., E
+
+slsH
+l
+
+= 1
+L
+L
+P
+l=1
+slsH
+l = I. The received
+SINR at the i-th user is thus given as
+γi =
+hT
+i ti
+2
+K
+P
+k=1,k6=i
+hT
+i tk
+2
++ PRkfik2
++ σ2
+C
+, ∀i. (2)
+Considering the echo wave in a single range-Doppler bin
+of the radar detector, at the l-th snapshot, the discrete signal
+vector yR
+l received by radar is given as
+yR
+l = α
+p
+PRA (θ) sl + GT
+K
+X
+k=1
+tkdk [l] + wl, (3)
+where G = [g1, g2, ..., gMr ] ∈ CN×Mr
+is the interference
+channel matrix between BS and radar RX, θ is the azimuth
+angle of the target, α is the complex path loss of the radar-
+target-radar path, wl = [w1 [l] , w2 [l] , ..., wMr [l]]
+T
+∈ CMr×1
+is the received noise vector at the l-th snapshot with wm[l] ∼
+CN 0, σ2
+R
+
+, ∀m, A (θ) = aR (θ) aT
+T (θ), in which aT (θ) ∈
+CMt×1
+and aR (θ) ∈ CMr×1
+are transmit and receive steering
+vectors of radar antenna array. In this letter, the model in [12]
+is used, for which
+Mr = Mt = M, aR (θ) = aT (θ) = a (θ) ,
+Aim (θ) = ai (θ) am (θ) = exp (−jωτim (θ))
+= exp
+
+−j
+2π
+λ
+[sin (θ) ; cos (θ)]
+T
+(xi + xm)
+
+,
+(4)
+where ω and λ denote the frequency and the wavelength of
+the carrier, Aim (θ) is the i-th element at the m-th column of
+the matrix A, which is the total phase delay of the signal,
+transmitted by the i-th element and received by the m-th
+element of the antenna array, xi =
+
+x1
+i ; x2
+i
+
+is the location of
+the i-th element of the antenna array. In the above model, we
+assume that H = [h1, h2, ..., hK], F = [f1, f2, ..., fK] and G
+are flat Rayleigh fading and independent with each other and
+can be estimated by the BS through the pilot symbols. Note
+that for a typical TDD downlink, users will remain silence
+when BS is transmitting signals, so the radar only receives
+1
+h
+2
+h
+k
+h
+G
+Target
+
+
+
+
+
+
+1
+f
+2
+f
+k
+f
+
+
+
+Fig. 1. Spectrum sharing scenario.
+interference from the BS. For convenience, the index l is
+omitted in the rest of the letter.
+The interference from BS to radar RX will affect the detec-
+tion probability of radar. Under the Neyman-Pearson criterion,
+by using the Generalized Likelihood Ratio Test (GLRT), the
+asymptotic radar detection probability PD is given as 1
+[12]
+PD = 1 − FX 2
+2 (ρ)
+
+F−1
+X 2
+2
+(1 − PF A)
+
+, (5)
+where PF A is radar’s probability of false alarm, FX 2
+2 (ρ) is
+the non-central chi-square Cumulative Distribution Function
+(CDF) with 2 Degrees of Freedom (DoF), F−1
+X 2
+2
+is the inverse
+function of chi-square CDF with 2 DoFs. Let T̃ =
+K
+P
+k=1
+tktH
+k ,
+the non-centrality parameter ρ for X2
+2 (ρ) is given by [13]
+ρ = |α|2
+LPRtr
+
+AAH
+
+GT
+T̃G∗
++ σ2
+RI
+−1
+
+. (6)
+III. PROPOSED BEAMFORMING OPTIMIZATION
+The average transmit power per frame of the BS is
+PC =
+K
+X
+k=1
+ktkk
+2
+=
+K
+X
+k=1
+tr tktH
+k
+
+=
+K
+X
+k=1
+tr (Tk), (7)
+where Tk = tktH
+k . The goal is to maximize the detection
+performance of radar while guaranteeing the received SINR
+per user and the power budget for the BS. We first consider the
+optimization with perfect CSI, followed by two optimization
+approaches, the upper bound minimization and the weighted
+minimization with norm-bounded CSI errors.
+A. Beamforming for Perfect CSI
+The optimization problem can be formulated as
+P0 : max
+tk
+PD
+s.t. γi ≥ Γi, ∀i,
+PC ≤ P0,
+(8)
+where Γi is the required SINR of the i-th communication user,
+P0 is the power budget of the BS, γi, PD and PC are defined
+1It should be highlighted that the derivation in [12] is for the scenario
+with white Gaussian noise only while the proposed model in (3) includes
+both interference and noise. However, it can be shown that the resultant
+interference-plus-noise is still i.i.d. Gaussian distributed, but with a non-
+identity covariance matrix. We therefore apply a whitening-filter to normalize
+the interference-plus-noise, such that the derivation in [12] is still valid.
+3
+as (2), (5) and (7) respectively. It is well-known that PD is a
+monotonically increasing function with respect to ρ [13], thus
+problem P0 can be equivalently formulated as
+P1 : max
+tk
+tr
+
+AAH
+
+GT
+T̃G∗
++ σ2
+RI
+−1
+
+s.t. γi ≥ Γi, ∀i,
+PC ≤ P0.
+(9)
+As the objective function is non-concave, we consider a relax-
+ation of optimizing its lower bound. Let J = GT
+T̃G∗
++ σ2
+RI.
+Noting that both J and AAH
+are positive-definite, we have
+tr AAH
+J−1
+J
+
+≤ tr AAH
+J−1
+
+tr (J) (10)
+⇒ tr AAH
+J−1
+
+≥
+tr AAH
+
+tr (J)
+=
+M2
+tr
+
+GT T̃G∗
+
++ Mσ2
+R
+.
+(11)
+Based on (11), P1 can be relaxed as
+P2 : min
+tk
+tr
+
+GT
+T̃G∗
+
+s.t. γi ≥ Γi, ∀i,
+PC ≤ P0.
+(12)
+P2 is non-convex, and is equivalent to minimizing the total
+interference power from BS to radar. Fortunately, it can be
+efficiently solved by SDR technique. We refer readers to [14]
+for details on this topic.
+B. Upper Bound Minimization for Imperfect CSI
+Let us first model the channel vectors as
+hi = ĥi + ehi, fi = f̂i + efi, ∀i,
+gm = ĝm + egm, ∀m,
+(13)
+where ĥi, ĝm and f̂i denote the estimated channel vectors
+known to the BS, ehi, egm and efi denote the CSI uncertainty
+within the spherical sets Uhi =
+n
+ehi|kehik
+2
+≤ δ2
+hi
+o
+, Ugm =
+n
+egm|kegmk2
+≤ δ2
+gm
+o
+and Ufi =
+n
+efi|kefik2
+≤ δ2
+fi
+o
+. This
+model is reasonable for scenarios where the CSI is quantized
+at the receiver and fed back to the BS. Particularly, if the
+quantizer is uniform, the quantization error region can be
+covered by spheres of given sizes [15].
+It is assumed that BS has no knowledge about the error
+vectors except for the bounds of their norms. Given the
+partially known G, following the process of [10], the upper
+bound of the interference power for the m-th radar antenna is
+given by
+gT
+m
+K
+X
+k=1
+tkdk
+2
+≤
+K
+X
+k=1
+tr ĝ∗
+mĝT
+mTk
+
++ ζgm
+K
+X
+k=1
+tr (Tk),
+(14)
+where ζgm = 2δgm kĝmk + δ2
+gm. We optimize the upper
+bound of the total interference power, which is obtained as
+tr
+
+GT
+T̃G∗
+
+=
+K
+X
+k=1
+tr G∗
+GT
+Tk
+
+=
+M
+X
+m=1
+gT
+m
+K
+X
+k=1
+tkdk
+2
+≤
+K
+X
+k=1
+tr
+
+Ĝ∗
+ĜT
+Tk
+
++
+M
+X
+m=1
+ζgm
+K
+X
+k=1
+tr (Tk).
+(15)
+For the SINR constraint with partially known channel H and
+F, a worst-case approach is considered to guarantee that the
+solution is robust to all the uncertainties. Based on the triangle
+inequality, the maximum interference power from radar to the
+ith user is given as
+PRkfik
+2
+= PR f̂i + efi
+2
+≤ PR
+
+f̂i + kefik
+2
+≤ PR
+
+f̂i + δfi
+2
+.
+(16)
+Following the well known S-procedure [16], the upper bound
+minimization with worst-case constraints is given as
+P3 : min
+Ti,si
+K
+X
+i=1
+tr
+
+Ĝ∗
+ĜT
+Ti
+
++
+M
+X
+m=1
+ζgm
+K
+X
+i=1
+tr (Ti)
+s.t.
+
+ĥT
+i Qiĥ∗
+i − Γiβi − siδ2
+hi ĥT
+i Qi
+Qiĥ∗
+i Qi + siI
+
+ 0,
+Ti  0, Ti = T∗
+i , rank (Ti) = 1, si ≥ 0, ∀i,
+K
+X
+i=1
+tr (Ti) ≤ P0,
+(17)
+where Qi = Ti−Γi
+K
+P
+n=1,n6=i
+Tn, βi = PR
+
+f̂i + δfi
+2
++ σ2
+C .
+Similar to problem P2, by dropping the rank constraint, the
+non-convex problem P3 becomes a standard SDP and can be
+solved by SDR.
+C. Weighted Minimization for Imperfect CSI
+It is important to note that the upper bound minimization
+can only guarantee that the obtained beamformer does not
+generate strong interference, and it may not perform well for
+all the realizations of the interference channel G. Here we
+use a weighted minimization for the case. Consider that G
+is perfectly known to the BS, thus the actual power of the
+interference can be minimized. On the contrary, if BS has no
+knowledge of G, the best strategy is to minimize the transmit
+power since a large power may cause higher interference.
+Obviously, the case with the partially known G falls in
+between these two extreme cases. In other word, BS knows the
+estimated form of the interference power
+K
+P
+i=1
+tr
+
+Ĝ∗
+ĜT
+Ti
+
+,
+and the uncertainty about it, which is decided by the norm
+bound δgm. If δgm is large, we are more uncertain about the
+estimated interference, so we put more weight on minimizing
+the transmit power. Based on this, we rewrite P3 as
+P4 : min
+Ti,si
+K
+P
+i=1
+tr
+
+Ĝ∗
+ĜT
+Ti
+
++ φ(δg1, ..., δgm)
+K
+P
+i=1
+tr (Ti)
+s.t. The same constraints with P3,
+(18)
+where φ(δg1, ..., δgm) is an increasing function of error
+bounds. It can be observed that the upper bound minimization
+is a particular case of the weighted minimization with its
+weight function equalling to
+M
+P
+m=1
+ζgm. Our results below show
+that this weight function is in general large, which means that
+it puts too much weight on minimizing the BS power while
+the uncertainty about the estimated channel Ĝ is small.
+4
+4 8 12 16 20 24
+Γ (dB)
+0
+0.2
+0.4
+0.6
+0.8
+1
+Average
+Detection
+Probability
+δ2
+= 2×10-3
+, P0
+= 32dBm
+Non-robust, perfect
+Robust, H+F
+WM, H+F+G
+UBM, H+F+G
+Solid Lines: SNRR
+= 6dB
+Dashed Lines: SNRR
+= 4dB
+(a)
+-20 -10 0 10 20 30
+Radar SNR (dB)
+0
+0.2
+0.4
+0.6
+0.8
+1
+Average
+Detection
+Probability
+δ2
+=2×10-3
+, Γ =20dB
+Zero Interference
+Non-robust, perfect
+WM, H+F+G
+UBM, H+F+G
+ZF, perfect
+MMSE, perfect
+Solid Lines:
+P0
+=28dBm
+Dashed Lines:
+P0
+=32dBm
+(b)
+Fig. 2. Numerical results. (a) Average detection probability vs. SINR level for
+different cases, δ2 = 2 × 10−3, P0 = 32dBm, PF A = 10−5; (b) Average
+detection probability vs. radar SNR for different cases, δ2 = 2 × 10−3, Γ =
+20dB, PF A = 10−5.
+IV. NUMERICAL RESULTS
+In this section, numerical results based on Monte Carlo
+simulations have been provided to validate the effectiveness
+of the proposed method. Without loss of generality, each
+entry of the channel matrices follows the standard complex
+Gaussian distribution. We assume that radar uses a Uniform
+Linear Array (ULA) and has unit power. For convenience,
+we set Γi = Γ, δhi = δfi = δgm = δ, ∀i, m. While it is
+plausible that the benefits of the proposed scheme extend to
+various scenarios, here we assume N = 8, K = 4, M = 4,
+δ2
+= 2×10−3
+and PF A = 10−5
+in all simulations. The power
+of all the noise vectors are set as σ2
+R = σ2
+C = 0dBm. The
+radar SNR is defined as SNRR = L|α|2
+PR
+σ2
+R
+[12]. And we use
+a weight function φ(δ) = δ
+M in the weighted minimization.
+In Fig. 2 (a), the average detection probability PD with
+increasing SINR level is shown for P0 = 32dBm. The legends
+denote the beamformer used and the CSI state assumed, where
+‘Non-robust’, ‘Robust’, ‘UBM’ and ‘WM’ denote beamform-
+ing optimization P2, P2 using robust constraints, upper bound
+minimization P3 and weighted minimization P4 respectively.
+‘Perfect’, ‘H + F’ and ‘H + F + G’ denote the case of
+perfect CSI, the case that H and F suffer from CSI errors
+while G is perfectly known and the case that all channels
+are with errors. It can be seen that PD decreases with the
+growth of Γ, which formulates the trade-off between the
+performance of radar and downlink communications. Note
+that the case ‘Robust, H + F’ and the weighted minimization
+show detection performance close to that for the perfect CSI
+case. Nevertheless, a significant performance loss occurs for
+upper bound minimization since it puts too much weight on
+minimizing the transmit power when δ is small. Similar results
+have been shown in Fig. 2 (b), where PD with increased
+radar SNR for different power budget has been given with
+Γ = 20dB. The idealistic case that BS causes no interference
+to radar has been provided as a reference. Once agian, the
+weighted minimization outperforms the upper bound mini-
+mization. To further prove the optimality of the proposed
+methods, we also show the performance of Zero-forcing (ZF)
+and Minimum Mean Squared Error (MMSE) beamforming
+methods with perfect CSI. Unsurprisingly, even the upper
+bound minimization achieves a far better performance than
+the conventional methods. It can be also observed that larger
+P0 leads to higher PD for the proposed methods due to the
+extension of the feasible domain.
+V. CONCLUSION
+A beamforming approach has been introduced to facilitate
+the coexistence between downlink MU-MIMO communication
+system and MIMO radar. Given a target communication link
+SINR and the transmit power budget of BS, the proposed
+beamformer optimizes the radar performance. The proposed
+optimization has also been made robust to CSI errors by the
+upper bound minimization and the weighted minimization. The
+trade-off between radar and communication performance as
+well as the effectiveness of the proposed approach have been
+revealed by numerical simulations.
+REFERENCES
+[1] F. C. Commission et al., Connecting America: The national broadband
+plan, 2010.
+[2] B. Paul, A. R. Chiriyath, and D. W. Bliss, “Survey of RF communi-
+cations and sensing convergence research,” IEEE Access, vol. 5, pp.
+252–270, 2017.
+[3] R. Saruthirathanaworakun, J. M. Peha, and L. M. Correia, “Opportunistic
+sharing between rotating radar and cellular,” IEEE Journal on Selected
+Areas in Communications, vol. 30, no. 10, pp. 1900–1910, November
+2012.
+[4] J. Li and P. Stoica, “MIMO radar with colocated antennas,” IEEE Signal
+Processing Magazine, vol. 24, no. 5, pp. 106–114, Sept 2007.
+[5] A. Babaei, W. H. Tranter, and T. Bose, “A nullspace-based precoder
+with subspace expansion for radar/communications coexistence,” in 2013
+IEEE GLOBECOM, Dec 2013, pp. 3487–3492.
+[6] A. Khawar, A. Abdelhadi, and C. Clancy, “Target detection performance
+of spectrum sharing MIMO radars,” IEEE Sensors Journal, vol. 15,
+no. 9, pp. 4928–4940, Sept 2015.
+[7] B. Li and A. Petropulu, “MIMO radar and communication spectrum
+sharing with clutter mitigation,” in 2016 IEEE Radar Conference
+(RadarConf), May 2016, pp. 1–6.
+[8] B. Li, A. P. Petropulu, and W. Trappe, “Optimum co-design for spectrum
+sharing between matrix completion based MIMO radars and a MIMO
+communication system,” IEEE Transactions on Signal Processing,
+vol. 64, no. 17, pp. 4562–4575, Sept 2016.
+[9] E. H. G. Yousif, M. C. Filippou, F. Khan, T. Ratnarajah, and M. Sellathu-
+rai, “A new LSA-based approach for spectral coexistence of MIMO radar
+and wireless communications systems,” in 2016 IEEE International
+Conference on Communications (ICC), May 2016, pp. 1–6.
+[10] K. T. Phan, S. A. Vorobyov, N. D. Sidiropoulos, and C. Tellambura,
+“Spectrum sharing in wireless networks via QoS-aware secondary mul-
+ticast beamforming,” IEEE Transactions on Signal Processing, vol. 57,
+no. 6, pp. 2323–2335, June 2009.
+[11] H. Du and T. Ratnarajah, “Robust utility maximization and admission
+control for a MIMO cognitive radio network,” IEEE Transactions on
+Vehicular Technology, vol. 62, no. 4, pp. 1707–1718, May 2013.
+[12] I. Bekkerman and J. Tabrikian, “Target detection and localization using
+MIMO radars and sonars,” IEEE Transactions on Signal Processing,
+vol. 54, no. 10, pp. 3873–3883, Oct 2006.
+[13] S. M. Kay, Fundamentals of statistical signal processing: Detection
+theory, vol. 2. Prentice Hall, 1998.
+[14] Z. Q. Luo, W. K. Ma, A. M. C. So, Y. Ye, and S. Zhang, “Semidefinite
+relaxation of quadratic optimization problems,” IEEE Signal Processing
+Magazine, vol. 27, no. 3, pp. 20–34, May 2010.
+[15] M. B. Shenouda and T. N. Davidson, “On the design of linear
+transceivers for multiuser systems with channel uncertainty,” IEEE
+Journal on Selected Areas in Communications, vol. 26, no. 6, pp. 1015–
+1024, August 2008.
+[16] S. Boyd and L. Vandenberghe, Convex optimization. Cambridge
+university press, 2004.
+
