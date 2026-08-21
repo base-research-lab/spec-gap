@@ -47,7 +47,7 @@ def load_trajectory_jsonl(path: str | Path) -> list[dict]:
     """Load and validate the basic ordering of a trajectory JSONL file."""
 
     records = []
-    with Path(path).open(encoding="utf-8") as handle:
+    with Path(path).open() as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
                 continue
