@@ -39,7 +39,7 @@ ACCESSION_LIKE_PATTERN = re.compile(
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text())
 
 
 def test_aihc_source_licenses_and_config_scope_are_explicit():
