@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Run the portable Scenario 1 smoke test without starting a GPU.
 
-The local check builds and validates both supported construction cohorts in a
-temporary directory: the two shared core fixtures and the nine active fellow
-packages. The optional Modal check authenticates against the contributor's
-selected workspace with read-only CLI calls, without running the production
-app, building its image, calling the model, or allocating a GPU.
+The local check builds and validates every style x position cell of every
+active fellow package in a temporary directory. The optional Modal check
+authenticates against the contributor's selected workspace with read-only CLI
+calls, without running the production app, building its image, calling the
+model, or allocating a GPU.
 """
 
 from __future__ import annotations
@@ -27,26 +27,35 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 _generator = import_module("src.scenario1.generator")
 _validator = import_module("src.scenario1.validator")
-DEFAULT_REGISTRY_PATHS = _generator.DEFAULT_REGISTRY_PATHS
+_domain_grid = import_module("src.scenario1.domain_grid")
 build_request_plan = _generator.build_request_plan
 generate_all = _generator.generate_all
 load_registries = _generator.load_registries
 validate_payload = _validator.validate_payload
 
-FELLOW_PACKAGE_ROOT = (
-    PROJECT_ROOT / "experiments" / "scenario1" / "inputs" / "fellow_packages"
-)
+INPUTS_ROOT = PROJECT_ROOT / "experiments" / "scenario1" / "inputs"
+FELLOW_PACKAGE_ROOT = INPUTS_ROOT / "fellow_packages_New"
 MODAL_CONNECT_TIMEOUT_SECONDS = 60
 
 
 def active_fellow_registry_paths(
     package_root: Path = FELLOW_PACKAGE_ROOT,
 ) -> tuple[Path, ...]:
-    """Return only canonical active package registries, never archived pilots."""
+    """Return every built style x position cell registry, never archived pilots."""
 
-    paths = tuple(sorted(package_root.glob("*/domain_config.json")))
-    if not paths:
-        raise RuntimeError(f"no active fellow registries found under {package_root}")
+    inputs_root = package_root.parent
+    paths = tuple(sorted(
+        _domain_grid.registry_paths_for_domains(
+            _domain_grid.KNOWN_DOMAINS, inputs_root=inputs_root
+        )
+    ))
+    missing = [path for path in paths if not path.is_file()]
+    if missing:
+        raise RuntimeError(
+            "missing built grid cell registries; build them first with "
+            "scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py "
+            f"--domains all: {[str(path) for path in missing]}"
+        )
     return paths
 
 
@@ -80,7 +89,7 @@ def _run_cohort(
 
     return {
         "cohort_id": cohort_id,
-        "domain_count": len(registries),
+        "registry_count": len(registries),
         "trajectory_count": len(records),
         "schema_validated_trajectory_count": len(records),
         "modal_request_template_count": len(request_plan),
@@ -104,11 +113,6 @@ def run_local_smoke(output_root: Path) -> dict[str, Any]:
         output_root.mkdir(parents=True)
     cohorts = [
         _run_cohort(
-            "shared_core",
-            (Path(path) for path in DEFAULT_REGISTRY_PATHS),
-            output_root / "shared_core",
-        ),
-        _run_cohort(
             "active_fellow_packages",
             active_fellow_registry_paths(),
             output_root / "active_fellow_packages",
@@ -119,7 +123,7 @@ def run_local_smoke(output_root: Path) -> dict[str, Any]:
         "model_called": False,
         "gpu_started": False,
         "cohorts": cohorts,
-        "domain_count": sum(item["domain_count"] for item in cohorts),
+        "registry_count": sum(item["registry_count"] for item in cohorts),
         "trajectory_count": sum(item["trajectory_count"] for item in cohorts),
         "schema_validated_trajectory_count": sum(
             item["schema_validated_trajectory_count"] for item in cohorts

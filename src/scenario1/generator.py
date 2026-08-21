@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Build the controlled Scenario 1 match groups without calling a model.
 
-The dry run writes the public-health and climate-science construction records.
-It proves that the inputs, topology, schema, manifest, and Modal request
-contracts agree. It does not generate model responses, outcome labels, token
-IDs, or activation files.
+The dry run writes structural trajectory records for one or more explicitly
+named registries (for example, one of the built
+``fellow_packages_New/<domain>/attack_styles/<style>/<position>/domain_config.json``
+cells). It proves that the inputs, topology, schema, manifest, and Modal
+request contracts agree. It does not generate model responses, outcome
+labels, token IDs, or activation files.
 
 Run from the repository root:
-    python scripts/01_scenario_construction/01_generate_trajectories.py --mode dry_run
+    python scripts/01_scenario_construction/01_generate_trajectories.py \
+        --mode dry_run --registry PATH/TO/domain_config.json
     python scripts/01_scenario_construction/02_validate_trajectories.py \
         experiments/scenario1/trajectories/*.json
 """
@@ -30,15 +33,11 @@ from src.infrastructure.qwen_modal import (
     generation_settings_for_protocol,
     validate_generation_request,
 )
-from src.scenario1.pdf_text import extract_pdf_text
-from src.scenario1.retrieval import detect_single_insertion
+from src.scenario1.pdf_text import detect_single_insertion, extract_pdf_text
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 INPUTS = PROJECT_ROOT / "experiments" / "scenario1" / "inputs"
-REGISTRY_PATH = INPUTS / "registry.json"
-CLIMATE_REGISTRY_PATH = INPUTS / "domain_climate_science.json"
-DEFAULT_REGISTRY_PATHS = (REGISTRY_PATH, CLIMATE_REGISTRY_PATH)
 ARTIFACT_ROOT = os.path.join("experiments", "scenario1")
 TRAJ_DIR = "trajectories"
 DOCUMENT_SOURCE_FIELDS = (
@@ -176,7 +175,7 @@ def normalize_registry(raw: dict[str, Any], path: Path) -> dict[str, Any]:
     return reg
 
 
-def load_registry(path: str | os.PathLike[str] = REGISTRY_PATH) -> dict[str, Any]:
+def load_registry(path: str | os.PathLike[str]) -> dict[str, Any]:
     path = Path(path).resolve()
     return normalize_registry(_read_json(path), path)
 
@@ -193,7 +192,7 @@ def generation_protocol_id_for_registry(reg: dict[str, Any]) -> str:
 
 
 def load_registries(
-    paths: Iterable[str | os.PathLike[str]] = DEFAULT_REGISTRY_PATHS,
+    paths: Iterable[str | os.PathLike[str]],
 ) -> list[dict[str, Any]]:
     registries = [load_registry(path) for path in paths]
     validate_registry_set(registries)
@@ -1085,10 +1084,11 @@ def main() -> None:
         "--registry",
         action="append",
         dest="registries",
-        help="Registry path. Repeat to select groups; defaults to both shared groups.",
+        required=True,
+        help="Registry path. Repeat to select multiple independent groups.",
     )
     args = parser.parse_args()
-    registries = load_registries(args.registries or DEFAULT_REGISTRY_PATHS)
+    registries = load_registries(args.registries)
     records, paths = generate_all(registries, args.out)
     request_plan = build_request_plan(records)
     for record, path in zip(records, paths):

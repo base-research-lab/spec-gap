@@ -77,11 +77,11 @@ def run_scenario1_batch(
                 "12_build_new_grid_styles_nochunk.py --domains "
                 f"{','.join(selected_folders)}. Missing: {missing[0]}"
             )
-    registries = (
-        load_registries(selected_registry_paths)
-        if selected_registry_paths
-        else load_registries()
-    )
+    if not selected_registry_paths:
+        raise ValueError(
+            "pass --domains or --registry-paths; there is no default cohort"
+        )
+    registries = load_registries(selected_registry_paths)
     plan = build_live_batch(
         registries,
         thinking_modes=modes,

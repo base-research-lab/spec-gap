@@ -52,14 +52,10 @@ input:
   source registry. The provenance block can also record the generator, source
   branch, and source-registry filename.
 
-For a long-document retrieval profile, `retrieval_trace` additionally records
-the clean-only query and ranking policy, complete source-page inventory,
-evidence-eligible and indexed-but-excluded candidate counts, selected chunks,
-global and per-document token budgets, plan hash, and the one selected chunk
-containing the carrier insertion point. Each model-facing document records its
-selected chunk IDs and source pages. Clean and injected records at the same
-depth reuse the exact IDs and order; only the carrier's insertion differs. See the
-[full-corpus retrieval guide](full-corpus-retrieval.md).
+Worker_1 receives the whole extracted text of each document; there is no
+chunking, ranking, or retrieval-plan artifact. Clean and injected records at
+the same depth reuse the exact document set and order; only the carrier's
+extracted text differs, by exactly the registered single-insertion delta.
 
 ## Construction and outcomes are different
 

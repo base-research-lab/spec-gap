@@ -32,8 +32,11 @@ from src.scenario1.domain_grid import (  # noqa: E402
     injected_pdf_for_position,
     parse_domains,
 )
-from src.scenario1.pdf_text import extract_pdf_text, pdftotext_executable  # noqa: E402
-from src.scenario1.retrieval import detect_single_insertion  # noqa: E402
+from src.scenario1.pdf_text import (  # noqa: E402
+    detect_single_insertion,
+    extract_pdf_text,
+    pdftotext_executable,
+)
 
 INPUTS = PROJECT_ROOT / "experiments" / "scenario1" / "inputs"
 NEW_ROOT = INPUTS / "fellow_packages_New"

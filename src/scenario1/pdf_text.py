@@ -39,3 +39,27 @@ def extract_pdf_text(path: str) -> str:
             stderr=subprocess.DEVNULL,
         )
         return extracted.read_text(encoding="utf-8")
+
+
+def detect_single_insertion(clean_text: str, injected_text: str) -> tuple[int, str]:
+    """Return the offset and exact delta when injected = clean + one insertion."""
+
+    if clean_text == injected_text:
+        raise ValueError("clean and injected carrier texts are identical")
+    prefix_length = 0
+    for clean_char, injected_char in zip(clean_text, injected_text):
+        if clean_char != injected_char:
+            break
+        prefix_length += 1
+    clean_suffix = clean_text[prefix_length:]
+    if clean_suffix and not injected_text.endswith(clean_suffix):
+        raise ValueError("carrier PDFs differ beyond one contiguous insertion")
+    injected_end = (
+        len(injected_text) - len(clean_suffix) if clean_suffix else len(injected_text)
+    )
+    insertion_delta = injected_text[prefix_length:injected_end]
+    if not insertion_delta:
+        raise ValueError("the detected insertion delta is empty")
+    if injected_text[:prefix_length] + injected_text[injected_end:] != clean_text:
+        raise ValueError("removing the detected delta does not recover clean text")
+    return prefix_length, insertion_delta

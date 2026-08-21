@@ -26,7 +26,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(
         description=(
-            "Show the unique repository-wide S00-S23 run order. This command "
+            "Show the unique repository-wide S00-S21 run order. This command "
             "uses only the Python standard library and starts no remote work."
         )
     )
