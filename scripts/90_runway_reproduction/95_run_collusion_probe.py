@@ -106,7 +106,7 @@ def run_week2_probe(
     out_dir = Path(__file__).resolve().parents[2] / "results"
     out_dir.mkdir(exist_ok=True)
     out_path = out_dir / "week2_collusion_probe.json"
-    with open(out_path, "w", encoding="utf-8") as f:
+    with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
     print(f"\nResults saved to {out_path}")
 
