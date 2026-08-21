@@ -131,7 +131,7 @@ class Qwen3Runner:
             raise RuntimeError(
                 "Qwen weights are not cached. Run the download action before RUN_H200."
             )
-        self.model_metadata = json.loads(metadata_path.read_text())
+        self.model_metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
         self.torch = torch
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
         self.model = AutoModelForCausalLM.from_pretrained(
@@ -772,7 +772,7 @@ def main(
     """Validate by default; remote download and H200 execution are explicit."""
 
     analysis_tier = validate_analysis_tier(analysis_tier)
-    payload = json.loads(Path(request_path).read_text())
+    payload = json.loads(Path(request_path).read_text(encoding="utf-8"))
     payload["analysis_tier"] = analysis_tier
     request = validate_generation_request(payload)
 

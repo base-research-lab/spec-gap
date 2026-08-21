@@ -48,7 +48,7 @@ def _build_runway_pair_ids(artifact_root: Path) -> list[str]:
     response_path = (
         artifact_root / "02_collusion_probe" / "week2_collusion_probe_responses.json"
     )
-    rows = json.loads(response_path.read_text())
+    rows = json.loads(response_path.read_text(encoding="utf-8"))
     role_counts: dict[tuple[int, str], int] = {}
     pair_ids = []
     for row in rows:

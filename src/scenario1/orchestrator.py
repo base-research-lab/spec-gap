@@ -414,7 +414,7 @@ def load_model_turn_result(
     if not path.exists():
         return None
     try:
-        result = validate_generation_result(json.loads(path.read_text()))
+        result = validate_generation_result(json.loads(path.read_text(encoding="utf-8")))
         _validate_result_matches_request(request, result)
     except (OSError, json.JSONDecodeError, ValueError) as error:
         raise ValueError(

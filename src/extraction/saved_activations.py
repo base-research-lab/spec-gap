@@ -65,7 +65,7 @@ def load_trajectory_records(paths: Iterable[str | Path]) -> list[dict[str, Any]]
         (Path(path) for path in paths), key=lambda item: item.as_posix()
     ):
         try:
-            payload = json.loads(path.read_text())
+            payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as error:
             raise ValueError(f"Cannot load trajectory JSON {path}: {error}") from error
         if not isinstance(payload, dict):
@@ -363,7 +363,7 @@ def write_activation_index(rows: Sequence[dict[str, Any]], path: str | Path) -> 
 
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with destination.open("w") as handle:
+    with destination.open("w", encoding="utf-8") as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True) + "\n")
 
@@ -379,7 +379,7 @@ def load_activation_index(path: str | Path) -> list[dict[str, Any]]:
 
     rows: list[dict[str, Any]] = []
     source_schemas: set[str] = set()
-    with Path(path).open() as handle:
+    with Path(path).open(encoding="utf-8") as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
                 continue

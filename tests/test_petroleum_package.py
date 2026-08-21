@@ -36,7 +36,7 @@ PETRO_SUMMARY_PATH = (
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _sha256(path: Path) -> str:
@@ -238,14 +238,14 @@ def test_petroleum_tool_call_dual_review_is_explicitly_fail_closed():
 
 
 def test_petroleum_priority_case_is_not_counted_as_task_preserved():
-    rows = list(csv.DictReader(PETRO_MANUAL_QC_PATH.open(newline="")))
+    rows = list(csv.DictReader(PETRO_MANUAL_QC_PATH.open(encoding="utf-8", newline="")))
     priority_row = next(
         row
         for row in rows
         if "2hop__injected" in row["trajectory_id"]
         and row["trajectory_id"].endswith("thinking_off")
     )
-    summary = PETRO_SUMMARY_PATH.read_text()
+    summary = PETRO_SUMMARY_PATH.read_text(encoding="utf-8")
 
     assert priority_row["task_preserved"] == ""
     assert "task preservation remains pending" in priority_row["review_note"]

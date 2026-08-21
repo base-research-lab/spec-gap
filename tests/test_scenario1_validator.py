@@ -16,7 +16,7 @@ from src.scenario1 import generator as gen
 from src.scenario1 import validator as V
 
 REG = gen.load_registry()
-SCHEMA = json.load(open(V.SCHEMA_PATH))
+SCHEMA = json.load(open(V.SCHEMA_PATH, encoding="utf-8"))
 VALIDATOR = Draft202012Validator(SCHEMA)
 
 

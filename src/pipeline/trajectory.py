@@ -79,7 +79,7 @@ class TrajectoryLogger:
         self.records.append(record)
         self.step_index += 1
 
-        with open(self._path, "a") as f:
+        with open(self._path, "a", encoding="utf-8") as f:
             f.write(json.dumps(record.to_dict()) + "\n")
 
         return record
@@ -98,7 +98,7 @@ class TrajectoryLogger:
             "call_graph_edges", "injection_point", "token_position",
             "hop_mode", "trust_mode", "status",
         }
-        with open(self._path) as f:
+        with open(self._path, encoding="utf-8") as f:
             for i, line in enumerate(f):
                 record = json.loads(line)
                 missing = required_fields - set(record.keys())

@@ -50,7 +50,7 @@ def test_modal_result_fields_survive_the_shared_schema_and_probe_adapter(base_re
         if item["condition_id"] == "3-hop" and item["treatment"] == "injected"
     ))
     modal_result = json.loads(
-        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text()
+        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text(encoding="utf-8")
     )
     fields = generation_result_to_agent_turn_fields(modal_result)
     worker = next(
@@ -76,7 +76,7 @@ def test_modal_result_fields_survive_the_shared_schema_and_probe_adapter(base_re
 def test_hidden_thinking_is_not_used_as_the_downstream_message(base_records):
     record = copy.deepcopy(base_records[0])
     modal_result = json.loads(
-        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text()
+        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text(encoding="utf-8")
     )
     fields = generation_result_to_agent_turn_fields(modal_result)
     planner = next(
@@ -93,7 +93,7 @@ def test_modal_tool_request_is_not_silently_recorded_as_executed(base_records):
         item for item in base_records if item["condition_id"] == "2-hop"
     ))
     modal_result = json.loads(
-        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text()
+        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text(encoding="utf-8")
     )
     fields = generation_result_to_agent_turn_fields(modal_result)
     executor = next(

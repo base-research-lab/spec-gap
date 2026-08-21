@@ -1177,7 +1177,7 @@ def _validate_turn_views(
 
 def _load_json_object(path: Path, description: str) -> dict[str, Any]:
     try:
-        payload = json.loads(path.read_text())
+        payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         raise ValueError(f"Cannot load {description} {path}: {error}") from error
     if not isinstance(payload, dict):

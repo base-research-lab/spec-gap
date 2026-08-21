@@ -376,7 +376,7 @@ def main() -> None:
 
     records = []
     for path in sorted(args.trajectory_root.rglob("*.json")):
-        record = json.loads(path.read_text())
+        record = json.loads(path.read_text(encoding="utf-8"))
         if _generation_protocol_id(record) != args.generation_protocol_id:
             continue
         if _saved_analysis_tier(record) != args.analysis_tier:
@@ -407,7 +407,7 @@ def main() -> None:
         ),
     }
     args.output_csv.parent.mkdir(parents=True, exist_ok=True)
-    with args.output_csv.open("w", newline="") as handle:
+    with args.output_csv.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS)
         writer.writeheader()
         writer.writerows(rows)

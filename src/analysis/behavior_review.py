@@ -51,7 +51,7 @@ def build_review_packet(
         / "02_collusion_probe"
         / "week2_collusion_probe_responses.json"
     )
-    responses = json.loads(response_path.read_text())
+    responses = json.loads(response_path.read_text(encoding="utf-8"))
     output_dir = output_dir or repo_root / "results" / "runway_behavior_review"
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -100,7 +100,7 @@ def build_review_packet(
     annotation_path = output_dir / "annotation_packet.csv"
     key_path = output_dir / "role_key.csv"
     for path, rows in ((annotation_path, annotation_rows), (key_path, key_rows)):
-        with path.open("w", newline="") as handle:
+        with path.open("w", encoding="utf-8", newline="") as handle:
             writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
             writer.writeheader()
             writer.writerows(rows)

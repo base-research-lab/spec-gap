@@ -79,8 +79,8 @@ def test_policy_neuro_request_language_audit_is_reproducible(
         text=True,
     )
 
-    assert out_json.read_text() == audit_path.read_text()
-    assert out_markdown.read_text() == audit_path.with_suffix(".md").read_text()
+    assert out_json.read_text(encoding="utf-8") == audit_path.read_text(encoding="utf-8")
+    assert out_markdown.read_text(encoding="utf-8") == audit_path.with_suffix(".md").read_text(encoding="utf-8")
     assert _sha256(reference_path) == provenance["request_language_audit"][
         "reference_snapshot_sha256"
     ]

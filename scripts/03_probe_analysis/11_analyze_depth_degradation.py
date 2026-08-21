@@ -90,7 +90,7 @@ def main() -> None:
     if args.temporal_output_jsonl:
         trajectory_rows = temporal_divergence_rows(prediction_rows)
         args.temporal_output_jsonl.parent.mkdir(parents=True, exist_ok=True)
-        with args.temporal_output_jsonl.open("w") as handle:
+        with args.temporal_output_jsonl.open("w", encoding="utf-8") as handle:
             for row in trajectory_rows:
                 handle.write(json.dumps(row, sort_keys=True, allow_nan=False) + "\n")
 

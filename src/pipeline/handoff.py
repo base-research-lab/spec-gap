@@ -22,14 +22,14 @@ from typing import Any
 def load_handoff_json(path: str | Path) -> dict:
     """Load a consolidated handoff JSON object."""
 
-    return json.loads(Path(path).read_text())
+    return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def load_handoff_jsonl(path: str | Path) -> list[dict]:
     """Load raw handoff JSONL events."""
 
     events = []
-    with Path(path).open() as handle:
+    with Path(path).open(encoding="utf-8") as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
                 continue

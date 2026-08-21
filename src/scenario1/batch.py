@@ -113,7 +113,7 @@ def load_completed_batch_item(item: dict[str, Any]) -> dict[str, Any] | None:
     if not path.exists():
         return None
     try:
-        record = json.loads(path.read_text())
+        record = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         raise ValueError(f"cannot resume from invalid JSON at {path}: {error}") from error
 

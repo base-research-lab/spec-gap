@@ -260,5 +260,5 @@ def test_clean_checkout_cli_rebuilds_committed_audit(tmp_path: Path):
         text=True,
     )
 
-    assert out_json.read_text() == AUDIT_RESULT.read_text()
-    assert out_markdown.read_text() == AUDIT_MARKDOWN.read_text()
+    assert out_json.read_text(encoding="utf-8") == AUDIT_RESULT.read_text(encoding="utf-8")
+    assert out_markdown.read_text(encoding="utf-8") == AUDIT_MARKDOWN.read_text(encoding="utf-8")

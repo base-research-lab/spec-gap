@@ -59,7 +59,7 @@ def test_local_smoke_refuses_to_overwrite_retained_output(tmp_path):
     with pytest.raises(RuntimeError, match="refusing to overwrite"):
         _script_namespace()["run_local_smoke"](tmp_path)
 
-    assert sentinel.read_text() == "do not replace\n"
+    assert sentinel.read_text(encoding="utf-8") == "do not replace\n"
 
 
 def test_modal_connectivity_explains_missing_authentication(monkeypatch):

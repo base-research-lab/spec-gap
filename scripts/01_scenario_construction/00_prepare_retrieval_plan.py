@@ -66,14 +66,34 @@ def _extract_pdf(path: Path) -> str:
     with tempfile.TemporaryDirectory(prefix="specgap-retrieval-") as temp_dir:
         extracted = Path(temp_dir) / "extracted.txt"
         subprocess.run(
-            [executable, "-raw", str(path), str(extracted)],
+            [executable, "-raw", "-enc", "UTF-8", str(path), str(extracted)],
             check=True,
         )
-        return extracted.read_text()
+        return _decode_pdftotext_bytes(extracted.read_bytes())
+
+
+def _decode_pdftotext_bytes(payload: bytes) -> str:
+    """Decode pdftotext -enc UTF-8 output, repairing a known Poppler bug.
+
+    Some Poppler builds mis-encode a ToUnicode CMap entry above the BMP as a
+    naive per-surrogate-half UTF-8 sequence (CESU-8) instead of one combined
+    4-byte sequence. Detect that case and repair it; anything else surfaces
+    the original UnicodeDecodeError unchanged.
+    """
+    try:
+        text = payload.decode("utf-8")
+    except UnicodeDecodeError:
+        with_surrogates = payload.decode("utf-8", errors="surrogatepass")
+        text = with_surrogates.encode("utf-16", "surrogatepass").decode("utf-16")
+    # Match Path.read_text()'s universal-newline translation, which is how
+    # load_documents() reads the indexed clean-text fixtures being compared
+    # against here. Poppler builds that emit CRLF would otherwise never
+    # match a fixture read back through text mode.
+    return text.replace("\r\n", "\n").replace("\r", "\n")
 
 
 def _read_injected_carrier(path: Path) -> str:
-    return _extract_pdf(path) if path.suffix.lower() == ".pdf" else path.read_text()
+    return _extract_pdf(path) if path.suffix.lower() == ".pdf" else path.read_text(encoding="utf-8")
 
 
 def _verify_source_pdfs(

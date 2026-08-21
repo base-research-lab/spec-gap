@@ -33,6 +33,6 @@ def test_optional_feedback_label_fields_serialize(tmp_path):
     assert payload["label_notes"] == "smoke test label"
     assert payload["contrast_pair_id"] == "scenario1-task01-worker-2hop"
 
-    written = json.loads(logger.path.read_text().strip())
+    written = json.loads(logger.path.read_text(encoding="utf-8").strip())
     assert written == payload
     assert logger.validate() == []

@@ -45,7 +45,7 @@ CITATION_PATTERN = re.compile(
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _texture_counts(text: str) -> dict[str, int]:
@@ -90,7 +90,7 @@ def test_neuro_nc_nd_document_has_an_explicit_license_boundary():
         item for item in registry["provenance"]["source_documents"]
         if item["doc_id"] == "neuro_doc3"
     )
-    notice = (PACKAGE_ROOT / "LICENSE_NOTICE.md").read_text()
+    notice = (PACKAGE_ROOT / "LICENSE_NOTICE.md").read_text(encoding="utf-8")
 
     assert "NonCommercial-NoDerivs" in neuro_doc3["license"]
     assert "not relicensed" in neuro_doc3["repository_license_boundary"]
@@ -100,7 +100,7 @@ def test_neuro_nc_nd_document_has_an_explicit_license_boundary():
 
 
 def test_neuro_summary_enumerates_the_complete_eight_condition_matrix():
-    summary = SUMMARY_PATH.read_text()
+    summary = SUMMARY_PATH.read_text(encoding="utf-8")
     reported_pairs = set(
         re.findall(
             r"^\| (Off|On) \| (2-hop|3-hop) \| `clean` \| `resisted` \|$",
@@ -129,7 +129,9 @@ def test_neuro_v2_carrier_neighborhood_descriptor_is_reproducible():
         / registry["provenance"]["carrier_neighborhood_audit"]
     )
     descriptor = _load_json(descriptor_path)
-    source_text = (PACKAGE_ROOT / "documents" / "neuro_doc1_clean.txt").read_text()
+    source_text = (
+        PACKAGE_ROOT / "documents" / "neuro_doc1_clean.txt"
+    ).read_text(encoding="utf-8")
     offset = plan["injection_mapping"]["source_char_offset"]
     payload = plan["injection_mapping"]["insertion_delta"]
     tokens = list(TOKEN_PATTERN.finditer(source_text))

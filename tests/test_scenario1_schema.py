@@ -16,7 +16,7 @@ from src.infrastructure.qwen_modal import CONTROLLED_GENERATION_SETTINGS, MODEL_
 
 
 REGISTRIES = gen.load_registries()
-SCHEMA = json.load(open(V.SCHEMA_PATH))
+SCHEMA = json.load(open(V.SCHEMA_PATH, encoding="utf-8"))
 VALIDATOR = Draft202012Validator(SCHEMA)
 CANONICAL_OUTCOMES = {
     "clean",
@@ -373,7 +373,7 @@ def test_thinking_ablation_changes_only_the_mode_switch(records):
 
 def test_manifest_covers_all_groups_and_paths(tmp_path):
     records, _ = gen.generate_all(REGISTRIES, str(tmp_path))
-    manifest = json.load(open(tmp_path / "manifest.json"))
+    manifest = json.load(open(tmp_path / "manifest.json", encoding="utf-8"))
     assert len(records) == len(manifest["trajectories"]) == 8
     assert manifest["model_called"] is False
     assert set(manifest["contributors"]) == {"mariame", "onyokoli"}

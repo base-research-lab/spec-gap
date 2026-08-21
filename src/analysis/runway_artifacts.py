@@ -49,7 +49,7 @@ def load_runway_artifacts(
     }
     labels = np.asarray(npz["labels"], dtype=int)
 
-    responses = json.loads(response_path.read_text())
+    responses = json.loads(response_path.read_text(encoding="utf-8"))
     scenario_ids = np.asarray(
         [row["metadata"]["scenario_idx"] for row in responses], dtype=int
     )

@@ -547,7 +547,7 @@ def semantic_checks(t):
 def validate_payload(t):
     """Return structural and semantic errors for an in-memory trajectory."""
 
-    with open(SCHEMA_PATH) as handle:
+    with open(SCHEMA_PATH, encoding="utf-8") as handle:
         schema = json.load(handle)
     validator = Draft202012Validator(schema)
     struct = sorted(validator.iter_errors(t), key=lambda error: error.path)
@@ -559,7 +559,7 @@ def validate_payload(t):
 
 
 def validate_file(path, validator):
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         t = json.load(f)
     struct = sorted(validator.iter_errors(t), key=lambda e: e.path)
     struct_msgs = [f"SCHEMA {'/'.join(map(str, e.path))}: {e.message}" for e in struct]
@@ -569,7 +569,7 @@ def validate_file(path, validator):
 
 
 def main():
-    with open(SCHEMA_PATH) as f:
+    with open(SCHEMA_PATH, encoding="utf-8") as f:
         schema = json.load(f)
     validator = Draft202012Validator(schema)
     paths = []
