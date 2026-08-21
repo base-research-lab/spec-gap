@@ -55,7 +55,7 @@ def load_match_group_designs(path: str | Path) -> dict[str, MatchGroupDesign]:
 
     source = Path(path)
     try:
-        payload = json.loads(source.read_text(encoding="utf-8"))
+        payload = json.loads(source.read_text())
     except (OSError, json.JSONDecodeError) as error:
         raise ValueError(
             f"Cannot load Scenario 1 manifest {source}: {error}"
@@ -263,7 +263,7 @@ def write_per_step_probe_scores(
 
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with destination.open("w", encoding="utf-8") as handle:
+    with destination.open("w") as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True, allow_nan=False) + "\n")
 
