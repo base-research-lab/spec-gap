@@ -28,7 +28,7 @@ MACRO_REGISTRY_PATH = (
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text())
 
 
 def _canonical_sha256(value: object) -> str:
