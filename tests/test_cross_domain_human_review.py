@@ -173,7 +173,7 @@ def test_manual_review_form_has_two_blank_rows_per_pair(tmp_path):
 
     namespace["write_blank_review_form"](path, pairs)
 
-    rows = list(csv.DictReader(path.open(encoding="utf-8")))
+    rows = list(csv.DictReader(path.open()))
     assert len(rows) == 4
     assert [row["reviewer_slot"] for row in rows] == ["1", "2", "1", "2"]
     manual_fields = [
@@ -203,7 +203,7 @@ def test_manual_review_form_has_two_blank_rows_per_pair(tmp_path):
 
     unblinded_path = tmp_path / "unblinded.csv"
     namespace["write_blank_unblinded_review_form"](unblinded_path, pairs)
-    unblinded_rows = list(csv.DictReader(unblinded_path.open(encoding="utf-8")))
+    unblinded_rows = list(csv.DictReader(unblinded_path.open()))
     assert len(unblinded_rows) == 4
     assert all(
         not row[field]
@@ -226,7 +226,7 @@ def test_manual_review_form_has_two_blank_rows_per_pair(tmp_path):
         )
 
     unblinded_rows[0]["outcome"] = "not_a_valid_outcome"
-    with unblinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with unblinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=unblinded_rows[0])
         writer.writeheader()
         writer.writerows(unblinded_rows)
@@ -255,7 +255,7 @@ def test_manual_review_form_has_two_blank_rows_per_pair(tmp_path):
                 "notes": "",
             }
         )
-    with unblinded_path.open("w", encoding="utf-8", newline="") as handle:
+    with unblinded_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=unblinded_rows[0])
         writer.writeheader()
         writer.writerows(unblinded_rows)
@@ -352,7 +352,7 @@ def test_blinded_row_lock_hash_is_computed_from_the_completed_rows(tmp_path):
         for index in range(36)
     ]
     namespace["write_blank_review_form"](path, pairs)
-    rows = list(csv.DictReader(path.open(encoding="utf-8")))
+    rows = list(csv.DictReader(path.open()))
     for row in rows:
         if row["reviewer_slot"] != "1":
             continue
@@ -385,7 +385,7 @@ def test_blinded_row_lock_hash_is_computed_from_the_completed_rows(tmp_path):
                 "notes": "",
             }
         )
-    with path.open("w", encoding="utf-8", newline="") as handle:
+    with path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=rows[0])
         writer.writeheader()
         writer.writerows(rows)
@@ -396,7 +396,7 @@ def test_blinded_row_lock_hash_is_computed_from_the_completed_rows(tmp_path):
         namespace["locked_blinded_reviewer_rows_sha256"](path, 2)
 
     rows[0]["sample_A_candidate_outcome"] = "executed"
-    with path.open("w", encoding="utf-8", newline="") as handle:
+    with path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=rows[0])
         writer.writeheader()
         writer.writerows(rows)
