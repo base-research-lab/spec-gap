@@ -1,0 +1,270 @@
+*
+Corresponding author: 123781874@QQ.com
+Cause analysis and preventive measures of casing damage in
+Punan Oilfield
+Xueqin Zhou
+Daqing Oilfield, Oil Production Plant No.7, Operation Area No.5, China
+Abstract: South region of casing damage Wells based on the statistics of Portugal plane and vertical
+distribution characteristics, combined with dynamic production of oil and water Wells, drilling pressure,
+measures, Wells and water injection cycle switch formation pressure and oil and water Wells casing damage
+reason analysis and summarizes the classification, find out the main factors of influence of casing damage,
+and put forward the effective measures of casing to prevent, reduce the speed of casing damage and to improve
+oilfield development effect.
+Key words: Punan Oilfield; Casing damage; Cause analysis; Casing prevention.
+1. Introduction
+Since the development of Southern Portugal, there have
+been 194 casing losses, including 50 oil Wells and 144
+water Wells, which are mainly divided into fault blocks
+no. 3, 4 and 8 in southern Portugal, accounting for 53.1%
+of the total casing losses. In this paper, 82 casing losses
+Wells in southern Portugal from 2010 to 2018 were
+compared and analyzed.It is found that the main causes of
+casing damage in southern Pu area in recent years are fault
+occlusion, high water injection intensity, influence of
+drilling control, poor cementing quality and so on. The
+longitudinal comparison and analysis mainly focus on the
+mudstone layer of The 1st, 2nd and 3rd member of The
+Nen and the mudstone interlayer of the main oil layer of
+the Pui group. It can be seen from the plane distribution
+that the block with complex fault structure is prone to
+forming high pressure abnormal area and sheath damage,
+such as The Third and fifth fault blocks in Punan.
+As long as there are three types of casing loss in Grape
+oilfield: deformation, stage-off and rupture, the water well
+deformation and rupture are the main ones, accounting for
+72.3% of the total casing loss.
+It can be seen from the figure that the faults in the plane
+are mainly NE trending, so this fault is mainly a stretch
+fault system in the early stage. In the late stage, the
+influence of the near-Sn extension on Nanpu no.2 fault is
+mainly reflected in the nW-SE extension of Nanpu no.2
+fault, which controls the formation of The No.2 buried hill.
+2. Set of damage cause classification
+Taking Pu 178-50 as an example, Pu Nan 7 fault block,
+casing failure horizon PI3-6JC, casing failure time
+201811, this well is located in casing failure area,
+connected with 3 Wells 7P178-52 (casing failure was
+discovered in September 2002, layer PI9-11JC,
+N1).7P180-50 (Casing damage was found in November
+2016, horizon PI3-4NJC), 7P176-50.
+E3S Web of Conferences 352, 01069 (2022) https://doi.org/10.1051/e3sconf/202235201069
+ESAT 2022
+© The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons Attribution
+License 4.0 (http://creativecommons.org/licenses/by/4.0/).
+*
+Figure 1: Depositional facies zone of Portuguese 178-50 I61
+The casing damaged well Pu 180-90 is in Pu I5 reservoir.
+According to the analysis of seismic data interpretation
+results, pu 180-90 encountered a micro fault in Pu I5
+reservoir. Because the existence of micro fault was not
+noticed, casing damage occurred in the replacement well
+Pu 180-Gen 90 later, and the casing damaged layer is in
+Pu I1 reservoir, and the fault fault is also in Pu I1
+reservoir.These two casing losses were caused by micro-
+faults.
+Nanpu no.2 buried-hill is obviously reformed by fracture
+cutting, mainly forming horst and single fault hill. The
+development of faults is regular and controlled by
+preexisting faults and stress field. Nanpu no.2 buried hill
+is located on the slope belt of Nanpu depression and
+Shaletian uplift. Nanpu no.2 buried hill is generally
+controlled by Nanpu no.2 fault, which constitutes the
+boundary fault of Nanpu no.2 buried hill and is separated
+from Nanpu no.1 buried hill. Nanpu no.2 buried hill is
+developed with nearly EW trending faults (see FIG. 3).
+Figure 2: Depositional facies
+Figure 3: Seismic section of Well Pu 180-90
+3. Poor cementing quality
+Poor cementing quality leads to the injection of water
+channeling main oil layer interlayer, tender first section,
+tender second section bottom oil shale, providing
+access.Well Pu 178-134 is located in The First fault block
+of Pu Nan. The casing damage time was January 2018,
+and the casing damage position was N1. The distribution
+of perforation top and bottom boundary was 1059.70m
+and 1083.30m.The well itself is well developed, and the
+injection-production relationship is perfect, and there is
+no fault around the block. Analysis shows that the well
+casing damage is caused by the injection water channeling
+caused by poor cementing quality.
+2
+E3S Web of Conferences 352, 01069 (2022) https://doi.org/10.1051/e3sconf/202235201069
+ESAT 2022
+Figure 4: Depositional facies zone of Portuguese 178-134 I11
+Figure 5: Depositional facies zone of Portuguese 254-116 I42
+Pu 254-116 is located in The Fourth fault block of Pu Nan.
+The casing loss occurred in October 2018 at the casing
+loss position PI1-4JC. The well was put into production
+in January 2015, but there has been no water and no water
+injection effect.In April 2018, when the large pump was
+replaced, the tubing could not be pulled out. After analysis
+and checking the cementing quality chart, it was found
+that the cementing quality above the casing damaged
+stratum was poor, which led to the dislocation of the well
+in pi1-4JC mudstone interlayer.
+This mechanism of segmented growth of main boundary
+faults controls the migration of trough, and thus the
+distribution of effective hydrocarbon stoves in different
+periods [1].In recent years, with the deepening of research,
+more and more scholars have realized that most of the
+trunk boundary faults have a segmental growth
+mechanism [2].Generally speaking, the growth of a single
+fault is characterized by the increase in the displacement
+of the ascending dip fault and the increase in the length of
+the ascending strike fault [3]. As for the relationship
+between the displacement of the fault and the length of the
+fault, many scholars have conducted a large number of
+quantitative studies by observing the morphology of faults
+in the field and established a variety of growth
+models. The simulation experiment of fault growth plays
+an important role in revealing the formation process of
+natural faults, and provides an important basis for the
+study of fault connection and stress[4].Fault growth stems
+from progressive deformation of fractures[5]. Studies on
+faults have gone through a process from the morphology
+of fault profile to the study of fault length and fault
+displacement[6]. Nanpu fault 2 has an important control
+action of buried hill, in order to study the growth of Nanpu
+fault 2 connection process and Nanpu no. 2 the control
+function of buried hill through the application of slip -
+distance curve and slip back stripping method to study the
+growth of the Nanpu fault 2 connection process, and the
+use of equilibrium profile to analyze its effect on the
+tectonic evolution of the buried hill. The results show that
+the Nanpu No. 2 fault is characterized by segmentalized
+growth, caledonian quiet structure, and widely distributed
+carbonate deposits. After the middle-late Caledonian
+uplift, the strata suffered from denudation. In view of the
+previous studies on the control effect of fault growth
+connection on qianshan in Nanpu depression, this paper
+applies fault backstripping technology to discuss the
+evolution of faults on qianshan.
+4. Casing damage prevention measures
+When it is found that the water absorption profile data
+shows single-layer inrush, profile control or water
+plugging should be carried out in time to alleviate the
+contradiction between layers and avoid excessive water
+injection intensity resulting in local high pressure and
+casing damage.
+Local high pressure is easy to be formed in injection Wells
+with poor reservoir development, so injection distribution
+should be adjusted reasonably and combined with
+periodic water injection to prevent casing damage.
+The investigation and analysis of single sand injection
+well should be strengthened, and the injection-production
+structure should be adjusted in time to control the
+development of abnormal high pressure layer, so as to
+prevent casing damage.
+Strengthen the dynamic analysis of oil and water well on
+both sides of the fault, improve the injection-production
+relationship, strengthen pressure monitoring, timely find
+local high pressure, timely adjustment, and prevent sheet
+casing damage.
+It is believed that the connection of faults is an important
+way for a large number of small faults to evolve and form
+large faults. Fault plays an important role in controlling
+the evolution of buried hill. Fault segmentation and
+connection process have an important influence on the
+distribution of subsidence center, migration and tectonic
+zone distribution, sedimentary facies and filling
+characteristics of strata in the same rift period in the
+basin. Strong folding occurred in The Indochinese period,
+and in the Himalayan Period, the Nanpu no. 2 fault was
+weakly active in the Shahejie sedimentary period and
+developed only in the north, forming the prototype of
+buried hill at this time. During the sedimentary period of
+Dongying Formation, the structure reversed slightly,
+which is also known as the Dongying Movement. At this
+3
+E3S Web of Conferences 352, 01069 (2022) https://doi.org/10.1051/e3sconf/202235201069
+ESAT 2022
+time, fault no. 2 strongly extended southward, and buried-
+hill was formed and basically formed. The research
+results have certain reference value for oil and gas
+exploration in Nanpu sag.
+References
+1. Xu Jianjun, Huang Lida, Yan Limei, Yi Na. Insulator
+Self-Explosion Defect Detection Based on
+Hierarchical Multi-Task Deep Learning[J].
+Transactions of China Electrotechnical Society,
+2021,36(07):1407-1415.
+2. Limei,LIU Yongqiang,XU Jianjun,et al.Broken
+string diagnosis of composite insulator based on
+Grabcut segmentation and filler area
+discrimination[J].Power System Protection and
+Control,2021,49(22):114-119
+3. N. Yi, Q. Wang, L. Yan, et al., A multi-stage game
+model for the false data injection attack from
+attacker’s perspective. Sustainable Energy Grids &
+Networks 28 (2021).
+4. Na Yi,Jianjun Xu,Limei Yan,Lin Huang. Task
+Optimization and Scheduling of Distributed Cyber-
+physical System Based on Improved Ant Colony
+Algorithm. Future Generation Computer Systems,
+109(Aug. 2020),134-148
+5. Yang Zhao, Jianjun Xu, Jingchun Wu. A New
+Method for Bad Data Identification of Oilfield Power
+System Based on Enhanced Gravitational Search-
+Fuzzy C-Means Algorithm. IEEE Transactions on
+Industrial Informatics. VOL. 15, NO. 11,
+NOVEMBER 2019 5963-5970
+6. Lei Chen,Jianjun Xu,Shuang Chen,Hui Yang,Linhu
+Liu. Power Quality Disturbance Signal Denoising
+Based on Overcomplete Representation. IEEJ
+TRANSACTIONS ON ELECTRICAL AND
+ELECTRONIC ENGINEERING.2022; 17: 544–555
+7. Xu jianjun, Deng Fanliang, Zhang Xiaolei, et.al.,
+Application of Distributed power Grid-Connection
+based on improved GA-GPC algoritthm. Journal of
+Northeast Petroleum University Vol.44,
+No.4,2020:105-112
+8. Jing Han,Xi Wang,LiMei Yan, Aida Dahlak, et al.
+Modelling the performance of an SOEC by
+optimization of neural network with MPSO
+algorithm. International Journal of Hydrogen Energy,
+Volume 44, Issue 51, 22 October 2019, Pages 27947-
+27957.
+9. Xu J.J., Gai D., Yan L.M. A NEW FAULT
+IDENTIFICATION AND DIAGNOSIS ON PUMP
+VALVES OF MEDICAL RECIPROCATING
+PUMPS. Basic & Clinical Pharmacology &
+Toxicology, 2016,118 (Suppl. 1), 38-38
+10. Hu S.B., Guo L.L., Liu Y.J., Zhang X., Xu J.
+J..ENERGY TRANSFER BY LONG GRAVITY
+HEAT PIPE ON HEALTH MEDICAL. Basic &
+Clinical Pharmacology & Toxicology, 2016,118
+(Suppl. 1), 38-38
+11. Anle He, Dawei Zhu, Chong Liang, Hewen Zhang,
+Jun Yan and Jianjun Xu. Optimization Research of
+Effective Stimulation for Carbonate Reservoir and its
+Application. International Journal of Smart Home
+Vol. 10, No. 3, (2016)
+12. Yan Zhang, Jianjun Xu, Limei Yan.The Multi-
+objective Model of Congestion Eliminating Method
+of Interruptible Load Nodes. International Journal of
+Future Generation Communication and Networking,
+Volume9, No.10, October ,2016. (20164502998720)
+13. Lei Shi, Jianjun Xu, Limei Yan. The Research on
+network Losses Allocation of Power Market based on
+Improved REI Network Numerical Equivalence.
+International Journal of u-and e-Service, Science and
+Technology, Volume 9, No.11, November,2016.
+14. Fu, Guangjie, Ge, Feng, Mu, Haiwei, Chen, Cong,
+Li, Mingqiu, Xu,Jianjun, Fault section location based
+on adaptive correlation analysis in the neutral non-
+effectual grounded system, Journal of Software
+Engineering, 2015, 9（3）：658-665
+15. Yang Yong, Wu Mingtao, XU Jianjun, Arithmetic
+Based on Wavelet Transform and Process SVM for
+Automatically Identifying Log-curve Formation,
+Journal of Software Engineering, 2015, 9（3）：
+666-672
+16. Lei Shi, Jianjun Xu, Guohui Qu and Limei Yan,
+Nonlinear Analysis Chaotic Characteristics of Leak
+Signal of Pipeline based on Reconstructed Phase
+Space, International Journal of Smart Home Vol. 9,
+No. 12, (2015), pp. 1-8
+4
+E3S Web of Conferences 352, 01069 (2022) https://doi.org/10.1051/e3sconf/202235201069
+ESAT 2022
+

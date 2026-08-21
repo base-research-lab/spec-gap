@@ -1,0 +1,202 @@
+Continuous Donoho-Elad Spark Uncertainty Principle
+K. MAHESH KRISHNA
+School of Mathematics and Natural Sciences
+Chanakya University Global Campus
+NH-648, Haraluru Village
+Devanahalli Taluk, Bengaluru North District
+Karnataka State 562 110 India
+Email: kmaheshak@gmail.com
+Date: September 3, 2025
+Abstract: Donoho and Elad [Proc. Natl. Acad. Sci. USA, 2003] introduced the important notion of
+the spark of a frame, using which they derived a fundamental uncertainty principle. Based on spark, they
+also provided a necessary and sufficient condition for the uniqueness of sparse solutions to the NP-hard
+ℓ0-minimization problem. In this nano note, we show that the notion of spark can be extended to linear
+maps whose domains are measure spaces. Using this generalization, we derive an uncertainty principle
+and provide a sufficient condition for the existence of sparse solutions to linear systems on measure spaces.
+Keywords: Frame, Uncertainty principle, Sparse solution.
+Mathematics Subject Classification (2020): 94A12, 42C15, 94A08, 28A05.
+1. Introduction
+Let H be a finite dimensional Hilbert space over K (C or R). Recall that [1] a collection of nonzero
+elements {τj}n
+j=1 in H is said to be a frame (also known as dictionary) H if there are r, s > 0 such that
+r∥h∥2
+≤
+n
+X
+j=1
+|⟨h, τj⟩|2
+≤ s∥h∥2
+, ∀h ∈ H.
+It is well-known that a collection {τj}n
+j=1 in H is a frame for H if and only if {τj}n
+j=1 spans H [5]. A
+frame {τj}n
+j=1 for H is said to be normalized if ∥τj∥ = 1 for all 1 ≤ j ≤ n. Note that any frame can be
+normalized by dividing each element by its norm. Given a frame {τj}n
+j=1 for H, we define the analysis
+operator
+θτ : H ∋ h 7→ θτ h := (⟨h, τj⟩)n
+j=1 ∈ Kn
+.
+Adjoint of the analysis operator is known as the synthesis operator whose equation is
+θ∗
+τ : Kn
+∋ (aj)n
+j=1 7→ θ∗
+τ (aj)n
+j=1 :=
+n
+X
+j=1
+ajτj ∈ H.
+Given d ∈ Kn
+, let ∥d∥0 be the number of nonzero entries in d. Central problem which occurs in many
+situations is the following ℓ0-minimization problem:
+Problem 1.1. Let {τj}n
+j=1 be a normalized frame for H. Given h ∈ H, solve
+minimize
+d∈Kn
+∥d∥0 subject to θ∗
+τ d = h.
+Recall that c ∈ Kn
+is said to be a unique solution to Problem 1.1 if it satisfies following two conditions.
+1
+arXiv:2509.00001v1
+[math.OC]
+1
+Aug
+2025
+K. MAHESH KRISHNA
+(i) θ∗
+τ c = h.
+(ii) If d ∈ Kn
+satisfies θ∗
+τ d = h, then
+∥d∥0 > ∥c∥0.
+In 1995, Natarajan showed that Problem 1.1 is NP-Hard [6]. Therefore solution to Problem 1.1 has to be
+obtained using other methods. Work which is built around Problem 1.1 is known as sparseland (term
+due to Elad [4]) or compressive sensing or compressed sensing.
+As the operator θ∗
+τ is surjective, for a given h ∈ H, there is always a d ∈ Kn
+such that θ∗
+τ d = h. Thus the
+central problem is when solution to Problem 1.1 is unique. One of the greatest results of Donoho and
+Elad [3] with regard to this is using the notion of spark defined as follows. In the paper, given a subset
+M ⊆ N, the cardinality of M is denoted by o(M).
+Definition 1.2. [3] Given a normalized frame {τj}n
+j=1 for H, the spark of {τj}n
+j=1 is defined as
+Spark({τj}n
+j=1) := min{o(M) : M ⊆ {1, . . . , n}, {τj}j∈M is linearly dependent}
+= min{∥d∥0 : d ∈ ker(θ∗
+τ ), d ̸= 0}.
+In 2003, Donoho and Elad derived the following breakthrough spark uncertainty principle [3].
+Theorem 1.3. [3] (Donoho-Elad Spark Uncertainty Principle) Let {τj}n
+j=1 be a normalized frame
+for H. If a, b ∈ Kn
+are distinct and θ∗
+τ a = θ∗
+τ b, then
+∥a∥0 + ∥b∥0 ≥ Spark({τj}n
+j=1).
+In the same paper [3], Donoho and Elad also gave a characterization for the solution of Problem 1.1 using
+spark.
+Theorem 1.4. [2,3] (Donoho-Elad Spark Sparsity Theorem) Let {τj}n
+j=1 be a normalized frame
+for H.
+(i) For every h ∈ H and every 1 ≤ k ≤ n, there exists atmost one vector c ∈ Kn
+such that
+h = θ∗
+τ c satisfying ∥c∥0 ≤ k
+if and only if
+Spark({τj}n
+j=1) > 2k.
+(ii) If h ∈ H can be written as h = θ∗
+τ c for some c ∈ Kn
+satisfying
+∥c∥0 <
+1
+2
+Spark({τj}n
+j=1),
+then c is the unique solution to Problem 1.1.
+In this note, we show that Definition 1.2 can be extended largely. Using this, we show that Theorems 1.3
+and 1.4 have continuous extensions.
+2. Continuous Spark
+Let (Ω, µ) be a measure space and let
+M(Ω, µ) := {f : Ω → K is measurable}.
+2
+CONTINUOUS DONOHO-ELAD SPARK UNCERTAINTY PRINCIPLE
+Let V be a vector space over K and let W be a subspace of M(Ω, µ). Given a linear map A : W → V,
+we define the spark of A as
+Spark(A) := inf{µ(supp(f)) : f ∈ ker(A), f ̸= 0}.
+We now have continuous version of Theorem 1.3.
+Theorem 2.1. (Continuous Donoho-Elad Spark Uncertainty Principle) Let A : W → V be a
+linear map. If f, g ∈ W are distinct and Af = Ag, then
+µ(supp(f)) + µ(supp(g)) ≥ Spark(A).
+Proof. Since f − g ̸= 0 and f − g ∈ ker(A), we have
+Spark(A) ≤ µ(supp(f − g)) ≤ µ(supp(f) ∪ supp(g)) ≤ µ(supp(f)) + µ(supp(g)).
+□
+We set of most general version of Problem 1.1 as follows.
+Problem 2.2. Let A : W → V be a linear map. Given v ∈ V, solve
+minimize
+g∈W
+µ(supp(g)) subject to Ag = v.
+Following is continuous version of Theorem 1.4.
+Theorem 2.3. (Continuous Donoho-Elad Spark Sparsity Theorem) Let A : W → V be a linear
+map.
+(i) Let r ∈ [0, ∞). If
+Spark(A) > 2r,
+then for every v ∈ V, there exists atmost one vector f ∈ W such that
+v = Af satisfying µ(supp(f)) ≤ r.
+(ii) If v ∈ V can be written as v = Af for some f ∈ W satisfying
+µ(supp(f)) <
+1
+2
+Spark(A),
+then f is the unique solution to Problem 2.2.
+Proof. (i) Let r ∈ [0, ∞) and v ∈ V. Let g, h ∈ W satisfy v = Ag = Ah and µ(supp(g)) ≤ r,
+µ(supp(h)) ≤ r. We claim that g = h. If this is not true, then g − h ̸= 0. Then g − h ∈ ker(A) with
+g − h ̸= 0. But then
+2r < Spark(A) ≤ µ(supp(g − h)) ≤ µ(supp(g) ∪ supp(h))
+≤ µ(supp(g)) + µ(supp(h)) ≤ r + r = 2r
+which is impossible. Hence claim holds.
+(ii) Let v ∈ V and f ∈ W satisfies
+µ(supp(f)) <
+1
+2
+Spark(A).
+Let g ∈ W be such that v = Ag and g ̸= f. Then we have
+A(f − g) = v − v = 0.
+3
+K. MAHESH KRISHNA
+Hence f − g ∈ ker(A) and f − g ̸= 0. Definition of spark then gives
+Spark(A) ≤ µ(supp(f − g)) ≤ µ(supp(f)) + µ(supp(g))
+<
+1
+2
+Spark(A) + µ(supp(g)).
+Therefore
+µ(supp(f)) <
+1
+2
+Spark(A) < µ(supp(g)).
+Hence f is unique solution to Problem 2.2.
+□
+In view of Theorem 1.4, we have following problem: For which measure spaces, the converse of (i) in
+Theorem 2.3 holds? Note that the proof of converse of (i) in Theorem 1.4 is based on the technique of
+writing a 2k-sparse vector as a difference of two k-sparse vectors [2] which we are unable do in continuous
+setting.
+References
+[1] John J. Benedetto and Matthew Fickus. Finite normalized tight frames. Adv. Comput. Math., 18(2-4):357–385, 2003.
+[2] Mark A. Davenport, Marco F. Duarte, Yonina C. Eldar, and Gitta Kutyniok. Introduction to compressed sensing. In
+Compressed sensing, pages 1–64. Cambridge Univ. Press, Cambridge, 2012.
+[3] David L. Donoho and Michael Elad. Optimally sparse representation in general (nonorthogonal) dictionaries via l1
+minimization. Proc. Natl. Acad. Sci. USA, 100(5):2197–2202, 2003.
+[4] Michael Elad. Sparse and redundant representations: From theory to applications in signal and image processing.
+Springer, New York, 2010.
+[5] Deguang Han, Keri Kornelson, David Larson, and Eric Weber. Frames for undergraduates, volume 40 of Student
+Mathematical Library. American Mathematical Society, Providence, RI, 2007.
+[6] B. K. Natarajan. Sparse approximate solutions to linear systems. SIAM J. Comput., 24(2):227–234, 1995.
+4
+

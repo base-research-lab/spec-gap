@@ -39,7 +39,13 @@ PROTOCOL_SUMMARY_SCRIPT = (
 
 def _fake_result(request, final_content, *, truncated=False):
     token_id = 100 + request["step_index"]
-    rendered_input = json.dumps(request["messages"], sort_keys=True)
+    # A plain-text join (not json.dumps) so embedded quotes/newlines in
+    # real PDF-derived injection text survive verbatim, matching how a
+    # real tokenizer chat template renders messages into one string.
+    rendered_input = "\n".join(
+        f"<{message['role']}>\n{message['content']}"
+        for message in request["messages"]
+    )
     injection_text = request.get("injection_text")
     offset_mapping = None
     if injection_text is not None:
@@ -109,8 +115,16 @@ def _fake_result(request, final_content, *, truncated=False):
     )
 
 
+_FIXTURE_REGISTRY_PATH = (
+    "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
+    "12_docid_in_calibration_line/begin/domain_config.json"
+)
+
+
 def _record(depth="3-hop", treatment="injected"):
-    return generator.build_record(generator.load_registry(), depth, treatment)
+    return generator.build_record(
+        generator.load_registry(_FIXTURE_REGISTRY_PATH), depth, treatment
+    )
 
 
 def _schema_errors(record):

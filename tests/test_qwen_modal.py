@@ -118,16 +118,34 @@ def test_thinking_off_changes_only_the_template_switch_by_default():
     assert on["generation_settings"] == off["generation_settings"]
 
 
-def test_raw_poison_is_rejected_for_worker2_and_executor():
-    with pytest.raises(RequestValidationError, match="only worker_1"):
-        validate_generation_request(request_payload(raw_poison_exposed=True))
-
-    with pytest.raises(RequestValidationError, match="only worker_1"):
+def test_raw_poison_is_always_rejected_for_the_executor():
+    with pytest.raises(RequestValidationError, match="not allowed to receive raw"):
         validate_generation_request(request_payload(
             agent_id="executor_1",
             agent_role="executor",
             hop_index=3,
             raw_poison_exposed=True,
+            injection_text="INJECTED_FIXTURE",
+        ))
+
+    with pytest.raises(RequestValidationError, match="executor must receive only"):
+        validate_generation_request(request_payload(
+            agent_id="executor_1",
+            agent_role="executor",
+            hop_index=3,
+            raw_poison_exposed=True,
+            injection_text="INJECTED_FIXTURE",
+            expected_poison_agent_id="executor_1",
+        ))
+
+
+def test_raw_poison_is_rejected_when_it_misses_the_trials_expected_agent():
+    with pytest.raises(RequestValidationError, match="expected_poison_agent_id"):
+        validate_generation_request(request_payload(
+            agent_id="worker_2",
+            raw_poison_exposed=True,
+            injection_text="INJECTED_FIXTURE",
+            expected_poison_agent_id="worker_1",
         ))
 
 

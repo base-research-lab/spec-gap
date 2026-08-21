@@ -13,6 +13,7 @@ import torch
 
 from src.infrastructure.modal_costs import build_gpu_cost_record, build_token_usage
 from src.infrastructure.qwen_modal import (
+    DEFAULT_GENERATION_PROTOCOL_ID,
     RequestValidationError,
     activation_artifact_path,
     build_generation_result,
@@ -42,7 +43,13 @@ from src.scenario1.orchestrator import (
 def _legacy_result(request, final_content, checksum):
     input_ids = [1, 2, 3 + request["step_index"]]
     generated_ids = [100 + request["step_index"]]
-    rendered_input = json.dumps(request["messages"], sort_keys=True)
+    # A plain-text join (not json.dumps) so embedded quotes/newlines in
+    # real PDF-derived injection text survive verbatim, matching how a
+    # real tokenizer chat template renders messages into one string.
+    rendered_input = "\n".join(
+        f"<{message['role']}>\n{message['content']}"
+        for message in request["messages"]
+    )
     injection_text = request.get("injection_text")
     offset_mapping = None
     if injection_text is not None:
@@ -108,11 +115,22 @@ def _legacy_result(request, final_content, checksum):
 
 def _write_live_pair(tmp_path):
     output_root = tmp_path / "experiments/scenario1/trajectories"
-    registry = next(
-        item
-        for item in load_registries()
-        if item["independence_group_id"] == "climate_coastal_flood_01"
-    )
+    registry = load_registries([
+        "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
+        "12_docid_in_calibration_line/begin/domain_config.json",
+    ])[0]
+    # The repair tool is hardwired to one frozen legacy pair
+    # (ACTIVATION_REPAIR_SMOKE_PAIR == "climate_coastal_flood_01__2hop"); the
+    # registry that originally carried this group id was retired with the
+    # whole-doc grid migration. Relabel a current registry's group id and
+    # drop its non-default prompt-profile/protocol suffixes (which would
+    # otherwise change matched_pair_id) to exercise that fixed gate.
+    registry = {
+        **registry,
+        "independence_group_id": "climate_coastal_flood_01",
+        "agent_prompt_profile_id": None,
+        "generation_protocol_id": DEFAULT_GENERATION_PROTOCOL_ID,
+    }
     for treatment in ("clean", "injected"):
         structural = build_record(registry, "2-hop", treatment)
 

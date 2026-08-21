@@ -21,7 +21,15 @@ from src.scenario1.batch import (  # noqa: E402
     load_completed_batch_item,
     trajectory_turn_cost,
 )
-from src.scenario1.generator import ARTIFACT_ROOT, load_registries  # noqa: E402
+from src.scenario1.domain_grid import (  # noqa: E402
+    parse_domains,
+    registry_paths_for_domains,
+)
+from src.scenario1.generator import (  # noqa: E402
+    ARTIFACT_ROOT,
+    INPUTS,
+    load_registries,
+)
 from src.scenario1.orchestrator import (  # noqa: E402
     load_model_turn_result,
     run_live_trajectory,
@@ -34,6 +42,7 @@ from src.scenario1.orchestrator import (  # noqa: E402
 def run_scenario1_batch(
     thinking_modes: str = "off,on",
     registry_paths: str = "",
+    domains: str = "",
     action: str = "validate",
     output_root: str = str(Path(ARTIFACT_ROOT) / "trajectories"),
     max_new_trajectories: int = 0,
@@ -49,11 +58,30 @@ def run_scenario1_batch(
     ]
     if registry_paths.strip() and not selected_registry_paths:
         raise ValueError("registry_paths must contain at least one path")
-    registries = (
-        load_registries(selected_registry_paths)
-        if selected_registry_paths
-        else load_registries()
-    )
+    if domains.strip() and selected_registry_paths:
+        raise ValueError("pass domains or registry_paths, not both")
+    if domains.strip():
+        selected_folders = parse_domains(domains)
+        selected_registry_paths = [
+            str(path)
+            for path in registry_paths_for_domains(
+                selected_folders,
+                inputs_root=INPUTS,
+            )
+        ]
+        missing = [path for path in selected_registry_paths if not Path(path).is_file()]
+        if missing:
+            raise ValueError(
+                "missing domain grid registries; build them first with "
+                "scripts/01_scenario_construction/"
+                "12_build_new_grid_styles_nochunk.py --domains "
+                f"{','.join(selected_folders)}. Missing: {missing[0]}"
+            )
+    if not selected_registry_paths:
+        raise ValueError(
+            "pass --domains or --registry-paths; there is no default cohort"
+        )
+    registries = load_registries(selected_registry_paths)
     plan = build_live_batch(
         registries,
         thinking_modes=modes,
@@ -101,9 +129,11 @@ def run_scenario1_batch(
             for item in plan
         }),
         "independence_group_ids": [
-            registry["independence_group_id"] for registry in registries
+            registry.get("independence_group_id") or registry.get("group_id")
+            for registry in registries
         ],
         "registry_paths": selected_registry_paths,
+        "domains": domains.strip() or None,
         "selected_ids": [item["trajectory_id"] for item in selected],
     }
     print(json.dumps(preview, indent=2), flush=True)
