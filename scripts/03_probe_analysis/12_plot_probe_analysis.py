@@ -349,7 +349,7 @@ def _write_csv(rows: list[dict], path: Path) -> None:
 
 def _read_json(path: Path) -> dict:
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text())
     except (OSError, json.JSONDecodeError) as error:
         raise ValueError(f"Cannot load analysis result {path}: {error}") from error
     if not isinstance(payload, dict):
