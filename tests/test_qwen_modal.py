@@ -591,7 +591,7 @@ def test_result_validates_multi_position_activation_metadata():
 
 def test_saved_mock_result_matches_the_local_contract():
     payload = json.loads(
-        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text(encoding="utf-8")
+        (FIXTURE_DIR / "qwen_agent_turn_result.json").read_text()
     )
 
     result = validate_generation_result(payload)
