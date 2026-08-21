@@ -437,7 +437,7 @@ def test_aihc_exact_qwen_context_preflight_has_headroom(
         generator.INPUTS
         / aihc_registry["retrieval"]["context_preflight_file"]
     )
-    preflight = json.loads(path.read_text(encoding="utf-8"))
+    preflight = json.loads(path.read_text())
     assert preflight["retrieval_plan_sha256"] == (
         aihc_pair[0]["retrieval_trace"]["plan_sha256"]
     )
