@@ -536,7 +536,7 @@ def load_prediction_jsonl(path: str | Path) -> list[dict]:
     """Load prediction rows from JSON Lines."""
 
     rows = []
-    with Path(path).open(encoding="utf-8") as handle:
+    with Path(path).open() as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
                 continue
