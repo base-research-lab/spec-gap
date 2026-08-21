@@ -100,7 +100,7 @@ def main() -> None:
     control_table = activation_control_table(control_audit)
     args.control_output_csv.parent.mkdir(parents=True, exist_ok=True)
     control_fieldnames = sorted({key for row in control_table for key in row})
-    with args.control_output_csv.open("w", encoding="utf-8", newline="") as handle:
+    with args.control_output_csv.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=control_fieldnames)
         writer.writeheader()
         writer.writerows(control_table)
@@ -121,7 +121,7 @@ def main() -> None:
     table = layer_scan_table(result)
     args.output_csv.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = sorted({key for row in table for key in row})
-    with args.output_csv.open("w", encoding="utf-8", newline="") as handle:
+    with args.output_csv.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(table)
