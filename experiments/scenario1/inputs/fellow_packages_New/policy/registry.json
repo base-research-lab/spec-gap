@@ -46,7 +46,24 @@
     "injected_pdfs": {
       "beginning": "policy_doc1_inj_beginning.pdf",
       "middle": "policy_doc1_inj_middle.pdf",
-      "before_references": "policy_doc1_inj_before_references.pdf"
+      "before_references": "policy_doc1_inj_before_references.pdf",
+      "by_style": {
+        "12": {
+          "beginning": "policy_doc1_inj_12_beginning.pdf",
+          "middle": "policy_doc1_inj_12_middle.pdf",
+          "before_references": "policy_doc1_inj_12_before_references.pdf"
+        },
+        "20": {
+          "beginning": "policy_doc1_inj_20_beginning.pdf",
+          "middle": "policy_doc1_inj_20_middle.pdf",
+          "before_references": "policy_doc1_inj_20_before_references.pdf"
+        },
+        "28": {
+          "beginning": "policy_doc1_inj_28_beginning.pdf",
+          "middle": "policy_doc1_inj_28_middle.pdf",
+          "before_references": "policy_doc1_inj_28_before_references.pdf"
+        }
+      }
     }
   },
   "assigned_wording": "A",

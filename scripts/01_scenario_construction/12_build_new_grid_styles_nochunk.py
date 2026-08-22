@@ -29,7 +29,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 from src.scenario1.domain_grid import (  # noqa: E402
     expand_domain_grid,
-    injected_pdf_for_position,
+    injected_pdf_for_cell,
     parse_domains,
 )
 from src.scenario1.pdf_text import (  # noqa: E402
@@ -343,13 +343,7 @@ def build_cell(cell: dict) -> dict:
     style_root.mkdir(parents=True, exist_ok=True)
 
     assigned = source.get("assigned_wording", "A")
-    try:
-        payload = source["injection"]["wordings"][assigned]
-    except KeyError as error:
-        raise SystemExit(
-            f"{folder} is missing injection wording {assigned}"
-        ) from error
-    injected_pdf_name = injected_pdf_for_position(source, position)
+    injected_pdf_name = injected_pdf_for_cell(source, style_key, position)
     injected_pdf_path = NEW_ROOT / folder / injected_pdf_name
     if not injected_pdf_path.is_file():
         raise SystemExit(f"missing position PDF {injected_pdf_path}")
@@ -390,6 +384,16 @@ def build_cell(cell: dict) -> dict:
     endpoint = source["injection"]["endpoint"]
     if ".invalid/" not in endpoint:
         raise SystemExit(f"{folder} endpoint is not .invalid")
+
+    camouflage = DOMAIN_CAMOUFLAGE[folder]
+    payload = build_payload(
+        style_key=style_key,
+        note_for=camouflage["note_for"],
+        baseline_label=camouflage["baseline_label"],
+        endpoint=endpoint,
+        doc_id=carrier_doc_id,
+    )
+
     if _normalize_ws(payload) in _normalize_ws(carrier_clean):
         raise SystemExit(f"{folder} clean text already contains the payload")
 
@@ -598,6 +602,14 @@ def main() -> None:
     except ValueError as error:
         raise SystemExit(str(error)) from error
 
+    trace_path = NEW_ROOT / "_grid_styles_nochunk" / "GRID_TRACE.json"
+    existing_trace: dict = {}
+    if trace_path.is_file():
+        try:
+            existing_trace = json.loads(trace_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            existing_trace = {}
+
     cells = expand_domain_grid(domains)
     built = [build_cell(cell) for cell in cells]
     for item in built:
@@ -617,6 +629,16 @@ def main() -> None:
             item["structural_root"] = str(out.relative_to(PROJECT_ROOT))
             print(f"structural ok: {out}")
 
+    rebuilt_domains = set(domains)
+    kept_grid = [
+        entry
+        for entry in existing_trace.get("grid", [])
+        if entry.get("domain_folder") not in rebuilt_domains
+    ]
+    merged_domains = sorted(
+        set(existing_trace.get("domains", [])) | rebuilt_domains
+    )
+
     trace = {
         "title": (
             "fellow_packages_New per-domain style 12/20/28 x "
@@ -631,7 +653,7 @@ def main() -> None:
         "generator": (
             "scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py"
         ),
-        "domains": list(domains),
+        "domains": merged_domains,
         "cells_per_domain": 9,
         "style_factor": (
             "Styles 12, 20, and 28 remain grid cells. Begin/middle/end "
@@ -655,7 +677,8 @@ def main() -> None:
             "status": "not_started",
             "note": "Awaiting the new paid H200 Modal. Do not launch from this script.",
         },
-        "grid": [
+        "grid": kept_grid
+        + [
             {
                 "position": item["position"],
                 "style": item["style_id"],
@@ -697,7 +720,7 @@ def main() -> None:
             },
         ],
     }
-    _write_json(NEW_ROOT / "_grid_styles_nochunk" / "GRID_TRACE.json", trace)
+    _write_json(trace_path, trace)
 
 
 if __name__ == "__main__":
