@@ -237,6 +237,18 @@ def _page_spans(text: str) -> list[dict[str, int | str]]:
     return pages
 
 
+def locate_payload_offset(haystack: str, payload: str) -> int | None:
+    """Find where ``payload`` starts in ``haystack``, tolerant of PDF line-wrap
+    whitespace differences. Returns None if no match is found."""
+
+    tokens = [tok for tok in re.split(r"\s+", payload.strip()) if tok]
+    if not tokens:
+        return None
+    pattern = r"\s+".join(re.escape(tok) for tok in tokens)
+    match = re.search(pattern, haystack, flags=re.DOTALL)
+    return match.start() if match else None
+
+
 def unique_anchor(text: str, offset: int) -> str:
     if offset <= 0:
         for length in range(80, 241, 20):
@@ -405,16 +417,19 @@ def build_cell(cell: dict) -> dict:
         )
     try:
         offset, _delta = detect_single_insertion(carrier_clean, carrier_injected)
-    except ValueError as error:
-        raise SystemExit(
-            f"{injected_pdf_name} is not a single-insertion twin of "
-            f"{carrier_pdf_name}: {error}"
-        ) from error
-    anchor = unique_anchor(carrier_clean, offset)
-    if not carrier_clean.startswith(anchor, offset - len(anchor)):
-        raise SystemExit(f"{folder} insertion_anchor does not sit at offset")
-
-    pages = _page_spans(carrier_clean)
+        anchor = unique_anchor(carrier_clean, offset)
+        if not carrier_clean.startswith(anchor, offset - len(anchor)):
+            raise SystemExit(f"{folder} insertion_anchor does not sit at offset")
+        pages = _page_spans(carrier_clean)
+    except ValueError:
+        offset = locate_payload_offset(carrier_injected, payload)
+        if offset is None:
+            raise SystemExit(
+                f"{injected_pdf_name} does not contain a locatable copy of "
+                f"the registered wording"
+            )
+        anchor = unique_anchor(carrier_injected, offset)
+        pages = _page_spans(carrier_injected)
     page_number = next(
         int(page["page_number"])
         for page in pages
@@ -611,7 +626,21 @@ def main() -> None:
             existing_trace = {}
 
     cells = expand_domain_grid(domains)
-    built = [build_cell(cell) for cell in cells]
+    built = []
+    failed = []
+    for cell in cells:
+        try:
+            built.append(build_cell(cell))
+        except SystemExit as error:
+            failed.append((cell, str(error)))
+    if failed:
+        for cell, message in failed:
+            print(
+                f"FAILED  {cell['folder']:9} {cell['position']:6} "
+                f"style {cell['style_key']:>2}  {message}"
+            )
+        raise SystemExit(f"{len(failed)}/{len(cells)} cells failed to build")
+
     for item in built:
         print(
             f"{item['folder']:9}  {item['position']:6} style {item['style_key']:>2}  "
