@@ -422,13 +422,20 @@ def _pdf_injection_span(
         offset, delta = detect_single_insertion(clean_text, injected_text)
         return [offset, offset + len(delta)], delta
     except ValueError:
-        if injected_text.count(wording) != 1:
+        # Fall back to locating the wording directly, tolerant of the hard
+        # line-wraps pdftotext inserts inside a long payload sentence (which
+        # would otherwise break an exact substring match even though the
+        # words are identical).
+        tokens = [tok for tok in re.split(r"\s+", wording.strip()) if tok]
+        pattern = r"\s+".join(re.escape(tok) for tok in tokens)
+        matches = list(re.finditer(pattern, injected_text, flags=re.DOTALL))
+        if len(matches) != 1:
             raise AssertionError(
                 "injected PDF text is not a single insertion over the clean "
                 "carrier and does not contain the registered wording exactly once"
             ) from None
-        start = injected_text.index(wording)
-        return [start, start + len(wording)], wording
+        match = matches[0]
+        return [match.start(), match.end()], match.group(0)
 
 
 def _build_document_bundle(
