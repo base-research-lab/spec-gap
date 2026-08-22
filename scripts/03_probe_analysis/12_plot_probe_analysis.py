@@ -79,7 +79,7 @@ def main() -> None:
     parser.add_argument(
         "--trajectory-root",
         type=Path,
-        default=PROJECT_ROOT / "experiments/scenario1/trajectories/live",
+        default=PROJECT_ROOT / "experiments/scenario1/outputs/trajectories/live",
         help="Live trajectory tree used to record model and decoding provenance.",
     )
     parser.add_argument(

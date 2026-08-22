@@ -761,7 +761,7 @@ def load_domain_sources(
         for trajectory_id in sorted(expected_trajectory_ids[domain]):
             mode = "on" if trajectory_id.endswith("__thinking_on") else "off"
             relative_path = (
-                Path("experiments/scenario1/trajectories/live")
+                Path("experiments/scenario1/outputs/trajectories/live")
                 / mode
                 / f"{trajectory_id}.json"
             )

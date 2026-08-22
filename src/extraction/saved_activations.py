@@ -125,7 +125,7 @@ def trajectory_paths_for_analysis_tier(
 
     root = Path(trajectory_root)
     tier = normalize_index_analysis_tier(analysis_tier)
-    pattern = "*/*.json" if tier == "unclassified" else f"{tier}/*/*.json"
+    pattern = "*/*/*.json" if tier == "unclassified" else f"{tier}/*/*/*.json"
     return sorted(root.glob(pattern))
 
 

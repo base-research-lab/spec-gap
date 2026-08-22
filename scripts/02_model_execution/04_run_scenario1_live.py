@@ -36,7 +36,7 @@ def run_scenario1_trajectory(
     treatment: str = "clean",
     thinking_mode: str = "off",
     action: str = "validate",
-    output_root: str = str(Path(ARTIFACT_ROOT) / "trajectories"),
+    output_root: str = str(Path(ARTIFACT_ROOT) / "outputs/trajectories"),
     confirm_paid_run: str = "",
     analysis_tier: str = "exploratory",
 ) -> None:

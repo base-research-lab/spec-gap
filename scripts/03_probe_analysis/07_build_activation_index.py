@@ -40,7 +40,7 @@ def main() -> None:
     parser.add_argument(
         "--trajectory-root",
         type=Path,
-        default=PROJECT_ROOT / "experiments/scenario1/trajectories/live",
+        default=PROJECT_ROOT / "experiments/scenario1/outputs/trajectories/live",
     )
     parser.add_argument(
         "--legacy-index",

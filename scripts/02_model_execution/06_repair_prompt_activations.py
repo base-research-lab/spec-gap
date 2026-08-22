@@ -28,10 +28,10 @@ from src.scenario1.activation_repair import (  # noqa: E402
 
 
 DEFAULT_TRAJECTORY_ROOT = (
-    PROJECT_ROOT / "experiments/scenario1/trajectories/live"
+    PROJECT_ROOT / "experiments/scenario1/outputs/trajectories/live"
 )
 DEFAULT_CHECKPOINT_ROOT = (
-    PROJECT_ROOT / "experiments/scenario1/trajectories/checkpoints"
+    PROJECT_ROOT / "experiments/scenario1/outputs/trajectories/checkpoints"
 )
 DEFAULT_REPORT_ROOT = PROJECT_ROOT / "results/scenario1/activation_repair"
 REPAIR_RUN_REPORT_SCHEMA = "spec_gap.activation_repair_run.v1"

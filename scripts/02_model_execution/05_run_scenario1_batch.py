@@ -44,7 +44,7 @@ def run_scenario1_batch(
     registry_paths: str = "",
     domains: str = "",
     action: str = "validate",
-    output_root: str = str(Path(ARTIFACT_ROOT) / "trajectories"),
+    output_root: str = str(Path(ARTIFACT_ROOT) / "outputs/trajectories"),
     max_new_trajectories: int = 0,
     confirm_paid_run: str = "",
     analysis_tier: str = "exploratory",

@@ -362,7 +362,7 @@ def main() -> None:
     parser.add_argument(
         "--checkpoint-root",
         type=Path,
-        default=PROJECT_ROOT / "experiments/scenario1/trajectories",
+        default=PROJECT_ROOT / "experiments/scenario1/outputs/trajectories",
     )
     parser.add_argument(
         "--results-root",
