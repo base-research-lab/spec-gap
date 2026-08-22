@@ -65,15 +65,15 @@ see the
 
 Choose only the path needed for the task:
 
-| Goal | Run | Stop point |
-| --- | --- | --- |
-| Check a checkout or code change | `S00`–`S02` | Portable smoke passes |
-| Rebuild public figures | `S00`–`S02`, then `S18` | Reporting bundle passes |
-| Add or change a domain package | `S00`–`S04` | Package and schema validation pass |
-| Check authorized Modal access | `S05` | Workspace and billing owner are confirmed |
-| Execute a new experiment | `S05`–`S11` | Every research and paid gate passes |
-| Analyze hydrated run artifacts | `S12`–`S20` | Cohort, tier, policy, and hashes agree |
-| Finalize behavioral labels | `S21` | Two human reviews and adjudication are complete |
+| Goal                            | Run                     | Stop point                                      |
+| ------------------------------- | ----------------------- | ----------------------------------------------- |
+| Check a checkout or code change | `S00`–`S02`             | Portable smoke passes                           |
+| Rebuild public figures          | `S00`–`S02`, then `S18` | Reporting bundle passes                         |
+| Add or change a domain package  | `S00`–`S04`             | Package and schema validation pass              |
+| Check authorized Modal access   | `S05`                   | Workspace and billing owner are confirmed       |
+| Execute a new experiment        | `S05`–`S11`             | Every research and paid gate passes             |
+| Analyze hydrated run artifacts  | `S12`–`S20`             | Cohort, tier, policy, and hashes agree          |
+| Finalize behavioral labels      | `S21`                   | Two human reviews and adjudication are complete |
 
 The [pipeline runbook](docs/scenario1/pipeline-runbook.md) is the only detailed
 operating sequence. Existing filename numbers are phase-local; `S00`–`S21` are
@@ -89,16 +89,16 @@ retrieval selection. Each package expands to clean/injected 2-hop and 3-hop
 records. Running both thinking modes produces eight trajectories and 28 model
 turns per package.
 
-| Property | Controlled value |
-| --- | --- |
-| 2-hop topology | planner → worker_1 → executor |
-| 3-hop topology | planner → worker_1 → worker_2 → executor |
-| Injection entry point | Worker 1 at both depths |
-| Retrieved documents | Three model-facing document views |
-| Seed | `0` |
-| Primary generation | `enable_thinking=false` |
-| Sensitivity generation | `enable_thinking=true` |
-| GPU backend | Modal, one H200 per active model container |
+| Property               | Controlled value                           |
+| ---------------------- | ------------------------------------------ |
+| 2-hop topology         | planner → worker_1 → executor              |
+| 3-hop topology         | planner → worker_1 → worker_2 → executor   |
+| Injection entry point  | Worker 1 at both depths                    |
+| Retrieved documents    | Three model-facing document views          |
+| Seed                   | `0`                                        |
+| Primary generation     | `enable_thinking=false`                    |
+| Sensitivity generation | `enable_thinking=true`                     |
+| GPU backend            | Modal, one H200 per active model container |
 
 Only Worker 1 receives retrieved documents. Downstream agents receive visible
 messages, never raw documents or hidden reasoning. The executor uses a
@@ -106,24 +106,24 @@ simulated, no-network tool, so it cannot contact the registered endpoint.
 
 ## Repository structure
 
-| Location | Responsibility |
-| --- | --- |
-| `experiments/scenario1/inputs/` | Canonical tasks, documents, injections, and provenance |
-| `schemas/scenario1/v2/` | Machine-readable trajectory and event contracts |
-| `scripts/00_repository/` | Environment-independent repository checks |
-| `scripts/01_scenario_construction/` | Package construction, validation, and source audits |
-| `scripts/02_model_execution/` | Guarded Modal execution, repair, and billing |
-| `scripts/03_probe_analysis/` | Activation indexing, controls, probes, and depth analysis |
-| `scripts/04_reporting/` | Public figures, fixed analysis, robustness, and review packets |
-| `scripts/90_runway_reproduction/` | Frozen historical runway reproduction only |
-| `src/` | Reusable implementation imported by scripts and tests |
-| `results/scenario1/` | Frozen Scenario 1 results and compact evidence |
-| `results/runway/` | Historical runway reports and lightweight rerun outputs |
-| `results/presentation/` | Generated presentation figures |
-| `docs/` | The runbook, technical reference guides, and documentation assets |
-| `notebooks/` | Historical exploratory notebooks, not canonical entry points |
-| `archive/` | Obsolete designs retained only for provenance |
-| `tests/` | Unit, integration, provenance, naming, and reporting checks |
+| Location                            | Responsibility                                                    |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| `experiments/scenario1/inputs/`     | Canonical tasks, documents, injections, and provenance            |
+| `schemas/scenario1/v2/`             | Machine-readable trajectory and event contracts                   |
+| `scripts/00_repository/`            | Environment-independent repository checks                         |
+| `scripts/01_scenario_construction/` | Package construction, validation, and source audits               |
+| `scripts/02_model_execution/`       | Guarded Modal execution, repair, and billing                      |
+| `scripts/03_probe_analysis/`        | Activation indexing, controls, probes, and depth analysis         |
+| `scripts/04_reporting/`             | Public figures, fixed analysis, robustness, and review packets    |
+| `scripts/90_runway_reproduction/`   | Frozen historical runway reproduction only                        |
+| `src/`                              | Reusable implementation imported by scripts and tests             |
+| `results/scenario1/`                | Frozen Scenario 1 results and compact evidence                    |
+| `results/runway/`                   | Historical runway reports and lightweight rerun outputs           |
+| `results/presentation/`             | Generated presentation figures                                    |
+| `docs/`                             | The runbook, technical reference guides, and documentation assets |
+| `notebooks/`                        | Historical exploratory notebooks, not canonical entry points      |
+| `archive/`                          | Obsolete designs retained only for provenance                     |
+| `tests/`                            | Unit, integration, provenance, naming, and reporting checks       |
 
 Use `scripts/` to run the pipeline and `src/` to edit reusable logic. Generated
 or historical outputs belong under `results/`; documentation belongs under

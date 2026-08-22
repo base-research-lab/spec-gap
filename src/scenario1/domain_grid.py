@@ -59,6 +59,44 @@ def injected_pdf_for_position(source: dict[str, Any], position: str) -> str:
     )
 
 
+def injected_pdf_for_cell(
+    source: dict[str, Any], style_key: str, position: str
+) -> str:
+    """Return the carrier injected-PDF filename for one style x position cell.
+
+    Since styles 12/20/28 now carry distinct payload text (see
+    ``build_payload`` in the grid-build script), each style needs its own
+    injected-PDF twin per position rather than sharing one PDF across all
+    three styles. Registries record that as
+    ``injection.injected_pdfs.by_style.<style_key>.<label>``. Falls back to
+    the position-only (shared) PDF via ``injected_pdf_for_position`` when a
+    domain hasn't registered style-specific twins yet, so unmigrated
+    domains keep working exactly as before.
+    """
+
+    if style_key not in STYLE_KEYS:
+        raise ValueError(
+            f"unknown style key {style_key!r}; known: " + ", ".join(STYLE_KEYS)
+        )
+    if position not in POSITION_PDF_LABELS:
+        raise ValueError(
+            f"unknown grid position {position!r}; known: "
+            + ", ".join(POSITIONS)
+        )
+    label = POSITION_PDF_LABELS[position]
+    injection = source.get("injection") or {}
+    named = injection.get("injected_pdfs")
+    if isinstance(named, dict):
+        by_style = named.get("by_style")
+        if isinstance(by_style, dict):
+            style_entry = by_style.get(style_key)
+            if isinstance(style_entry, dict):
+                filename = style_entry.get(label)
+                if isinstance(filename, str) and filename.lower().endswith(".pdf"):
+                    return filename
+    return injected_pdf_for_position(source, position)
+
+
 def parse_domains(raw: str) -> tuple[str, ...]:
     """Parse a comma-separated domain list, or ``all`` for every known folder."""
 
