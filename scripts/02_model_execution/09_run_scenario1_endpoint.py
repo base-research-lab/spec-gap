@@ -73,7 +73,10 @@ def _estimate(items: list[dict], config: EndpointConfig) -> dict:
             chars = sum(len(m.get("content") or "") for m in request["messages"])
             prompt_tokens += int(chars / 3.5)
             turns += 1
-            max_completion += request["generation_settings"]["max_new_tokens"]
+            max_completion += (
+                config.max_tokens_override
+                or request["generation_settings"]["max_new_tokens"]
+            )
     price = config.pricing_per_mtok
     return {
         "model_turns": turns,
@@ -100,18 +103,39 @@ def main() -> None:
                         help="hard stop once spend in this invocation reaches this")
     parser.add_argument("--model", default=None, help="default zai-org/GLM-5.3")
     parser.add_argument("--base-url", default=None)
-    parser.add_argument("--reasoning-effort", default=None,
-                        choices=(None, "low", "high", "max"))
+    parser.add_argument("--reasoning-effort-on", default="high",
+                        choices=("low", "high", "max"))
+    parser.add_argument("--reasoning-effort-off", default="low",
+                        choices=("low", "high", "max", "none"),
+                        help="'none' sends enable_thinking=false instead "
+                             "(only for servers that honour it)")
+    parser.add_argument("--max-tokens", type=int, default=0,
+                        help="override the protocol cap; reasoning counts "
+                             "against it on reasoning models")
+    parser.add_argument("--extended-sampling", action="store_true",
+                        help="also send seed/top_k/min_p")
     parser.add_argument("--output-root", default="")
     args = parser.parse_args()
 
     config = EndpointConfig.from_env(
         model=args.model, base_url=args.base_url,
-        reasoning_effort_on=args.reasoning_effort,
+        reasoning_effort_on=args.reasoning_effort_on,
+        max_tokens_override=args.max_tokens or None,
+        extended_sampling=args.extended_sampling or None,
+    )
+    config.reasoning_effort_off = (
+        None if args.reasoning_effort_off == "none" else args.reasoning_effort_off
+    )
+    # Each reasoning/token setting gets its own folder so runs under different
+    # settings never resume from each other's checkpoints.
+    profile = (
+        f"effort-off_{args.reasoning_effort_off}-on_{config.reasoning_effort_on}"
+        f"__maxtok_{config.max_tokens_override or 'protocol'}"
+        + ("__extsampling" if config.extended_sampling else "")
     )
     output_root = Path(args.output_root or (
         Path(ARTIFACT_ROOT) / "outputs/trajectories/behavioral_endpoint"
-        / _slug(config.model)
+        / _slug(config.model) / profile
     ))
 
     if args.domains and args.registry_paths:
@@ -143,6 +167,9 @@ def main() -> None:
         "action": args.action,
         "model": config.model,
         "base_url": config.base_url,
+        "reasoning_effort": {"off": args.reasoning_effort_off,
+                             "on": config.reasoning_effort_on},
+        "max_tokens": config.max_tokens_override or "protocol",
         "output_root": str(output_root),
         "thinking_modes": modes,
         "analysis_tier": args.analysis_tier,

@@ -64,11 +64,18 @@ class EndpointConfig:
     base_url: str = DEFAULT_BASE_URL
     model: str = DEFAULT_MODEL
     token: str | None = None
-    # Thinking-mode mapping. GLM exposes thinking via ``reasoning_effort`` on
-    # Modal and via ``chat_template_kwargs.enable_thinking`` on vLLM/SGLang
-    # servers; both are sent so the mode is explicit either way.
+    # Thinking-mode mapping. Modal's GLM-5.3 shared endpoint exposes reasoning
+    # only as ``reasoning_effort`` in {low, high, max} and ignores
+    # ``enable_thinking``; there is no true "off". So thinking_mode "off" is
+    # run as the lowest effort and recorded as such. Set
+    # ``reasoning_effort_off=None`` for servers that honour enable_thinking.
     reasoning_effort_on: str = "high"
-    send_top_k: bool = True
+    reasoning_effort_off: str | None = "low"
+    # The endpoint advertises only temperature/top_p/stop/max_tokens. seed,
+    # top_k and min_p are sent only when this is True.
+    extended_sampling: bool = False
+    # Reasoning tokens count against max_tokens. None keeps the protocol cap.
+    max_tokens_override: int | None = None
     timeout_s: float = 600.0
     max_retries: int = 4
     pricing_per_mtok: dict[str, float] = field(
@@ -88,6 +95,10 @@ class EndpointConfig:
         return config
 
 
+def effective_reasoning_effort(thinking_mode: str, config: EndpointConfig) -> str | None:
+    return config.reasoning_effort_on if thinking_mode == "on" else config.reasoning_effort_off
+
+
 def build_chat_body(request: dict[str, Any], config: EndpointConfig) -> dict[str, Any]:
     """Map a validated SPEC-GAP generation request onto a chat-completions body.
 
@@ -102,14 +113,16 @@ def build_chat_body(request: dict[str, Any], config: EndpointConfig) -> dict[str
         "messages": copy.deepcopy(request["messages"]),
         "temperature": settings["temperature"],
         "top_p": settings["top_p"],
-        "seed": settings["seed"],
-        "max_tokens": settings["max_new_tokens"],
-        "chat_template_kwargs": {"enable_thinking": thinking},
-        "thinking": {"type": "enabled" if thinking else "disabled"},
+        "max_tokens": config.max_tokens_override or settings["max_new_tokens"],
     }
-    if thinking:
-        body["reasoning_effort"] = config.reasoning_effort_on
-    if config.send_top_k:
+    effort = effective_reasoning_effort(request["thinking_mode"], config)
+    if effort is not None:
+        body["reasoning_effort"] = effort
+    else:
+        body["chat_template_kwargs"] = {"enable_thinking": thinking}
+        body["thinking"] = {"type": "enabled" if thinking else "disabled"}
+    if config.extended_sampling:
+        body["seed"] = settings["seed"]
         body["top_k"] = settings.get("top_k")
         body["min_p"] = settings.get("min_p")
     if request["tools"]:
@@ -209,8 +222,13 @@ def parse_chat_response(
 
     finish_reason = choice.get("finish_reason") or "unknown"
     usage = response.get("usage") or {}
-    thinking_leak = request["thinking_mode"] == "off" and bool(
-        (reasoning or "").strip()
+    effort = effective_reasoning_effort(request["thinking_mode"], config)
+    # Reasoning under "off" is only a violation when we asked for no thinking
+    # at all; under an explicit low effort it is expected and recorded.
+    thinking_leak = (
+        request["thinking_mode"] == "off"
+        and effort is None
+        and bool((reasoning or "").strip())
     )
     return {
         "result_format": BEHAVIORAL_RESULT_FORMAT,
@@ -240,6 +258,8 @@ def parse_chat_response(
         "raw_content": content,
         "thinking_content": reasoning,
         "thinking_mode_violation": thinking_leak,
+        "effective_reasoning_effort": effort,
+        "reasoning_chars": len(reasoning or ""),
         "final_content": final_content,
         "downstream_message": final_content,
         "tool_call_requests": calls,
@@ -289,10 +309,10 @@ class EndpointClient:
                 # Unsupported optional sampling params: drop them once, record it.
                 if (
                     message.startswith("HTTP 400")
-                    and self.config.send_top_k
-                    and ("top_k" in message or "min_p" in message)
+                    and self.config.extended_sampling
+                    and any(k in message for k in ("top_k", "min_p", "seed"))
                 ):
-                    self.config.send_top_k = False
+                    self.config.extended_sampling = False
                     body = build_chat_body(request, self.config)
                     last_error = error
                     continue

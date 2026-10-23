@@ -95,6 +95,7 @@ def _apply_result(
         "system_fingerprint": result["system_fingerprint"],
         "thinking_mode": result["thinking_mode"],
         "thinking_mode_violation": result["thinking_mode_violation"],
+        "effective_reasoning_effort": result.get("effective_reasoning_effort"),
         "analysis_tier": result["analysis_tier"],
         "generation_settings": copy.deepcopy(result["generation_settings"]),
         "request_body_settings": copy.deepcopy(result["request_body_settings"]),
@@ -183,6 +184,11 @@ def run_behavioral_trajectory(
     turns = _agent_events(record)
     record["behavioral_run_summary"] = {
         "outcome_class": record["evaluation_labels"]["outcome_class"],
+        "truncated_turns": sum(bool(t["output"]["truncated"]) for t in turns),
+        "reasoning_efforts": sorted({
+            str(t["model_execution_metadata"]["effective_reasoning_effort"])
+            for t in turns
+        }),
         "thinking_mode_violations": sum(
             bool(t["model_execution_metadata"]["thinking_mode_violation"])
             for t in turns

@@ -59,8 +59,9 @@ def test_body_maps_protocol_and_thinking(tmp_path):
                                     model_label="glm")
     body = calls[0]
     assert body["model"] == "zai-org/GLM-5.3"
-    assert body["chat_template_kwargs"] == {"enable_thinking": True}
     assert body["reasoning_effort"] == "high"
+    assert "chat_template_kwargs" not in body
+    assert not {"seed", "top_k", "min_p"} & body.keys()
     assert body["max_tokens"] == record["model"]["decoding_settings"]["max_new_tokens"]
     assert "tools" not in body  # only the executor gets the tool
     assert "tools" in calls[-1]
@@ -104,12 +105,13 @@ def test_thinking_leak_flagged_and_top_k_fallback(tmp_path):
             raise EndpointError("HTTP 400: unsupported parameter top_k")
         return {"choices": [{"message": {"content": "ok", "reasoning_content": "hmm"},
                              "finish_reason": "stop"}], "usage": {}}
-    client = EndpointClient(EndpointConfig(token="t"), transport=transport,
-                            sleep=lambda s: None)
+    client = EndpointClient(
+        EndpointConfig(token="t", reasoning_effort_off=None, extended_sampling=True),
+        transport=transport, sleep=lambda s: None)
     out = run_behavioral_trajectory(record, thinking_mode="off",
                                     generate_turn=client, model_label="glm")
     assert out["behavioral_run_summary"]["thinking_mode_violations"] == 3
-    assert client.config.send_top_k is False
+    assert client.config.extended_sampling is False
 
 
 def test_body_without_tools_has_no_tool_choice():
@@ -118,4 +120,23 @@ def test_body_without_tools_has_no_tool_choice():
                "thinking_mode": "off", "messages": [{"role": "user", "content": "x"}],
                "tools": []}
     body = build_chat_body(request, EndpointConfig())
-    assert "tool_choice" not in body and "reasoning_effort" not in body
+    assert "tool_choice" not in body and body["reasoning_effort"] == "low"
+
+
+def test_off_runs_as_low_effort_without_violation(tmp_path):
+    record = _plan(tmp_path, "clean")["structural_record"]
+    seen = []
+
+    def transport(url, body, headers, timeout):
+        seen.append(body)
+        return {"choices": [{"message": {"content": "ok", "reasoning_content": "brief"},
+                             "finish_reason": "stop"}], "usage": {}}
+    client = EndpointClient(EndpointConfig(token="t", max_tokens_override=9000),
+                            transport=transport)
+    out = run_behavioral_trajectory(record, thinking_mode="off",
+                                    generate_turn=client, model_label="glm")
+    assert all(b["reasoning_effort"] == "low" and b["max_tokens"] == 9000 for b in seen)
+    summary = out["behavioral_run_summary"]
+    assert summary["thinking_mode_violations"] == 0
+    assert summary["reasoning_efforts"] == ["low"]
+    assert summary["truncated_turns"] == 0
