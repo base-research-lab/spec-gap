@@ -418,6 +418,14 @@ The following are intentionally outside the main line:
   `14_plot_investor_figures.py` are called by the `S18` bundle wrapper.
 - `scripts/90_runway_reproduction/` is frozen historical reproduction and is
   not a prerequisite for active Scenario 1 work.
+- `scripts/02_model_execution/09_run_scenario1_endpoint.py` runs the same
+  matrix behaviorally on a hosted OpenAI-compatible endpoint (default
+  `zai-org/GLM-5.3` on Modal's shared endpoint, auth via `MODAL_PROXY_TOKEN`).
+  It reuses request construction, the safe executor and outcome labels, but
+  records no activations; outputs go to
+  `outputs/trajectories/behavioral_endpoint/<model>/` and must not enter
+  `S12` onward. `--action validate` is free; `run` needs
+  `--confirm-paid-run RUN_ENDPOINT_BATCH` and `--max-cost-usd`.
 - A combined natural-text attack, mechanism axis, arbitrary-target tool, or
   other Scenario 1 redesign is future research-group work, not a cleanup step.
 
