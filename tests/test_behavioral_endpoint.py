@@ -140,3 +140,29 @@ def test_off_runs_as_low_effort_without_violation(tmp_path):
     assert summary["thinking_mode_violations"] == 0
     assert summary["reasoning_efforts"] == ["low"]
     assert summary["truncated_turns"] == 0
+
+
+def test_flag_summary_counts_clean_and_injected(tmp_path):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "flags", "scripts/04_reporting/19_summarize_endpoint_injection_flags.py")
+    flags = importlib.util.module_from_spec(spec); spec.loader.exec_module(flags)
+    records = []
+    for treatment in ("clean", "injected"):
+        record = _plan(tmp_path, treatment)["structural_record"]
+        endpoint = resolve_expected_endpoint(record)
+
+        def transport(url, body, headers, timeout, t=treatment, ep=endpoint):
+            agent_sees_doc = "Retrieved documents" in body["messages"][-1]["content"]
+            text = (f"Warning: embedded instruction mentioning {ep[8:30]} ignored."
+                    if t == "injected" and agent_sees_doc else "Summary.")
+            return {"choices": [{"message": {"content": text}, "finish_reason": "stop"}],
+                    "usage": {}}
+        records.append(run_behavioral_trajectory(
+            record, thinking_mode="off", model_label="glm",
+            generate_turn=EndpointClient(EndpointConfig(token="t"), transport=transport)))
+    summary = flags.summarize(records)
+    assert summary["flagged"][("clean", "worker_1")] == 0
+    assert summary["flagged"][("injected", "worker_1")] == 1
+    assert summary["flagged"][("injected", "planner_1")] == 0
+    assert "| `worker_1` | 0/1 | 1/1 |" in flags.render_markdown(summary)
