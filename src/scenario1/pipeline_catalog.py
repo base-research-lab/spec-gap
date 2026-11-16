@@ -63,7 +63,7 @@ PIPELINE_STAGES = (
         "local only",
         ("scripts/run_portable_smoke_test.py",),
         ("S00",),
-        "44 validated structural trajectories and 308 request templates",
+        "324 validated structural trajectories and 2268 request templates",
     ),
     PipelineStage(
         "S03",

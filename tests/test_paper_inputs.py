@@ -135,8 +135,16 @@ def test_tracked_policy_points_to_complete_finance_v2_artifacts():
     assert finance["required_trajectory_id_fragment"] == (
         "__gen_controlled_v2_5000__"
     )
+    # The policy is hash-bound provenance, so its recorded paths are frozen.
+    # Pre-grid inputs were later moved under archive/old_experiment_inputs/.
+    def _exists_now_or_archived(path: str) -> bool:
+        archived = path.replace(
+            "experiments/scenario1/inputs/", "archive/old_experiment_inputs/", 1
+        )
+        return (PROJECT_ROOT / path).is_file() or (PROJECT_ROOT / archived).is_file()
+
     assert all(
-        (PROJECT_ROOT / path).is_file()
+        _exists_now_or_archived(path)
         for path in finance["required_artifacts"].values()
     )
 

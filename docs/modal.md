@@ -69,7 +69,7 @@ in temporary storage and optionally verifies the selected Modal credentials:
 python scripts/run_portable_smoke_test.py --check-modal
 ```
 
-It covers 11 domains, 44 structural trajectories, and 308 request templates.
+It covers 9 domains (81 grid registries), 324 structural trajectories, and 2268 request templates.
 The access check runs only `modal token info` and read-only `modal app list
 --json`; it does not register the production app, build its image, call Qwen,
 or allocate a GPU.

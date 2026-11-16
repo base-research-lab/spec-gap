@@ -53,7 +53,7 @@ python scripts/00_repository/00_show_pipeline.py --check
 | --- | --- | --- | --- | --- | --- |
 | `S00` | Setup | all contributors | local only | `pyproject.toml` | Editable development and Modal dependencies installed |
 | `S01` | Setup | all contributors | local only | `scripts/00_repository/00_show_pipeline.py` | Catalog, entry-point, and runbook consistency check |
-| `S02` | Setup | all contributors | local only | `scripts/run_portable_smoke_test.py` | 44 validated structural trajectories and 308 request templates |
+| `S02` | Setup | all contributors | local only | `scripts/run_portable_smoke_test.py` | 324 validated structural trajectories and 2268 request templates |
 | `S03` | Construction | package changes | local only | `scripts/01_scenario_construction/01_generate_trajectories.py` | Matched clean/injected 2-hop and 3-hop records |
 | `S04` | Construction | package changes | local only | `scripts/01_scenario_construction/02_validate_trajectories.py` | Schema and semantic validation pass |
 | `S05` | Modal | authorized workspace | read-only network | `scripts/run_portable_smoke_test.py` | Authenticated workspace check with no app or GPU start |
@@ -92,7 +92,7 @@ python scripts/run_portable_smoke_test.py
 ```
 
 The smoke command is checkout-relative, writes only to temporary storage by
-default, validates all 11 active domains, and starts no network request, Modal
+default, validates all 9 active domains (81 grid registries), and starts no network request, Modal
 app, model, or GPU. If it fails, stop here.
 
 To retain its generated dry-run records, provide a new or empty directory:
@@ -268,7 +268,7 @@ Build a tier-specific protocol ledger immediately after the matrix validates:
 
 ```bash
 python scripts/02_model_execution/07_summarize_scenario1_protocol.py \
-  --trajectory-root experiments/scenario1/trajectories/live \
+  --trajectory-root experiments/scenario1/outputs/trajectories/live \
   --generation-protocol-id PROTOCOL_ID \
   --analysis-tier ANALYSIS_TIER \
   --expected-trajectory-count EXPECTED_COUNT \
@@ -300,7 +300,7 @@ hashes must match the run ledger; never silently mix `exploratory`,
 
 ```bash
 python scripts/03_probe_analysis/07_build_activation_index.py \
-  --trajectory-root experiments/scenario1/trajectories/live \
+  --trajectory-root experiments/scenario1/outputs/trajectories/live \
   --artifact-root PATH/TO/HYDRATED_ARTIFACT_ROOT \
   --analysis-tier ANALYSIS_TIER \
   --output PATH/TO/activation_index.jsonl \

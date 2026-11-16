@@ -54,3 +54,6 @@ week2_ep_*.png
 .DS_Store
 CLAUDE.md
 lit_review_running.md
+
+# Notebook run outputs (notebooks/02_behavioral_run.ipynb)
+experiments/scenario1/outputs/behavioral/

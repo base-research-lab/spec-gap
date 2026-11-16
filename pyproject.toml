@@ -6,7 +6,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 dependencies = [
-    "transformer-lens>=2.0",
+    "transformer-lens>=2.0,<3",
     "torch>=2.1",
     "einops",
     "jaxtyping",

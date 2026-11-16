@@ -121,12 +121,27 @@ def trajectory_paths_for_analysis_tier(
     trajectory_root: str | Path,
     analysis_tier: str,
 ) -> list[Path]:
-    """Select only the storage namespace belonging to one explicit tier."""
+    """Select only the storage namespace belonging to one explicit tier.
+
+    Tiered runs are written by the orchestrator as ``<tier>/<mode>/*.json``;
+    hydrated copies may also be grouped as ``<tier>/<domain>/<mode>/*.json``.
+    Historical tierless runs live at ``<mode>/*.json`` (or
+    ``<domain>/<mode>/*.json``) and must never pick up a tiered namespace.
+    """
 
     root = Path(trajectory_root)
     tier = normalize_index_analysis_tier(analysis_tier)
-    pattern = "*/*/*.json" if tier == "unclassified" else f"{tier}/*/*/*.json"
-    return sorted(root.glob(pattern))
+    if tier == "unclassified":
+        tiered_namespaces = ACTIVATION_INDEX_ANALYSIS_TIERS - {"unclassified"}
+        candidates = [*root.glob("*/*.json"), *root.glob("*/*/*.json")]
+        paths = {
+            path
+            for path in candidates
+            if path.relative_to(root).parts[0] not in tiered_namespaces
+        }
+    else:
+        paths = {*root.glob(f"{tier}/*/*.json"), *root.glob(f"{tier}/*/*/*.json")}
+    return sorted(paths)
 
 
 def build_activation_index(

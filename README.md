@@ -1,6 +1,6 @@
 <!--
 Purpose: authoritative landing page for the active SPEC-GAP codebase.
-Last reorganized: 2026-08-10.
+Last reorganized: 2026-11-16.
 This is the repository's only README. Detailed procedures live in the linked
 runbook and reference guides rather than being repeated here.
 -->
@@ -49,9 +49,10 @@ python scripts/run_portable_smoke_test.py
 ```
 
 The first command validates the canonical `S00`–`S21` run order. The portable
-smoke test builds and schema-validates 44 structural trajectories across 11
-active domains plus 308 Modal request templates. It uses temporary storage and
-starts no model, app, image build, or GPU.
+smoke test builds and schema-validates 324 structural trajectories from the 81
+grid registries (9 active domains x 9 style/position cells) plus 2268 Modal
+request templates. It uses temporary storage and starts no model, app, image
+build, or GPU.
 
 Run the complete test suite with:
 
@@ -84,17 +85,19 @@ the repository-wide order.
 ## Experiment at a glance
 
 Each domain package contains three clean documents. One is the carrier; the
-injected condition inserts one registered payload while preserving matched
-retrieval selection. Each package expands to clean/injected 2-hop and 3-hop
-records. Running both thinking modes produces eight trajectories and 28 model
-turns per package.
+injected condition swaps in a pre-built injected PDF of that carrier while the
+other two documents stay identical. Each domain expands to a 3x3 grid of
+injection style x position (9 registries). Each registry expands to
+clean/injected 2-hop and 3-hop records; running both thinking modes produces
+eight trajectories and 28 model turns per registry.
 
 | Property | Controlled value |
 | --- | --- |
 | 2-hop topology | planner → worker_1 → executor |
 | 3-hop topology | planner → worker_1 → worker_2 → executor |
 | Injection entry point | Worker 1 at both depths |
-| Retrieved documents | Three model-facing document views |
+| Retrieved documents | Three whole documents, text extracted from PDF at retrieval |
+| Injection grid | Styles `12`, `20`, `28` x positions `begin`, `middle`, `end` |
 | Seed | `0` |
 | Primary generation | `enable_thinking=false` |
 | Sensitivity generation | `enable_thinking=true` |
@@ -109,20 +112,21 @@ simulated, no-network tool, so it cannot contact the registered endpoint.
 | Location | Responsibility |
 | --- | --- |
 | `experiments/scenario1/inputs/` | Canonical tasks, documents, injections, and provenance |
+| `experiments/scenario1/paper_input_policy.json` | Hash-bound protocol-selection policy for the frozen cohort |
+| `experiments/scenario1/outputs/` | Live run outputs (`outputs/trajectories/live/<tier>/<mode>/`); git-ignored |
 | `schemas/scenario1/v2/` | Machine-readable trajectory and event contracts |
 | `scripts/00_repository/` | Environment-independent repository checks |
-| `scripts/01_scenario_construction/` | Package construction, validation, and source audits |
+| `scripts/01_scenario_construction/` | Package construction, grid building, validation, and source audits |
 | `scripts/02_model_execution/` | Guarded Modal execution, repair, and billing |
 | `scripts/03_probe_analysis/` | Activation indexing, controls, probes, and depth analysis |
 | `scripts/04_reporting/` | Public figures, fixed analysis, robustness, and review packets |
 | `scripts/90_runway_reproduction/` | Frozen historical runway reproduction only |
 | `src/` | Reusable implementation imported by scripts and tests |
 | `results/scenario1/` | Frozen Scenario 1 results and compact evidence |
-| `results/runway/` | Historical runway reports and lightweight rerun outputs |
-| `results/presentation/` | Generated presentation figures |
+| `results/presentation/` | Presentation figures written by the `S18` bundle (regenerated, not hand-edited) |
 | `docs/` | The runbook, technical reference guides, and documentation assets |
 | `notebooks/` | Historical exploratory notebooks, not canonical entry points |
-| `archive/` | Obsolete designs retained only for provenance |
+| `archive/` | Obsolete designs, pre-grid inputs, and historical runway results retained only for provenance |
 | `tests/` | Unit, integration, provenance, naming, and reporting checks |
 
 Use `scripts/` to run the pipeline and `src/` to edit reusable logic. Generated
@@ -150,7 +154,9 @@ Each domain's `registry.json` expands to a 3x3 grid of injection style
 
 The active domains are `aihc`, `convex`, `fin`, `kg`, `macro`, `neuro`,
 `petro`, `policy`, and `telecoms`. Historical pre-grid packages are preserved
-for provenance under `archive/old_experiment_inputs/fellow_packages/`.
+for provenance under `archive/old_experiment_inputs/fellow_packages/`; the
+2026-08-19 text-only dry-run packages that preceded the grid are under
+`archive/old_experiment_inputs/fellow_packages_dryrun_2026-08-19/`.
 
 Large raw trajectories and activation tensors are intentionally ignored. Git
 tracks canonical inputs, compact evidence, public summaries, checksums, and
@@ -202,7 +208,7 @@ substitutes.
 - [Domain-package build guide](docs/scenario1/package-build-guide.md)
 - [Trajectory schema guide](docs/scenario1/schema.md)
 - [Modal execution and billing](docs/modal.md)
-- [Historical runway reproduction](docs/runway.md)
+- [Historical runway reproduction](archive/runway/docs/runway.md)
 
 ## Reproducibility rules
 
