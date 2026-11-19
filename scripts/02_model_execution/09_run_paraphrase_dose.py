@@ -318,47 +318,53 @@ def run_dose(
     capture_activations: bool = True,
 ) -> list:
     import json
+    import operator
     import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    import transformers
+    from transformers import AutoTokenizer
 
     from src.scenario1.generator import _agent_events, build_generation_request
     from src.infrastructure.qwen_modal import split_thinking_text
     from src.infrastructure.model_profiles import get_profile
 
     profile = get_profile(profile_id)
-    if profile.loader != "causal_lm":
-        raise NotImplementedError(
-            f"profile {profile_id!r} uses loader {profile.loader!r}; the paraphrase "
-            "sandbox loads causal_lm models only. Use the main pipeline's runner for "
-            "multimodal profiles."
-        )
     # Probe layers come from the profile (Qwen3-32B: 40 primary, 32/48 ablation),
     # the same relative depths across models — never chosen from AUROC.
     capture_layers = (profile.reference_layer, *profile.ablation_layers)
 
-    print(f"Loading {profile.model_id} (bf16, rev {profile.revision[:8]})...", flush=True)
+    # Pick the load class by profile.loader, exactly like the main pipeline
+    # (modal_qwen_runner): causal_lm -> AutoModelForCausalLM; image_text_to_text ->
+    # AutoModelForImageTextToText (multimodal models loaded whole, vision tower idle
+    # since the prompts are text only — Qwen3.5-9B, Gemma 4 31B).
+    model_class = {
+        "causal_lm": transformers.AutoModelForCausalLM,
+        "image_text_to_text": transformers.AutoModelForImageTextToText,
+    }.get(profile.loader)
+    if model_class is None:
+        raise ValueError(f"unknown loader {profile.loader!r} for profile {profile_id!r}")
+
+    print(f"Loading {profile.model_id} ({profile.loader}, bf16, rev {profile.revision})...", flush=True)
     tok = AutoTokenizer.from_pretrained(profile.model_id, revision=profile.revision)
-    model = (
-        AutoModelForCausalLM.from_pretrained(
-            profile.model_id,
-            revision=profile.revision,
-            torch_dtype=torch.bfloat16,
-            attn_implementation="sdpa",
-            device_map="auto",
-        )
-        .eval()
-    )
+    model = model_class.from_pretrained(
+        profile.model_id,
+        revision=profile.revision,
+        torch_dtype=torch.bfloat16,
+        attn_implementation="sdpa",
+        device_map="auto",
+    ).eval()
     print(f"Loaded. VRAM {torch.cuda.memory_allocated() / 1e9:.1f} GB", flush=True)
 
-    # Resolve the decoder-block list for residual-stream hooks. Same convention as
-    # the main pipeline (modal_qwen_runner._extract_position_activations): a forward
-    # hook on each block reads output[0] = the residual stream after that block, at
-    # the last input token = the executor's final input token (the paper's §5.6
-    # probe location). Capture runs during the generation prefill, so it adds no
-    # extra forward pass.
-    decoder_layers = model
-    for part in profile.decoder_layers_path.split("."):
-        decoder_layers = getattr(decoder_layers, part)
+    # Resolve the decoder-block list for residual-stream hooks (same convention as
+    # modal_qwen_runner._extract_position_activations). A forward hook on each block
+    # reads output[0] = the residual stream after that block, at the last input
+    # token = the executor's final input token (the paper's §5.6 probe location).
+    # Capture runs during the generation prefill, so it adds no extra forward pass.
+    decoder_layers = operator.attrgetter(profile.decoder_layers_path)(model)
+    if len(decoder_layers) != profile.layer_count:
+        raise AssertionError(
+            f"{profile.decoder_layers_path} resolved to {len(decoder_layers)} blocks, "
+            f"expected {profile.layer_count} for profile {profile_id!r}"
+        )
 
     def generate(messages, tools, enable_thinking, settings, seed, capture=False):
         torch.manual_seed(seed)
@@ -489,8 +495,12 @@ def main(
     )
     print(f"~{len(plans) * 4} model calls on one warm H200 (thinking={thinking}).")
 
+    from src.infrastructure.model_profiles import get_profile
+
+    gpu = get_profile(profile).gpu
+    print(f"Running profile {profile} on GPU {gpu}.")
     t0 = time.time()
-    raw = run_dose.remote(
+    raw = run_dose.with_options(gpu=gpu).remote(
         plans, thinking_mode=thinking, profile_id=profile,
         capture_activations=capture_activations,
     )
