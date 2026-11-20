@@ -20,9 +20,9 @@ from src.infrastructure.qwen_modal import (
 
 REGISTRY_PATHS = [
     "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
-    "12_docid_in_calibration_line/begin/domain_config.json",
-    "experiments/scenario1/inputs/fellow_packages_New/fin/attack_styles/"
-    "12_docid_in_calibration_line/begin/domain_config.json",
+    "1_calibration_line/begin/domain_config.json",
+    "experiments/scenario1/inputs/fellow_packages_New/convex/attack_styles/"
+    "1_calibration_line/begin/domain_config.json",
 ]
 REGISTRIES = gen.load_registries(REGISTRY_PATHS)
 SCHEMA = json.load(open(V.SCHEMA_PATH))

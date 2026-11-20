@@ -92,7 +92,7 @@ python scripts/run_portable_smoke_test.py
 ```
 
 The smoke command is checkout-relative, writes only to temporary storage by
-default, validates all 11 active domains, and starts no network request, Modal
+default, validates all 3 active domains, and starts no network request, Modal
 app, model, or GPU. If it fails, stop here.
 
 To retain its generated dry-run records, provide a new or empty directory:
@@ -261,6 +261,57 @@ modal run \
 `--domains` or `--registry-paths` is required; there is no default cohort.
 Record the approved cohort, expected trajectory count, protocol ID, tier,
 workspace, and cost ceiling before the paid command.
+
+### Running another model profile
+
+Every stage reads its model from `SPEC_GAP_MODEL_PROFILE`
+(`src/infrastructure/model_profiles.py`). Unset, it is `qwen3-32b` and every
+path, Volume, and layer above is unchanged. `qwen3.5-9b` pins
+`Qwen/Qwen3.5-9B` and keeps its runs apart from Qwen3-32B:
+
+| | `qwen3-32b` (default) | `qwen3.5-9b` |
+| --- | --- | --- |
+| Layers; prespecified probe layers | 64; 40 (32, 48) | 32; 20 (16, 24) |
+| Modal app | `spec-gap-qwen3-32b` | `spec-gap-qwen3-5-9b` |
+| Weight / artifact Volumes | `spec-gap-qwen3-32b-model` / `spec-gap-scenario1-artifacts` | `spec-gap-qwen3-5-9b-model` / `spec-gap-qwen3-5-9b-artifacts` |
+| Live trajectories | `experiments/scenario1/trajectories/` | `experiments/scenario1/trajectories/qwen3_5_9b/` |
+| Tool-call format | Hermes JSON in `<tool_call>` | Qwen3-Coder XML in `<tool_call>` |
+
+Export the variable once per shell and run the same commands; the Modal
+image carries it into containers. Caching the weights needs no request file:
+
+```bash
+export SPEC_GAP_MODEL_PROFILE=qwen3.5-9b
+modal run scripts/02_model_execution/03_modal_qwen_runner.py --action download
+modal run scripts/02_model_execution/05_run_scenario1_batch.py::run_scenario1_batch \
+  --domains all --thinking-modes off,on --analysis-tier definitive --action validate
+```
+
+Qwen3.5-9B thinking-on turns run past the 5000-token cap (about 1 in 10 turns
+capped, leaving trajectories `indeterminate` or passing an empty message
+downstream), so its thinking-on half runs under `controlled_v2_16384`: the same
+sampling with a 16384-token cap. Thinking-off keeps `controlled_v2_5000` (1 of
+378 turns capped). Qwen3-32B never exceeded 2.7k tokens (96 local runs), so neither cap binds
+for it. The superseded 5000-cap thinking-on runs are kept in
+`qwen3_5_9b/superseded_controlled_v2_5000_thinking_on/`, outside every
+analysis root. The thinking-off grid ran on an H200; the thinking-on grid runs
+on an A100-80GB (the profile's `gpu`), and every turn's `cost_metadata` records
+its `gpu_type` and rate.
+
+```bash
+modal run scripts/02_model_execution/05_run_scenario1_batch.py::run_scenario1_batch \
+  --domains all --thinking-modes on --analysis-tier definitive \
+  --generation-protocol-id controlled_v2_16384 \
+  --action run --confirm-paid-run RUN_H200_BATCH
+```
+
+For analysis, fetch the profile's artifact Volume into its own folder
+(`modal volume get spec-gap-qwen3-5-9b-artifacts activations PATH/activations`),
+pass `--artifact-root PATH`, and use `--layers 16,20,24` at `S16`. Compare the
+two models' behavior with
+`scripts/04_reporting/19_summarize_behavioral_outcomes.py --cohort LABEL=PATH`.
+Records from one profile fail validation under another, so a forgotten
+variable stops the stage rather than mixing models.
 
 ## S10-S11: execution accounting
 

@@ -7,23 +7,17 @@ from typing import Any, Iterable
 
 KNOWN_DOMAINS = (
     "aihc",
-    "telecoms",
     "policy",
-    "petro",
-    "neuro",
-    "macro",
-    "kg",
-    "fin",
     "convex",
 )
 POSITIONS = ("begin", "middle", "end")
-STYLE_KEYS = ("12", "20", "28")
+STYLE_KEYS = ("1", "2", "3")
 STYLE_IDS = {
-    "12": "12_docid_in_calibration_line",
-    "20": "20_full_note_self_replicate",
-    "28": "28_tool_in_traveling_line",
+    "1": "1_calibration_line",
+    "2": "2_self_replicating_note",
+    "3": "3_tool_binding_note",
 }
-# Grid positions → Ifeoluwa injected-twin labels in fellow_packages_New registries.
+# Grid positions → injected-twin labels in fellow_packages_New registries.
 POSITION_PDF_LABELS = {
     "begin": "beginning",
     "middle": "middle",
@@ -64,7 +58,7 @@ def injected_pdf_for_cell(
 ) -> str:
     """Return the carrier injected-PDF filename for one style x position cell.
 
-    Since styles 12/20/28 now carry distinct payload text (see
+    Since styles 1/2/3 now carry distinct payload text (see
     ``build_payload`` in the grid-build script), each style needs its own
     injected-PDF twin per position rather than sharing one PDF across all
     three styles. Registries record that as
@@ -103,14 +97,14 @@ def parse_domains(raw: str) -> tuple[str, ...]:
     text = (raw or "").strip()
     if not text:
         raise ValueError(
-            "specify domains, for example 'macro' or 'macro,fin' or 'all'"
+            "specify domains, for example 'aihc' or 'aihc,convex' or 'all'"
         )
     if text.lower() == "all":
         return KNOWN_DOMAINS
     folders = tuple(item.strip() for item in text.split(",") if item.strip())
     if not folders:
         raise ValueError(
-            "specify domains, for example 'macro' or 'macro,fin' or 'all'"
+            "specify domains, for example 'aihc' or 'aihc,convex' or 'all'"
         )
     unknown = [folder for folder in folders if folder not in KNOWN_DOMAINS]
     if unknown:

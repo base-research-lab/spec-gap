@@ -1,7 +1,8 @@
-"""Pure-Python validation helpers for the Qwen3-32B Modal runner.
+"""Pure-Python validation helpers for the Modal model runner.
 
 This module does not import Modal, Torch, or Transformers. Scenario generators
 can validate a request locally before any remote function or GPU is started.
+Model identity comes from the active profile in ``model_profiles``.
 """
 
 from __future__ import annotations
@@ -15,11 +16,13 @@ from typing import Any
 
 from .modal_billing import ANALYSIS_TIERS
 from .modal_costs import validate_gpu_cost_record
+from .model_profiles import ACTIVE_PROFILE
 
 
-MODEL_ID = "Qwen/Qwen3-32B"
-MODEL_REVISION = "9216db5781bf21249d130ec9da846c4624c16137"
-MODEL_LAYER_COUNT = 64
+MODEL_PROFILE_ID = ACTIVE_PROFILE.profile_id
+MODEL_ID = ACTIVE_PROFILE.model_id
+MODEL_REVISION = ACTIVE_PROFILE.revision
+MODEL_LAYER_COUNT = ACTIVE_PROFILE.layer_count
 THINKING_MODES = {"on": True, "off": False}
 ALLOWED_AGENT_ROLES = {
     "planner", "worker", "worker2", "executor",
@@ -56,6 +59,13 @@ GENERATION_PROTOCOL_SETTINGS = {
         **CONTROLLED_GENERATION_SETTINGS,
         "max_new_tokens": 5000,
     },
+    # Same sampling with a higher cap: Qwen3.5-9B thinking-on turns run past
+    # 5000 tokens, while Qwen3-32B never came close, so the cap is non-binding
+    # for both models.
+    "controlled_v2_16384": {
+        **CONTROLLED_GENERATION_SETTINGS,
+        "max_new_tokens": 16384,
+    },
 }
 
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
@@ -64,6 +74,10 @@ _TOOL_CALL_BLOCK = re.compile(
     r"<tool_call>\s*(.*?)\s*</tool_call>",
     flags=re.DOTALL,
 )
+# Qwen3.5 (Qwen3-Coder) tool-call body:
+#   <function=name>\n<parameter=key>\nvalue\n</parameter>\n</function>
+_XML_FUNCTION = re.compile(r"^<function=([^>\n]+)>(.*)</function>$", flags=re.DOTALL)
+_XML_PARAMETER = re.compile(r"<parameter=([^>\n]+)>(.*?)</parameter>", flags=re.DOTALL)
 
 
 class RequestValidationError(ValueError):
@@ -235,9 +249,9 @@ def _validate_settings(settings: Any) -> dict[str, Any]:
     if (
         not isinstance(max_new_tokens, int)
         or isinstance(max_new_tokens, bool)
-        or not 1 <= max_new_tokens <= 8192
+        or not 1 <= max_new_tokens <= 32768
     ):
-        raise RequestValidationError("max_new_tokens must be between 1 and 8192")
+        raise RequestValidationError("max_new_tokens must be between 1 and 32768")
     seed = normalized["seed"]
     if not isinstance(seed, int) or isinstance(seed, bool) or seed < 0:
         raise RequestValidationError("seed must be a non-negative integer")
@@ -267,7 +281,7 @@ def _validate_layers(layers: Any) -> list[int]:
     invalid = [layer for layer in layers if not 0 <= layer < MODEL_LAYER_COUNT]
     if invalid:
         raise RequestValidationError(
-            f"activation layers out of range for Qwen3-32B: {invalid}"
+            f"activation layers out of range for {MODEL_ID}: {invalid}"
         )
     return sorted(layers)
 
@@ -551,10 +565,12 @@ def parse_tool_call_requests(
     final_content: str,
     tools: list[dict[str, Any]],
 ) -> dict[str, list[Any]]:
-    """Parse only Qwen's explicit Hermes-style tool-call blocks.
+    """Parse only explicit ``<tool_call>`` blocks.
 
-    Plain text, including an endpoint written in prose, is never converted into
-    a tool request. A parsed request is still only a request; the shared
+    Qwen3 writes a Hermes JSON body; Qwen3.5 writes the Qwen3-Coder XML body
+    (``<function=name><parameter=key>value</parameter></function>``). Plain
+    text, including an endpoint written in prose, is never converted into a
+    tool request. A parsed request is still only a request; the shared
     executor must separately record whether an allowed simulated action fired.
     """
 
@@ -574,6 +590,19 @@ def parse_tool_call_requests(
 
     for index, match in enumerate(matches):
         raw = match.group(1).strip()
+        if raw.startswith("<function="):
+            parsed_xml = _parse_xml_tool_call(raw, index, normalized_tools)
+            if "code" in parsed_xml:
+                errors.append(parsed_xml)
+                continue
+            name = parsed_xml["name"]
+            calls.append({
+                "name": name,
+                "arguments": parsed_xml["arguments"],
+                "recognized": name in allowed_names,
+                "status": "requested",
+            })
+            continue
         try:
             parsed = json.loads(raw)
         except json.JSONDecodeError as exc:
@@ -617,6 +646,54 @@ def parse_tool_call_requests(
         })
 
     return {"calls": calls, "errors": errors}
+
+
+def _parse_xml_tool_call(
+    raw: str,
+    index: int,
+    tools: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Parse one Qwen3-Coder XML body; return the call or an error record.
+
+    Value handling follows the reference qwen3_coder parser: drop exactly one
+    leading and one trailing newline, keep strings verbatim (so destinations
+    still need an exact match), and JSON-decode non-string schema types.
+    """
+
+    match = _XML_FUNCTION.match(raw)
+    if match is None:
+        return {"code": "invalid_tool_call_xml", "index": index, "raw": raw,
+                "message": "expected <function=name>...</function>"}
+    name = match.group(1).strip()
+    body = match.group(2)
+    if not name:
+        return {"code": "missing_tool_name", "index": index, "raw": raw}
+    if _XML_PARAMETER.sub("", body).strip():
+        return {"code": "invalid_tool_call_xml", "index": index, "name": name,
+                "raw": raw, "message": "text outside <parameter> elements"}
+    properties: dict[str, Any] = {}
+    for tool in tools:
+        if _tool_name(tool) == name:
+            function = tool.get("function") if isinstance(tool.get("function"), dict) else tool
+            properties = (function.get("parameters") or {}).get("properties") or {}
+    arguments: dict[str, Any] = {}
+    for key, value in _XML_PARAMETER.findall(body):
+        key = key.strip()
+        if key in arguments:
+            return {"code": "duplicate_tool_parameter", "index": index,
+                    "name": name, "parameter": key, "raw": raw}
+        if value.startswith("\n"):
+            value = value[1:]
+        if value.endswith("\n"):
+            value = value[:-1]
+        declared = (properties.get(key) or {}).get("type")
+        if declared not in (None, "string"):
+            try:
+                value = json.loads(value)
+            except json.JSONDecodeError:
+                pass
+        arguments[key] = value
+    return {"name": name, "arguments": arguments}
 
 
 def rendered_input_sha256(rendered_input: str) -> str:

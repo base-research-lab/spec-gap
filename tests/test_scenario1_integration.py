@@ -15,7 +15,7 @@ FIXTURE_DIR = Path(__file__).parent / "fixtures"
 _FIXTURE_REGISTRY_PATH = (
     Path(__file__).resolve().parents[1]
     / "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
-    "12_docid_in_calibration_line/begin/domain_config.json"
+    "1_calibration_line/begin/domain_config.json"
 )
 
 

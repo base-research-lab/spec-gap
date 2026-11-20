@@ -145,11 +145,10 @@ experiments/scenario1/inputs/fellow_packages_New/<domain>/
 ```
 
 Each domain's `registry.json` expands to a 3x3 grid of injection style
-(`12`, `20`, `28`) x position (`begin`, `middle`, `end`) via
+(`1`, `2`, `3`) x position (`begin`, `middle`, `end`) via
 `scripts/01_scenario_construction/12_build_new_grid_styles_nochunk.py`.
 
-The active domains are `aihc`, `convex`, `fin`, `kg`, `macro`, `neuro`,
-`petro`, `policy`, and `telecoms`. Historical pre-grid packages are preserved
+The active domains are `aihc`, `convex`, and `policy`. Historical pre-grid packages are preserved
 for provenance under `archive/old_experiment_inputs/fellow_packages/`.
 
 Large raw trajectories and activation tensors are intentionally ignored. Git

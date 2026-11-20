@@ -88,7 +88,7 @@ must record that relationship.
 Current short codes include:
 
 ```text
-petro  telecom  neuro  aihc  kg  convex  macro  fin  policy
+aihc  convex  policy
 ```
 
 ## What the three clean documents should be

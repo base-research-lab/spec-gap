@@ -17,7 +17,7 @@ from src.infrastructure.modal_billing import (  # noqa: E402
 )
 from src.infrastructure.modal_qwen_runner import Qwen3Runner, app  # noqa: E402
 from src.scenario1.generator import (  # noqa: E402
-    ARTIFACT_ROOT,
+    LIVE_OUTPUT_ROOT,
     build_record,
     build_request_plan,
     load_registry,
@@ -36,7 +36,7 @@ def run_scenario1_trajectory(
     treatment: str = "clean",
     thinking_mode: str = "off",
     action: str = "validate",
-    output_root: str = str(Path(ARTIFACT_ROOT) / "trajectories"),
+    output_root: str = LIVE_OUTPUT_ROOT,
     confirm_paid_run: str = "",
     analysis_tier: str = "exploratory",
 ) -> None:

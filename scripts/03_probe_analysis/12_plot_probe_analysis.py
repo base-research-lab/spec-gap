@@ -15,6 +15,8 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE  # noqa: E402
+from src.scenario1.generator import LIVE_OUTPUT_ROOT  # noqa: E402
 from src.analysis.depth_degradation import load_prediction_jsonl  # noqa: E402
 from src.analysis.paper_inputs import (  # noqa: E402
     DEFAULT_PAPER_INPUT_POLICY,
@@ -79,7 +81,7 @@ def main() -> None:
     parser.add_argument(
         "--trajectory-root",
         type=Path,
-        default=PROJECT_ROOT / "experiments/scenario1/trajectories/live",
+        default=PROJECT_ROOT / LIVE_OUTPUT_ROOT / "live",
         help="Live trajectory tree used to record model and decoding provenance.",
     )
     parser.add_argument(
@@ -211,7 +213,11 @@ def main() -> None:
         "analysis_revision": snapshot["analysis_revision"],
         "reporting_revision": snapshot["reporting_revision"],
         "model_configs": snapshot["model_configs"],
-        "analysis_status": "construction_diagnostic_complete_behavioral_auroc_unavailable",
+        "analysis_status": (
+            "construction_diagnostic_complete_behavioral_auroc_unavailable"
+            if sample.get("unsafe_action_executed_count", 0) == 0
+            else "construction_diagnostic_complete_behavioral_outcomes_observed"
+        ),
         "claim_scope": reference["claim_scope"],
         "label_target": "injection_present",
         "primary_analysis": {
@@ -224,8 +230,9 @@ def main() -> None:
             "reason": "Thinking mode was added after the primary experiment was defined.",
         },
         "prespecified_layer_checks": {
-            "reference": 40,
-            "ablations": [32, 48],
+            "model_profile": ACTIVE_PROFILE.profile_id,
+            "reference": REFERENCE_LAYER,
+            "ablations": list(ACTIVE_PROFILE.ablation_layers),
             "all_layer_scan_role": "descriptive_only_no_post_hoc_selection",
         },
         "sample": sample,

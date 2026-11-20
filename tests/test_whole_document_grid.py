@@ -22,8 +22,8 @@ from src.scenario1.pdf_text import extract_pdf_text, pdftotext_executable
 from src.scenario1.validator import validate_payload
 
 
-MACRO_PDF_ROOT = (
-    generator.INPUTS / "fellow_packages_New" / "macro"
+AIHC_PDF_ROOT = (
+    generator.INPUTS / "fellow_packages_New" / "aihc"
 )
 
 
@@ -89,8 +89,8 @@ def _minimal_registry(**overrides: object) -> dict:
 
 
 def test_parse_domains_accepts_one_or_many_or_all():
-    assert parse_domains("macro") == ("macro",)
-    assert parse_domains("macro,fin") == ("macro", "fin")
+    assert parse_domains("aihc") == ("aihc",)
+    assert parse_domains("aihc,convex") == ("aihc", "convex")
     assert parse_domains("all") == KNOWN_DOMAINS
     with pytest.raises(ValueError, match="specify domains"):
         parse_domains("")
@@ -99,22 +99,22 @@ def test_parse_domains_accepts_one_or_many_or_all():
 
 
 def test_expand_domain_grid_is_nine_cells_per_domain():
-    cells = expand_domain_grid(["macro"])
+    cells = expand_domain_grid(["aihc"])
     assert len(cells) == 9
-    assert {cell["folder"] for cell in cells} == {"macro"}
+    assert {cell["folder"] for cell in cells} == {"aihc"}
     assert {cell["style_key"] for cell in cells} == set(STYLE_KEYS)
     assert {cell["position"] for cell in cells} == set(POSITIONS)
     assert len({cell["domain_id"] for cell in cells}) == 9
-    assert cells[0]["domain_id"] == "macro_newgrid_12_begin"
-    paths = registry_paths_for_domains(["macro"], inputs_root=generator.INPUTS)
+    assert cells[0]["domain_id"] == "aihc_newgrid_1_begin"
+    paths = registry_paths_for_domains(["aihc"], inputs_root=generator.INPUTS)
     assert len(paths) == 9
     assert paths[0].name == "domain_config.json"
     assert "begin" in str(paths[0])
 
-    both = expand_domain_grid(["macro", "fin"])
+    both = expand_domain_grid(["aihc", "convex"])
     assert len(both) == 18
-    assert [cell["folder"] for cell in both].count("macro") == 9
-    assert [cell["folder"] for cell in both].count("fin") == 9
+    assert [cell["folder"] for cell in both].count("aihc") == 9
+    assert [cell["folder"] for cell in both].count("convex") == 9
 
 
 def test_worker1_receives_whole_documents_without_retrieval_trace():
@@ -169,7 +169,7 @@ def test_build_record_rejects_a_retrieval_block():
 
 def test_same_source_pack_may_reuse_documents_and_task():
     first = _minimal_registry()
-    first["provenance"]["source_pack"] = "fellow_packages_New/macro"
+    first["provenance"]["source_pack"] = "fellow_packages_New/aihc"
     second = copy.deepcopy(first)
     second["domain_id"] = "whole_doc_test_end"
     second["independence_group_id"] = "whole_doc_test_end"
@@ -197,62 +197,62 @@ def test_load_documents_converts_pdf_instead_of_precomputed_txt(tmp_path):
         pdftotext_executable()
     except RuntimeError:
         pytest.skip("pdftotext is not available")
-    pdf_path = MACRO_PDF_ROOT / "macro_doc1_clean.pdf"
+    pdf_path = AIHC_PDF_ROOT / "aihc_doc1_clean.pdf"
     if not pdf_path.is_file():
-        pytest.skip("macro source PDF is not available")
+        pytest.skip("aihc source PDF is not available")
 
     dummy = tmp_path / "dummy.txt"
     dummy.write_text("THIS IS NOT THE PDF TEXT", encoding="utf-8")
     registry = _minimal_registry()
-    registry["provenance"]["source_pdf_root"] = "fellow_packages_New/macro"
+    registry["provenance"]["source_pdf_root"] = "fellow_packages_New/aihc"
     registry["document_slots"] = [
         {
             "slot": 1,
-            "doc_id": "macro_doc3",
+            "doc_id": "aihc_doc3",
             "title": "Carrier",
             "role": "injection_carrier",
             "file": str(dummy.relative_to(tmp_path)),
-            "clean_source_pdf": "macro_doc3_clean.pdf",
+            "clean_source_pdf": "aihc_doc3_clean.pdf",
         },
         {
             "slot": 2,
-            "doc_id": "macro_doc1",
+            "doc_id": "aihc_doc1",
             "title": "Benign one",
             "role": "benign",
             "file": str(dummy.relative_to(tmp_path)),
-            "source_pdf": "macro_doc1_clean.pdf",
+            "source_pdf": "aihc_doc1_clean.pdf",
         },
         {
             "slot": 3,
-            "doc_id": "macro_doc2",
+            "doc_id": "aihc_doc2",
             "title": "Benign two",
             "role": "benign",
             "file": str(dummy.relative_to(tmp_path)),
-            "source_pdf": "macro_doc2_clean.pdf",
+            "source_pdf": "aihc_doc2_clean.pdf",
         },
     ]
     documents = generator.load_documents(registry)
     extracted = extract_pdf_text(str(pdf_path.resolve()))
     by_id = {item["doc_id"]: item["text"] for item in documents}
-    assert by_id["macro_doc1"] == extracted
-    assert "THIS IS NOT THE PDF TEXT" not in by_id["macro_doc1"]
-    assert len(by_id["macro_doc1"]) > 500
-    assert by_id["macro_doc3"] == extract_pdf_text(
-        str((MACRO_PDF_ROOT / "macro_doc3_clean.pdf").resolve())
+    assert by_id["aihc_doc1"] == extracted
+    assert "THIS IS NOT THE PDF TEXT" not in by_id["aihc_doc1"]
+    assert len(by_id["aihc_doc1"]) > 500
+    assert by_id["aihc_doc3"] == extract_pdf_text(
+        str((AIHC_PDF_ROOT / "aihc_doc3_clean.pdf").resolve())
     )
 
 
 def test_grid_position_selects_registered_injected_pdf():
     source = json.loads(
         (
-            generator.INPUTS / "fellow_packages_New" / "macro" / "registry.json"
+            generator.INPUTS / "fellow_packages_New" / "aihc" / "registry.json"
         ).read_text(encoding="utf-8")
     )
-    assert injected_pdf_for_position(source, "begin") == "macro_doc3_inj_beginning.pdf"
-    assert injected_pdf_for_position(source, "middle") == "macro_doc3_inj_middle.pdf"
+    assert injected_pdf_for_position(source, "begin") == "aihc_doc2_inj_beginning.pdf"
+    assert injected_pdf_for_position(source, "middle") == "aihc_doc2_inj_middle.pdf"
     assert (
         injected_pdf_for_position(source, "end")
-        == "macro_doc3_inj_before_references.pdf"
+        == "aihc_doc2_inj_before_references.pdf"
     )
     with pytest.raises(ValueError, match="unknown grid position"):
         injected_pdf_for_position(source, "top")
@@ -263,13 +263,13 @@ def test_grid_position_selects_registered_injected_pdf():
         ).read_text(encoding="utf-8")
     )
     assert injected_pdf_for_position(aihc, "begin") == "aihc_doc2_inj_beginning.pdf"
-    petro = json.loads(
+    policy = json.loads(
         (
-            generator.INPUTS / "fellow_packages_New" / "petro" / "registry.json"
+            generator.INPUTS / "fellow_packages_New" / "policy" / "registry.json"
         ).read_text(encoding="utf-8")
     )
-    assert injected_pdf_for_position(petro, "end") == (
-        "petrengr_doc1_inj_before_references.pdf"
+    assert injected_pdf_for_position(policy, "end") == (
+        "policy_doc1_inj_before_references.pdf"
     )
 
 

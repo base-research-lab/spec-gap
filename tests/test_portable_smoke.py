@@ -20,17 +20,17 @@ def test_local_smoke_covers_every_active_package(tmp_path):
     assert summary["status"] == "passed"
     assert summary["model_called"] is False
     assert summary["gpu_started"] is False
-    assert summary["registry_count"] == 81
-    assert summary["trajectory_count"] == 324
-    assert summary["schema_validated_trajectory_count"] == 324
-    assert summary["modal_request_template_count"] == 2268
+    assert summary["registry_count"] == 27
+    assert summary["trajectory_count"] == 108
+    assert summary["schema_validated_trajectory_count"] == 108
+    assert summary["modal_request_template_count"] == 756
     assert summary["cohorts"] == [
         {
             "cohort_id": "active_fellow_packages",
-            "registry_count": 81,
-            "trajectory_count": 324,
-            "schema_validated_trajectory_count": 324,
-            "modal_request_template_count": 2268,
+            "registry_count": 27,
+            "trajectory_count": 108,
+            "schema_validated_trajectory_count": 108,
+            "modal_request_template_count": 756,
             "analysis_tier": "exploratory",
         },
     ]
@@ -39,7 +39,7 @@ def test_local_smoke_covers_every_active_package(tmp_path):
 def test_fellow_discovery_excludes_archived_configs():
     paths = _script_namespace()["active_fellow_registry_paths"]()
 
-    assert len(paths) == 81
+    assert len(paths) == 27
     assert all(path.name == "domain_config.json" for path in paths)
     assert all("archive" not in path.parts for path in paths)
     assert all("attack_styles" in path.parts for path in paths)

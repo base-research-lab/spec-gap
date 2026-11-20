@@ -15,6 +15,7 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE, scale_qwen3_layers  # noqa: E402
 from src.analysis.figure_export import save_reproducible_figure  # noqa: E402
 from src.analysis.depth_degradation import (  # noqa: E402
     depth_result_analysis_tier,
@@ -33,9 +34,10 @@ from src.extraction.saved_activations import (  # noqa: E402
 )
 
 
-DEFAULT_MAIN_LAYERS = (16, 32, 40, 48, 63)
-DEFAULT_ROBUSTNESS_LAYERS = (0, 8, 16, 24, 32, 40, 48, 56, 63)
-PRIMARY_LAYER = 40
+# Qwen3-32B layer choices, mapped to the same relative depths for other profiles.
+DEFAULT_MAIN_LAYERS = scale_qwen3_layers((16, 32, 40, 48, 63))
+DEFAULT_ROBUSTNESS_LAYERS = scale_qwen3_layers((0, 8, 16, 24, 32, 40, 48, 56, 63))
+PRIMARY_LAYER = ACTIVE_PROFILE.reference_layer
 AGENT_ORDER = ("planner_1", "worker_1", "worker_2", "executor_1")
 AGENT_LABELS = {
     "planner_1": "Planner",

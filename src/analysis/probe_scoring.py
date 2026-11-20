@@ -15,6 +15,7 @@ from typing import Any, Iterable, Sequence
 
 import numpy as np
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE
 from src.extraction.saved_activations import (
     load_probe_activation_batch,
     normalize_index_analysis_tier,
@@ -241,13 +242,10 @@ def summarize_per_step_probe_scores(rows: Sequence[dict[str, Any]]) -> dict[str,
         "thinking_modes": sorted({str(row["thinking_mode"]) for row in rows}),
         "probes": sorted({str(row["probe_name"]) for row in rows}),
         "layers": sorted({int(row["layer"]) for row in rows}),
-        "prespecified_reference_layer": 40,
-        "prespecified_ablation_layers": [32, 48],
-        "layer_selection_note": (
-            "Layer 40 preserves the original Llama layer-20 relative-depth choice "
-            "for a 64-layer model. Layers 32 and 48 are prespecified midpoint and "
-            "three-quarter-depth checks. No layer is selected from observed AUROC."
-        ),
+        "model_profile": ACTIVE_PROFILE.profile_id,
+        "prespecified_reference_layer": ACTIVE_PROFILE.reference_layer,
+        "prespecified_ablation_layers": list(ACTIVE_PROFILE.ablation_layers),
+        "layer_selection_note": _layer_selection_note(),
         "fit_status_counts": _counts(rows, "fit_status"),
         "behavioral_outcome_counts": _counts(
             _unique_rows(rows, ("trajectory_id",)), "behavioral_outcome"
@@ -266,6 +264,17 @@ def write_per_step_probe_scores(
     with destination.open("w") as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True, allow_nan=False) + "\n")
+
+
+def _layer_selection_note() -> str:
+    low, high = ACTIVE_PROFILE.ablation_layers
+    return (
+        f"Layer {ACTIVE_PROFILE.reference_layer} preserves the original Llama "
+        "layer-20 relative-depth choice "
+        f"for a {ACTIVE_PROFILE.layer_count}-layer model. Layers {low} and {high} "
+        "are prespecified midpoint and three-quarter-depth checks. No layer is "
+        "selected from observed AUROC."
+    )
 
 
 def _fit_fold_probes(

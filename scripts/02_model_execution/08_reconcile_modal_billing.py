@@ -17,6 +17,7 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.scenario1.generator import LIVE_OUTPUT_ROOT  # noqa: E402
 from src.infrastructure.modal_billing import (  # noqa: E402
     ANALYSIS_TIERS,
     BILLING_RECONCILIATION_SCHEMA_VERSION,
@@ -362,7 +363,7 @@ def main() -> None:
     parser.add_argument(
         "--checkpoint-root",
         type=Path,
-        default=PROJECT_ROOT / "experiments/scenario1/trajectories",
+        default=PROJECT_ROOT / LIVE_OUTPUT_ROOT,
     )
     parser.add_argument(
         "--results-root",

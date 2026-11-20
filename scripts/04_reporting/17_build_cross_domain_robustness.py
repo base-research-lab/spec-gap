@@ -138,7 +138,7 @@ def _display_path(path: Path) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Re-fit layer-40 Worker 1 probes and build style, exposure, paired-"
+            f"Re-fit layer-{PRIMARY_LAYER} Worker 1 probes and build style, exposure, paired-"
             "delta, permutation, and train-only residualization checks."
         )
     )
@@ -212,7 +212,7 @@ def main() -> None:
     )
     if regenerated != primary_saved_scores:
         raise ValueError(
-            "Saved Worker 1 layer-40 scores do not match an exact activation re-fit."
+            f"Saved Worker 1 layer-{PRIMARY_LAYER} scores do not match an exact activation re-fit."
         )
 
     cohort_results, compact_score_rows = _build_cohort_results(
@@ -582,7 +582,7 @@ def _plot_paired_deltas(
         )
     axis.axvline(0.0, color="#374151", linewidth=0.8, linestyle="--")
     axis.set_yticks(y_positions, labels)
-    axis.set_xlabel("Layer-40 score change (injected − clean)")
+    axis.set_xlabel(f"Layer-{PRIMARY_LAYER} score change (injected − clean)")
     axis.set_title("Worker 1, thinking off: paired construction-score changes")
     axis.text(
         0.0,
@@ -635,7 +635,7 @@ def _render_markdown(artifact: dict[str, Any]) -> str:
         "",
         "## What the headline means",
         "",
-        f"Worker 1, thinking off, layer 40 reaches **{primary['mean_fold_auroc']:.3f} mean held-out-domain AUROC** for the `injection_present` construction label. The pooled AUROC is {primary['pooled_auroc']:.3f}. This detects the presence of injected prompt construction/tokens; it is not compromise detection. All 36 injected runs resisted, so compromise-detection AUROC cannot be estimated from this sample.",
+        f"Worker 1, thinking off, layer {PRIMARY_LAYER} reaches **{primary['mean_fold_auroc']:.3f} mean held-out-domain AUROC** for the `injection_present` construction label. The pooled AUROC is {primary['pooled_auroc']:.3f}. This detects the presence of injected prompt construction/tokens; it is not compromise detection. All 36 injected runs resisted, so compromise-detection AUROC cannot be estimated from this sample.",
         "",
         "AIHC is the only 0.0 held-out fold; the other eight folds are 1.0. With four observations in each domain fold, those estimates are coarse and fragile.",
         "",

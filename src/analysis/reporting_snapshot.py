@@ -10,12 +10,14 @@ from typing import Any, Iterable
 
 from src.analysis.depth_degradation import depth_result_analysis_tier
 from src.infrastructure.modal_billing import ANALYSIS_TIERS, validate_analysis_tier
+from src.infrastructure.model_profiles import ACTIVE_PROFILE
 
 
 REPORTING_SNAPSHOT_SCHEMA = "spec_gap.scenario1_reporting_snapshot.v1"
 REPORTING_ANALYSIS_TIERS = frozenset({*ANALYSIS_TIERS, "unclassified"})
-REPORTING_LAYER = 40
-REFERENCE_LAYERS = {32, 40, 48}
+REPORTING_LAYER = ACTIVE_PROFILE.reference_layer
+REFERENCE_LAYERS = {REPORTING_LAYER, *ACTIVE_PROFILE.ablation_layers}
+_LOW, _HIGH = ACTIVE_PROFILE.ablation_layers
 PROBE_NAMES = {"goldowsky_dill_logistic", "lat_contrast_pair_pca"}
 THINKING_MODES = {"off", "on"}
 
@@ -39,7 +41,9 @@ def build_reporting_snapshot(
         and row.get("label_target") == "injection_present"
     ]
     if not score_rows:
-        raise ValueError("No layer-40 construction-label score rows are available.")
+        raise ValueError(
+            f"No layer-{REPORTING_LAYER} construction-label score rows are available."
+        )
 
     unique_trajectories: dict[str, dict[str, Any]] = {}
     for row in score_rows:
@@ -159,16 +163,23 @@ def validate_reporting_snapshot(snapshot: dict[str, Any]) -> None:
 
     reference_layers = {int(row["layer"]) for row in reference["depth_metrics"]}
     if not REFERENCE_LAYERS.issubset(reference_layers):
-        raise ValueError("Reference result must include layers 32, 40, and 48.")
+        raise ValueError(
+            f"Reference result must include layers {_LOW}, {REPORTING_LAYER}, and {_HIGH}."
+        )
     all_layers = {int(row["layer"]) for row in all_layer["depth_metrics"]}
-    if all_layers != set(range(64)):
-        raise ValueError("All-layer result must include layers 0 through 63.")
+    if all_layers != set(range(ACTIVE_PROFILE.layer_count)):
+        raise ValueError(
+            "All-layer result must include layers 0 through "
+            f"{ACTIVE_PROFILE.layer_count - 1}."
+        )
     if {row.get("thinking_mode") for row in rows} != THINKING_MODES:
         raise ValueError("Per-step reporting rows must cover both thinking modes.")
     if {row.get("probe_name") for row in rows} != PROBE_NAMES:
         raise ValueError("Per-step reporting rows must cover both baseline probes.")
     if any(int(row.get("layer", -1)) != REPORTING_LAYER for row in rows):
-        raise ValueError("Per-step reporting rows must contain only layer 40.")
+        raise ValueError(
+            f"Per-step reporting rows must contain only layer {REPORTING_LAYER}."
+        )
     if any(row.get("label_target") != "injection_present" for row in rows):
         raise ValueError("Per-step reporting rows must use injection_present.")
 

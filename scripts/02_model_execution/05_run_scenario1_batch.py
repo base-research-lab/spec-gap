@@ -26,7 +26,7 @@ from src.scenario1.domain_grid import (  # noqa: E402
     registry_paths_for_domains,
 )
 from src.scenario1.generator import (  # noqa: E402
-    ARTIFACT_ROOT,
+    LIVE_OUTPUT_ROOT,
     INPUTS,
     load_registries,
 )
@@ -44,12 +44,20 @@ def run_scenario1_batch(
     registry_paths: str = "",
     domains: str = "",
     action: str = "validate",
-    output_root: str = str(Path(ARTIFACT_ROOT) / "trajectories"),
+    output_root: str = LIVE_OUTPUT_ROOT,
     max_new_trajectories: int = 0,
     confirm_paid_run: str = "",
     analysis_tier: str = "exploratory",
+    generation_protocol_id: str = "",
+    treatments: str = "clean,injected",
 ) -> None:
-    """Validate or resume selected match groups in one Modal app."""
+    """Validate or resume selected match groups in one Modal app.
+
+    ``generation_protocol_id`` overrides the registries' protocol, e.g.
+    ``controlled_v2_16384`` for Qwen3.5-9B thinking-on runs. ``treatments``
+    limits the run to ``injected`` or ``clean`` trajectories when the budget
+    only covers part of the matrix.
+    """
 
     analysis_tier = validate_analysis_tier(analysis_tier)
     modes = [mode.strip() for mode in thinking_modes.split(",") if mode.strip()]
@@ -82,12 +90,23 @@ def run_scenario1_batch(
             "pass --domains or --registry-paths; there is no default cohort"
         )
     registries = load_registries(selected_registry_paths)
+    if generation_protocol_id.strip():
+        registries = [
+            {**registry, "generation_protocol_id": generation_protocol_id.strip()}
+            for registry in registries
+        ]
     plan = build_live_batch(
         registries,
         thinking_modes=modes,
         output_root=output_root,
         analysis_tier=analysis_tier,
     )
+    selected_treatments = {
+        item.strip() for item in treatments.split(",") if item.strip()
+    }
+    if not selected_treatments or not selected_treatments <= {"clean", "injected"}:
+        raise ValueError("treatments must be clean, injected, or both")
+    plan = [item for item in plan if item["treatment"] in selected_treatments]
     completed: list[tuple[dict, dict]] = []
     pending = []
     legacy_existing = []
@@ -117,6 +136,7 @@ def run_scenario1_batch(
         "selected_new_trajectories": len(selected),
         "selected_model_turns": model_turns,
         "thinking_modes": modes,
+        "treatments": sorted(selected_treatments),
         "analysis_tier": analysis_tier,
         "generation_protocol_ids": sorted({
             item["structural_record"]["generation_protocol_id"]

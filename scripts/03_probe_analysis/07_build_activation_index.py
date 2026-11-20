@@ -12,6 +12,7 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.scenario1.generator import LIVE_OUTPUT_ROOT  # noqa: E402
 from src.extraction.saved_activations import (  # noqa: E402
     ACTIVATION_INDEX_ANALYSIS_TIERS,
     build_activation_index,
@@ -40,7 +41,7 @@ def main() -> None:
     parser.add_argument(
         "--trajectory-root",
         type=Path,
-        default=PROJECT_ROOT / "experiments/scenario1/trajectories/live",
+        default=PROJECT_ROOT / LIVE_OUTPUT_ROOT / "live",
     )
     parser.add_argument(
         "--legacy-index",

@@ -17,7 +17,7 @@ from src.scenario1 import validator as V
 
 REG = gen.load_registry(
     "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
-    "12_docid_in_calibration_line/begin/domain_config.json"
+    "1_calibration_line/begin/domain_config.json"
 )
 SCHEMA = json.load(open(V.SCHEMA_PATH))
 VALIDATOR = Draft202012Validator(SCHEMA)

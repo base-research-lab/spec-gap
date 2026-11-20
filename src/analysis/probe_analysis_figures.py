@@ -14,11 +14,13 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 
 from src.analysis.figure_export import save_reproducible_figure
+from src.infrastructure.model_profiles import ACTIVE_PROFILE
 
 
 FORMATS = ("png", "svg", "pdf")
-REFERENCE_LAYER = 40
-ABLATION_LAYERS = (32, 48)
+REFERENCE_LAYER = ACTIVE_PROFILE.reference_layer
+ABLATION_LAYERS = ACTIVE_PROFILE.ablation_layers
+LAYER_COUNT = ACTIVE_PROFILE.layer_count
 PROBE_ORDER = ("goldowsky_dill_logistic", "lat_contrast_pair_pca")
 PROBE_LABELS = {
     "goldowsky_dill_logistic": "Goldowsky–Dill",
@@ -113,12 +115,13 @@ def figure_catalog() -> list[dict[str, Any]]:
         {
             "stem": "figure3_primary_probe_metrics",
             "role": "primary",
-            "title": "Thinking-off probe metrics at prespecified layer 40",
+            "title": f"Thinking-off probe metrics at prespecified layer {REFERENCE_LAYER}",
             "caption": (
                 "Group-held-out construction-label AUROC, Brier score, and ECE for "
                 "executor-only and temporal path-mean aggregation at 2-hop and 3-hop. "
                 "Signed Temporal Divergence is reported separately. Intervals resample "
-                "match groups; n=2 independent groups."
+                "independent match groups; the pooled group count is reported on the "
+                "figure itself."
             ),
         },
         {
@@ -126,7 +129,7 @@ def figure_catalog() -> list[dict[str, Any]]:
             "role": "primary_with_sensitivity_panel",
             "title": "Preliminary 3-hop minus 2-hop AUROC change",
             "caption": (
-                "Depth change at prespecified layer 40. Thinking-off is the primary "
+                f"Depth change at prespecified layer {REFERENCE_LAYER}. Thinking-off is the primary "
                 "analysis and thinking-on is a late-added sensitivity analysis. Positive "
                 "values indicate higher construction-label AUROC at 3-hop."
             ),
@@ -136,7 +139,7 @@ def figure_catalog() -> list[dict[str, Any]]:
             "role": "primary",
             "title": "Per-agent probe-score trajectories",
             "caption": (
-                "Thinking-off, layer-40 held-out probabilities across the agent chain. "
+                f"Thinking-off, layer-{REFERENCE_LAYER} held-out probabilities across the agent chain. "
                 "Thin lines are independent match groups and bold lines are their mean."
             ),
         },
@@ -145,14 +148,16 @@ def figure_catalog() -> list[dict[str, Any]]:
             "role": "primary_limitation",
             "title": "Observed behavioral outcomes",
             "caption": (
-                "All injected runs resisted and no unsafe executor action fired. This "
-                "prevents behavioral-compromise AUROC estimation in the current sample."
+                "Observed executor outcome counts for injected and clean runs. "
+                "Behavioral-compromise probe metrics are a separate, not-yet-computed "
+                "analysis; when no unsafe action was executed in the sample, that "
+                "metric is undefined."
             ),
         },
         {
             "stem": "appendix_thinking_on_probe_metrics",
             "role": "sensitivity",
-            "title": "Thinking-on sensitivity metrics at layer 40",
+            "title": f"Thinking-on sensitivity metrics at layer {REFERENCE_LAYER}",
             "caption": (
                 "The same group-held-out construction-label analysis for the late-added "
                 "thinking-on condition. It is not pooled with the primary thinking-off run."
@@ -164,7 +169,8 @@ def figure_catalog() -> list[dict[str, Any]]:
             "title": "Descriptive all-layer AUROC",
             "caption": (
                 "All 64 layers are shown without selecting a best layer. Vertical markers "
-                "identify the prespecified reference and ablation layers. n=2 groups."
+                "identify the prespecified reference and ablation layers. The pooled "
+                "group count is reported on the figure itself."
             ),
         },
     ]
@@ -249,17 +255,7 @@ def _probe_metrics_figure(
             fontweight="bold",
             y=0.995,
         )
-        figure.text(
-            0.5,
-            0.005,
-            (
-                "Prespecified layer 40; leave-one-match-group-out scores; "
-                "95% cluster-bootstrap intervals; n=2 groups."
-            ),
-            ha="center",
-            fontsize=7.5,
-        )
-        figure.tight_layout(rect=(0, 0.07, 1, 0.82))
+        figure.tight_layout(rect=(0, 0.02, 1, 0.82))
     return figure
 
 
@@ -327,18 +323,11 @@ def _depth_delta_figure(result: dict[str, Any]) -> plt.Figure:
             frameon=False,
         )
         figure.suptitle(
-            "Preliminary depth change at prespecified layer 40",
+            f"Preliminary depth change at prespecified layer {REFERENCE_LAYER}",
             fontweight="bold",
             y=0.995,
         )
-        figure.text(
-            0.5,
-            0.005,
-            "Construction-label diagnostic; 95% cluster-bootstrap intervals; n=2 groups.",
-            ha="center",
-            fontsize=7.5,
-        )
-        figure.tight_layout(rect=(0, 0.07, 1, 0.82))
+        figure.tight_layout(rect=(0, 0.02, 1, 0.82))
     return figure
 
 
@@ -409,21 +398,11 @@ def _temporal_profile_figure(rows: Sequence[dict[str, Any]]) -> plt.Figure:
             frameon=False,
         )
         figure.suptitle(
-            "Per-agent score profiles · thinking off · layer 40",
+            f"Per-agent score profiles · thinking off · layer {REFERENCE_LAYER}",
             fontweight="bold",
             y=0.995,
         )
-        figure.text(
-            0.5,
-            0.005,
-            (
-                "Vertical line marks Worker 1, the fixed document-injection anchor. "
-                "Thin lines are match groups; bold lines are means; n=2 groups."
-            ),
-            ha="center",
-            fontsize=7.5,
-        )
-        figure.tight_layout(rect=(0, 0.055, 1, 0.90))
+        figure.tight_layout(rect=(0, 0.02, 1, 0.90))
     return figure
 
 
@@ -465,17 +444,7 @@ def _behavioral_outcome_figure(rows: Sequence[dict[str, Any]]) -> plt.Figure:
         _clean_axis(axis)
         axis.legend(frameon=False, ncol=2, loc="upper right")
         axis.set_title("Observed executor outcomes", fontweight="bold")
-        figure.text(
-            0.5,
-            0.005,
-            (
-                "No unsafe action executed. Behavioral-compromise AUROC is therefore "
-                "undefined for this sample."
-            ),
-            ha="center",
-            fontsize=7.5,
-        )
-        figure.tight_layout(rect=(0, 0.075, 1, 1))
+        figure.tight_layout(rect=(0, 0.02, 1, 1))
     return figure
 
 
@@ -545,17 +514,7 @@ def _all_layer_figure(result: dict[str, Any]) -> plt.Figure:
             fontweight="bold",
             y=0.995,
         )
-        figure.text(
-            0.5,
-            0.005,
-            (
-                "Vertical lines: layer 40 reference (solid), layers 32/48 ablations "
-                "(dotted). Descriptive only; n=2 match groups."
-            ),
-            ha="center",
-            fontsize=7.5,
-        )
-        figure.tight_layout(rect=(0, 0.055, 1, 0.90))
+        figure.tight_layout(rect=(0, 0.02, 1, 0.90))
     return figure
 
 
@@ -661,14 +620,22 @@ def _validate_inputs(
     ):
         if result.get("label_targets") != ["injection_present"]:
             raise ValueError(f"{name} result must be an injection-present diagnostic.")
-        if int(result.get("n_match_groups", 0)) != 2:
-            raise ValueError(f"{name} result must declare the two available match groups.")
+        if int(result.get("n_match_groups", 0)) < 2:
+            raise ValueError(
+                f"{name} result must declare at least two independent match groups "
+                "for a leave-one-match-group-out comparison."
+            )
     reference_layers = {int(row["layer"]) for row in reference_result["depth_metrics"]}
     if not {REFERENCE_LAYER, *ABLATION_LAYERS}.issubset(reference_layers):
-        raise ValueError("Reference result must contain layers 32, 40, and 48.")
+        raise ValueError(
+            f"Reference result must contain layers {ABLATION_LAYERS[0]}, "
+            f"{REFERENCE_LAYER}, and {ABLATION_LAYERS[1]}."
+        )
     all_layers = {int(row["layer"]) for row in all_layer_result["depth_metrics"]}
-    if all_layers != set(range(64)):
-        raise ValueError("All-layer result must contain layers 0 through 63.")
+    if all_layers != set(range(LAYER_COUNT)):
+        raise ValueError(
+            f"All-layer result must contain layers 0 through {LAYER_COUNT - 1}."
+        )
     if not rows:
         raise ValueError("Per-step probe-score rows are required for profile figures.")
 

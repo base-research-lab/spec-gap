@@ -14,13 +14,15 @@ from collections import defaultdict
 from decimal import Decimal
 from typing import Any, Iterable
 
+from .model_profiles import ACTIVE_PROFILE
+
 
 BILLING_RECONCILIATION_SCHEMA_VERSION = (
     "spec_gap.modal_billing_reconciliation.v2"
 )
 BASE_BILLING_TAGS = {
     "project": "spec-gap",
-    "component": "qwen3-inference",
+    "component": ACTIVE_PROFILE.billing_component,
     "scenario": "scenario1",
 }
 ANALYSIS_TIERS = frozenset({"exploratory", "definitive"})

@@ -15,6 +15,7 @@ from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import Patch  # noqa: E402
 
 from src.analysis.figure_export import save_reproducible_figure
+from src.infrastructure.model_profiles import ACTIVE_PROFILE, scale_qwen3_layers
 
 
 MAIN_AGENT_ORDER = ("planner_1", "worker_1", "executor_1")
@@ -280,9 +281,10 @@ def _appendix_heatmap(result: dict[str, Any]) -> plt.Figure:
                     f"Qualified last-input stratum missing for {mode}/{agent_id}."
                 )
             layers, means = _mean_series(stratum)
-            if layers != list(range(64)):
+            if layers != list(range(ACTIVE_PROFILE.layer_count)):
                 raise ValueError(
-                    "Paper heatmap requires complete layers 0 through 63."
+                    "Paper heatmap requires complete layers 0 through "
+                    f"{ACTIVE_PROFILE.layer_count - 1}."
                 )
             matrix.append(means)
         mode_matrices.append(np.asarray(matrix, dtype=float))
@@ -326,7 +328,7 @@ def _appendix_heatmap(result: dict[str, Any]) -> plt.Figure:
             for spine in axis.spines.values():
                 spine.set_color("#D1D5DB")
                 spine.set_linewidth(0.7)
-        axes[-1][0].set_xticks([0, 8, 16, 24, 32, 40, 48, 56, 63])
+        axes[-1][0].set_xticks(scale_qwen3_layers((0, 8, 16, 24, 32, 40, 48, 56, 63)))
         axes[-1][0].set_xlabel("Model layer")
         color_axis = figure.add_axes((0.91, 0.18, 0.018, 0.58))
         if image is None:
@@ -475,7 +477,7 @@ def _match_groups(result: dict[str, Any]) -> list[str]:
 def _standard_axis(axis: plt.Axes) -> None:
     axis.set_xlim(0, 63)
     axis.set_ylim(-0.02, 1.02)
-    axis.set_xticks([0, 16, 32, 48, 63])
+    axis.set_xticks(scale_qwen3_layers((0, 16, 32, 48, 63)))
     axis.set_yticks(np.linspace(0, 1, 6))
     axis.spines["top"].set_visible(False)
     axis.spines["right"].set_visible(False)

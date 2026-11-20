@@ -14,13 +14,14 @@ from typing import Any, Sequence
 
 import numpy as np
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE
 from src.analysis.probe_scoring import preprocess_activation_fold
 from src.probes.linear_probe import make_probe_pipeline
 
 
 PRIMARY_AGENT = "worker_1"
 PRIMARY_THINKING_MODE = "off"
-PRIMARY_LAYER = 40
+PRIMARY_LAYER = ACTIVE_PROFILE.reference_layer
 PRIMARY_PROBE = "goldowsky_dill_logistic"
 
 

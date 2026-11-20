@@ -1,8 +1,10 @@
-"""Modal runner for Qwen3-32B generation and residual-stream extraction.
+"""Modal runner for generation and residual-stream extraction.
 
-The default local action validates a synthetic or real request without calling
-Modal compute. A paid H200 run requires the explicit confirmation string
-``RUN_H200``.
+The model comes from the active profile (``SPEC_GAP_MODEL_PROFILE``, default
+``qwen3-32b``); each profile has its own app, weight Volume, and artifact
+Volume. The default local action validates a synthetic or real request without
+calling Modal compute. A paid H200 run requires the explicit confirmation
+string ``RUN_H200``.
 """
 
 from __future__ import annotations
@@ -18,8 +20,11 @@ from typing import Any
 
 import modal
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE, PROFILE_ENV
 from src.infrastructure.qwen_modal import (
     MODEL_ID,
+    MODEL_LAYER_COUNT,
+    MODEL_PROFILE_ID,
     MODEL_REVISION,
     activation_artifact_path,
     build_activation_checkpoint_plan,
@@ -47,12 +52,12 @@ from src.scenario1.activation_repair import (
 )
 
 
-APP_NAME = "spec-gap-qwen3-32b"
-MODEL_VOLUME_NAME = "spec-gap-qwen3-32b-model"
-ARTIFACT_VOLUME_NAME = "spec-gap-scenario1-artifacts"
+APP_NAME = ACTIVE_PROFILE.app_name
+MODEL_VOLUME_NAME = ACTIVE_PROFILE.model_volume_name
+ARTIFACT_VOLUME_NAME = ACTIVE_PROFILE.artifact_volume_name
 MODEL_MOUNT = Path("/models")
 ARTIFACT_MOUNT = Path("/artifacts")
-MODEL_PATH = MODEL_MOUNT / "Qwen--Qwen3-32B"
+MODEL_PATH = MODEL_MOUNT / ACTIVE_PROFILE.model_dir_name
 
 image = (
     modal.Image.debian_slim(python_version="3.11")
@@ -63,7 +68,12 @@ image = (
         "huggingface-hub[hf-xet]>=0.34,<2",
         "safetensors>=0.5,<1",
     )
-    .env({"HF_XET_HIGH_PERFORMANCE": "1", "TOKENIZERS_PARALLELISM": "false"})
+    .env({
+        "HF_XET_HIGH_PERFORMANCE": "1",
+        "TOKENIZERS_PARALLELISM": "false",
+        # Containers re-import this module; pin them to the caller's profile.
+        PROFILE_ENV: MODEL_PROFILE_ID,
+    })
     .add_local_python_source("src")
 )
 
@@ -107,7 +117,7 @@ def download_model(revision: str = MODEL_REVISION) -> dict[str, str]:
 
 @app.cls(
     image=image,
-    gpu="H200",
+    gpu=ACTIVE_PROFILE.gpu,
     volumes={
         MODEL_MOUNT.as_posix(): model_volume,
         ARTIFACT_MOUNT.as_posix(): artifact_volume,
@@ -119,22 +129,35 @@ def download_model(revision: str = MODEL_REVISION) -> dict[str, str]:
     startup_timeout=1800,
 )
 class Qwen3Runner:
-    """One warm Qwen3-32B instance shared by sequential agent turns."""
+    """One warm model instance shared by sequential agent turns."""
 
     @modal.enter()
     def load(self) -> None:
+        import operator
+
         import torch
-        from transformers import AutoModelForCausalLM, AutoTokenizer
+        import transformers
+        from transformers import AutoTokenizer
 
         metadata_path = MODEL_PATH / "spec_gap_model_metadata.json"
         if not metadata_path.exists():
             raise RuntimeError(
-                "Qwen weights are not cached. Run the download action before RUN_H200."
+                f"{MODEL_ID} weights are not cached. Run the download action "
+                "before RUN_H200."
             )
         self.model_metadata = json.loads(metadata_path.read_text())
+        if self.model_metadata.get("model_id") != MODEL_ID:
+            raise RuntimeError(
+                f"Volume {MODEL_VOLUME_NAME} holds {self.model_metadata.get('model_id')!r}, "
+                f"not {MODEL_ID!r}"
+            )
         self.torch = torch
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-        self.model = AutoModelForCausalLM.from_pretrained(
+        model_class = {
+            "causal_lm": transformers.AutoModelForCausalLM,
+            "image_text_to_text": transformers.AutoModelForImageTextToText,
+        }[ACTIVE_PROFILE.loader]
+        self.model = model_class.from_pretrained(
             MODEL_PATH,
             dtype=torch.bfloat16,
             device_map={"": 0},
@@ -142,10 +165,29 @@ class Qwen3Runner:
             attn_implementation="sdpa",
         )
         self.model.eval()
-        if int(self.model.config.num_hidden_layers) != 64:
+        self.text_config = self.model.config.get_text_config()
+        if int(self.text_config.num_hidden_layers) != MODEL_LAYER_COUNT:
             raise RuntimeError(
-                f"expected 64 Qwen3-32B layers, got {self.model.config.num_hidden_layers}"
+                f"expected {MODEL_LAYER_COUNT} {MODEL_ID} layers, got "
+                f"{self.text_config.num_hidden_layers}"
             )
+        self.decoder_layers = operator.attrgetter(
+            ACTIVE_PROFILE.decoder_layers_path
+        )(self.model)
+        if len(self.decoder_layers) != MODEL_LAYER_COUNT:
+            raise RuntimeError(
+                f"{ACTIVE_PROFILE.decoder_layers_path} has "
+                f"{len(self.decoder_layers)} blocks, expected {MODEL_LAYER_COUNT}"
+            )
+        # Stop on every end-of-turn id. Qwen3.5 ships no generation_config and
+        # its config eos is <|endoftext|>, while turns end with <|im_end|>.
+        stop_ids = {self.tokenizer.eos_token_id}
+        for source in (self.model.generation_config, self.text_config):
+            eos = getattr(source, "eos_token_id", None)
+            stop_ids.update(eos if isinstance(eos, (list, tuple)) else [eos])
+        self.stop_token_ids = sorted(
+            token_id for token_id in stop_ids if isinstance(token_id, int)
+        )
 
     def _extract_position_activations(
         self,
@@ -170,7 +212,7 @@ class Qwen3Runner:
 
         for layer in layers:
             handles.append(
-                self.model.model.layers[layer].register_forward_hook(make_hook(layer))
+                self.decoder_layers[layer].register_forward_hook(make_hook(layer))
             )
         try:
             attention_mask = torch.ones_like(full_token_ids)
@@ -427,6 +469,7 @@ class Qwen3Runner:
             runtime_metadata={
                 "operation": ACTIVATION_REPAIR_METHOD,
                 "app_name": APP_NAME,
+                "model_profile": MODEL_PROFILE_ID,
                 "model_name": MODEL_ID,
                 "model_revision": self.model_metadata["resolved_revision"],
                 "analysis_tier": request.get("analysis_tier"),
@@ -520,7 +563,7 @@ class Qwen3Runner:
         }
         input_length = int(model_inputs["input_ids"].shape[-1])
         context_window = getattr(
-            self.model.config,
+            self.text_config,
             "max_position_embeddings",
             None,
         )
@@ -547,6 +590,7 @@ class Qwen3Runner:
                 top_k=settings["top_k"],
                 min_p=settings["min_p"],
                 max_new_tokens=settings["max_new_tokens"],
+                eos_token_id=self.stop_token_ids,
                 pad_token_id=self.tokenizer.eos_token_id,
             )
 
@@ -596,8 +640,7 @@ class Qwen3Runner:
             final_output_token_count = len(generated_ids)
         downstream_message = final_content
 
-        eos_id = self.tokenizer.eos_token_id
-        stopped = eos_id is not None and eos_id in generated_ids
+        stopped = any(token_id in self.stop_token_ids for token_id in generated_ids)
         finish_reason = "stop" if stopped else "length"
         truncated = finish_reason == "length"
 
@@ -719,6 +762,7 @@ class Qwen3Runner:
             token_usage=token_usage,
             runtime_metadata={
                 "app_name": APP_NAME,
+                "model_profile": MODEL_PROFILE_ID,
                 "model_name": MODEL_ID,
                 "model_revision": self.model_metadata["resolved_revision"],
                 "analysis_tier": request["analysis_tier"],
@@ -762,7 +806,7 @@ class Qwen3Runner:
 
 @app.local_entrypoint()
 def main(
-    request_path: str,
+    request_path: str = "",
     action: str = "validate",
     output_path: str = "",
     model_revision: str = MODEL_REVISION,
@@ -772,6 +816,11 @@ def main(
     """Validate by default; remote download and H200 execution are explicit."""
 
     analysis_tier = validate_analysis_tier(analysis_tier)
+    if action == "download":
+        print(json.dumps(download_model.remote(model_revision), indent=2))
+        return
+    if not request_path:
+        raise ValueError("--request-path is required for validate and run")
     payload = json.loads(Path(request_path).read_text())
     payload["analysis_tier"] = analysis_tier
     request = validate_generation_request(payload)
@@ -779,9 +828,6 @@ def main(
     if action == "validate":
         print(json.dumps(request, indent=2))
         print("Validation passed. No remote function or GPU was started.")
-        return
-    if action == "download":
-        print(json.dumps(download_model.remote(model_revision), indent=2))
         return
     if action != "run":
         raise ValueError("action must be validate, download, or run")

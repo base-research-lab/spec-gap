@@ -13,12 +13,21 @@ import re
 from pathlib import PurePosixPath
 from typing import Any
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE
 
-GPU_TYPE = "H200"
+
+# Modal list prices per GPU-second. The "h200" in the record field names below
+# predates other GPUs; ``gpu_type`` and ``gpu_rate_usd_per_second`` say which
+# GPU and rate a record's estimate actually uses.
+GPU_USD_PER_SECOND = {
+    "H200": 0.001261,
+    "A100-80GB": 0.000694,
+}
+GPU_TYPE = ACTIVE_PROFILE.gpu
 GPU_COUNT = 1
-H200_USD_PER_SECOND = 0.001261
+H200_USD_PER_SECOND = GPU_USD_PER_SECOND["H200"]
 PRICE_SOURCE = "https://modal.com/pricing"
-PRICE_CHECKED_ON = "2026-07-13"
+PRICE_CHECKED_ON = "2026-10-28"
 COST_SCHEMA_VERSION = "spec_gap.modal_gpu_cost.v1"
 
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
@@ -128,7 +137,7 @@ def build_gpu_cost_record(
     token_usage: dict[str, int],
     runtime_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Build a per-input H200 estimate with explicit billing caveats."""
+    """Build a per-input GPU estimate with explicit billing caveats."""
 
     if not isinstance(elapsed_seconds, (int, float)) or isinstance(
         elapsed_seconds, bool
@@ -154,7 +163,8 @@ def build_gpu_cost_record(
     )
     generated_tokens = normalized_usage["generated_tokens"]
     rounded_elapsed = round(elapsed, 6)
-    estimated_cost = rounded_elapsed * H200_USD_PER_SECOND * GPU_COUNT
+    rate = GPU_USD_PER_SECOND[GPU_TYPE]
+    estimated_cost = rounded_elapsed * rate * GPU_COUNT
     tokens_per_second = (
         generated_tokens / rounded_elapsed if rounded_elapsed > 0 else None
     )
@@ -184,7 +194,7 @@ def build_gpu_cost_record(
         "elapsed_seconds": rounded_elapsed,
         "gpu_type": GPU_TYPE,
         "gpu_count": GPU_COUNT,
-        "gpu_rate_usd_per_second": H200_USD_PER_SECOND,
+        "gpu_rate_usd_per_second": rate,
         "estimated_h200_cost_usd": round(estimated_cost, 8),
         "generated_tokens_per_second": (
             round(tokens_per_second, 6)
@@ -201,7 +211,7 @@ def build_gpu_cost_record(
         "runtime_metadata": copy.deepcopy(runtime_metadata or {}),
         "storage_path": storage_path,
         "includes": [
-            "measured Qwen model-turn method time on one H200",
+            f"measured Qwen model-turn method time on one {GPU_TYPE}",
         ],
         "excludes": [
             "container startup and model-load time before this input",
@@ -228,10 +238,16 @@ def validate_gpu_cost_record(payload: Any) -> dict[str, Any]:
         raise CostRecordValidationError(
             "cost_kind must be 'per_input_h200_estimate'"
         )
-    if record.get("gpu_type") != GPU_TYPE or record.get("gpu_count") != GPU_COUNT:
-        raise CostRecordValidationError("cost record must describe one H200")
-    if record.get("gpu_rate_usd_per_second") != H200_USD_PER_SECOND:
-        raise CostRecordValidationError("H200 rate does not match the pinned estimate")
+    gpu_type = record.get("gpu_type")
+    if gpu_type not in GPU_USD_PER_SECOND or record.get("gpu_count") != GPU_COUNT:
+        raise CostRecordValidationError(
+            f"cost record must describe one GPU of {sorted(GPU_USD_PER_SECOND)}"
+        )
+    rate = GPU_USD_PER_SECOND[gpu_type]
+    if record.get("gpu_rate_usd_per_second") != rate:
+        raise CostRecordValidationError(
+            f"{gpu_type} rate does not match the pinned estimate"
+        )
 
     usage = record.get("token_usage")
     if not isinstance(usage, dict):
@@ -249,9 +265,9 @@ def validate_gpu_cost_record(payload: Any) -> dict[str, Any]:
     if not isinstance(elapsed, (int, float)) or isinstance(elapsed, bool):
         raise CostRecordValidationError("elapsed_seconds must be numeric")
     elapsed = float(elapsed)
-    expected_cost = round(elapsed * H200_USD_PER_SECOND * GPU_COUNT, 8)
+    expected_cost = round(elapsed * rate * GPU_COUNT, 8)
     if record.get("estimated_h200_cost_usd") != expected_cost:
-        raise CostRecordValidationError("estimated H200 cost is inconsistent")
+        raise CostRecordValidationError("estimated GPU cost is inconsistent")
     expected_path = cost_record_path(
         trajectory_id=record.get("trajectory_id"),
         thinking_mode=record.get("thinking_mode"),

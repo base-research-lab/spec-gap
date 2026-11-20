@@ -29,10 +29,12 @@ from src.infrastructure.qwen_modal import (
     DEFAULT_GENERATION_PROTOCOL_ID,
     MODEL_ID,
     MODEL_LAYER_COUNT,
+    MODEL_PROFILE_ID,
     MODEL_REVISION,
     generation_settings_for_protocol,
     validate_generation_request,
 )
+from src.infrastructure.model_profiles import ACTIVE_PROFILE
 from src.scenario1.pdf_text import detect_single_insertion, extract_pdf_text
 
 
@@ -40,6 +42,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 INPUTS = PROJECT_ROOT / "experiments" / "scenario1" / "inputs"
 ARTIFACT_ROOT = os.path.join("experiments", "scenario1")
 TRAJ_DIR = "trajectories"
+# Live runs of each model profile stay in their own tree; Qwen3-32B keeps the
+# original location.
+LIVE_OUTPUT_ROOT = os.path.join(
+    ARTIFACT_ROOT, TRAJ_DIR, ACTIVE_PROFILE.output_subdir
+).rstrip(os.sep)
 DOCUMENT_SOURCE_FIELDS = (
     "file",
     "source_pdf",
@@ -848,6 +855,7 @@ def build_record(
         "hop_path": HOP_PATH[condition],
         "model": {
             "model_name": MODEL_ID,
+            "model_profile": MODEL_PROFILE_ID,
             "provider": "modal",
             "model_revision": MODEL_REVISION,
             "tokenizer_name": MODEL_ID,

@@ -12,6 +12,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.patches import Rectangle  # noqa: E402
 
+from src.infrastructure.model_profiles import ACTIVE_PROFILE  # noqa: E402
+
 
 CHECKPOINT_ORDER = (
     "last_input_token",
@@ -375,7 +377,7 @@ def _mode_grid(result: dict[str, Any], mode: str) -> plt.Figure:
             if row_index == len(AGENT_ORDER) - 1:
                 axis.set_xlabel("Layer")
             axis.set_ylim(-0.02, 1.02)
-            axis.set_xlim(0, 63)
+            axis.set_xlim(0, ACTIVE_PROFILE.layer_count - 1)
             _control_badge(axis, control)
 
     figure.suptitle(
@@ -448,7 +450,7 @@ def _planner_control_figure(result: dict[str, Any]) -> plt.Figure:
             )
         axis.set_title(f"Thinking {mode}")
         axis.set_xlabel("Layer")
-        axis.set_xlim(0, 63)
+        axis.set_xlim(0, ACTIVE_PROFILE.layer_count - 1)
         axis.set_ylim(-0.02, 1.02)
         axis.legend(fontsize=8, loc="best")
     axes[0][0].set_ylabel("Planner mean AUROC")

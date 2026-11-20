@@ -8,7 +8,11 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-_FALLBACK_PDFTOTEXT = Path("/Users/oudoum/opt/anaconda3/bin/pdftotext")
+_FALLBACK_PDFTOTEXT_CANDIDATES = (
+    Path("/opt/homebrew/bin/pdftotext"),
+    Path("/usr/local/bin/pdftotext"),
+    Path("/usr/bin/pdftotext"),
+)
 
 
 def pdftotext_executable() -> str:
@@ -17,8 +21,9 @@ def pdftotext_executable() -> str:
     found = shutil.which("pdftotext")
     if found:
         return found
-    if _FALLBACK_PDFTOTEXT.is_file():
-        return str(_FALLBACK_PDFTOTEXT)
+    for candidate in _FALLBACK_PDFTOTEXT_CANDIDATES:
+        if candidate.is_file():
+            return str(candidate)
     raise RuntimeError("pdftotext is required (Poppler) to convert PDFs to text")
 
 

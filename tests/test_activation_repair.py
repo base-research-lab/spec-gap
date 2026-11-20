@@ -117,7 +117,7 @@ def _write_live_pair(tmp_path):
     output_root = tmp_path / "experiments/scenario1/trajectories"
     registry = load_registries([
         "experiments/scenario1/inputs/fellow_packages_New/aihc/attack_styles/"
-        "12_docid_in_calibration_line/begin/domain_config.json",
+        "1_calibration_line/begin/domain_config.json",
     ])[0]
     # The repair tool is hardwired to one frozen legacy pair
     # (ACTIVATION_REPAIR_SMOKE_PAIR == "climate_coastal_flood_01__2hop"); the
